@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SARA USA 2026 — full survey prototype</title>
+<style>
+  :root{--ink:#1c2733;--muted:#647281;--line:#e6eaef;--bg:#eef1f5;--card:#fff;--accent:#2e5496;--accent2:#1f3864;--accentsoft:#eaf0fa;--good:#2e8b57;--warn:#c0392b;--tipbg:#1f2937}
+  *{box-sizing:border-box} html,body{margin:0;padding:0}
+  body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.55;-webkit-font-smoothing:antialiased}
+  .topbar{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 1px 3px rgba(20,40,70,.05)}
+  .topbar .inner{max-width:780px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:14px}
+  .brand{font-weight:800;color:var(--accent2);font-size:15px;white-space:nowrap}
+  .brand .tag{font-size:10px;font-weight:700;color:#fff;background:var(--accent);border-radius:4px;padding:1px 6px;margin-left:6px;vertical-align:middle;letter-spacing:.06em}
+  .grow{flex:1}
+  .switch{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--muted);cursor:pointer;user-select:none}
+  .switch input{display:none}
+  .track{width:38px;height:21px;background:#cdd6e0;border-radius:999px;position:relative;transition:.15s}
+  .track::after{content:"";position:absolute;top:2px;left:2px;width:17px;height:17px;background:#fff;border-radius:50%;transition:.15s;box-shadow:0 1px 2px rgba(0,0,0,.25)}
+  .switch input:checked + .track{background:var(--accent)}
+  .switch input:checked + .track::after{transform:translateX(17px)}
+  .progress{height:4px;background:#e6eaef}
+  .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),#4d79b8);transition:width .25s}
+  .wrap{max-width:780px;margin:0 auto;padding:28px 20px 120px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px 26px 22px;box-shadow:0 2px 10px rgba(20,40,70,.05);animation:rise .25s ease}
+  @keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .chip{display:inline-block;font-size:11px;font-weight:700;color:var(--accent);background:var(--accentsoft);border-radius:6px;padding:3px 9px;letter-spacing:.03em;margin-bottom:14px}
+  .qhead{display:flex;align-items:flex-start;gap:8px}
+  .q{font-size:19px;font-weight:650;color:#1b2733;margin:0}
+  .info{flex:none;margin-top:3px;width:20px;height:20px;border-radius:50%;border:1.5px solid var(--accent);color:var(--accent);font-size:12px;font-weight:800;line-height:17px;text-align:center;cursor:help;background:#fff;user-select:none;transition:.12s}
+  .info:hover{background:var(--accent);color:#fff}
+  .opts{margin-top:18px;display:flex;flex-direction:column;gap:10px}
+  .opt{display:flex;align-items:center;gap:12px;border:1.5px solid var(--line);border-radius:11px;padding:13px 15px;cursor:pointer;transition:.12s;background:#fff;font-size:15px}
+  .opt:hover{border-color:#b9c7da;background:#fafbfd}
+  .opt.sel{border-color:var(--accent);background:var(--accentsoft);box-shadow:inset 0 0 0 1px var(--accent)}
+  .opt .dot{flex:none;width:18px;height:18px;border-radius:50%;border:2px solid #b9c7da;transition:.12s}
+  .opt.sel .dot{border-color:var(--accent);background:radial-gradient(circle at center,var(--accent) 0 6px,#fff 7px)}
+  .opt .box{flex:none;width:18px;height:18px;border-radius:5px;border:2px solid #b9c7da}
+  .opt.sel .box{border-color:var(--accent);background:var(--accent)}
+  .opt.sq{border-style:dashed;color:var(--muted);justify-content:center}
+  .likert{display:flex;gap:6px;margin-top:18px;flex-wrap:wrap}
+  .likert .lk{flex:1;min-width:80px;text-align:center;border:1.5px solid var(--line);border-radius:10px;padding:11px 6px;cursor:pointer;font-size:12.5px;transition:.12s;background:#fff;line-height:1.25}
+  .likert .lk:hover{border-color:#b9c7da;background:#fafbfd}
+  .likert .lk.sel{border-color:var(--accent);background:var(--accent);color:#fff;font-weight:600}
+  .matrix{margin-top:16px;overflow-x:auto}
+  table.mx{border-collapse:collapse;width:100%;font-size:13px}
+  table.mx th{font-weight:600;color:var(--muted);padding:7px 6px;text-align:center;font-size:11px}
+  table.mx td{padding:7px 6px;text-align:center;border-top:1px solid var(--line)}
+  table.mx td.rl{text-align:left;font-weight:500;color:#283b4a;max-width:300px}
+  .mxr{width:20px;height:20px;border-radius:50%;border:2px solid #b9c7da;display:inline-block;cursor:pointer;transition:.1s}
+  .mxr.sel{border-color:var(--accent);background:radial-gradient(circle at center,var(--accent) 0 6px,#fff 7px)}
+  .dctx{font-size:13.5px;color:var(--muted);margin:6px 0 16px;background:#f7f9fc;border:1px solid var(--line);border-radius:10px;padding:11px 14px}
+  .dce{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .dopt{border:1.5px solid var(--line);border-radius:13px;overflow:hidden;cursor:pointer;transition:.12s;background:#fff}
+  .dopt:hover{border-color:#b9c7da}
+  .dopt.sel{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent)}
+  .dopt h4{margin:0;padding:11px 14px;background:#f4f7fb;font-size:13.5px;border-bottom:1px solid var(--line);color:var(--accent2)}
+  .dopt.sel h4{background:var(--accent);color:#fff}
+  .dopt dl{margin:0;padding:12px 14px;font-size:13px}
+  .dopt dt{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.03em;margin-top:8px}
+  .dopt dt:first-child{margin-top:0}
+  .dopt dd{margin:1px 0 0;font-weight:600;color:#22303d}
+  .dopt .risk{color:var(--warn)}
+  .sq-row{margin-top:12px}
+  select,input[type=number],input[type=text]{font:inherit;padding:11px 13px;border:1.5px solid var(--line);border-radius:10px;width:100%;max-width:360px;margin-top:16px;background:#fff}
+  .rat{margin-top:18px;border-left:4px solid var(--accent);background:#f6f9ff;border-radius:0 10px 10px 0;padding:12px 16px;font-size:13px;color:#33455a;display:none}
+  body.notes .rat{display:block}
+  .rat b{color:var(--accent2)} .rat ul{margin:6px 0 0;padding-left:18px} .rat li{margin:3px 0}
+  .term{border-bottom:1.5px dotted var(--accent);cursor:help}
+  .lead{font-size:15px;color:#33455a}
+  .infobox{margin-top:6px;background:#fffaf0;border:1px solid #f0dcae;border-radius:11px;padding:14px 16px;font-size:14.5px;color:#4a3c1c}
+  .nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);z-index:30}
+  .nav .inner{max-width:780px;margin:0 auto;padding:13px 20px;display:flex;align-items:center;gap:12px}
+  .btn{font:inherit;font-weight:650;border-radius:10px;padding:11px 22px;cursor:pointer;border:1.5px solid var(--accent);transition:.12s}
+  .btn.primary{background:var(--accent);color:#fff} .btn.primary:hover{background:var(--accent2)}
+  .btn.ghost{background:#fff;color:var(--accent)} .btn.ghost:hover{background:var(--accentsoft)}
+  .btn:disabled{opacity:.4;cursor:not-allowed}
+  .stepinfo{flex:1;text-align:center;color:var(--muted);font-size:12.5px}
+  #tip{position:fixed;z-index:100;max-width:350px;background:var(--tipbg);color:#f1f5f9;font-size:13px;line-height:1.5;border-radius:10px;padding:12px 14px;box-shadow:0 8px 28px rgba(0,0,0,.28);opacity:0;pointer-events:none;transition:opacity .12s}
+  #tip.on{opacity:1;pointer-events:auto}
+  #tip b{color:#fff} #tip ul{margin:7px 0 0;padding-left:17px} #tip li{margin:3px 0;color:#d6deea}
+  #tip .pin{font-size:11px;color:#9fb0c6;margin-top:8px;display:block}
+  .datatable{width:100%;border-collapse:collapse;margin-top:14px;font-size:13px}
+  .datatable th{text-align:left;background:#f4f7fb;padding:8px 10px;border-bottom:2px solid var(--line);color:var(--accent2);font-size:12px}
+  .datatable td{padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  .datatable td.var{font-family:ui-monospace,Menlo,monospace;color:var(--accent);white-space:nowrap}
+  .datatable td.val{font-weight:600} .datatable td.note{color:var(--muted);font-size:12px}
+  .derived{margin-top:18px;background:#f6f9ff;border:1px solid #d7e3f6;border-radius:11px;padding:14px 16px;font-size:13px}
+  .derived h4{margin:0 0 6px;color:var(--accent2);font-size:14px}
+  pre.json{background:#0f172a;color:#cbd5e1;border-radius:10px;padding:14px;overflow:auto;font-size:12px;margin-top:14px;max-height:260px}
+  .hintbar{max-width:780px;margin:10px auto 0;padding:0 20px;color:var(--muted);font-size:12.5px;text-align:center}
+  @media(max-width:640px){.dce{grid-template-columns:1fr}.card{padding:20px 16px}.q{font-size:17px}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="inner">
+    <div class="brand">SARA &middot; United States 2026 <span class="tag">FULL PROTOTYPE</span></div>
+    <div class="grow"></div>
+    <label class="switch" title="Reveal the design rationale under every question">
+      <input type="checkbox" id="notesToggle"/><span class="track"></span><span>Design notes</span>
+    </label>
+  </div>
+  <div class="progress"><div class="bar" id="bar"></div></div>
+</div>
+<div class="hintbar" id="hintbar">Hover the <b>&#9432;</b> on any question for the design rationale. Toggle &ldquo;Design notes&rdquo; to pin them all.</div>
+<div class="wrap"><div id="screen"></div></div>
+<div class="nav"><div class="inner">
+  <button class="btn ghost" id="back">Back</button>
+  <div class="stepinfo" id="stepinfo"></div>
+  <button class="btn primary" id="next">Next</button>
+</div></div>
+<div id="tip"></div>
+
+<script>
+const DEF={
+  "advanced AI":"AI systems substantially more capable than today's, approaching or exceeding human ability across most cognitive tasks.",
+  "catastrophe":"In this survey, an AI-caused event that kills 100,000 or more people. The severity is held fixed; how tolerance changes with the death toll is measured separately.",
+  "loss of control":"A scenario in which an advanced AI system acts against human intentions in ways people cannot stop or reverse.",
+  "societal risk":"The chance an event happens somewhere in the population, not your personal chance of being harmed.",
+  "tolerable":"Acceptable only if the risk is actively managed and reduced where reasonably practicable — a regulator's term, distinct from 'acceptable'."
+};
+const TOL=["Acceptable","Tolerable","Intolerable","Unacceptable / should be illegal"];
+const AGREE=["Strongly agree","Agree","Neither","Disagree","Strongly disagree"];
+const SUPPORT=["Strongly support","Somewhat support","Somewhat oppose","Strongly oppose","Don't know"];
+const WORRY=["Very worried","Fairly worried","Not very worried","Not at all worried","Don't know"];
+const TRUST=["A great deal","A fair amount","Not very much","Not at all","Don't know"];
+
+const SURVEY=[
+/* ---------- INTRO (topic-neutral on purpose) ---------- */
+{kind:"intro",chip:"Welcome",q:"A short survey about technology and your community",
+ lead:"This survey asks for your views on technology, infrastructure, and public policy. There are no right answers; we want your honest opinion. It takes about 15 minutes.<br><br>Some words have a dotted underline &mdash; hover them for a plain definition. Researchers can switch on &ldquo;Design notes&rdquo; (top right) to see why each question is built the way it is.",
+ why:"<b>The intro is deliberately generic and does not mention AI.</b> The first few questions test how people react to infrastructure projects; if we said up front that this is an AI survey, the 'AI' label would already be salient and the reverse-halo test (below) would be contaminated.",
+ cons:["Standard definitions (catastrophe, loss of control, societal risk) are shown on hover and on first use, per the Instrument preface."]},
+
+/* ---------- MODULE 8 ENV — MOVED FIRST, UNPRIMED ---------- */
+{kind:"single",chip:"Community & infrastructure",varname:"env_label",
+ q:"A company wants to buy land, electricity, and water near you to run a large facility. It would create few local jobs, mainly serve customers elsewhere, and pay about $2,800 per resident a year in local taxes. How acceptable is this if it is an <b>AI data centre</b>?",
+ options:["Completely acceptable","Mostly acceptable","Neither","Mostly unacceptable","Completely unacceptable"],
+ why:"<b>The reverse-halo (AI-label) experiment, and the reason these questions now come first.</b> The identical facility is shown to others as a manufacturing plant, a semiconductor factory, or a bottling plant. The gap between 'AI data centre' and the generic versions, holding the facts constant, is the AI-specific penalty.",
+ cons:["Moved from Module 8 to question 1: by question 8 the survey was obviously about AI, which contaminates the contrast. It must run before 'AI' is salient.","Label is randomised across respondents; the facts (jobs, beneficiaries, taxes) are held constant so only the label varies."]},
+
+{kind:"single",chip:"Community & infrastructure",varname:"env_reversal",
+ q:"Suppose your area already received about $2,800 per resident a year from a local facility like that. Would giving up that money &mdash; to avoid its land, water, and energy use &mdash; be worth it?",
+ options:["Definitely worth giving up the money","Probably worth it","Hard to say","Probably not worth it","Definitely not worth it"],
+ why:"<b>Status-quo-bias reversal (after Masley).</b> The same tradeoff, with the default flipped: here the money is the thing you would give up. Comparing this with the previous answer estimates how much opposition is status-quo bias rather than a considered judgement.",
+ cons:["Masley's empirical offset claims are contested, so we test the framing effect on preferences, not whether the offsets are real."]},
+
+{kind:"select",chip:"Community & infrastructure",varname:"env_forgo",
+ q:"What is the most tax revenue per resident, per year, your area should be willing to give up to avoid such a facility's land, water, and energy use?",
+ options:["$0","$1–50","$51–150","$151–500","$501–1,500","More than $1,500","Don't know"],
+ why:"<b>A continuous version of the trade.</b> If the amount people would give up is below what the facility actually pays (~$2,800), they have revealed, on their own terms, that it is worth it.",
+ cons:["Compared against the real per-resident tax figure during analysis."]},
+
+/* ---------- (AI now on the table) ENV ATTITUDE ---------- */
+{kind:"likert",chip:"Module 8 · Environment",varname:"env_attitude",scale:WORRY,
+ q:"How worried, if at all, are you about <span class='term' data-d='advanced AI'>advanced AI</span>'s impact on the environment, including its energy and water use?",
+ why:"<b>Baseline environmental concern.</b> Lets us relate the framing effects above to people's underlying worry, and is a natural bridge into the AI-focused part of the survey.",
+ cons:["Placed after the label experiment so it does not prime 'AI' beforehand."]},
+
+/* ---------- MODULE 1 ATTITUDES ---------- */
+{kind:"single",chip:"Module 1 · Attitudes",varname:"m1_goodharm",
+ q:"Overall, do you think advanced AI will do more good or more harm?",
+ options:["More good than harm","About equal","More harm than good","Don't know"],
+ why:"<b>A simple, robust attitude item (Cluster A).</b> Carried from SARA core for trend comparison; reported directly.",
+ cons:["Cluster A (attitudes) items are descriptive and robust; the harder risk-tolerance items are Cluster B and treated more cautiously."]},
+
+{kind:"likert",chip:"Module 1 · Attitudes",varname:"m1_worry_control",scale:WORRY,
+ q:"How worried, if at all, are you that humans will lose control of AI?",
+ why:"<b>Loss-of-control concern.</b> A headline trend item, comparable to the UK CDEI / DSIT surveys.",
+ cons:["'Loss of control' is defined on hover so respondents share a meaning (Gradient's point about key terms)."]},
+
+{kind:"likert",chip:"Module 1 · Attitudes",varname:"m1_trust_companies",scale:TRUST,
+ q:"To what extent do you trust technology companies to make sure the AI they build is safe?",
+ why:"<b>Trust in industry self-regulation.</b> Feeds the co-regulation questions later and is one of the most stable cross-country findings.",
+ cons:["Trust scale (a great deal &rarr; not at all), not agree/disagree, to match prior international items."]},
+
+{kind:"likert",chip:"Module 1 · Attitudes",varname:"m1_extinction_priority",scale:AGREE,
+ q:"How much do you agree? &ldquo;Reducing the risk of human extinction from AI should be a global priority, alongside risks like pandemics and nuclear war.&rdquo;",
+ why:"<b>The CAIS statement, repeated for a trend.</b> SARA 2024 found strong agreement; repeating it measures movement.",
+ cons:["Kept verbatim from prior waves so the year-on-year comparison is clean."]},
+
+{kind:"single",chip:"Module 1 · Attitudes",varname:"m1_reg_toofar",
+ q:"Thinking about AI in the US, are you more concerned that the government will&hellip;",
+ options:["Go too far regulating it","Not go far enough regulating it","Not sure"],
+ why:"<b>Direction of regulatory concern.</b> A neutral framing that lets both 'overreach' and 'underreach' worries surface.",
+ cons:["Balanced wording so neither side is the easy pick."]},
+
+{kind:"likert",chip:"Module 1 · Attitudes",varname:"m1_treaty_ban",scale:SUPPORT,
+ q:"Would you support or oppose an international treaty to ban the development of any 'smarter-than-human' AI?",
+ why:"<b>Appetite for strong international action (Cluster A).</b> Comparable to YouGov / ControlAI items.",
+ cons:["A neutrally worded twin of the superintelligence statement later in the survey; the two let us check wording effects."]},
+
+/* ---------- INFORMATION-PROVISION EXPERIMENT ---------- */
+{kind:"info",chip:"Before the next questions",
+ q:"A note before the next few questions",
+ infotext:"Some experts worry that as AI systems become more capable, they could act in ways their developers did not intend and cannot easily stop &mdash; what researchers call <span class='term' data-d='loss of control'>loss of control</span>. Others argue these concerns are speculative and that real harms are narrower and more manageable. The next questions ask what level of risk you find acceptable.",
+ why:"<b>The information-provision experiment.</b> A random half of respondents see this short, balanced explanation before the tolerance questions; the other half do not. Comparing them shows whether an informed judgement differs from a snap one.",
+ cons:["Gradient and the citizens'-assembly idea: people may lack the concepts to answer well. Rather than assume the uninformed answer is considered, we measure the difference and report the informed estimate where they diverge.","Includes a one-line counter-consideration so it is not a nudge."]},
+
+/* ---------- MODULE 2 STATUS QUO ---------- */
+{kind:"likert",chip:"Module 2 · Status quo",varname:"m2_tol_anchor",scale:TOL,
+ q:"Dario Amodei, CEO of the AI company Anthropic, has estimated roughly a <b>25% chance</b> that AI goes &ldquo;really, really badly.&rdquo; A risk at that level is&hellip;",
+ why:"<b>Recognition, not generation.</b> People can't reliably produce a probability, but they can judge one we hand them. The judgement is about a number a developer volunteered, so it doesn't depend on the public's numeracy.",
+ cons:["The anchor is randomised across a balanced pool from Yann LeCun (&asymp;0%) to Amodei (25%), so we are not curating only alarming numbers.","Reported by source, never as a single average that hides the spread."]},
+
+{kind:"likert",chip:"Module 2 · Status quo",varname:"m2_pace",scale:TOL,
+ q:"Setting catastrophic risks aside, how tolerable is the current pace at which AI is changing work, information, and daily life?",
+ why:"<b>Non-catastrophic disruption.</b> Captures people who dislike AI's effects on society even if they are unworried about catastrophe (Peter Barnett's point).",
+ cons:["Uses the same tolerability scale so it sits alongside the catastrophic items."]},
+
+{kind:"single",chip:"Module 2 · Status quo",varname:"m2_frame_applicable",
+ q:"Some technologies, like flying or nuclear power, are held to a strict number for how risky they're allowed to be. Which is closer to your view about <span class='term' data-d='advanced AI'>advanced AI</span>?",
+ options:["You can put a number on its risk and hold it to a safety limit too","Its risk is too uncertain to put a useful number on","Unsure"],
+ why:"<b>Frame-applicability check.</b> Later questions assume risk can be quantified. This measures that premise instead of assuming it; results are reported separately for people who reject the frame.",
+ cons:["Both options are matched for length and reading level, with the aviation/nuclear example in the stem, so neither answer is easier to pick."]},
+
+/* ---------- MODULE 3 EXPECTED STANDARD ---------- */
+{kind:"single",chip:"Module 3 · Expected standard",varname:"m3a_i_standards",
+ q:"Compared with the safety <b>regulations</b> on nuclear power, regulation of advanced AI should be&hellip;",
+ options:["Much stricter","Somewhat stricter","About the same","Somewhat less strict","Much less strict","Cannot compare these technologies"],
+ why:"<b>Relative anchoring.</b> Instead of asking for a number, we ask how AI should compare with a technology people already live with; the named anchor carries a known risk level, so the answer implies a band.",
+ cons:["The comparator (aviation / nuclear / medicines / cars / food) is randomised across respondents."]},
+
+{kind:"single",chip:"Module 3 · Expected standard",varname:"m3a_ii_safety",
+ q:"And compared with how safe nuclear power is <b>in practice</b>, advanced AI systems themselves should be&hellip;",
+ options:["Much safer","Somewhat safer","About as safe","Somewhat less safe","Much less safe","Cannot compare these technologies"],
+ why:"<b>Stricter standards and safer systems are different questions.</b> Splitting them fixes the Figure-11 category error Gradient identified.",
+ cons:["Same comparator as the previous item, so the two can be compared within person."]},
+
+{kind:"single",chip:"Module 3 · Sanity anchor",varname:"m3_sanity",
+ q:"Climbing Mount Everest kills roughly <b>1 in 100</b> people who attempt the summit. Compared with how safe that is, advanced AI systems should be&hellip;",
+ options:["Much safer","Somewhat safer","About as safe","Somewhat less safe","Much less safe","Cannot compare these technologies"],
+ why:"<b>A deliberately easy, high-risk anchor &mdash; a sanity check.</b> It sits opposite the very-safe comparators (aviation is about 1 in 10,000,000): almost everyone should say AI must be far safer than a 1-in-100-death activity. Anyone choosing 'as safe' or 'less safe' is probably not engaging with the scale, which both flags them and tests whether people can place AI across the full risk range.",
+ cons:["Randomised across a few high-risk voluntary activities to span the dangerous end: bungee jumping (~1 in 500,000 per jump), BASE jumping (~1 in 2,300), climbing Mount Everest (~1 in 100). Death rates are approximate and to be verified before fielding.","Pairs with the very-safe comparators in 3a; together they bracket the scale, which is the strongest test of scope sensitivity in the comparative items."]},
+
+{kind:"single",chip:"Module 3 · Quality check",varname:"m3_attention",
+ q:"To check you're reading carefully, please select &ldquo;Somewhat less strict than nuclear power&rdquo; below.",
+ options:["Much stricter than nuclear power","Somewhat stricter than nuclear power","About the same","Somewhat less strict than nuclear power","Much less strict than nuclear power"],
+ why:"<b>Attention check, embedded among the equivalence items.</b> It mimics the comparative-standard format, so it only blends in (and works) when it sits next to those items &mdash; which is why it now lives here rather than in Module 7.",
+ cons:["One of a pair; its twin instructs 'more strict', so a pattern-clicker fails at least one."]},
+
+/* ---------- MODULE 4 QUANT CORE ---------- */
+{kind:"dce",chip:"Module 4 · The public number (DCE)",varname:"dce_t1",
+ q:"Here are two possible futures for advanced AI in the US, plus the option to keep things as they are. Which do you prefer? (1 of about 10)",
+ context:"In each future, a <span class='term' data-d='catastrophe'>catastrophe</span> means an AI-caused event that kills 100,000 or more people.",
+ aoptions:[
+  {label:"Future A",attrs:{"Annual chance of a catastrophe":"1 in 1,000","What AI delivers":"Transformative — cures diseases, helps climate","Global position":"The US leads the world","Cost to your household / year":"$400"}},
+  {label:"Future B",attrs:{"Annual chance of a catastrophe":"1 in 100,000","What AI delivers":"Modest — better everyday tools","Global position":"Other countries lead","Cost to your household / year":"$0"}}],
+ sq:"Neither — keep AI roughly as it is today",
+ why:"<b>The primary instrument for the public number.</b> People can't state an acceptable probability cold, but they can choose between concrete options. Across ~10 of these, a model recovers the level of catastrophic risk people accept and what they'll pay for safety.",
+ cons:["Attributes are exactly the tradeoff Dean Ball names: safety (risk), utility (benefit), competition (global position), plus cost for willingness-to-pay.","Catastrophe severity is fixed here; how tolerance scales with deaths is measured in the grid below."]},
+
+{kind:"dce",chip:"Module 4 · The public number (DCE)",varname:"dce_t2",
+ q:"And this pair? (2 of about 10)",
+ context:"Same setup — a <span class='term' data-d='catastrophe'>catastrophe</span> is an AI-caused event killing 100,000+ people.",
+ aoptions:[
+  {label:"Future A",attrs:{"Annual chance of a catastrophe":"1 in 100","What AI delivers":"Major — strong growth, new industries","Global position":"The US keeps pace","Cost to your household / year":"$0"}},
+  {label:"Future B",attrs:{"Annual chance of a catastrophe":"1 in 1,000,000","What AI delivers":"Modest — better everyday tools","Global position":"The US keeps pace","Cost to your household / year":"$1,000"}}],
+ sq:"Neither — keep AI roughly as it is today",
+ why:"<b>Repetition is the point.</b> Each task varies the attributes; the pattern of choices across all tasks is what identifies the tradeoffs, not any single answer.",
+ cons:["The full design is D-optimal (cbcTools); each respondent sees a balanced subset."]},
+
+{kind:"single",chip:"Module 4 · Direct check",varname:"m4b_reasonable",
+ q:"What is the highest annual chance of an AI disaster killing 100,000+ people that you would consider <b>reasonable</b>? (Any higher would be unreasonable.)",
+ options:["1 in 100","1 in 1,000","1 in 10,000","1 in 100,000","1 in 1,000,000","1 in 10,000,000 or less","Zero risk only is reasonable","Too speculative to answer"],
+ why:"<b>A direct single-shot elicitation, kept as a cross-check.</b> The RAISE Act bars 'unreasonable' risk but never defines it; public expectation is a legitimate input.",
+ cons:["Secondary to the DCE; reported as validation, not the headline."]},
+
+{kind:"matrix",chip:"Module 4 · Scope (within-person)",varname:"m4c",scale:TOL,
+ q:"Think about an AI disaster that kills <b>100,000 people</b> (<span class='term' data-d='societal risk'>societal risk</span>, not your personal risk). For each annual chance, how tolerable is it?",
+ rows:[{k:"p1e3",l:"1 in 1,000 per year"},{k:"p1e5",l:"1 in 100,000 per year"},{k:"p1e7",l:"1 in 10,000,000 per year"}],
+ why:"<b>Benjamin Reid's scope instrument and the DCE's cross-check.</b> Each person judges several probabilities, so we can see whether their tolerance actually falls as risk rises &mdash; and whether more numerate people show that more.",
+ cons:["Rows are two orders of magnitude apart, so a scope-insensitive person who rates them all the same is clearly distinguishable.","Within-subjects on purpose; natural frequencies, no percentages; order randomised with a between-subjects cross-check for demand effects."]},
+
+/* ---------- MODULE 5 TRADEOFFS ---------- */
+{kind:"select",chip:"Module 5 · Tradeoffs",varname:"m5_wtp",
+ q:"What is the most you would pay each year, through taxes or higher prices, to cut the chance of an AI <span class='term' data-d='catastrophe'>catastrophe</span> from 1 in 20 to 1 in 100 over the next 30 years?",
+ options:["$0","$1–10","$10–100","$100–1,000","$1,000–10,000","More than $10,000","Don't know"],
+ why:"<b>A costed tradeoff on a log scale.</b> Each band is about ten times the last, because willingness-to-pay is roughly log-normal. The continuous estimate comes from the DCE; this is a cross-check.",
+ cons:["Log bands, not a free-text box: open dollars invite protest zeros, round-number anchoring, and outliers that swamp the mean."]},
+
+{kind:"single",chip:"Module 5 · Tradeoffs",varname:"m5b_delay_uncond",
+ q:"Putting risk to one side, would you support or oppose <b>delaying</b> the deployment of advanced AI by several years?",
+ options:["Strongly support","Somewhat support","Neither","Somewhat oppose","Strongly oppose"],
+ why:"<b>Unconditional support for delay, measured directly.</b> Gradient caught the 2025 report turning a conditional answer into 'X% support waiting 10+ years'. This is the unconditional version, reported on its own.",
+ cons:["Paired with the conditional version next; the two are never merged."]},
+
+{kind:"single",chip:"Module 5 · Tradeoffs",varname:"m5b_delay_cond",
+ q:"<b>If</b> delaying advanced AI by 10 years would cut the chance of a <span class='term' data-d='catastrophe'>catastrophe</span> from 5% to 1%, that delay would be&hellip;",
+ options:["Clearly worthwhile","Probably worthwhile","Difficult to judge","Probably not worthwhile","Clearly not worthwhile"],
+ why:"<b>Conditional, and reported as conditional.</b> Any figure carries its condition verbatim, never collapsed into unconditional support.",
+ cons:["The strict conditional-reporting rule is pre-registered."]},
+
+{kind:"single",chip:"Module 5 · Tradeoffs",varname:"m5_race",
+ q:"<b>If</b> slowing US AI development let other countries catch up, but cut the chance of a <span class='term' data-d='catastrophe'>catastrophe</span> from 5% to 1%, that slowdown would be&hellip;",
+ options:["Clearly worthwhile","Probably worthwhile","Difficult to judge","Probably not worthwhile","Clearly not worthwhile"],
+ why:"<b>The competition tradeoff as a direct item.</b> Mirrors the 'global position' attribute in the DCE and Ball's question about utility, safety, and competition.",
+ cons:["Phrased as a conditional, like the delay item."]},
+
+/* mitigations & priority-risks batteries moved to the Dumpster (protocol section 6), per MN, 17 Jun 2026 */
+
+/* ---------- MODULE 6 POLICY ---------- */
+{kind:"single",chip:"Module 6 · Policy",varname:"m6_certify",
+ q:"Before deployment, who should certify that an AI system is safe?",
+ options:["The companies that build them","Government agencies","Independent third-party auditors","No certification needed; the market will sort it out"],
+ why:"<b>A decision-relevant policy lever (Cluster A).</b> Distinguishes appetite for self-, government, and third-party oversight.",
+ cons:["Stands on its own regardless of how the catastrophe items land."]},
+
+{kind:"single",chip:"Module 6 · Policy",varname:"m6_faa",
+ q:"Some have proposed regulating frontier AI like the FAA regulates aircraft: models would have to pass independent safety testing before release, and the government could block or reverse a release that fails to meet safety standards. Do you support or oppose this?",
+ options:["Strongly support","Somewhat support","Somewhat oppose","Strongly oppose","Unsure"],
+ why:"<b>The FAA model: binding pre-release testing.</b> This is Anthropic's stated proposal &mdash; the cars/airplanes/drugs analogy (powerful technologies essential to the economy but able to kill many people if built or run poorly). It goes beyond the June 2026 White House executive order, which is security-focused and explicitly voluntary (it disavows any mandatory licensing or pre-clearance of new models).",
+ cons:["Attributed to Anthropic only in this rationale; the participant sees a neutral 'some have proposed', not a branded position, to avoid biasing the answer.","Tests the single most consequential mitigation directly, now that the mitigations battery has moved to the Dumpster."]},
+
+{kind:"single",chip:"Module 6 · Policy",varname:"m6_fedstate",
+ q:"Should the US have one national AI policy, or let each state set its own rules?",
+ options:["Strongly prefer one federal policy","Somewhat prefer federal","Somewhat prefer state-by-state","Strongly prefer state-by-state"],
+ why:"<b>Federal pre-emption vs a state patchwork.</b> Central to whether the RAISE Act can model federal law; a US-specific fragmentation question.",
+ cons:["Four-point forced choice with no midpoint to avoid fence-sitting on a binary policy question."]},
+
+{kind:"single",chip:"Module 6 · Policy",varname:"m6_killswitch",
+ q:"Should advanced AI be legally required to have an emergency &ldquo;kill switch&rdquo; to shut it down if it behaves dangerously?",
+ options:["Yes, for all AI systems","Yes, but only for high-risk systems","No, voluntary guidelines are enough","Unsure"],
+ why:"<b>Fills a gap in current bills.</b> Neither the RAISE Act nor SB 53 addresses post-deployment intervention.",
+ cons:[]},
+
+{kind:"single",chip:"Module 6 · Policy",varname:"m6_liability",
+ q:"If an AI system causes a <span class='term' data-d='catastrophe'>catastrophe</span>, under what conditions should the company that built it be financially liable?",
+ options:["Fully liable, even if it followed every rule (strict liability)","Liable only if it failed to take reasonable care (negligence / duty of care)","Liable only if it broke a specific written rule","Not liable if it followed all safety standards","Unsure"],
+ why:"<b>Liability rules, with a real middle option.</b> Tests appetite for proposals like the RAISE Act and SB 53.",
+ cons:["The negligence / duty-of-care middle was added so support for strict liability isn't overstated (Ball's point)."]},
+
+/* ---------- MODULE 7 VALIDATION ---------- */
+{kind:"likert",chip:"Module 7 · Validation",varname:"m7_si_ban",scale:AGREE,
+ q:"How much do you agree? &ldquo;I support a ban on developing smarter-than-human AI until there is broad scientific consensus it can be done safely, and strong public buy-in.&rdquo;",
+ why:"<b>We test the wording, not just the view.</b> This is a real campaign statement whose conditions inflate agreement. Half of respondents instead see a symmetric permission-framed version; the gap is the wording effect.",
+ cons:["A random third of respondents also saw a competitiveness message, and a third a safety message, before the tolerance block, so we can show how stable these views are."]},
+
+/* ---------- MODULE 9 COVARIATES + DEMOGRAPHICS ---------- */
+{kind:"number",chip:"About you",varname:"m9_crt_pig",
+ q:"A quick puzzle: a man buys a pig for $60, sells it for $70, buys it back for $80, and sells it again for $90. How much money has he made? ($)",
+ why:"<b>Cognitive Reflection Test (one of several, Benjamin Reid's items).</b> Measures whether someone overrides an intuitive-but-wrong answer. A covariate, never used to exclude people.",
+ cons:["With the numeracy item, this is the moderator in the scope-sensitivity analysis: do more reflective people track risk magnitude more closely?"]},
+
+{kind:"number",chip:"About you",varname:"m9_numeracy",
+ q:"Imagine rolling a fair six-sided die 1,000 times. Out of 1,000 rolls, how many times do you think it would land on an even number (2, 4, or 6)?",
+ why:"<b>Risk-literacy / numeracy (Berlin-style item).</b> Used to report results for high- vs low-numeracy respondents and to test the scope-sensitivity interaction.",
+ cons:["Retained as a moderator, not an exclusion criterion."]},
+
+{kind:"single",chip:"About you",varname:"m9_politics",
+ q:"In general, how would you describe your political views?",
+ options:["Very liberal","Liberal","Slightly liberal","Moderate","Slightly conservative","Conservative","Very conservative"],
+ why:"<b>Standard covariate (Jost, 2006).</b> Lets us report across the political spectrum, which matters for a US sample and for federal-vs-state questions.",
+ cons:["Reported as a breakdown, not used to weight the headline."]},
+
+{kind:"single",chip:"About you",varname:"m9_ai_use",
+ q:"In your personal life, work, or studies, how often do you intentionally use AI tools, including chatbots like ChatGPT?",
+ options:["Never","A few times a year","Every few months","Monthly","Weekly","Daily"],
+ why:"<b>AI familiarity.</b> A validated proxy for hands-on experience (Gillespie et al., 2025).",
+ cons:["Frequency of use, not self-rated expertise, which people misjudge."]},
+
+{kind:"select",chip:"About you",varname:"demo_age",
+ q:"What is your age?",
+ options:["18–24","25–34","35–44","45–54","55–64","65–74","75 or older","Prefer not to say"],
+ why:"<b>Demographics for weighting.</b> Age, with the items that follow, feeds the MRP model that produces nationally- and state-representative estimates.",
+ cons:["Bands match the US Census / ACS adult age groups (table B01001, collapsed), so they post-stratify cleanly to population controls. Verify against the exact ACS pull before fielding."]},
+
+{kind:"single",chip:"About you",varname:"demo_gender",
+ q:"What is your gender?",
+ options:["Male","Female","In another way / non-binary","Prefer not to say"],
+ why:"<b>Weighting variable.</b> Part of the post-stratification frame.",
+ cons:["Post-stratification uses the Census ACS sex controls (Male / Female); the additional category is kept descriptively rather than dropped, and allocated for weighting. Matches how the Census reports sex while staying inclusive."]},
+
+{kind:"single",chip:"About you",varname:"demo_education",
+ q:"What is the highest level of education you have completed?",
+ options:["Less than high school diploma","High school graduate (or equivalent)","Some college, no degree","Associate degree","Bachelor's degree","Graduate or professional degree","Prefer not to say"],
+ why:"<b>Weighting variable.</b> Education correlates with both numeracy and AI attitudes, so it matters for representative estimates.",
+ cons:["Categories match the Census / ACS educational-attainment table (B15003, collapsed), so they post-stratify to population controls."]},
+
+{kind:"select",chip:"About you",varname:"demo_state",
+ q:"Which state do you live in?",
+ options:["Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","District of Columbia","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming","Prefer not to say"],
+ why:"<b>State is essential for the MRP state-level estimates.</b> All 50 states plus the District of Columbia (the earlier 6-state stub was a placeholder).",
+ cons:["No state map is published unless the effective sample per state clears a pre-registered threshold."]},
+
+{kind:"select",chip:"About you",varname:"demo_income",
+ q:"What was your total household income last year, before taxes?",
+ options:["Under $15,000","$15,000–$24,999","$25,000–$34,999","$35,000–$49,999","$50,000–$74,999","$75,000–$99,999","$100,000–$149,999","$150,000–$199,999","$200,000 or more","Prefer not to say"],
+ why:"<b>Weighting variable, and a control for willingness-to-pay.</b> WTP scales with income, so we report it income-adjusted.",
+ cons:["Brackets match the Census / ACS household-income groupings (table B19001), so they post-stratify to population controls."]},
+
+/* ---------- END ---------- */
+{kind:"end",chip:"Done",q:"Thank you — that's the survey",
+ why:"<b>The screen below is for researchers, not participants.</b> It shows the row of data your answers produce, so you can see exactly what the instrument captures before fielding."}
+];
+
+/* ============================ ENGINE ============================ */
+let idx=0; const answers={};
+const screen=document.getElementById('screen'),bar=document.getElementById('bar'),tip=document.getElementById('tip'),stepinfo=document.getElementById('stepinfo');
+function infoBtn(item){
+  if(!item.why) return "";
+  const cons=(item.cons||[]).map(c=>`<li>${c}</li>`).join("");
+  const html=`<b>Why this question is designed this way</b><br>${item.why}`+(cons?`<ul>${cons}</ul>`:"");
+  return `<span class="info" data-rich="${encodeURIComponent(html)}" tabindex="0">i</span>`;
+}
+function qcount(){ return SURVEY.filter(s=>s.kind!=='intro'&&s.kind!=='end'&&s.kind!=='info').length; }
+function render(){
+  const item=SURVEY[idx];
+  let h=`<div class="card"><span class="chip">${item.chip||""}</span>`;
+  h+=`<div class="qhead"><p class="q">${item.q}</p>${infoBtn(item)}</div>`;
+  if(item.kind==='intro') h+=`<p class="lead">${item.lead}</p>`;
+  if(item.kind==='info') h+=`<div class="infobox">${item.infotext}</div>`;
+  if(item.kind==='single'||item.kind==='multi'){
+    const multi=item.kind==='multi'; const cur=answers[item.varname];
+    h+=`<div class="opts">`+item.options.map((o,i)=>{
+      const on=multi?(Array.isArray(cur)&&cur.includes(i)):(cur===i);
+      return `<label class="opt ${on?'sel':''}" data-pick="${i}"><span class="${multi?'box':'dot'}"></span><span>${o}</span></label>`;
+    }).join("")+`</div>`;
+  }
+  if(item.kind==='likert'){
+    h+=`<div class="likert">`+item.scale.map((o,i)=>`<div class="lk ${answers[item.varname]===i?'sel':''}" data-pick="${i}">${o}</div>`).join("")+`</div>`;
+  }
+  if(item.kind==='matrix'){
+    h+=`<div class="matrix"><table class="mx"><tr><th></th>`+item.scale.map(s=>`<th>${s}</th>`).join("")+`</tr>`;
+    item.rows.forEach(r=>{ const key=item.varname+"__"+r.k;
+      h+=`<tr><td class="rl">${r.l}</td>`+item.scale.map((s,i)=>`<td><span class="mxr ${answers[key]===i?'sel':''}" data-mx="${key}" data-pick="${i}"></span></td>`).join("")+`</tr>`;});
+    h+=`</table></div>`;
+  }
+  if(item.kind==='dce'){
+    h+=`<div class="dctx">${item.context}</div><div class="dce">`;
+    item.aoptions.forEach((opt,i)=>{
+      const dl=Object.entries(opt.attrs).map(([k,v])=>`<dt>${k}</dt><dd class="${k.toLowerCase().includes('chance')?'risk':''}">${v}</dd>`).join("");
+      h+=`<div class="dopt ${answers[item.varname]===i?'sel':''}" data-pick="${i}"><h4>${opt.label}</h4><dl>${dl}</dl></div>`;
+    });
+    h+=`</div><div class="sq-row"><label class="opt sq ${answers[item.varname]===2?'sel':''}" data-pick="2"><span class="dot"></span><span>${item.sq}</span></label></div>`;
+  }
+  if(item.kind==='select'){
+    h+=`<select data-sel><option value="">Select&hellip;</option>`+item.options.map((o,i)=>`<option value="${i}" ${answers[item.varname]===i?'selected':''}>${o}</option>`).join("")+`</select>`;
+  }
+  if(item.kind==='number') h+=`<input type="number" data-num placeholder="Enter a number" value="${answers[item.varname]??''}"/>`;
+  if(item.kind==='end') h+=endHTML();
+  if(item.why&&item.kind!=='end'){
+    const cons=(item.cons||[]).map(c=>`<li>${c}</li>`).join("");
+    h+=`<div class="rat"><b>Why this question is designed this way.</b> ${item.why}${cons?`<ul>${cons}</ul>`:""}</div>`;
+  }
+  h+=`</div>`; screen.innerHTML=h;
+  screen.querySelectorAll('.term').forEach(t=>{ t.setAttribute('data-rich',encodeURIComponent(`<b>${t.textContent}</b><br>${DEF[t.getAttribute('data-d')]||''}`)); attachTip(t); });
+  screen.querySelectorAll('.info').forEach(attachTip);
+  screen.querySelectorAll('[data-pick]').forEach(el=>{
+    if(el.hasAttribute('data-mx')) return;
+    el.addEventListener('click',()=>{
+      const it=SURVEY[idx];
+      if(it.kind==='multi'){ const a=Array.isArray(answers[it.varname])?answers[it.varname]:[]; const i=+el.getAttribute('data-pick'); const k=a.indexOf(i); k>=0?a.splice(k,1):a.push(i); answers[it.varname]=a; }
+      else answers[it.varname]=+el.getAttribute('data-pick');
+      render();
+    });
+  });
+  screen.querySelectorAll('[data-mx]').forEach(el=>el.addEventListener('click',()=>{ answers[el.getAttribute('data-mx')]=+el.getAttribute('data-pick'); render(); }));
+  const sel=screen.querySelector('[data-sel]'); if(sel) sel.addEventListener('change',()=>{ answers[SURVEY[idx].varname]= sel.value===''?undefined:+sel.value; });
+  const num=screen.querySelector('[data-num]'); if(num) num.addEventListener('input',()=>{ answers[SURVEY[idx].varname]= num.value===''?undefined:num.value; });
+  // progress over answerable questions
+  const answeredTo=SURVEY.slice(0,idx+1).filter(s=>s.kind!=='intro'&&s.kind!=='end'&&s.kind!=='info').length;
+  bar.style.width=(answeredTo/qcount()*100)+'%';
+  stepinfo.textContent= item.kind==='end'?'Complete': (item.kind==='intro'||item.kind==='info'?'':'Question '+answeredTo+' of '+qcount());
+  document.getElementById('back').disabled=idx===0;
+  document.getElementById('next').textContent= idx>=SURVEY.length-1?'Restart':(item.kind==='intro'?'Begin':(item.kind==='info'?'Continue':'Next'));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+/* tooltip */
+let pinned=false;
+function showTip(el){
+  tip.innerHTML=decodeURIComponent(el.getAttribute('data-rich'))+`<span class="pin">click to pin &middot; click elsewhere to close</span>`;
+  const r=el.getBoundingClientRect(); tip.classList.add('on');
+  const tw=Math.min(350,window.innerWidth-24); tip.style.maxWidth=tw+'px';
+  let left=r.left; if(left+tw>window.innerWidth-12) left=window.innerWidth-tw-12;
+  tip.style.left=Math.max(12,left)+'px'; tip.style.top=(r.bottom+8)+'px';
+  const th=tip.offsetHeight; if(r.bottom+8+th>window.innerHeight-12) tip.style.top=Math.max(12,r.top-th-8)+'px';
+}
+function hideTip(){ if(!pinned) tip.classList.remove('on'); }
+function attachTip(el){
+  el.addEventListener('mouseenter',()=>{ if(!pinned) showTip(el); });
+  el.addEventListener('mouseleave',hideTip);
+  el.addEventListener('focus',()=>showTip(el)); el.addEventListener('blur',hideTip);
+  el.addEventListener('click',e=>{ e.stopPropagation(); pinned=true; showTip(el); });
+}
+document.addEventListener('click',()=>{ pinned=false; tip.classList.remove('on'); });
+tip.addEventListener('click',e=>e.stopPropagation());
+/* data view */
+function readable(item,v){
+  if(v===undefined||v==='') return '—';
+  if(item.kind==='likert'||item.kind==='matrix') return item.scale[v];
+  if(item.options) return item.options[v];
+  return v;
+}
+function endHTML(){
+  let rows="";
+  SURVEY.forEach(it=>{
+    if(it.kind==='dce'){
+      const v=answers[it.varname]; const val=v===undefined?'—':(v===2?'Neither (status quo)':it.aoptions[v].label);
+      rows+=`<tr><td class="var">${it.varname}_choice</td><td class="val">${val}</td><td class="note">DCE task (1 of ~10). Feeds the mixed-logit model.</td></tr>`;
+    } else if(it.kind==='matrix'){
+      it.rows.forEach(r=>{ const key=it.varname+"__"+r.k; const v=answers[key];
+        rows+=`<tr><td class="var">${key}</td><td class="val">${v===undefined?'—':it.scale[v]}</td><td class="note">${it.chip}</td></tr>`; });
+    } else if(it.varname){
+      rows+=`<tr><td class="var">${it.varname}</td><td class="val">${readable(it,answers[it.varname])}</td><td class="note">${it.chip}</td></tr>`;
+    }
+  });
+  const json=JSON.stringify(answers,null,2);
+  return `<p class="lead">For a participant this is just a thank-you page. For you, here is the <b>row of data your answers produce</b> &mdash; the variables, their values, and what each feeds. This is the point of the prototype: see the dataset before you field it.</p>
+   <table class="datatable"><tr><th>Variable</th><th>Your value</th><th>Module</th></tr>${rows}</table>
+   <div class="derived"><h4>Derived, not stored as raw fields</h4><ul style="margin:0;padding-left:18px">
+     <li><b>Acceptable catastrophic risk (the public number)</b> &mdash; recovered from the DCE choices by mixed logit, by benefit scenario, with credible intervals.</li>
+     <li><b>Willingness-to-pay for safety</b> &mdash; from the DCE cost attribute (<code>m5_wtp</code> is a cross-check).</li>
+     <li><b>AI-label penalty (reverse halo)</b> &mdash; <code>env_label</code> for the AI arm minus the generic arms, holding the facts constant.</li>
+     <li><b>Status-quo bias</b> &mdash; <code>env_reversal</code> vs <code>env_label</code>; <b>scope slope &times; numeracy</b> &mdash; the <code>m4c</code> grid &times; <code>m9_numeracy</code> (Ben's thesis).</li>
+     <li><b>Expert &divide; public multiplier</b> &mdash; only if the DCE and the m4c grid converge within an order of magnitude (the pre-registered go/no-go).</li>
+   </ul></div>
+   <pre class="json">${json.replace(/</g,'&lt;')}</pre>`;
+}
+/* nav */
+document.getElementById('next').addEventListener('click',()=>{
+  if(idx>=SURVEY.length-1){ idx=0; for(const k in answers) delete answers[k]; render(); return; }
+  idx++; render();
+});
+document.getElementById('back').addEventListener('click',()=>{ if(idx>0){idx--;render();} });
+document.getElementById('notesToggle').addEventListener('change',e=>document.body.classList.toggle('notes',e.target.checked));
+render();
+</script>
+</body>
+</html>

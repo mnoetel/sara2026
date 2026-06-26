@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SARA USA 2026 — survey prototype</title>
+<style>
+  :root{
+    --ink:#1c2733; --muted:#647281; --line:#e6eaef; --bg:#eef1f5; --card:#fff;
+    --accent:#2e5496; --accent2:#1f3864; --accentsoft:#eaf0fa;
+    --good:#2e8b57; --warn:#c0392b; --tipbg:#1f2937;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--ink);
+       background:var(--bg);line-height:1.55;-webkit-font-smoothing:antialiased}
+  /* top bar */
+  .topbar{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid var(--line);
+          box-shadow:0 1px 3px rgba(20,40,70,.05)}
+  .topbar .inner{max-width:760px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:14px}
+  .brand{font-weight:800;color:var(--accent2);font-size:15px;letter-spacing:.01em;white-space:nowrap}
+  .brand .tag{font-size:10px;font-weight:700;color:#fff;background:var(--accent);border-radius:4px;padding:1px 6px;margin-left:6px;vertical-align:middle;letter-spacing:.06em}
+  .grow{flex:1}
+  .switch{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--muted);cursor:pointer;user-select:none}
+  .switch input{display:none}
+  .track{width:38px;height:21px;background:#cdd6e0;border-radius:999px;position:relative;transition:.15s}
+  .track::after{content:"";position:absolute;top:2px;left:2px;width:17px;height:17px;background:#fff;border-radius:50%;transition:.15s;box-shadow:0 1px 2px rgba(0,0,0,.25)}
+  .switch input:checked + .track{background:var(--accent)}
+  .switch input:checked + .track::after{transform:translateX(17px)}
+  .progress{height:4px;background:#e6eaef}
+  .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),#4d79b8);transition:width .25s}
+  /* layout */
+  .wrap{max-width:760px;margin:0 auto;padding:28px 20px 120px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px 26px 22px;
+        box-shadow:0 2px 10px rgba(20,40,70,.05);animation:rise .25s ease}
+  @keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .chip{display:inline-block;font-size:11px;font-weight:700;color:var(--accent);background:var(--accentsoft);
+        border-radius:6px;padding:3px 9px;letter-spacing:.03em;margin-bottom:14px}
+  .qhead{display:flex;align-items:flex-start;gap:8px}
+  .q{font-size:19px;font-weight:650;color:#1b2733;margin:0}
+  .qsub{color:var(--muted);font-size:14px;margin:8px 0 2px}
+  .info{flex:none;margin-top:3px;width:20px;height:20px;border-radius:50%;border:1.5px solid var(--accent);
+        color:var(--accent);font-size:12px;font-weight:800;line-height:17px;text-align:center;cursor:help;
+        background:#fff;user-select:none;transition:.12s}
+  .info:hover{background:var(--accent);color:#fff}
+  .opts{margin-top:18px;display:flex;flex-direction:column;gap:10px}
+  .opt{display:flex;align-items:center;gap:12px;border:1.5px solid var(--line);border-radius:11px;
+       padding:13px 15px;cursor:pointer;transition:.12s;background:#fff;font-size:15px}
+  .opt:hover{border-color:#b9c7da;background:#fafbfd}
+  .opt.sel{border-color:var(--accent);background:var(--accentsoft);box-shadow:inset 0 0 0 1px var(--accent)}
+  .opt .dot{flex:none;width:18px;height:18px;border-radius:50%;border:2px solid #b9c7da;transition:.12s}
+  .opt.sel .dot{border-color:var(--accent);background:radial-gradient(circle at center,var(--accent) 0 6px,#fff 7px)}
+  .opt.sq{border-style:dashed;color:var(--muted)}
+  /* likert */
+  .likert{display:flex;gap:6px;margin-top:18px;flex-wrap:wrap}
+  .likert .lk{flex:1;min-width:84px;text-align:center;border:1.5px solid var(--line);border-radius:10px;
+       padding:11px 6px;cursor:pointer;font-size:12.5px;transition:.12s;background:#fff;line-height:1.25}
+  .likert .lk:hover{border-color:#b9c7da;background:#fafbfd}
+  .likert .lk.sel{border-color:var(--accent);background:var(--accent);color:#fff;font-weight:600}
+  /* matrix */
+  .matrix{margin-top:16px;overflow-x:auto}
+  table.mx{border-collapse:collapse;width:100%;font-size:13px}
+  table.mx th{font-weight:600;color:var(--muted);padding:7px 6px;text-align:center;font-size:11.5px}
+  table.mx td{padding:6px;text-align:center;border-top:1px solid var(--line)}
+  table.mx td.rl{text-align:left;font-weight:600;color:#283b4a;white-space:nowrap}
+  .mxr{width:20px;height:20px;border-radius:50%;border:2px solid #b9c7da;display:inline-block;cursor:pointer;transition:.1s}
+  .mxr.sel{border-color:var(--accent);background:radial-gradient(circle at center,var(--accent) 0 6px,#fff 7px)}
+  /* dce */
+  .dctx{font-size:13.5px;color:var(--muted);margin:6px 0 16px;background:#f7f9fc;border:1px solid var(--line);border-radius:10px;padding:11px 14px}
+  .dce{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .dopt{border:1.5px solid var(--line);border-radius:13px;overflow:hidden;cursor:pointer;transition:.12s;background:#fff}
+  .dopt:hover{border-color:#b9c7da}
+  .dopt.sel{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent)}
+  .dopt h4{margin:0;padding:11px 14px;background:#f4f7fb;font-size:13.5px;border-bottom:1px solid var(--line);color:var(--accent2)}
+  .dopt.sel h4{background:var(--accent);color:#fff}
+  .dopt dl{margin:0;padding:12px 14px;font-size:13px}
+  .dopt dt{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.03em;margin-top:8px}
+  .dopt dt:first-child{margin-top:0}
+  .dopt dd{margin:1px 0 0;font-weight:600;color:#22303d}
+  .dopt .risk{color:var(--warn)}
+  .sq-row{margin-top:12px}
+  .sq-row .opt{justify-content:center}
+  /* inputs */
+  select,input[type=number],input[type=text]{font:inherit;padding:11px 13px;border:1.5px solid var(--line);
+       border-radius:10px;width:100%;max-width:340px;margin-top:16px;background:#fff}
+  /* rationale inline */
+  .rat{margin-top:18px;border-left:4px solid var(--accent);background:#f6f9ff;border-radius:0 10px 10px 0;
+       padding:12px 16px;font-size:13px;color:#33455a;display:none}
+  body.notes .rat{display:block}
+  .rat b{color:var(--accent2)}
+  .rat ul{margin:6px 0 0;padding-left:18px}
+  .rat li{margin:3px 0}
+  .term{border-bottom:1.5px dotted var(--accent);cursor:help}
+  /* nav */
+  .nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);z-index:30}
+  .nav .inner{max-width:760px;margin:0 auto;padding:13px 20px;display:flex;align-items:center;gap:12px}
+  .btn{font:inherit;font-weight:650;border-radius:10px;padding:11px 22px;cursor:pointer;border:1.5px solid var(--accent);transition:.12s}
+  .btn.primary{background:var(--accent);color:#fff}
+  .btn.primary:hover{background:var(--accent2)}
+  .btn.ghost{background:#fff;color:var(--accent)}
+  .btn.ghost:hover{background:var(--accentsoft)}
+  .btn:disabled{opacity:.4;cursor:not-allowed}
+  .stepinfo{flex:1;text-align:center;color:var(--muted);font-size:12.5px}
+  /* floating tooltip */
+  #tip{position:fixed;z-index:100;max-width:340px;background:var(--tipbg);color:#f1f5f9;font-size:13px;
+       line-height:1.5;border-radius:10px;padding:12px 14px;box-shadow:0 8px 28px rgba(0,0,0,.28);
+       opacity:0;pointer-events:none;transition:opacity .12s;transform:translateY(-4px)}
+  #tip.on{opacity:1;pointer-events:auto}
+  #tip b{color:#fff}
+  #tip ul{margin:7px 0 0;padding-left:17px}
+  #tip li{margin:3px 0;color:#d6deea}
+  #tip .pin{font-size:11px;color:#9fb0c6;margin-top:8px;display:block}
+  /* intro / end */
+  .lead{font-size:15px;color:#33455a}
+  .glossary{margin-top:18px;font-size:13px;color:var(--muted)}
+  .datatable{width:100%;border-collapse:collapse;margin-top:14px;font-size:13px}
+  .datatable th{text-align:left;background:#f4f7fb;padding:8px 10px;border-bottom:2px solid var(--line);color:var(--accent2);font-size:12px}
+  .datatable td{padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  .datatable td.var{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--accent);white-space:nowrap}
+  .datatable td.val{font-weight:600}
+  .datatable td.note{color:var(--muted);font-size:12px}
+  .derived{margin-top:18px;background:#f6f9ff;border:1px solid #d7e3f6;border-radius:11px;padding:14px 16px;font-size:13px}
+  .derived h4{margin:0 0 6px;color:var(--accent2);font-size:14px}
+  pre.json{background:#0f172a;color:#cbd5e1;border-radius:10px;padding:14px;overflow:auto;font-size:12px;margin-top:14px;max-height:280px}
+  .hintbar{max-width:760px;margin:10px auto 0;padding:0 20px;color:var(--muted);font-size:12.5px;text-align:center}
+  @media(max-width:640px){ .dce{grid-template-columns:1fr} .card{padding:20px 16px} .q{font-size:17px} }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="inner">
+    <div class="brand">SARA · United States 2026 <span class="tag">PROTOTYPE</span></div>
+    <div class="grow"></div>
+    <label class="switch" title="Reveal the design rationale under every question">
+      <input type="checkbox" id="notesToggle"/>
+      <span class="track"></span>
+      <span>Design notes</span>
+    </label>
+  </div>
+  <div class="progress"><div class="bar" id="bar"></div></div>
+</div>
+<div class="hintbar" id="hintbar">Hover the <b>ⓘ</b> on any question to see why it is designed that way. Toggle “Design notes” to pin all rationales.</div>
+
+<div class="wrap"><div id="screen"></div></div>
+
+<div class="nav"><div class="inner">
+  <button class="btn ghost" id="back">Back</button>
+  <div class="stepinfo" id="stepinfo"></div>
+  <button class="btn primary" id="next">Next</button>
+</div></div>
+
+<div id="tip"></div>
+
+<script>
+/* ============================ DEFINITIONS (glossary tooltips) ============================ */
+const DEF = {
+  "advanced AI":"AI systems substantially more capable than today's, approaching or exceeding human ability across most cognitive tasks.",
+  "catastrophe":"In this survey, an AI-caused event that kills 100,000 or more people. Severity is held fixed here; how tolerance changes with the death toll is measured separately.",
+  "loss of control":"A scenario in which an advanced AI system acts against human intentions in ways people cannot stop or reverse.",
+  "societal risk":"The chance that an event happens somewhere in the population, not your personal chance of being harmed.",
+  "tolerable":"Acceptable only if the risk is actively managed and reduced where reasonably practicable (a regulator's term, distinct from 'acceptable')."
+};
+/* ============================ THE SURVEY ============================ */
+const TOL = ["Acceptable","Tolerable","Intolerable","Unacceptable / should be illegal"];
+const AGREE = ["Strongly agree","Agree","Neither","Disagree","Strongly disagree"];
+
+const SURVEY = [
+  { kind:"intro", chip:"Welcome",
+    q:"A short survey about <span class='term' data-d='advanced AI'>advanced AI</span> and risk",
+    lead:"You will be asked what you think about advanced AI, how much risk you find acceptable, and what you would want governments and companies to do. There are no right answers; we want your honest view. It takes about 12 minutes.<br><br>Some words have a dotted underline — hover them for a plain-language definition. Researchers can switch on “Design notes” (top right) to see why each question is built the way it is.",
+    why:"<b>Standard definitions are shown to everyone (Instrument preface).</b> Gradient Institute noted the 2025 survey let people answer different questions. v4 fixes wording: probability is kept separate from impact, and every risk item is labelled personal or societal.",
+    cons:["Glossary terms (catastrophe, loss of control, societal risk) are defined on hover and on first use."] },
+
+  { kind:"single", chip:"Module 1 · Attitudes", varname:"m1_goodharm",
+    q:"Overall, do you think advanced AI will do more good or more harm?",
+    options:["More good than harm","About equal","More harm than good","Don't know"],
+    why:"<b>A simple, robust attitude item (Cluster A).</b> Carried from SARA core for trend comparison. Cluster A items describe sentiment and are reported directly; the harder risk-tolerance items are Cluster B.",
+    cons:["Kept early and easy to warm respondents up before the demanding items."] },
+
+  { kind:"likert", chip:"Module 2 · Status quo", varname:"m2_tol_anchor",
+    q:"Dario Amodei, CEO of the AI company Anthropic, has estimated roughly a <b>25% chance</b> that AI goes “really, really badly.” A risk at that level is…",
+    scale:TOL,
+    why:"<b>Recognition, not generation.</b> People can't reliably produce a probability, but they can judge one we hand them. The judgement is about a number a developer volunteered, so it doesn't depend on the public's numeracy and is hard to dismiss as advocacy.",
+    cons:["Anchor is randomised across a balanced pool from Yann LeCun (≈0%) to Amodei (25%) so we are not curating only alarming numbers (Ball fix).","Reported by source, never as a single average that hides the spread."] },
+
+  { kind:"single", chip:"Module 2 · Status quo", varname:"m2_frame_applicable",
+    q:"Which is closer to your view?",
+    options:["The risk from <span class='term' data-d='advanced AI'>advanced AI</span> can be estimated and held to a numerical safety standard, like aviation or nuclear power","AI risk is too uncertain or too novel to put a meaningful number on","Unsure"],
+    why:"<b>Frame-applicability check.</b> Later modules assume risk can be quantified. This measures that premise instead of assuming it; results are reported separately for people who reject the frame, so the engineering-risk paradigm isn't smuggled in.",
+    cons:["Added in response to the skeptical (Ball-style) review."] },
+
+  { kind:"single", chip:"Module 3 · Expected standard", varname:"m3a_i_standards",
+    q:"Compared with the safety <b>regulations</b> on nuclear power, regulation of advanced AI should be…",
+    options:["Much stricter","Somewhat stricter","About the same","Somewhat less strict","Much less strict","Cannot compare these technologies"],
+    why:"<b>Relative anchoring.</b> Instead of asking for a number, we ask how AI should compare with a technology people already live with; the named anchor carries a known risk level, so the answer implies a band without anyone stating a probability.",
+    cons:["Gradient flagged the old wording as a category error. v4 splits it: this item is about the rules (stricter), the next is about the systems (safer).","The comparator (aviation / nuclear / medicines / cars / food) is randomised."] },
+
+  { kind:"single", chip:"Module 3 · Expected standard", varname:"m3a_ii_safety",
+    q:"And compared with how safe nuclear power is <b>in practice</b>, advanced AI systems themselves should be…",
+    options:["Much safer","Somewhat safer","About as safe","Somewhat less safe","Much less safe","Cannot compare these technologies"],
+    why:"<b>Stricter standards and safer systems are different questions.</b> Splitting them fixes the Figure-11 category error Gradient identified, and lets us see where the public conflates rules with outcomes.",
+    cons:["Same comparator as the previous item, so the two can be compared within person."] },
+
+  { kind:"dce", chip:"Module 4a · The public number (DCE)", varname:"dce_task1",
+    q:"Here are two possible futures for advanced AI in the US, plus the option to keep things as they are. Which do you prefer?",
+    context:"In each future, a <span class='term' data-d='catastrophe'>catastrophe</span> means an AI-caused event that kills 100,000 or more people. You'll see several of these comparisons.",
+    aoptions:[
+      {label:"Future A", attrs:{"Annual chance of a catastrophe":"1 in 1,000","What AI delivers":"Transformative — cures diseases, helps solve climate","Global position":"The US leads the world","Cost to your household / year":"$400"}},
+      {label:"Future B", attrs:{"Annual chance of a catastrophe":"1 in 100,000","What AI delivers":"Modest — better everyday tools","Global position":"Other countries lead","Cost to your household / year":"$0"}}
+    ],
+    sq:"Neither — keep AI roughly as it is today",
+    why:"<b>This is the primary instrument for the public number.</b> People can't state an acceptable probability cold, but they can choose between concrete options. Across ~10 of these, a mixed-logit model recovers the level of catastrophic risk people will accept, and what they will pay for safety — without anyone naming a number.",
+    cons:["Attributes are exactly Ball's tradeoff: safety (risk), utility (benefit), competition (global position), plus cost for willingness-to-pay.","Catastrophe severity is held fixed; how tolerance scales with deaths is measured in Module 4c, not here.","A 'neither' opt-out anchors the scale to the status quo."] },
+
+  { kind:"matrix", chip:"Module 4c · Scope (within-person)", varname:"m4c_severe",
+    q:"Think about an AI disaster that kills <b>100,000 people</b> (<span class='term' data-d='societal risk'>societal risk</span>, not your personal risk). For each annual chance below, say how tolerable that is.",
+    rows:[{k:"p_1k",l:"3 in 10,000 per year"},{k:"p_10k",l:"1 in 10,000 per year"},{k:"p_100k",l:"1 in 100,000 per year"}],
+    scale:TOL,
+    why:"<b>Benjamin Reid's scope instrument, and the DCE's cross-check.</b> Each person judges several probabilities (and, across the survey, several death tolls), so we can measure whether their tolerance actually falls as risk rises — and whether more numerate people show that more.",
+    cons:["Within-subjects on purpose (reverted in v4.1): a between-subjects design cannot recover an individual's scope slope.","Natural frequencies ('3 in 10,000'), no percentages; icon arrays only appear in a separate randomised arm so their bias can be measured.","Order randomised; a between-subjects arm guards against people answering tidily just to look consistent."] },
+
+  { kind:"select", chip:"Module 5 · Tradeoffs", varname:"m5_wtp",
+    q:"What is the most you would pay each year, through taxes or higher prices, to cut the chance of an AI <span class='term' data-d='catastrophe'>catastrophe</span> from 1 in 20 to 1 in 100 over the next 30 years?",
+    options:["$0","$1–25","$26–100","$101–500","$501–1,000","More than $1,000","I'd pay whatever it takes","Don't know"],
+    why:"<b>A costed tradeoff, so the preference isn't free.</b> In v5 willingness-to-pay also comes out of the DCE cost attribute; this stated item is kept as a simple cross-check.",
+    cons:["Oscar Delaney's point: opinions that cost nothing are cheap. Attaching a price tests whether concern is real."] },
+
+  { kind:"single", chip:"Module 5 · Tradeoffs", varname:"m5b_delay_uncond",
+    q:"Putting risk to one side, would you support or oppose <b>delaying</b> the deployment of advanced AI by several years?",
+    options:["Strongly support","Somewhat support","Neither","Somewhat oppose","Strongly oppose"],
+    why:"<b>Unconditional support for delay, measured directly.</b> Gradient caught the 2025 report claiming “80% support waiting 10+ years” from a question that was actually conditional. v4 asks the unconditional version on its own…",
+    cons:["…and the conditional version (next) is reported separately, with its condition stated."] },
+
+  { kind:"single", chip:"Module 5 · Tradeoffs", varname:"m5b_delay_cond",
+    q:"<b>If</b> delaying advanced AI by 10 years would cut the chance of a <span class='term' data-d='catastrophe'>catastrophe</span> from 5% to 1%, that delay would be…",
+    options:["Clearly worthwhile","Probably worthwhile","Difficult to judge","Probably not worthwhile","Clearly not worthwhile"],
+    why:"<b>Conditional, and reported as conditional.</b> Any figure from this item carries its condition verbatim (“conditional on a 5%→1% cut, X% judged a 10-year delay worthwhile”), never collapsed into unconditional support.",
+    cons:["The strict conditional-reporting rule is pre-registered (Gradient #5)."] },
+
+  { kind:"single", chip:"Module 6 · Policy", varname:"m6_liability",
+    q:"If an AI system causes a <span class='term' data-d='catastrophe'>catastrophe</span>, under what conditions should the company that built it be financially liable?",
+    options:["Fully liable, even if it followed every rule (strict liability)","Liable only if it failed to take reasonable care (negligence / duty of care)","Liable only if it broke a specific written rule","Not liable if it followed all safety standards","Unsure"],
+    why:"<b>The decision-relevant policy items (Cluster A) stand on their own.</b> This one tests appetite for liability rules in proposals like the RAISE Act / SB 53.",
+    cons:["Ball noted the old options made strict liability sound like the moderate choice. v3 added the negligence / duty-of-care middle so support isn't overstated."] },
+
+  { kind:"single", chip:"Module 6 · Policy", varname:"m6_killswitch",
+    q:"Should advanced AI be legally required to have an emergency “kill switch” to shut it down if it behaves dangerously?",
+    options:["Yes, for all AI systems","Yes, but only for high-risk systems","No, voluntary guidelines are enough","Unsure"],
+    why:"<b>Fills a gap in current bills.</b> Neither the RAISE Act nor SB 53 addresses post-deployment intervention; this finds whether the public wants it.",
+    cons:["Phrased neutrally; 'dangerously' is defined in the glossary build."] },
+
+  { kind:"likert", chip:"Module 7 · Validation", varname:"m7_si_ban",
+    q:"How much do you agree? “I support a ban on developing smarter-than-human AI until there is broad scientific consensus it can be done safely, and strong public buy-in.”",
+    scale:AGREE,
+    why:"<b>We test the wording, not just the view.</b> This is a real campaign statement whose conditions inflate agreement. Half of respondents instead see a symmetric permission-framed version; the gap is reported as a wording effect.",
+    cons:["Before the tolerance block, a random third also saw a competitiveness (a16z-style) message and a third a safety message, so we can show how stable these views are (Oscar's counter-message idea)."] },
+
+  { kind:"single", chip:"Module 8 · Data centres", varname:"m8_label",
+    q:"A company wants to buy land, power, and water near you to run a large facility. It would create few local jobs, serve customers elsewhere, and pay about $2,800 per resident a year in local taxes. How acceptable is this if it is an <b>AI data centre</b>?",
+    options:["Completely acceptable","Mostly acceptable","Neither","Mostly unacceptable","Completely unacceptable"],
+    why:"<b>This module red-teams anti-AI sentiment.</b> The identical facility is shown to others as a manufacturing plant, a semiconductor factory, or a bottling plant. The gap between 'AI data centre' and the generic versions, holding the facts constant, is the AI-specific penalty (a reverse halo).",
+    cons:["A companion item flips the framing à la Masley ('would you give up the tax revenue to avoid it?') to measure status-quo bias.","Included as a deliberate symmetry check: the rest of the survey red-teams pro-AI complacency, so this red-teams the other side."] },
+
+  { kind:"number", chip:"Module 9 · About you", varname:"m9_crt_pig",
+    q:"A quick puzzle: a man buys a pig for $60, sells it for $70, buys it back for $80, and sells it again for $90. How much money has he made? ($)",
+    why:"<b>Cognitive Reflection Test (Benjamin Reid's items).</b> Measures whether someone overrides an intuitive-but-wrong answer. Used as a covariate, never to exclude people.",
+    cons:["With the Berlin Numeracy Test (risk literacy), this is the moderator in the scope-sensitivity analysis: do more numerate people track risk magnitude more closely?"] },
+
+  { kind:"single", chip:"Module 9 · About you", varname:"m9_politics",
+    q:"In general, how would you describe your political views?",
+    options:["Very liberal","Liberal","Slightly liberal","Moderate","Slightly conservative","Conservative","Very conservative"],
+    why:"<b>Standard covariate (Jost, 2006).</b> Lets us report results across the political spectrum, which matters for a US sample and for federal-vs-state questions.",
+    cons:["Reported as a breakdown, not used to weight the headline."] },
+
+  { kind:"end", chip:"Done", q:"Thank you — that's the survey",
+    why:"<b>The end screen below is for researchers, not participants.</b> It shows the row of data your answers produce, so you can see exactly what the instrument captures before fielding.",
+    cons:[] }
+];
+
+/* ============================ ENGINE ============================ */
+let idx = 0;
+const answers = {};
+const screen = document.getElementById('screen');
+const bar = document.getElementById('bar');
+const tip = document.getElementById('tip');
+const stepinfo = document.getElementById('stepinfo');
+
+function defHTML(el){ // wrap glossary terms: replace data-d attr usage handled at render via terms()
+}
+function terms(html){
+  // attach definitions: spans already have data-d; we copy into data-tip on render
+  return html;
+}
+function infoBtn(item){
+  const why = item.why || "";
+  const cons = (item.cons||[]).map(c=>`<li>${c}</li>`).join("");
+  const html = `<b>Why this question is designed this way</b><br>${why}` + (cons?`<ul>${cons}</ul>`:"") ;
+  return `<span class="info" data-rich="${encodeURIComponent(html)}" tabindex="0">i</span>`;
+}
+
+function render(){
+  const item = SURVEY[idx];
+  document.body.classList.toggle('intro', item.kind==='intro');
+  let h = `<div class="card">`;
+  h += `<span class="chip">${item.chip||""}</span>`;
+  if(item.kind!=='intro' && item.kind!=='end'){
+    h += `<div class="qhead"><p class="q">${item.q}</p>${infoBtn(item)}</div>`;
+  } else {
+    h += `<div class="qhead"><p class="q">${item.q}</p>${item.why?infoBtn(item):""}</div>`;
+  }
+
+  if(item.kind==='intro'){
+    h += `<p class="lead">${item.lead}</p>`;
+  }
+  if(item.kind==='single'){
+    h += `<div class="opts">` + item.options.map((o,i)=>{
+      const sel = answers[item.varname]===i ? 'sel':'';
+      return `<label class="opt ${sel}" data-pick="${i}"><span class="dot"></span><span>${o}</span></label>`;
+    }).join("") + `</div>`;
+  }
+  if(item.kind==='likert'){
+    h += `<div class="likert">` + item.scale.map((o,i)=>{
+      const sel = answers[item.varname]===i?'sel':'';
+      return `<div class="lk ${sel}" data-pick="${i}">${o}</div>`;
+    }).join("") + `</div>`;
+  }
+  if(item.kind==='matrix'){
+    h += `<div class="matrix"><table class="mx"><tr><th></th>` + item.scale.map(s=>`<th>${s}</th>`).join("") + `</tr>`;
+    item.rows.forEach(r=>{
+      const key = item.varname+"__"+r.k;
+      h += `<tr><td class="rl">${r.l}</td>` + item.scale.map((s,i)=>{
+        const sel = answers[key]===i?'sel':'';
+        return `<td><span class="mxr ${sel}" data-mx="${key}" data-pick="${i}"></span></td>`;
+      }).join("") + `</tr>`;
+    });
+    h += `</table></div>`;
+  }
+  if(item.kind==='dce'){
+    h += `<div class="dctx">${item.context}</div><div class="dce">`;
+    item.aoptions.forEach((opt,i)=>{
+      const sel = answers[item.varname]===i?'sel':'';
+      const dl = Object.entries(opt.attrs).map(([k,v])=>{
+        const cls = k.toLowerCase().includes('chance')?'risk':'';
+        return `<dt>${k}</dt><dd class="${cls}">${v}</dd>`;
+      }).join("");
+      h += `<div class="dopt ${sel}" data-pick="${i}"><h4>${opt.label}</h4><dl>${dl}</dl></div>`;
+    });
+    h += `</div><div class="sq-row"><label class="opt sq ${answers[item.varname]===2?'sel':''}" data-pick="2"><span class="dot"></span><span>${item.sq}</span></label></div>`;
+  }
+  if(item.kind==='select'){
+    h += `<select data-sel><option value="">Select…</option>` +
+      item.options.map((o,i)=>`<option value="${i}" ${answers[item.varname]===i?'selected':''}>${o}</option>`).join("") + `</select>`;
+  }
+  if(item.kind==='number'){
+    h += `<input type="number" data-num placeholder="Enter a number" value="${answers[item.varname]??''}"/>`;
+  }
+  if(item.kind==='end'){
+    h += endHTML();
+  }
+
+  // inline rationale (shown when Design notes on)
+  if(item.why && item.kind!=='end'){
+    const cons = (item.cons||[]).map(c=>`<li>${c}</li>`).join("");
+    h += `<div class="rat"><b>Why this question is designed this way.</b> ${item.why}${cons?`<ul>${cons}</ul>`:""}</div>`;
+  }
+  h += `</div>`;
+  screen.innerHTML = h;
+
+  // wire glossary terms -> tooltip
+  screen.querySelectorAll('.term').forEach(t=>{
+    const d = DEF[t.getAttribute('data-d')] || "";
+    t.setAttribute('data-rich', encodeURIComponent(`<b>${t.textContent}</b><br>${d}`));
+    attachTip(t);
+  });
+  // wire info buttons
+  screen.querySelectorAll('.info').forEach(attachTip);
+  // wire pickers
+  screen.querySelectorAll('[data-pick]').forEach(el=>{
+    if(el.hasAttribute('data-mx')) return;
+    el.addEventListener('click',()=>{ answers[SURVEY[idx].varname]=+el.getAttribute('data-pick'); render(); });
+  });
+  screen.querySelectorAll('[data-mx]').forEach(el=>{
+    el.addEventListener('click',()=>{ answers[el.getAttribute('data-mx')]=+el.getAttribute('data-pick'); render(); });
+  });
+  const sel = screen.querySelector('[data-sel]');
+  if(sel) sel.addEventListener('change',()=>{ answers[SURVEY[idx].varname]= sel.value===''?undefined:+sel.value; });
+  const num = screen.querySelector('[data-num]');
+  if(num) num.addEventListener('input',()=>{ answers[SURVEY[idx].varname]= num.value===''?undefined:num.value; });
+
+  bar.style.width = (idx/(SURVEY.length-1)*100)+'%';
+  stepinfo.textContent = (item.kind==='end')? 'Complete' : `Question ${idx+1} of ${SURVEY.length-1}`;
+  document.getElementById('back').disabled = idx===0;
+  const nextBtn = document.getElementById('next');
+  nextBtn.textContent = idx>=SURVEY.length-1 ? 'Restart' : (item.kind==='intro'?'Begin':'Next');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ---------- floating tooltip (hover + click-to-pin) ---------- */
+let pinned=false;
+function showTip(el){
+  tip.innerHTML = decodeURIComponent(el.getAttribute('data-rich')) + `<span class="pin">click to pin · click elsewhere to close</span>`;
+  const r = el.getBoundingClientRect();
+  tip.classList.add('on');
+  const tw = Math.min(340, window.innerWidth-24);
+  tip.style.maxWidth = tw+'px';
+  let left = r.left;  if(left+tw > window.innerWidth-12) left = window.innerWidth-tw-12;
+  let top = r.bottom+8;
+  tip.style.left = Math.max(12,left)+'px';
+  tip.style.top = top+'px';
+  // flip up if near bottom
+  const th = tip.offsetHeight;
+  if(top+th > window.innerHeight-12){ tip.style.top = Math.max(12, r.top - th - 8)+'px'; }
+}
+function hideTip(){ if(!pinned){ tip.classList.remove('on'); } }
+function attachTip(el){
+  el.addEventListener('mouseenter',()=>{ if(!pinned) showTip(el); });
+  el.addEventListener('mouseleave',hideTip);
+  el.addEventListener('focus',()=>showTip(el));
+  el.addEventListener('blur',hideTip);
+  el.addEventListener('click',(e)=>{ e.stopPropagation(); pinned=true; showTip(el); });
+}
+document.addEventListener('click',()=>{ pinned=false; tip.classList.remove('on'); });
+tip.addEventListener('click',e=>e.stopPropagation());
+
+/* ---------- end-screen data view ---------- */
+const LABELS = {
+  m1_goodharm:["More good","Equal","More harm","Don't know"],
+  m2_tol_anchor:TOL, m2_frame_applicable:["Can quantify","Too uncertain","Unsure"],
+  m3a_i_standards:["Much stricter","Somewhat stricter","Same","Somewhat less","Much less","Can't compare"],
+  m3a_ii_safety:["Much safer","Somewhat safer","About as safe","Somewhat less","Much less","Can't compare"],
+  m5_wtp:["$0","$1–25","$26–100","$101–500","$501–1000",">$1000","Whatever it takes","Don't know"],
+  m5b_delay_uncond:["Str. support","Support","Neither","Oppose","Str. oppose"],
+  m5b_delay_cond:["Clearly worth","Probably","Hard to judge","Probably not","Clearly not"],
+  m6_liability:["Strict","Negligence","Broke a rule","None if compliant","Unsure"],
+  m6_killswitch:["All systems","High-risk only","Voluntary","Unsure"],
+  m7_si_ban:AGREE, m8_label:["Compl. accept","Mostly accept","Neither","Mostly unaccept","Compl. unaccept"],
+  m9_politics:["Very lib","Lib","Slightly lib","Moderate","Slightly con","Con","Very con"]
+};
+const DCEATTR = SURVEY.find(s=>s.kind==='dce');
+function endHTML(){
+  let rows="";
+  SURVEY.forEach(it=>{
+    if(it.kind==='dce'){
+      const v = answers[it.varname];
+      const val = v===undefined?'—':(v===2?'Neither (status quo)':DCEATTR.aoptions[v].label);
+      rows += `<tr><td class="var">${it.varname}_choice</td><td class="val">${val}</td><td class="note">Which alternative chosen (1 of ~10 tasks). Feeds the mixed-logit model.</td></tr>`;
+    } else if(it.kind==='matrix'){
+      it.rows.forEach(r=>{ const key=it.varname+"__"+r.k; const v=answers[key];
+        rows += `<tr><td class="var">${key}</td><td class="val">${v===undefined?'—':TOL[v]}</td><td class="note">Tolerability of ${r.l}. Within-person → scope slope.</td></tr>`; });
+    } else if(it.varname){
+      const v = answers[it.varname];
+      let val='—';
+      if(v!==undefined){ val = LABELS[it.varname]? LABELS[it.varname][v] : v; }
+      rows += `<tr><td class="var">${it.varname}</td><td class="val">${val}</td><td class="note">${it.chip}</td></tr>`;
+    }
+  });
+  const json = JSON.stringify(answers,null,2);
+  return `<p class="lead">For a participant this is just a thank-you page. For you, here is the <b>row of data your answers produce</b> — the variables, their values, and what each feeds. This is the point of the prototype: see the dataset before you field it.</p>
+    <table class="datatable"><tr><th>Variable</th><th>Your value</th><th>What it is / feeds</th></tr>${rows}</table>
+    <div class="derived"><h4>Derived, not stored as raw fields</h4>
+      <ul style="margin:0;padding-left:18px">
+        <li><b>Acceptable catastrophic risk (the public number)</b> — recovered from the ~10 DCE choices by mixed logit, reported by benefit scenario with credible intervals.</li>
+        <li><b>Willingness-to-pay for safety</b> — from the DCE cost attribute (the stated <code>m5_wtp</code> is a cross-check).</li>
+        <li><b>Scope slope &times; risk literacy</b> — from the within-person Module 4c grid &times; numeracy (Ben's thesis).</li>
+        <li><b>Expert &divide; public multiplier</b> — computed only if the DCE and 4c converge within an order of magnitude (the pre-registered go/no-go); otherwise a bound is reported.</li>
+      </ul></div>
+    <pre class="json">${json.replace(/</g,'&lt;')}</pre>`;
+}
+
+/* ---------- nav ---------- */
+document.getElementById('next').addEventListener('click',()=>{
+  if(idx>=SURVEY.length-1){ idx=0; for(const k in answers) delete answers[k]; render(); return; }
+  idx++; render();
+});
+document.getElementById('back').addEventListener('click',()=>{ if(idx>0){idx--;render();} });
+document.getElementById('notesToggle').addEventListener('change',e=>{
+  document.body.classList.toggle('notes', e.target.checked);
+});
+render();
+</script>
+</body>
+</html>
