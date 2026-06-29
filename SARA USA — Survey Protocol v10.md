@@ -19,7 +19,7 @@ This survey aims to fill what Hadfield and Clark call the *democratic deficit*: 
 | [§4](#4-moderators-who-we-measure-and-why) | Moderators to explore. |
 | [§5](#5-estimating-the-population-view-mrp) | Estimating the *population* view using MRP. |
 | [§6](#6-how-much-does-opinion-move-with-framing) | Testing how opinion moves with framing. |
-| [§7](#7-secondary-modules-not-about-risk-tolerance) | Secondary modules not about risk tolerance: the superintelligence ban, and data centres. |
+| [§7](#7-secondary-modules-not-about-risk-tolerance) | Secondary modules not about risk tolerance: the superintelligence ban (the data-centre module was cut to the dumpster, Appendix C). |
 | [§8](#8-criticisms-and-our-responses) | Criticisms and tentative responses: one table for what we have resolved, one for what we have not. |
 | [§9](#9-open-questions-to-settle) | Open questions we still need to settle. |
 | Appendices | [A](#appendix-a-full-fielding-order-and-demographics) fielding order, [B](#appendix-b-dce-design-and-analysis-summary-of-sara_dce_designr) DCE design, [C](#appendix-c-the-dumpster-considered-deliberately-not-asking) dumpster, [D](#appendix-d-provenance-and-sources) provenance. |
@@ -46,7 +46,7 @@ The four methods run from least anchoring to most. We start by asking for the re
 
 ### 3.1 Method 1: Ask directly, then test whether the answer is real
 
-**The approach.** We do ask people directly for a tolerable risk, but we treat the raw answer with suspicion and build in a test of whether it means anything. The key test is *scope sensitivity*: we present the same fixed-severity disaster at probabilities two orders of magnitude apart and check whether the respondent's tolerance actually tracks the probability. We also collect willingness-to-pay on a log scale.
+**The approach.** We ask people directly for the highest risk they will accept, but build in a test of whether the answer means anything. We ask it across a *severity ladder*, from a single death up to a global catastrophe (around one in ten people), and read off the highest annual chance the respondent will accept at each rung. The key test is *scope sensitivity*: a considered answer demands a lower acceptable chance as the outcome gets worse, so an answer that stays flat across the ladder is affect, not a threshold. This yields each person's stated frequency-number (F–N) curve. We also collect willingness-to-pay on a log scale.
 
 **Why it is worth doing.** It is the most legible method ("the public's own number"), it provides the within-person scope slope that no other method gives, and it is the convergence cross-check for the discrete choice experiment. I have an honors student checking how scope sensitive people are, and who is more scope sensitive.
 
@@ -54,23 +54,25 @@ The four methods run from least anchoring to most. We start by asking for the re
 
 **Strengths.** Directly interpretable; yields the per-person scope slope; cheap; the natural convergence test for the DCE.
 
-**Limitations.** Most exposed to scope insensitivity ("1 in a million for everything"), to protest zeros and outliers in WTP, and to demand effects if the probability rows are seen in an obvious order.
+**Limitations.** Most exposed to scope insensitivity ("1 in a million for everything"), to protest zeros and outliers in WTP, and to demand effects if the ladder rows are seen in an obvious order.
 
-**How we respond.** We measure scope sensitivity instead of designing it away: probability and severity vary *within person*, rows sit two orders of magnitude apart so insensitive respondents are clearly distinguishable, order is randomised, and a between-subjects arm cross-checks for demand effects. We interact the scope slope with risk literacy (Ben's thesis). WTP uses a bounded log scale (not free text) to tame protest zeros and outliers, and the DCE cost coefficient is the *primary* WTP, with this item as the cross-check.
+**How we respond.** We measure scope sensitivity instead of designing it away: severity varies *within person* across the ladder (a single death up to a global catastrophe) and the respondent sets the highest acceptable annual chance at each rung, so an insensitive respondent (flat across the ladder) is clearly distinguishable; row order is randomised, and a between-subjects arm cross-checks for demand effects. We interact the per-person scope slope with risk literacy (Ben's thesis). WTP uses a bounded log scale (not free text) to tame protest zeros and outliers, and the DCE cost coefficient is the *primary* WTP, with this item as the cross-check.
 
 **Worked example items.**
 
-> **(a) Reasonable risk (single shot).** What is the highest annual chance of an AI-caused disaster killing 100,000 people that you would consider *reasonable* for the US to allow?
-> ◯ 1 in 100  ◯ 1 in 1,000  ◯ 1 in 10,000  ◯ 1 in 100,000  ◯ 1 in 1,000,000  ◯ Lower than 1 in 1,000,000  ◯ No level is reasonable
-> *(Echoes the RAISE Act's "unreasonable risk" language.)*
+> **(a) Highest acceptable risk, by outcome (the public's stated F–N curve).** For each outcome, what is the highest chance *per year* you would find acceptable for AI systems to cause it?
 >
-> **(b) Scope (within person).** How acceptable is a disaster that kills 100,000 people if its chance each year is **[randomise order]**:
-> &nbsp;&nbsp;• 1 in 1,000 → Acceptable / Tolerable / Intolerable / Unacceptable
-> &nbsp;&nbsp;• 1 in 100,000 → Acceptable / Tolerable / Intolerable / Unacceptable
-> &nbsp;&nbsp;• 1 in 10,000,000 → Acceptable / Tolerable / Intolerable / Unacceptable
-> *(Rows are two orders of magnitude apart; a respondent who answers identically across all three is flagged scope-insensitive.)*
+> | Outcome | Highest acceptable annual chance |
+> |---|---|
+> | A single death | _(select)_ |
+> | 100+ deaths or serious injuries, or $1 billion in damage | _(select)_ |
+> | 1,000,000+ deaths or $100 billion in damage | _(select)_ |
+> | ~800,000,000 deaths, about 10% of humanity | _(select)_ |
 >
-> **(c) Willingness to pay (log scale).** What is the most you would be willing to pay each year, through higher prices and taxes, to cut the annual chance of an AI catastrophe from 1 in 20 to 1 in 100?
+> Every row uses the same scale: 1 in 10 / 1 in 100 / 1 in 1,000 / 1 in 10,000 / 1 in 100,000 / 1 in 1,000,000 / 1 in 10,000,000 / 1 in 1,000,000,000 / Should never be allowed.
+> *(Respondents see only the plain outcome wording above; the source anchors behind each rung — RAISE Act "critical harm", MIT AI Risk Repository "catastrophic", and FRI/XPT "catastrophe"[^catdef][^fri] — are internal and never shown. Severity rises down the ladder, so a considered respondent's acceptable chance should fall; one who picks the same chance regardless of severity is flagged scope-insensitive. Row order randomised. This traces each person's stated frequency-number, F–N, curve and is the stated-preference cross-check on the DCE's revealed surface, §3.2.)*
+>
+> **(b) Willingness to pay (log scale).** What is the most you would be willing to pay each year, through higher prices and taxes, to cut the annual chance of an AI catastrophe from 1 in 20 to 1 in 100?
 > ◯ $0  ◯ $1–10  ◯ $10–100  ◯ $100–1,000  ◯ $1,000–10,000  ◯ More than $10,000
 
 ### 3.2 Method 2: Reveal preferences through choices (the discrete choice experiment)
@@ -89,23 +91,41 @@ The four methods run from least anchoring to most. We start by asking for the re
 
 | Checklist step (Bridges et al. 2011) | What SARA does |
 |---|---|
-| 1. Well-defined research question, conjoint appropriate | Yes: acceptable annual catastrophe risk, and the safety/utility/competition/cost tradeoff. |
-| 2. Attributes and levels justified | 4 attributes: **safety** (annual chance of a 100,000+ death catastrophe, 1 in 100 → 1 in 1,000,000), **utility** (modest / major / transformative), **competition** (others lead / keep pace / US leads), **cost** ($0 / $100 / $400 / $1,000 per household per year). Severity held fixed so the design's power concentrates on level-of-risk. |
+| 1. Well-defined research question, conjoint appropriate | Yes: acceptable annual catastrophe risk by severity, and the severity/probability/utility/competition/cost tradeoff. |
+| 2. Attributes and levels justified | 5 attributes: **severity** (the catastrophe ladder below, a single death → ~800,000,000 deaths),[^catdef] **probability** (annual chance of that catastrophe, 1 in 100 → 1 in 1,000,000), **utility** (modest / major / transformative), **competition** (others lead / keep pace / US leads), **cost** ($0 / $100 / $400 / $1,000 per household per year). Severity is varied, not fixed, so the design traces the full frequency-severity (F–N) surface rather than a single hard-coded 100,000-death point. |
 | 3. Construction of choice tasks | Two unlabelled AI-future options plus a "keep today's status quo" opt-out, ~10 tasks per respondent. |
-| 4. Experimental design (efficiency) | D-optimal design (Bayesian D-efficient option with priors), 10 blocks, 4,000 respondents; level balance and overlap checked. |
+| 4. Experimental design (efficiency) | Bayesian D-efficient design, 10 blocks, 4,000 respondents; level balance and overlap checked. Fielded in waves with **population-level sequential re-optimisation**: priors are refreshed from accumulated data at fixed checkpoints (see "Population-level sequential design" below and Appendix B). |
 | 5. Preference elicitation format | Forced choice among A / B / opt-out. |
 | 6. Instrument design and data collection | Blocked versions; plain natural-frequency risk labels; oversample the risk module. |
 | 7. Statistical analysis | Mixed logit / hierarchical Bayes; random coefficients on the risk slope and cost; per-respondent posteriors feed the literacy interaction. |
 | 8 & 9. Results, conclusions, reporting | Acceptable risk reported as a *distribution with credible intervals by benefit scenario*, never a point; WTP from the cost coefficient; identification confirmed by simulation (seed 7, coefficients recovered to within ~0.03). |
 
+**Severity ladder (the varied catastrophe attribute).** Severity is one level of a ladder, never a single fixed definition; RAISE/SB 53 is the legal baseline.[^catdef]
+
+| Severity level | Concrete wording shown to respondents | Why this level |
+|---|---|---|
+| A single death | A single death | Lower anchor for the F–N curve |
+| Critical harm | 100+ deaths or serious injuries, or $1 billion in damage | RAISE Act "critical harm" legal anchor[^catdef] |
+| Catastrophic | 1,000,000+ deaths or $100 billion in damage | MIT AI Risk Repository "catastrophic" threshold[^catdef] |
+| Global catastrophe | ~800,000,000 deaths, about 10% of humanity | FRI/XPT "catastrophe"[^fri] |
+
 **Strengths.** Revealed not stated preferences; recovers a defensible number with intervals; lets us read off willingness-to-pay and the competition tradeoff directly; resistant to scope-insensitivity gaming because risk trades against other attributes.
 
 **Limitations.**
-- **Combinatorial size.** Mike's worry: with several attributes at several levels the full factorial is large (here 5 × 3 × 3 × 4 = 180 profiles), and pairwise comparisons explode. You cannot show one person everything.
+- **Combinatorial size.** Mike's worry: with several attributes at several levels the full factorial is large (now 4 × 5 × 3 × 3 × 4 = 720 profiles once severity is varied), and pairwise comparisons explode. You cannot show one person everything.
 - **Cognitive load.** Ten multi-attribute choices is near the upper end of what a general sample handles well.
 - **Hypotheticality.** Stated-choice futures are still hypothetical, even if the format is choice-based.
 
-**How we respond.** We do **not** show every cell to every person. A D-optimal (or Bayesian D-efficient) design selects an efficient subset, split into 10 blocks, so each respondent sees ~10 well-chosen tasks while the *sample* identifies all tradeoffs. We hold severity fixed (scope sensitivity is tested more simply in §3.1), which buys power. We confirmed by simulation that this attribute structure identifies the coefficients and WTP. And the DCE number must agree with the direct method (§3.1) within about one order of magnitude before we report any single public number (the convergence go/no-go, §5).
+**How we respond.** We do **not** show every cell to every person. A Bayesian D-efficient design selects an efficient subset, split into 10 blocks, so each respondent sees ~10 well-chosen tasks while the *sample* identifies all tradeoffs. Severity is a varied attribute (the ladder above), so the DCE traces an F–N surface rather than a single point; the cost is power spread across the larger grid, which the 4,000-respondent sample and an efficient design must absorb. The §3.1 severity-ladder elicitation (a stated F–N curve) stays as the cheaper stated-preference cross-check. We confirmed by simulation that this attribute structure identifies the coefficients and WTP. And the DCE number must agree with the direct method (§3.1) within about one order of magnitude before we report any single public number (the convergence go/no-go, §5).
+
+**Population-level sequential design (adaptive priors).** Adding severity enlarges the grid from 180 to 720 profiles, so a design built on *guessed* priors spreads its power thinly and may concentrate it in the wrong region — public AI-risk tolerance is close to unknown going in. We therefore field in waves and let the **population-level** priors adapt to the data, while holding each respondent's instrument fixed:
+
+1. **Pilot wave** (~500 respondents) on a Bayesian D-efficient design built from diffuse priors (or the 2025 estimates where available).
+2. At fixed sample checkpoints, re-estimate the population coefficients (mixed logit, `logitr`) and regenerate the Bayesian D-efficient design (`cbcTools`) using the posterior mean and covariance as the new priors.
+3. **Main waves** (~3 waves of ~1,170) field the current design; the design is *locked within a wave*.
+4. Lock the design permanently after the final checkpoint; cap the total at 4,000.
+
+The adaptation is **between-respondent only**: it sharpens *which* tradeoffs the next wave sees, never *how* an individual is questioned mid-session. This buys the efficiency and prior-robustness of adaptivity while avoiding the costs of individual-level adaptation — no within-respondent endogeneity, no response-noise chasing, and a fixed, explainable instrument for any given person. Because task selection depends only on past *observed* choices, the adaptive sampling is ignorable for the mixed-logit/HB likelihood, so the pooled estimate stays consistent; we report design-wave as a robustness control. The whole loop is a **pre-registered, deterministic algorithm** — fixed model specification, fixed D-efficiency criterion, fixed seeds, fixed checkpoint sizes, with the design updated only if it improves the Bayesian D-error — so no analyst discretion enters (full specification in Appendix B). **The §3.1 direct elicitation is held fully static**, preserving one fixed, non-adaptive instrument so the convergence cross-check (§5) rests on a clean comparison.
 
 **Worked example choice task.**
 
@@ -113,7 +133,8 @@ The four methods run from least anchoring to most. We start by asking for the re
 >
 > | | **Option A** | **Option B** | **Keep today's status quo** |
 > |---|---|---|---|
-> | Annual chance of a catastrophe (100,000+ deaths) | 1 in 10,000 | 1 in 1,000,000 | (current trajectory) |
+> | Worst catastrophe it could cause | 100+ deaths or $1B damage | 1,000,000+ deaths | (as today) |
+> | Annual chance of that catastrophe | 1 in 10,000 | 1 in 1,000,000 | (current trajectory) |
 > | What AI can do for society | Transformative | Modest | (as today) |
 > | Global competition | US leads | Others lead | (as today) |
 > | Cost to your household per year | $400 | $1,000 | $0 |
@@ -222,11 +243,9 @@ These two modules are deliberately kept separate from the triangulation core bec
 
 At least one item captures support for halting or banning development of smarter-than-human AI. We field the CAIS-style extinction-priority statement and a "treaty to ban smarter-than-human AI" item, with the wording experiment in §6 applied to the superintelligence statement. Reported descriptively (Cluster A), with the framing sensitivity reported alongside.
 
-### 7.2 Data centres and the environment (reverse-halo)
+### 7.2 Data centres and the environment (reverse-halo) — moved to the dumpster (29 Jun 2026)
 
-The environment module runs **first**, before anything reveals the survey is about AI, so the AI label is not primed. A respondent judges whether a large facility (land, power, water, few local jobs, serves elsewhere, ~$2,800/resident/yr in tax) is acceptable when it is randomly described as an AI data centre, a manufacturing plant, a semiconductor factory, or a bottling plant. The AI-minus-generic gap, with the facts held constant, estimates the AI-specific penalty (a reverse halo). Follow-ups test status-quo framing (after Masley) and how much revenue per resident people would forgo.
-
-> **Honest flag on purpose (Mike's own note).** Mike is "relatively unphased by data centres and relatively phased by catastrophic risk." It is not yet clear what decision these items inform. Candidate justifications: (a) they measure an AI-specific affective penalty that may *predict* risk tolerance, giving a useful covariate; (b) they test whether environmental salience is a halo that contaminates risk attitudes; (c) they are publishable on their own as a clean framing experiment. If none of these earns its place against the survey's length budget, this module is a candidate to cut. **Listed as an open question in §9.** The first-fielding position is justified only by the un-priming logic; if the module is cut, the priming concern disappears with it.
+Cut from the live instrument and parked in Appendix C. The module measured an AI-specific affective penalty (a reverse halo) by randomly describing an identical facility as an AI data centre or a generic plant, with status-quo-framing (after Masley) and revenue-forgone follow-ups, fielded first so the AI label was not primed. It was dropped against the survey's length budget: none of its three candidate justifications — a predictive covariate for risk tolerance, a halo control, or a standalone framing experiment — clearly earned its place, and Mike's own note was that the items' decision relevance was unclear. The first-fielding / un-priming rationale lapses with the cut. Recoverable as a standalone study (see Appendix C).
 
 ---
 
@@ -272,7 +291,7 @@ The environment module runs **first**, before anything reveals the survey is abo
 
 1. **Theory of change.** What is the strongest version of "this changes a real decision"? If the honest answer is "it shifts the Overton window and arms regulators with a public number," say so, and design the dissemination around that. (Open item A.)
 2. **The overshoot problem.** If the gap is 3–12 OOMs, is the F–N machinery the right vehicle, or does the simpler "the public finds the current trajectory unacceptable" framing land better and dodge the "absurd precision" dismissal? (Open item B.)
-3. **Data-centre module.** Does it earn its place? Decide which of the three justifications in §7.2 it serves, or cut it.
+3. **Data-centre module.** *Decided (29 Jun 2026): cut to the dumpster (Appendix C); none of the three justifications earned its place against the length budget.*
 4. **Cognitive measures (CRT and need for cognition).** Tentatively dropped to the dumpster (Appendix C) on space and weak rationale; revisit only if a collaborator brings a hypothesis the numeracy item cannot test.
 5. **Argument vs social-proof decomposition (§6).** Approve, modify, or drop the proposed 2×2.
 6. **Convergence failure.** Pre-commit now to exactly what we publish if the DCE and direct methods disagree by more than one OOM (a bound and qualitative finding, with what wording).
@@ -286,11 +305,11 @@ The environment module runs **first**, before anything reveals the survey is abo
 
 Order reflects current fielding. Brackets mark randomisation/logic; long batteries are matrix-sampled (a random 5–8 per respondent). Standard definitions (probability vs impact; personal vs societal; loss-of-control vs application risk, anchored to today's baseline) are shown before any Cluster B item.
 
-1. **Intro (topic-neutral).** "Technology and your community." Does **not** mention AI.
-2. **Environment module (FIRST, unprimed).** env_label (AI vs generic facility), env_reversal (Masley status-quo flip), env_forgo (revenue forgone), env_attitude (energy/water worry, asked last so AI is not primed earlier). *(See §7.2 for the purpose flag.)*
+1. **Information sheet & consent.** UQ Participant Information Sheet (v2.1, ethics 2023/HE002257) and consent ("I consent" / "I do not consent"); a non-consent ends the survey. *(Files: `ethics consent form/`.)*
+2. **Intro (topic-neutral).** "Technology and your community." Does **not** mention AI.
 3. **Module 1: Attitudes (Cluster A).** Good/harm; loss-of-control worry; trust in companies; CAIS extinction-priority statement; too-far / not-far-enough regulating; treaty to ban smarter-than-human AI.
 4. **Information-provision experiment** (random half; §6).
-5. **Free number estimation (§3.1).** Fielded first among the tolerance blocks so no figure we show can anchor the respondent's own number: m4b_reasonable (highest reasonable annual risk); m4c scope (within person).
+5. **Free number estimation (§3.1).** Fielded first among the tolerance blocks so no figure we show can anchor the respondent's own number: m4b_reasonable (highest reasonable annual risk); m4c severity ladder (within person).
 6. **Discrete choice experiment (§3.2).** The DCE, ~10 choice tasks.
 7. **Anchor to accepted safety (§3.3).** 3a-i standards; 3a-ii safety-in-practice; m3_sanity dangerous-activity anchor; m3_attention (bidirectional quality check embedded here).
 8. **Judge a named expert's number (§3.4).** Fielded last because named figures are the strongest anchors: m2_tol_anchor; m2_pace (tolerability of the current pace of disruption); m2_frame_applicable.
@@ -298,6 +317,8 @@ Order reflects current fielding. Brackets mark randomisation/logic; long batteri
 10. **Policy (Cluster A).** m6_certify; **m6_faa** (FAA-style mandatory independent pre-release safety testing with government power to block; Anthropic's stated proposal, presented neutrally as "some have proposed"); m6_fedstate (federal pre-emption vs state patchwork); m6_killswitch; m6_liability.
 11. **Validation.** Within-person consistency; superintelligence-statement wording experiment (§6); free-text authenticity check (no AI tools); the counter-message arm precedes the tolerance block.
 12. **Individual differences and demographics** (§4).
+
+*(The environment / data-centre module was fielded first in v10; cut to the dumpster on 29 Jun 2026 — see Appendix C.)*
 
 **Anchoring note (changed in v9).** The four tolerance blocks are now fielded from least to most anchoring (free estimate, then DCE, then safety comparators, then named-expert figures), matching §3, so an earlier figure cannot anchor a later answer. They sit after the topic-neutral warm-up and the attitude items, so the harder quantitative items are not the respondent's very first task. If you would rather field a gentler block first to cut early dropout, that tradeoff is open (see §9).
 
@@ -312,12 +333,19 @@ Order reflects current fielding. Brackets mark randomisation/logic; long batteri
 
 ## Appendix B: DCE design and analysis (summary of `sara_dce_design.R`)
 
-- **Grid:** safety (5 levels, 1 in 100 → 1 in 1,000,000), utility (3), competition (3), cost (4). Full factorial 180 profiles. Catastrophe defined to respondents as "an AI-caused event that kills 100,000 or more people," severity fixed.
-- **Design:** D-optimal (Bayesian D-efficient option with priors), 2 alternatives + opt-out, 10 tasks, 10 blocks, 4,000 respondents (oversampling the risk module relative to 2025). Level balance and overlap checked (`cbcTools`).
+- **Grid:** severity (4 levels: a single death, critical harm 100+ deaths/$1B, catastrophic 1,000,000+ deaths/$100B, global catastrophe ~800,000,000 deaths),[^catdef] probability (5 levels, annual chance 1 in 100 → 1 in 1,000,000), utility (3), competition (3), cost (4). Full factorial 4 × 5 × 3 × 3 × 4 = 720 profiles. Severity is varied across the four-tier ladder, not fixed; the RAISE Act "critical harm" tier is the legal baseline.
+- **Design:** Bayesian D-efficient, 2 alternatives + opt-out, 10 tasks, 10 blocks, 4,000 respondents (oversampling the risk module relative to 2025). Level balance and overlap checked (`cbcTools`).
+- **Population-level sequential re-optimisation (pre-registered algorithm):**
+  - **Waves:** pilot ~500, then ~3 main waves of ~1,170 (≈4,010 total). Design locked within each wave.
+  - **Checkpoints:** at each wave boundary, re-estimate the population coefficients on all data so far (mixed logit, `logitr`, fixed specification, multistart, fixed seed) and regenerate the Bayesian D-efficient design (`cbcTools`, fixed prior-draw count and seed) using the posterior mean and covariance as priors.
+  - **Update rule:** adopt the regenerated design only if it lowers the Bayesian D-error versus the incumbent; otherwise keep the incumbent. Design is locked permanently after the final checkpoint; hard cap 4,000.
+  - **Why this is not p-hacking:** only the *priors* update — the model, the D-efficiency criterion, the seeds, the checkpoint sizes, and the downstream analysis are all fixed in advance. The algorithm is deterministic given the data; no analyst discretion enters. Task selection depends only on past observed choices, so the adaptive sampling is ignorable for the likelihood and the pooled estimate is consistent; design-wave is reported as a robustness control. §3.1 is held static (non-adaptive).
+- **Fielding pipeline:** survey scripted in **GuidedTrack** (code-based; handles block assignment, task-order randomisation, and Prolific completion-code crediting). The adaptive loop runs *off-platform* in R on the droplet — `cbcTools` (design) + `logitr` (estimation) — with the regenerated block design pasted into the GT program between waves. No within-session compute is required (see chat rationale, 29 Jun 2026).
 - **Estimation:** mixed logit (`logitr`), random normal coefficients on the log-risk slope and cost; multistart.
-- **Recovering the public number:** acceptable annual risk p\* is the level at which an AI-future option equals the status-quo opt-out for a given benefit/competition scenario at cost 0; WTP for a 10× risk reduction is the risk coefficient over the cost coefficient. Report p\* as a distribution with credible intervals by scenario, never a point.
+- **Recovering the public number:** acceptable annual risk p\* is the level at which an AI-future option equals the status-quo opt-out for a given severity tier, benefit/competition scenario at cost 0; WTP for a 10× risk reduction is the risk coefficient over the cost coefficient. Report p\* as a distribution with credible intervals by scenario, never a point.
 - **Identification:** confirmed by simulation (seed 7); coefficients recovered to within ~0.03 of truth.
 - **Go/no-go and multiplier governance:** see §5.
+- **To update before fielding (26 Jun 2026):** `sara_dce_design.R` still encodes the old single-severity design (catastrophe fixed at 100,000). Add severity as a varied attribute (the four-tier ladder), regenerate the design for the larger 720-profile grid, and re-run the identification simulation. **Also implement the sequential loop (29 Jun 2026):** wrap design generation + `logitr` estimation into the wave/checkpoint procedure above, and extend the identification simulation to confirm the *sequential* procedure recovers the coefficients (not just a one-shot static design).
 
 ---
 
@@ -338,6 +366,7 @@ Order reflects current fielding. Brackets mark randomisation/logic; long batteri
 | Priority-risks battery ("government should focus regulation on…") | Removed from the live instrument (MN, 17 Jun 2026) |
 | Cognitive reflection (CRT) battery | Dropped (MN, 26 Jun 2026): too little space and the rationale is too weak to be essential. Overlaps with the numeracy item we keep (same reflective-ability construct, correlations typically r ≈ 0.3–0.5), the classic items are leaked in online panels, and any moderation is likely small. Recoverable if a hypothesis emerges that numeracy cannot test.[^crt] |
 | Need-for-cognition short form | Dropped (MN, 26 Jun 2026): a disposition, not an ability; its plausible effect (engaged respondents answer more steadily) is already captured by numeracy; likely small and the rationale is too weak to justify the items.[^nfc] |
+| Environment / data-centre module (reverse-halo: env_label, env_reversal, env_forgo, env_attitude) | Dropped (MN, 29 Jun 2026): decision relevance unclear; none of the three justifications (predictive covariate, halo control, or standalone framing experiment) earned its place against the length budget. Fielded-first/un-priming rationale lapses with the cut. Recoverable as a standalone framing study (after Masley, *A simple trick to fix the data center debate*). |
 
 ---
 
@@ -382,3 +411,7 @@ I would rather do something that requires little thought than something that is 
 [^open2]: Peter Barnett (review comment, Dec 2025): "the current estimates about AI risk are just so so far from anything remotely acceptable by current standards … I somewhat expect the results to be something like 'Current estimates of AI risk are 3-12 Orders of magnitude too high by the normal standards.' And this is such a crazy thing to say that it might just get discounted … I worry that because the risk situation is so unreasonable by any current risk management standard that trying to use precise risk management tools … won't really work." (Self-described as possibly "too doomy.")
 
 [^open3]: Peter Barnett (review comment, Dec 2025): "I think this relies on being able to accurately assess risks, which I think people will either be bad at, or wildly optimistic (off by multiple OOMs)."
+
+[^catdef]: Definitions of catastrophic AI risk vary substantially across legal, expert-prioritisation, and existential-risk contexts. RAISE/SB 53-style statutory definitions use a relatively low legal threshold: "catastrophic risk" means a foreseeable and material risk that a frontier model will materially contribute to death or serious injury to 100 or more people, or at least $1 billion in property damage, from a single incident involving CBRN assistance, autonomous cyber/criminal conduct, or loss of control. The MIT AI Risk Repository prioritisation study uses a broader expert-severity frame: "catastrophic" harm includes, for example, more than 1 million human deaths, more than USD $100 billion in damage, or civilization-scale intangible harms such as collapse of democratic norms or privacy by 2030 under business as usual. The Existential Risk Persuasion Tournament focused on long-run risks to humanity from AI and other causes, distinguishing catastrophic and extinction outcomes across the century; public summaries report AI catastrophe and extinction probabilities separately, with large disagreement between experts and superforecasters. Because these definitions span ordinary legal catastrophes through existential outcomes, this survey does not assume a single threshold. It varies severity explicitly and reports risk tolerance conditional on the severity described.
+
+[^fri]: Forecasting Research Institute, *Existential Risk Persuasion Tournament* (XPT, 2022). "Catastrophe" is defined as 10% or more of humans dying within a five-year period (about 800 million people at current population; pathogen risks use a 1% threshold). https://forecastingresearch.org/xpt
