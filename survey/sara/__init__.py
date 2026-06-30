@@ -150,8 +150,8 @@ def _clsname(pid):
     return ''.join(w.capitalize() for w in pid.split('_')) + 'Page'
 
 
-# ── Page factories ────────────────────────────────────────────────────
-def _make_content_page(page):
+# ── Page factories (ordn/total passed for the progress bar) ───────────
+def _make_content_page(page, ordn, total):
     item_ids = [it['id'] for it in page.get('items', [])]
     is_brief = page['id'] == 'superintelligence_brief'
 
@@ -160,12 +160,13 @@ def _make_content_page(page):
         form_fields = item_ids
         template_name = 'sara/Page.html'
 
-        def vars_for_template(player, ps=page, brief=is_brief):
+        def vars_for_template(player, ps=page, brief=is_brief, ordn=ordn, total=total):
             body_html = ""
             if brief:
                 st = muskan.get(player.field_maybe_none('muskan_stim') or '')
                 body_html = render.paragraphs(st['body_text']) if st else ""
             return dict(page_title=ps.get('title', ''),
+                        page_index=ordn, page_total=total,
                         body=render.page_body(ps, player, _SCALES, body_html))
 
         def is_displayed(player, ps=page):
@@ -175,36 +176,40 @@ def _make_content_page(page):
     return _P
 
 
-def _make_dce_pages(page):
-    pages = []
-    for tn in range(1, NUM_DCE_TASKS + 1):
-        class _D(Page):
-            form_model = 'player'
-            form_fields = ['dce_%d' % tn]
-            template_name = 'sara/Page.html'
+def _make_dce_page(page, tn, ordn, total):
+    rat = page.get('rationale', '')
 
-            def vars_for_template(player, n=tn):
-                block = player.field_maybe_none('dce_block') or 1
-                return dict(page_title="Discrete choice experiment",
-                            body=render.dce_body(n, NUM_DCE_TASKS,
-                                                 dce.get_task(block, n)))
+    class _D(Page):
+        form_model = 'player'
+        form_fields = ['dce_%d' % tn]
+        template_name = 'sara/Page.html'
 
-            def is_displayed(player):
-                return not _declined(player)
+        def vars_for_template(player, n=tn, ordn=ordn, total=total, rat=rat):
+            block = player.field_maybe_none('dce_block') or 1
+            return dict(page_title="Discrete choice experiment",
+                        page_index=ordn, page_total=total,
+                        body=render.dce_body(n, NUM_DCE_TASKS, dce.get_task(block, n), rat))
 
-        _D.__name__ = 'DceTask%dPage' % tn
-        pages.append(_D)
-    return pages
+        def is_displayed(player):
+            return not _declined(player)
+
+    _D.__name__ = 'DceTask%dPage' % tn
+    return _D
 
 
-# ── Build the page sequence ───────────────────────────────────────────
-page_sequence = []
+# ── Build the page sequence (flatten units, then number them) ─────────
+_units = []
 for _ps in _PAGES:
     if _ps.get('type') == 'dce':
-        for _cls in _make_dce_pages(_ps):
-            globals()[_cls.__name__] = _cls
-            page_sequence.append(_cls)
+        for _tn in range(1, NUM_DCE_TASKS + 1):
+            _units.append(('dce', _ps, _tn))
     else:
-        _cls = _make_content_page(_ps)
-        globals()[_cls.__name__] = _cls
-        page_sequence.append(_cls)
+        _units.append(('content', _ps, None))
+_TOTAL = len(_units)
+
+page_sequence = []
+for _ordn, (_kind, _ps, _tn) in enumerate(_units, 1):
+    _cls = (_make_dce_page(_ps, _tn, _ordn, _TOTAL) if _kind == 'dce'
+            else _make_content_page(_ps, _ordn, _TOTAL))
+    globals()[_cls.__name__] = _cls
+    page_sequence.append(_cls)

@@ -1,29 +1,154 @@
-{{ block title }}{{ page_title }}{{ endblock }}
+{{ block title }}{{ endblock }}
 
 {{ block content }}
 <style>
-  .sara-readbox{background:#f6f9fc;border:1px solid #e3e9f0;border-radius:10px;
-    padding:8px 16px;margin-bottom:18px;font-size:15px;line-height:1.55;}
+  :root{ --accent:#2e5496; --accent2:#1f3864; --soft:#eaf0fa; --line:#e3e9f0;
+         --ink:#1c2733; --muted:#647281; --warn:#c0392b; }
+  .otree-body,.content{max-width:760px;}
+  .otree-title,.page-header{display:none;}
+
+  .sara-top{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid var(--line);
+    margin:-1rem -15px 14px;}
+  .sara-top .inner{max-width:760px;margin:0 auto;padding:8px 18px;display:flex;align-items:center;gap:12px;}
+  .sara-brand{font-weight:800;color:var(--accent2);font-size:14px;}
+  .sara-brand .tag{font-size:9px;font-weight:700;color:#fff;background:var(--accent);border-radius:4px;
+    padding:1px 6px;margin-left:5px;vertical-align:middle;letter-spacing:.05em;}
+  .sara-grow{flex:1;}
+  .sara-switch{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted);cursor:pointer;user-select:none;}
+  .sara-switch input{display:none;}
+  .sara-track{width:34px;height:19px;background:#cdd6e0;border-radius:999px;position:relative;transition:.15s;}
+  .sara-track::after{content:"";position:absolute;top:2px;left:2px;width:15px;height:15px;background:#fff;
+    border-radius:50%;transition:.15s;box-shadow:0 1px 2px rgba(0,0,0,.25);}
+  .sara-switch input:checked + .sara-track{background:var(--accent);}
+  .sara-switch input:checked + .sara-track::after{transform:translateX(15px);}
+  .sara-prog{height:4px;background:#e6eaef;}
+  .sara-bar{height:100%;background:linear-gradient(90deg,var(--accent),#4d79b8);transition:width .25s;}
+
+  .sara-readbox{background:#f6f9fc;border:1px solid var(--line);border-radius:10px;
+    padding:6px 16px;margin-bottom:18px;font-size:15px;line-height:1.55;}
   .sara-readbox p{margin:10px 0;}
   table.meta{border-collapse:collapse;margin:4px 0 12px;font-size:13px;}
-  table.meta td{border:1px solid #e3e9f0;padding:5px 9px;vertical-align:top;}
+  table.meta td{border:1px solid var(--line);padding:5px 9px;vertical-align:top;}
   table.meta td:first-child{font-weight:600;background:#eef2f7;width:32%;}
-  .sara-item{margin:0 0 22px;}
-  .sara-q{font-size:16px;font-weight:600;margin:0 0 10px;line-height:1.5;}
-  .sara-opts{display:flex;flex-direction:column;gap:8px;max-width:620px;}
-  .sara-opt{display:flex;align-items:flex-start;gap:10px;border:1.5px solid #e3e9f0;
-    border-radius:9px;padding:10px 13px;cursor:pointer;background:#fff;}
+
+  .sara-item{margin:0 0 24px;}
+  .sara-qhead{display:flex;align-items:flex-start;gap:8px;}
+  .sara-q{font-size:16px;font-weight:600;margin:0;line-height:1.5;}
+  .sara-info{flex:none;margin-top:1px;width:19px;height:19px;border-radius:50%;border:1.5px solid var(--accent);
+    color:var(--accent);font-size:11px;font-weight:800;line-height:16px;text-align:center;cursor:pointer;
+    background:#fff;user-select:none;font-style:normal;}
+  .sara-info:hover{background:var(--accent);color:#fff;}
+  .sara-rat{display:none;margin-top:10px;border-left:3px solid var(--accent);background:#f6f9ff;
+    border-radius:0 8px 8px 0;padding:9px 13px;font-size:12.5px;color:#33455a;}
+  .sara-rat b{color:var(--accent2);}
+  body.notes .sara-rat{display:block;}
+
+  .sara-opts{display:flex;flex-direction:column;gap:8px;max-width:620px;margin-top:12px;}
+  .sara-opt{display:flex;align-items:flex-start;gap:11px;border:1.5px solid var(--line);border-radius:10px;
+    padding:11px 14px;cursor:pointer;background:#fff;transition:.1s;font-size:15px;}
   .sara-opt:hover{border-color:#b9c7da;background:#fafbfd;}
-  .sara-opt input{margin-top:2px;}
-  .sara-num,.sara-select{font:inherit;padding:9px 12px;border:1.5px solid #cdd6e0;
-    border-radius:8px;max-width:340px;}
-  table.sara-dce{border-collapse:collapse;width:100%;max-width:640px;margin:6px 0 16px;font-size:14px;}
-  table.sara-dce th,table.sara-dce td{border:1px solid #e3e9f0;padding:8px 10px;text-align:left;}
+  .sara-opt.sel{border-color:var(--accent);background:var(--soft);box-shadow:inset 0 0 0 1px var(--accent);}
+  .sara-opt input{margin-top:3px;}
+  .sara-select,.sara-num{font:inherit;padding:9px 12px;border:1.5px solid #cdd6e0;border-radius:8px;
+    max-width:360px;margin-top:12px;}
+
+  table.sara-dce{border-collapse:collapse;width:100%;max-width:640px;margin:8px 0 14px;font-size:14px;}
+  table.sara-dce th,table.sara-dce td{border:1px solid var(--line);padding:8px 10px;text-align:left;}
   table.sara-dce th{background:#eef2f7;}
   table.sara-dce tr td:first-child,table.sara-dce th:first-child{color:#5b6b7c;font-weight:600;}
+
+  .sara-nav{position:sticky;bottom:0;background:#fff;border-top:1px solid var(--line);
+    margin:18px -15px -1rem;padding:12px 18px;display:flex;justify-content:flex-end;}
+  .otree-btn-next{background:var(--accent)!important;border-color:var(--accent)!important;
+    font-weight:650;border-radius:9px;padding:9px 26px;}
+  .otree-btn-next:disabled{opacity:.45;}
+  #sara-tip{position:fixed;z-index:100;max-width:330px;background:#1f2937;color:#f1f5f9;font-size:13px;
+    line-height:1.5;border-radius:9px;padding:11px 13px;box-shadow:0 8px 28px rgba(0,0,0,.28);
+    opacity:0;pointer-events:none;transition:opacity .12s;}
+  #sara-tip.on{opacity:1;}
 </style>
+
+<div class="sara-top">
+  <div class="inner">
+    <div class="sara-brand">SARA · United States 2026 <span class="tag">SURVEY</span></div>
+    <div class="sara-grow"></div>
+    <label class="sara-switch" title="Reveal the design rationale under every question">
+      <input type="checkbox" id="sara-notes"><span class="sara-track"></span><span>Design notes</span>
+    </label>
+  </div>
+  <div class="sara-prog"><div class="sara-bar" id="sara-bar" style="width:0%"></div></div>
+</div>
+
+{% if page_title %}<h3 style="margin:0 0 14px;color:#1f3864;font-size:18px">{{ page_title }}</h3>{% endif %}
 
 {{ body|safe }}
 
-{{ next_button }}
+<div class="sara-nav">{{ next_button }}</div>
+<div id="sara-tip"></div>
+
+<script>
+(function(){
+  var pi = {{ page_index }}, pt = {{ page_total }};
+  var bar = document.getElementById('sara-bar');
+  if (bar && pt) bar.style.width = Math.round(pi / pt * 100) + '%';
+
+  var nt = document.getElementById('sara-notes');
+  if (nt) nt.addEventListener('change', function(e){ document.body.classList.toggle('notes', e.target.checked); });
+
+  // ---- floating tooltip for the info button ----
+  var tip = document.getElementById('sara-tip'), pinned = false;
+  function showTip(el){
+    tip.textContent = el.getAttribute('data-tip') || '';
+    tip.classList.add('on');
+    var r = el.getBoundingClientRect(), tw = Math.min(330, window.innerWidth - 24);
+    tip.style.maxWidth = tw + 'px';
+    var left = r.left; if (left + tw > window.innerWidth - 12) left = window.innerWidth - tw - 12;
+    tip.style.left = Math.max(12, left) + 'px';
+    tip.style.top = (r.bottom + 8) + 'px';
+    if (r.bottom + 8 + tip.offsetHeight > window.innerHeight - 12)
+      tip.style.top = Math.max(12, r.top - tip.offsetHeight - 8) + 'px';
+  }
+  function hideTip(){ if (!pinned) tip.classList.remove('on'); }
+  document.querySelectorAll('.sara-info').forEach(function(b){
+    b.addEventListener('mouseenter', function(){ if(!pinned) showTip(b); });
+    b.addEventListener('mouseleave', hideTip);
+    b.addEventListener('focus', function(){ showTip(b); });
+    b.addEventListener('blur', hideTip);
+    b.addEventListener('click', function(e){ e.stopPropagation(); pinned = true; showTip(b); });
+  });
+  document.addEventListener('click', function(){ pinned = false; tip.classList.remove('on'); });
+
+  // ---- options, single-click advance, mandatory ----
+  var form = document.querySelector('form');
+  var next = document.querySelector('.otree-btn-next');
+  var radios = Array.prototype.slice.call(document.querySelectorAll('input[type=radio]'));
+  var selects = Array.prototype.slice.call(document.querySelectorAll('select'));
+  var nums = Array.prototype.slice.call(document.querySelectorAll('input[type=number]'));
+  var radioNames = radios.reduce(function(s,r){ if(s.indexOf(r.name)<0) s.push(r.name); return s; }, []);
+  var nFields = radioNames.length + selects.length + nums.length;
+  var single = (radioNames.length === 1 && selects.length === 0 && nums.length === 0);
+
+  function complete(){
+    for (var i=0;i<radioNames.length;i++){
+      if (!document.querySelector('input[name="'+radioNames[i]+'"]:checked')) return false;
+    }
+    if (selects.some(function(s){ return !s.value; })) return false;
+    if (nums.some(function(n){ return n.value.trim() === ''; })) return false;
+    return true;
+  }
+  function paint(r){
+    document.querySelectorAll('input[name="'+r.name+'"]').forEach(function(x){
+      var lab = x.closest('.sara-opt'); if (lab) lab.classList.toggle('sel', x.checked);
+    });
+  }
+  function update(){
+    if (next && nFields) next.disabled = !complete();
+    if (single && complete()) setTimeout(function(){ if(next) next.click(); }, 200);
+  }
+  radios.forEach(function(r){ r.addEventListener('change', function(){ paint(r); update(); }); });
+  selects.forEach(function(s){ s.addEventListener('change', update); });
+  nums.forEach(function(n){ n.addEventListener('input', update); });
+  update();
+})();
+</script>
 {{ endblock }}
