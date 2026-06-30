@@ -16,7 +16,7 @@
 library(cbcTools)
 suppressMessages(library(dplyr))
 
-OUT_CSV <- "/Users/michaelnoetel/git/sara_otree/sara/dce_blocks.csv"
+OUT_CSV <- "/Users/michaelnoetel/git/sara2026/survey/sara/dce_blocks.csv"
 
 # ---------------------------------------------------------------------
 # 1. THE GRID  (attributes x levels)  — severity now varied
@@ -25,8 +25,8 @@ OUT_CSV <- "/Users/michaelnoetel/git/sara_otree/sara/dce_blocks.csv"
 # DCE table can render these verbatim.
 profiles <- cbc_profiles(
   severity    = c("A single death",
-                  "100+ deaths or $1B damage",
-                  "1,000,000+ deaths or $100B damage",
+                  "100 deaths or $1B damage",
+                  "1,000,000 deaths or $100B damage",
                   "~800,000,000 deaths (10% of humanity)"),   # SEVERITY (4)
   risk_annual = c("1 in 100", "1 in 1,000", "1 in 10,000",
                   "1 in 100,000", "1 in 1,000,000"),          # PROBABILITY (5)
@@ -109,8 +109,8 @@ try({
   risk_to_logp <- c("1 in 100"=-2, "1 in 1,000"=-3, "1 in 10,000"=-4,
                     "1 in 100,000"=-5, "1 in 1,000,000"=-6)
   sev_to_logn  <- c("A single death"=0,
-                    "100+ deaths or $1B damage"=2,
-                    "1,000,000+ deaths or $100B damage"=6,
+                    "100 deaths or $1B damage"=2,
+                    "1,000,000 deaths or $100B damage"=6,
                     "~800,000,000 deaths (10% of humanity)"=8.9)  # log10(deaths)
 
   sim <- cbc_choices(design, priors = priors)

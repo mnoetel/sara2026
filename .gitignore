@@ -1,6 +1,21 @@
+# OS / Drive cruft
 .DS_Store
+.Rhistory
+Icon?
 *.gdoc
 *.gsheet
 *.gslides
 *.gform
-Icon?
+
+# Python / oTree generated
+__pycache__/
+*.py[cod]
+*.otreezip
+db.sqlite3
+db.sqlite3-journal
+_static_root/
+staticfiles/
+
+# R / analysis outputs (regenerated from scripts)
+poststrat_frame.csv
+.Rproj.user

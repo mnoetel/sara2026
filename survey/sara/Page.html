@@ -1,0 +1,29 @@
+{{ block title }}{{ page_title }}{{ endblock }}
+
+{{ block content }}
+<style>
+  .sara-readbox{background:#f6f9fc;border:1px solid #e3e9f0;border-radius:10px;
+    padding:8px 16px;margin-bottom:18px;font-size:15px;line-height:1.55;}
+  .sara-readbox p{margin:10px 0;}
+  table.meta{border-collapse:collapse;margin:4px 0 12px;font-size:13px;}
+  table.meta td{border:1px solid #e3e9f0;padding:5px 9px;vertical-align:top;}
+  table.meta td:first-child{font-weight:600;background:#eef2f7;width:32%;}
+  .sara-item{margin:0 0 22px;}
+  .sara-q{font-size:16px;font-weight:600;margin:0 0 10px;line-height:1.5;}
+  .sara-opts{display:flex;flex-direction:column;gap:8px;max-width:620px;}
+  .sara-opt{display:flex;align-items:flex-start;gap:10px;border:1.5px solid #e3e9f0;
+    border-radius:9px;padding:10px 13px;cursor:pointer;background:#fff;}
+  .sara-opt:hover{border-color:#b9c7da;background:#fafbfd;}
+  .sara-opt input{margin-top:2px;}
+  .sara-num,.sara-select{font:inherit;padding:9px 12px;border:1.5px solid #cdd6e0;
+    border-radius:8px;max-width:340px;}
+  table.sara-dce{border-collapse:collapse;width:100%;max-width:640px;margin:6px 0 16px;font-size:14px;}
+  table.sara-dce th,table.sara-dce td{border:1px solid #e3e9f0;padding:8px 10px;text-align:left;}
+  table.sara-dce th{background:#eef2f7;}
+  table.sara-dce tr td:first-child,table.sara-dce th:first-child{color:#5b6b7c;font-weight:600;}
+</style>
+
+{{ body|safe }}
+
+{{ next_button }}
+{{ endblock }}

@@ -65,8 +65,8 @@ The four methods run from least anchoring to most. We start by asking for the re
 > | Outcome | Highest acceptable annual chance |
 > |---|---|
 > | A single death | _(select)_ |
-> | 100+ deaths or serious injuries, or $1 billion in damage | _(select)_ |
-> | 1,000,000+ deaths or $100 billion in damage | _(select)_ |
+> | 100 deaths or serious injuries, or $1 billion in damage | _(select)_ |
+> | 1,000,000 deaths or $100 billion in damage | _(select)_ |
 > | ~800,000,000 deaths, about 10% of humanity | _(select)_ |
 >
 > Every row uses the same scale: 1 in 10 / 1 in 100 / 1 in 1,000 / 1 in 10,000 / 1 in 100,000 / 1 in 1,000,000 / 1 in 10,000,000 / 1 in 1,000,000,000 / Should never be allowed.
@@ -105,8 +105,8 @@ The four methods run from least anchoring to most. We start by asking for the re
 | Severity level | Concrete wording shown to respondents | Why this level |
 |---|---|---|
 | A single death | A single death | Lower anchor for the F–N curve |
-| Critical harm | 100+ deaths or serious injuries, or $1 billion in damage | RAISE Act "critical harm" legal anchor[^catdef] |
-| Catastrophic | 1,000,000+ deaths or $100 billion in damage | MIT AI Risk Repository "catastrophic" threshold[^catdef] |
+| Critical harm | 100 deaths or serious injuries, or $1 billion in damage | RAISE Act "critical harm" legal anchor[^catdef] |
+| Catastrophic | 1,000,000 deaths or $100 billion in damage | MIT AI Risk Repository "catastrophic" threshold[^catdef] |
 | Global catastrophe | ~800,000,000 deaths, about 10% of humanity | FRI/XPT "catastrophe"[^fri] |
 
 **Strengths.** Revealed not stated preferences; recovers a defensible number with intervals; lets us read off willingness-to-pay and the competition tradeoff directly; resistant to scope-insensitivity gaming because risk trades against other attributes.
@@ -133,7 +133,7 @@ The adaptation is **between-respondent only**: it sharpens *which* tradeoffs the
 >
 > | | **Option A** | **Option B** | **Keep today's status quo** |
 > |---|---|---|---|
-> | Worst catastrophe it could cause | 100+ deaths or $1B damage | 1,000,000+ deaths | (as today) |
+> | Worst catastrophe it could cause | 100 deaths or $1B damage | 1,000,000 deaths | (as today) |
 > | Annual chance of that catastrophe | 1 in 10,000 | 1 in 1,000,000 | (current trajectory) |
 > | What AI can do for society | Transformative | Modest | (as today) |
 > | Global competition | US leads | Others lead | (as today) |
@@ -177,7 +177,7 @@ The adaptation is **between-respondent only**: it sharpens *which* tradeoffs the
 
 ### 3.4 Method 4: Judge a named expert's number
 
-**The approach.** We hand the respondent a risk figure that a named, real person has stated publicly, and we ask whether that level is acceptable. Because the number is recognised rather than generated, the respondent does the one thing they are good at: judging. We randomise which source they see, across a pool spanning the full range of stated views.
+**The approach.** We hand the respondent risk figures that named, real people have stated publicly, and we ask whether each level is acceptable. Because the numbers are recognised rather than generated, the respondent does the one thing they are good at: judging. We show **several** sources at once, spanning the full range of stated views, and read off the acceptability of each — a within-person tolerance curve rather than a single anchored reading.
 
 **Why it is worth doing.** This is the method that speaks most directly to policy. It does not set the public's risk tolerance in the abstract; it tests whether the *current* expert estimates fall inside or outside that tolerance. If most of the public calls Amodei's stated figure "unacceptable, should be illegal," that is a finding lawmakers can act on without anyone first agreeing on the true probability.
 
@@ -187,15 +187,20 @@ The adaptation is **between-respondent only**: it sharpens *which* tradeoffs the
 
 **Limitations.** (a) Anchoring: people may cluster around whatever number they are shown. (b) The figures must be real and fairly quoted, or the whole item is indefensible. (c) A tolerability rating can still be affect ("I dislike AI") rather than a considered threshold.
 
-**How we respond.** We use a *symmetric* anchor pool, from roughly 0% (LeCun) to 25% (Amodei), plus superforecasters and the Existential Risk Persuasion Tournament (XPT), and we report results *by anchor* so any anchoring effect is visible rather than hidden. Every figure is verified against a citable public statement before fielding (see the flag below). And this method is only one of four; if affect were driving it, the choice-based method (§3.2) would not agree.
+**How we respond.** We show a *symmetric* set of figures within person — from roughly 0% (LeCun) through Altman (~2%) and Musk (~20%) to Amodei (~25%) (superforecaster / XPT medians can be added) — and we report results *by source* so the spread is visible rather than collapsed into one average. Showing several at once also dampens the pull of any single anchor. Every figure is verified against a citable public statement before fielding (see the flag below). And this method is only one of four; if affect were driving it, the choice-based method (§3.2) would not agree.
 
 **Worked example item.**
 
-> Dario Amodei, CEO of the AI company Anthropic, has said there is roughly a **1 in 4 (25%) chance** that advanced AI leads to a catastrophe killing a large fraction of humanity.
-> In your view, accepting a 25% chance of that outcome would be:
-> ◯ Acceptable  ◯ Tolerable  ◯ Intolerable  ◯ Unacceptable (should be illegal)
+> Several public figures have estimated the chance that advanced AI leads to a catastrophe killing a large fraction of humanity. For each, accepting a risk at that level would be:
 >
-> *[Randomise the source and figure across: Yann LeCun (~0%), Sam Altman (~2%), Elon Musk (~10–20%), Dario Amodei (~25%), the median superforecaster, the XPT median. Report by anchor.]*
+> | Source (illustrative figure) | Acceptable | Tolerable | Intolerable | Unacceptable |
+> |---|---|---|---|---|
+> | Yann LeCun (Meta): less than 1 in 10,000 | ◯ | ◯ | ◯ | ◯ |
+> | Sam Altman (OpenAI): about 1 in 50 | ◯ | ◯ | ◯ | ◯ |
+> | Elon Musk (xAI / Tesla): about 1 in 5 | ◯ | ◯ | ◯ | ◯ |
+> | Dario Amodei (Anthropic): about 1 in 4 | ◯ | ◯ | ◯ | ◯ |
+>
+> *[Judged within-person; reported by source. Figures illustrative — replace with exact, citable quotations (source, date, wording) before fielding.]*
 
 > **Field flag.** Every named figure above is illustrative and must be replaced with an exact, citable quotation (source, date, wording) before fielding. Do not field a number we cannot source. This is non-negotiable given the named-attribution design.
 
@@ -228,9 +233,8 @@ A convenience or panel sample is not the US public. We use **multilevel regressi
 
 Critics say poll answers are shallow and shift with messaging. Rather than pretend otherwise, we make the swing a primary outcome.
 
-- **Counter-message arm.** Before the tolerance block, a random third see accelerationist talking points (a16z style), a random third see safety talking points, and a third see none. The swing in tolerance is a headline result. (Requested by Delaney.)
-- **Information-provision experiment.** A random half see a short, balanced explanation of loss-of-control risk plus a counter-consideration. Where informed and uninformed answers diverge, the *informed* estimate is the headline.
-- **Superintelligence-statement wording experiment (Muskan's).** The same statement is shown in two framings (Stem A: campaign / petition wording; Stem B: a neutral permission framing), randomised, to isolate the wording effect on agreement.
+- **Information-provision experiment.** A random half see a short, balanced explanation of loss-of-control risk plus a counter-consideration, *before* the tolerance block. Where informed and uninformed answers diverge, the *informed* estimate is the headline. This is the framing test that touches tolerance; everything else is kept off it.
+- **Superintelligence-briefing experiment (Muskan's 3×3 ELM).** The survey's final module. Each respondent is randomly assigned one pre-built briefing that crosses an argument *for* a ban × an argument *against* it, each at three levels — elite source-cue (peripheral route), substantive argument (central route), or none — then rates ban support. Framed by the Elaboration Likelihood Model: it tests whether the *type* of context (who endorses vs what the argument is) shifts support and certainty, and estimates *considered* support after exposure to both sides. It runs last so its persuasion cannot contaminate the tolerance core. (Supersedes the earlier accel/safety counter-message arm and the Stem-A/B wording experiment, both retired 29 Jun 2026.) Stimuli and the support DV live in the instrument; full design in `Muskan's Expiermnet/`.
 - **Argument vs social proof (proposed decomposition).** Mike's question: when framing moves people, is it the *content* of the argument or the *social signal* (for example, "Prince Harry signed it")? Proposed design: cross the argument (present / absent) with a prestige-signatory cue (present / absent) so we can attribute any movement to the substance or to the social proof. **This is a proposed addition; flag for sign-off (§9).**
 
 ---
@@ -239,9 +243,9 @@ Critics say poll answers are shallow and shift with messaging. Rather than prete
 
 These two modules are deliberately kept separate from the triangulation core because they answer different questions.
 
-### 7.1 The superintelligence ban / treaty
+### 7.1 The superintelligence ban (Muskan's 3×3 briefing experiment)
 
-At least one item captures support for halting or banning development of smarter-than-human AI. We field the CAIS-style extinction-priority statement and a "treaty to ban smarter-than-human AI" item, with the wording experiment in §6 applied to the superintelligence statement. Reported descriptively (Cluster A), with the framing sensitivity reported alongside.
+Support for banning development of smarter-than-human AI is captured by **Muskan's 3×3 ELM briefing experiment**, the final module (§6). After a neutral definition, each respondent reads one randomly-assigned briefing — argument *for* the ban × argument *against*, each elite-cue / substantive / none — then answers two 5-point ban-support items (a pro-ban and an anti-ban statement, reported by top-2-box prevalence and as their difference). The contested (two-sided) cells give the *considered-support* estimate; the one-sided cells carry the ELM mechanism (peripheral source-cue vs central argument). The earlier descriptive twins (CAIS extinction-priority, a neutrally worded "treaty to ban") and the Stem-A/B wording experiment are retired to the dumpster. Item text, the 27 stimuli, and the support DV are in the instrument; the full study design (aims, hypotheses, mediators) is in `Muskan's Expiermnet/`.
 
 ### 7.2 Data centres and the environment (reverse-halo) — moved to the dumpster (29 Jun 2026)
 
@@ -262,7 +266,7 @@ Cut from the live instrument and parked in Appendix C. The module measured an AI
 | 5 | Peter Barnett | "All technologies carry risk" framing misleads | Removed from public-facing items (it imports a wrong "last order of magnitude" frame) |
 | 6 | Peter Barnett | "Negligent" is weaker than "Intolerable" | Scale relabelled to a monotonic Acceptable < Tolerable < Intolerable < Unacceptable |
 | 7 | Peter Barnett | Depends what you call "experts" | Every source named and randomised (LeCun, Altman, Musk, Amodei; superforecasters; XPT); reported by anchor (§3.4) |
-| 8 | Oscar Delaney | Test counter-messages (a16z talking points) | Added a randomised message arm (accel / safety / none) before the tolerance block (§6) |
+| 8 | Oscar Delaney | Test counter-messages (a16z talking points) | Folded into Muskan's 3×3 ELM briefing experiment (§6/§7.1) — the final module, testing source-cue vs argument framing on ban support, kept off the tolerance core |
 | 9 | Peter Barnett | One attention check should be "more strict," one "less strict" | Bidirectional attention-check pair, embedded next to the comparative-standard items so it blends in |
 | 10 | Barnett / Delaney | Give people a neutral intuition for risk levels by comparing to other fields | Relative-standards method (§3.3) plus the dangerous-activity sanity anchor |
 | 11 | Gradient (Carroll, A. Reid, Caetano) | Open with a clear purpose; two question classes | §1–§2 rewrite; Cluster A (attitudes) vs Cluster B (tolerance) split |
@@ -280,7 +284,7 @@ Cut from the live instrument and parked in Appendix C. The module measured an AI
 
 | # | Raised by | The criticism (paraphrased, with the live quote in the footnote) | Where we stand |
 |---|---|---|---|
-| A | Delaney; Barnett agreed | It may not matter what the public thinks here: these are not deeply held beliefs, just numbers people invent when forced, politicians won't weight them, and unless AI becomes personally salient the public won't act on them.[^open1] | **Partially mitigated, not resolved.** We measure stability (counter-message swing, consistency, information effects) and recommend a deliberative Phase 2. But the deeper theory-of-change challenge (does this move decisions?) is unsettled. See §9. |
+| A | Delaney; Barnett agreed | It may not matter what the public thinks here: these are not deeply held beliefs, just numbers people invent when forced, politicians won't weight them, and unless AI becomes personally salient the public won't act on them.[^open1] | **Partially mitigated, not resolved.** We measure stability (the information-provision contrast on tolerance, within-person consistency, the superintelligence-briefing swing on ban support) and recommend a deliberative Phase 2. But the deeper theory-of-change challenge (does this move decisions?) is unsettled. See §9. |
 | B | Barnett | The whole F–N exercise may overshoot: AI risk estimates sit 3–12 orders of magnitude above any tolerated engineering standard, so a precise risk-management chart may "overshoot the graph" and be discounted as absurd.[^open2] | **Partially mitigated.** Headline is now the *gap*, not a point on an F–N curve; the back-out is illustrative only. The residual worry (that the framing invites dismissal) remains. |
 | C | Barnett | The method relies on people accurately assessing risks, which they will do badly or with wild optimism (off by OOMs).[^open3] | **Partially mitigated** via recognition-over-generation, the information-provision arm, and numeracy moderation. Not fully closed. |
 | D | Liam Carroll (Gradient) | Latent-preference and conditional-vs-unconditional points (mostly actioned in §8.1) plus the standing recommendation that a deliberative process may be the better instrument. | Phase 2 deliberative mini-public recommended; not yet scoped or funded. |
@@ -301,79 +305,48 @@ Cut from the live instrument and parked in Appendix C. The module measured an AI
 
 ---
 
-## Appendix A: Full fielding order and demographics
+## Appendix A: Fielding order — assumptions and rationale
 
-Order reflects current fielding. Brackets mark randomisation/logic; long batteries are matrix-sampled (a random 5–8 per respondent). Standard definitions (probability vs impact; personal vs societal; loss-of-control vs application risk, anchored to today's baseline) are shown before any Cluster B item.
+The authoritative item list, response scales, and exact page order **are the instrument** — `survey/sara_usa.yaml` (the single source of truth) and the generated review table `render/review.html`. This appendix gives only the design assumptions behind that order; it does not restate the items.
 
-1. **Information sheet & consent.** UQ Participant Information Sheet (v2.1, ethics 2023/HE002257) and consent ("I consent" / "I do not consent"); a non-consent ends the survey. *(Files: `ethics consent form/`.)*
-2. **Intro (topic-neutral).** "Technology and your community." Does **not** mention AI.
-3. **Module 1: Attitudes (Cluster A).** Good/harm; loss-of-control worry; trust in companies; CAIS extinction-priority statement; too-far / not-far-enough regulating; treaty to ban smarter-than-human AI.
-4. **Information-provision experiment** (random half; §6).
-5. **Free number estimation (§3.1).** Fielded first among the tolerance blocks so no figure we show can anchor the respondent's own number: m4b_reasonable (highest reasonable annual risk); m4c severity ladder (within person).
-6. **Discrete choice experiment (§3.2).** The DCE, ~10 choice tasks.
-7. **Anchor to accepted safety (§3.3).** 3a-i standards; 3a-ii safety-in-practice; m3_sanity dangerous-activity anchor; m3_attention (bidirectional quality check embedded here).
-8. **Judge a named expert's number (§3.4).** Fielded last because named figures are the strongest anchors: m2_tol_anchor; m2_pace (tolerability of the current pace of disruption); m2_frame_applicable.
-9. **Costed tradeoffs.** m5_wtp (log scale); m5b_delay_uncond and m5b_delay_cond (reported separately); m5_race (conditional slowdown).
-10. **Policy (Cluster A).** m6_certify; **m6_faa** (FAA-style mandatory independent pre-release safety testing with government power to block; Anthropic's stated proposal, presented neutrally as "some have proposed"); m6_fedstate (federal pre-emption vs state patchwork); m6_killswitch; m6_liability.
-11. **Validation.** Within-person consistency; superintelligence-statement wording experiment (§6); free-text authenticity check (no AI tools); the counter-message arm precedes the tolerance block.
-12. **Individual differences and demographics** (§4).
+**Standard definitions** (probability vs impact; personal vs societal; loss-of-control vs application risk, anchored to today's baseline) are shown before any Cluster B (tolerance) item.
 
-*(The environment / data-centre module was fielded first in v10; cut to the dumpster on 29 Jun 2026 — see Appendix C.)*
+**Least-to-most anchoring.** The four tolerance methods are fielded *free estimate → DCE → safety comparators → named-expert figures* (matching §3), so an earlier figure cannot anchor a later answer. They sit after the topic-neutral warm-up, so the harder quantitative items are not the respondent's first task. Fielding a gentler block first to cut early dropout is an open tradeoff (§9).
 
-**Anchoring note (changed in v9).** The four tolerance blocks are now fielded from least to most anchoring (free estimate, then DCE, then safety comparators, then named-expert figures), matching §3, so an earlier figure cannot anchor a later answer. They sit after the topic-neutral warm-up and the attitude items, so the harder quantitative items are not the respondent's very first task. If you would rather field a gentler block first to cut early dropout, that tradeoff is open (see §9).
+**Placement of the framing experiments.** Consent comes first (a non-consent ends the survey). The **balanced information-provision arm** (random half) sits *before* the tolerance block by design — the one framing test allowed to touch tolerance. The **persuasive** material (Muskan's 3×3 briefing experiment, §6/§7.1) runs *last*, after demographics, so it cannot contaminate the tolerance core. The environment module, the descriptive-attitudes battery, and m2_pace are cut (the dumpster lives in the instrument).
 
-**Demographics (US Census / ACS categories; verify against the exact ACS pull before fielding):**
-- **Age:** 18–24 / 25–34 / 35–44 / 45–54 / 55–64 / 65–74 / 75+ (ACS B01001, collapsed).
-- **Gender:** Male / Female / In another way–non-binary / prefer not to say. Weighting uses ACS sex controls; the extra category is kept descriptively and allocated, not dropped.
-- **Education:** < high school / high-school grad / some college, no degree / associate / bachelor's / graduate or professional (ACS B15003, collapsed).
-- **Income:** Census/ACS household brackets, < $15k to $200k+ (B19001).
-- **State:** all 50 + DC. No state map unless the per-state effective sample clears the pre-registered threshold.
+**Demographics → MRP.** Age, gender, education, income and state are collected in Census/ACS-aligned categories (B01001 / B15003 / B19001) so they post-stratify cleanly; the exact brackets are in the instrument. ACS sex controls drive weighting (the extra gender category is allocated, not dropped). No state-level map is published unless the per-state effective sample clears the pre-registered threshold. Frame build: `acs_poststrat.R` + `ACS_poststratification_manual.md`.
 
 ---
 
 ## Appendix B: DCE design and analysis (summary of `sara_dce_design.R`)
 
-- **Grid:** severity (4 levels: a single death, critical harm 100+ deaths/$1B, catastrophic 1,000,000+ deaths/$100B, global catastrophe ~800,000,000 deaths),[^catdef] probability (5 levels, annual chance 1 in 100 → 1 in 1,000,000), utility (3), competition (3), cost (4). Full factorial 4 × 5 × 3 × 3 × 4 = 720 profiles. Severity is varied across the four-tier ladder, not fixed; the RAISE Act "critical harm" tier is the legal baseline.
+- **Grid:** severity (4 levels: a single death, critical harm 100 deaths/$1B, catastrophic 1,000,000 deaths/$100B, global catastrophe ~800,000,000 deaths),[^catdef] probability (5 levels, annual chance 1 in 100 → 1 in 1,000,000), utility (3), competition (3), cost (4). Full factorial 4 × 5 × 3 × 3 × 4 = 720 profiles. Severity is varied across the four-tier ladder, not fixed; the RAISE Act "critical harm" tier is the legal baseline.
 - **Design:** Bayesian D-efficient, 2 alternatives + opt-out, 10 tasks, 10 blocks, 4,000 respondents (oversampling the risk module relative to 2025). Level balance and overlap checked (`cbcTools`).
 - **Population-level sequential re-optimisation (pre-registered algorithm):**
   - **Waves:** pilot ~500, then ~3 main waves of ~1,170 (≈4,010 total). Design locked within each wave.
   - **Checkpoints:** at each wave boundary, re-estimate the population coefficients on all data so far (mixed logit, `logitr`, fixed specification, multistart, fixed seed) and regenerate the Bayesian D-efficient design (`cbcTools`, fixed prior-draw count and seed) using the posterior mean and covariance as priors.
   - **Update rule:** adopt the regenerated design only if it lowers the Bayesian D-error versus the incumbent; otherwise keep the incumbent. Design is locked permanently after the final checkpoint; hard cap 4,000.
   - **Why this is not p-hacking:** only the *priors* update — the model, the D-efficiency criterion, the seeds, the checkpoint sizes, and the downstream analysis are all fixed in advance. The algorithm is deterministic given the data; no analyst discretion enters. Task selection depends only on past observed choices, so the adaptive sampling is ignorable for the likelihood and the pooled estimate is consistent; design-wave is reported as a robustness control. §3.1 is held static (non-adaptive).
-- **Fielding pipeline:** survey scripted in **GuidedTrack** (code-based; handles block assignment, task-order randomisation, and Prolific completion-code crediting). The adaptive loop runs *off-platform* in R on the droplet — `cbcTools` (design) + `logitr` (estimation) — with the regenerated block design pasted into the GT program between waves. No within-session compute is required (see chat rationale, 29 Jun 2026).
+- **Fielding pipeline:** the survey is the **oTree app generated from `survey/sara_usa.yaml`** (the single source of truth); it assigns each respondent a DCE block plus the randomisation arms and handles Prolific completion-code crediting. The population-level sequential loop runs *off-platform* in R between waves — `cbcTools` (design) + `logitr` (estimation) — regenerating `survey/sara/dce_blocks.csv` (the per-block design the app reads) for the next wave. No within-session compute is required.
 - **Estimation:** mixed logit (`logitr`), random normal coefficients on the log-risk slope and cost; multistart.
 - **Recovering the public number:** acceptable annual risk p\* is the level at which an AI-future option equals the status-quo opt-out for a given severity tier, benefit/competition scenario at cost 0; WTP for a 10× risk reduction is the risk coefficient over the cost coefficient. Report p\* as a distribution with credible intervals by scenario, never a point.
 - **Identification:** confirmed by simulation (seed 7); coefficients recovered to within ~0.03 of truth.
 - **Go/no-go and multiplier governance:** see §5.
-- **To update before fielding (26 Jun 2026):** `sara_dce_design.R` still encodes the old single-severity design (catastrophe fixed at 100,000). Add severity as a varied attribute (the four-tier ladder), regenerate the design for the larger 720-profile grid, and re-run the identification simulation. **Also implement the sequential loop (29 Jun 2026):** wrap design generation + `logitr` estimation into the wave/checkpoint procedure above, and extend the identification simulation to confirm the *sequential* procedure recovers the coefficients (not just a one-shot static design).
+- **Status / to do before fielding:** `sara_dce_design.R` now encodes the varied-severity 720-profile grid and exports the per-block CSV the app reads (done, 29 Jun 2026). **Still to do:** implement the wave/checkpoint sequential loop (wrap design generation + `logitr` estimation), and extend the identification simulation to confirm the *sequential* procedure recovers the coefficients (not just a one-shot static design).
 
 ---
 
 ## Appendix C: The dumpster (considered, deliberately not asking)
 
-| Item | Why cut |
-|---|---|
-| Icon arrays | Bias judgements upward; kept only as a randomised arm to measure that bias |
-| Verbal societal-risk anchors ("1 in 100 = a pandemic") | Confused 2024 Australian respondents; replaced by familiar-technology comparators |
-| Micromorts | Not clearly validated/intuitive for a general US sample |
-| "All technologies carry residual risk" preamble | Primes acceptance; imports a wrong "last order of magnitude" frame for AI |
-| Off-the-shelf scales (AIAS-4, GAAIS, GRIPS, DOSPERT) | Measure general attitudes / trait risk, not AI-specific tolerance; can't build an F–N curve |
-| "4000× safer" multiplier from a qualitative item | Conflates a qualitative answer with expert estimates (Gradient #16) |
-| Direct "do you support SB 53 / the RAISE Act" | Reads as advocacy; we ask the underlying values question instead |
-| Test–retest recontact wave | Dropped on cost; consistency handled within-survey |
-| "I'd pay whatever it takes" WTP option | Strategic and unbounded; breaks the scale |
-| Mitigations battery ("I'd trust AI more if…") | Removed from the live instrument (MN, 17 Jun 2026); the FAA-style item carries the single most important mitigation; the rest are recoverable here |
-| Priority-risks battery ("government should focus regulation on…") | Removed from the live instrument (MN, 17 Jun 2026) |
-| Cognitive reflection (CRT) battery | Dropped (MN, 26 Jun 2026): too little space and the rationale is too weak to be essential. Overlaps with the numeracy item we keep (same reflective-ability construct, correlations typically r ≈ 0.3–0.5), the classic items are leaked in online panels, and any moderation is likely small. Recoverable if a hypothesis emerges that numeracy cannot test.[^crt] |
-| Need-for-cognition short form | Dropped (MN, 26 Jun 2026): a disposition, not an ability; its plausible effect (engaged respondents answer more steadily) is already captured by numeracy; likely small and the rationale is too weak to justify the items.[^nfc] |
-| Environment / data-centre module (reverse-halo: env_label, env_reversal, env_forgo, env_attitude) | Dropped (MN, 29 Jun 2026): decision relevance unclear; none of the three justifications (predictive covariate, halo control, or standalone framing experiment) earned its place against the length budget. Fielded-first/un-priming rationale lapses with the cut. Recoverable as a standalone framing study (after Masley, *A simple trick to fix the data center debate*). |
+The full ledger of items and modules considered and cut — with the reason for each — lives in the instrument, `survey/sara_usa.yaml`, under the top-level **`dumpster:`** key, so the decision record sits beside the items themselves. It covers the icon arrays, verbal/micromort risk anchors, the "all technologies carry residual risk" preamble, off-the-shelf scales (AIAS-4/GAAIS/GRIPS/DOSPERT), the "4000× safer" multiplier, the direct "support SB 53/RAISE" item, the test–retest wave, the unbounded-WTP option, the mitigations and priority-risks batteries, CRT and need-for-cognition, the environment/data-centre module, the Module 1 descriptive-attitudes battery, m2_pace, and the retired Stem-A/B wording experiment + counter-message arm (superseded by Muskan's 3×3). The deeper rationale for the methodologically interesting cuts is in §2–§3 and §6–§7.
 
 ---
 
 ## Appendix D: Provenance and sources
 
-- Supersedes v6/v7/v8/v9 (markdown) and the v5/v4.1/v4/v3/v2 Word docs and the archived Nov-2025 draft (all retained in this folder).
-- Companion files: `SARA USA — full survey prototype v2.html` (clickable instrument), `sara_dce_design.R` (DCE design + analysis).
+- Supersedes v6/v7/v8/v9 (markdown) and the v5/v4.1/v4/v3/v2 Word docs and the archived Nov-2025 draft (all retained in `ARCHIVED/`).
+- Companion files (the instrument and its toolchain): `survey/sara_usa.yaml` (single source of truth — items, scales, order, dumpster), `render/review.html` (generated review table), `sara_dce_design.R` (DCE design), `acs_poststrat.R` + `ACS_poststratification_manual.md` (MRP frame), `ethics consent form/` (PIS v2.1), `Muskan's Expiermnet/` (3×3 study design).
 - The FAA-model item and cars/airplanes/drugs framing follow Anthropic's public proposal; the contextual EO is the 2 June 2026 White House order *Promoting Advanced AI Innovation and Security* (security-focused, voluntary). **Verify the EO title and date before citing externally.**
 - Round 1 reviewers: Peter Barnett, Oscar Delaney (Dec 2025). Round 2: Gradient Institute (Liam Carroll, Alistair Reid, Tiberio Caetano) (24 Nov 2025). The "skeptical reviewer" is a reconstruction of a Dean-Ball-style critique, not a quotation. (Alistair Reid of Gradient is a different person from Benjamin Reid, whose covariate items appear in §4.)
 - Added measures from Benjamin Reid, *Additional Questions for SARA*.
