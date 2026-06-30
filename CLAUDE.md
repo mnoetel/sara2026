@@ -64,6 +64,5 @@ as a **single-source-of-truth pipeline**. See `README.md` for the overview.
 (`db.sqlite3*`, `poststrat_frame.csv`, `*.otreezip`, `__pycache__`) are gitignored.
 
 ## Git
-Trunk `master`; work on branches + PRs (repo `mnoetel/SARA-survey`, private). Commit only
-when asked. Current feature branches: `ux-polish` (PR #1, the UX layer), `acs-mrp-alignment`
-(the MRP frame + alignment).
+Trunk `main`; work on branches + PRs (repo `mnoetel/SARA-survey`, private). Commit only
+when asked.

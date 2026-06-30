@@ -66,6 +66,6 @@ Schema changes (adding/removing items) need a DB reset: `rm survey/db.sqlite3*`.
 
 ## Git
 
-Repo: `github.com/mnoetel/SARA-survey` (private). Trunk is `master`; feature work goes on
+Repo: `github.com/mnoetel/SARA-survey` (private). Trunk is `main`; feature work goes on
 branches with PRs. Secrets (`.Renviron`) and generated data (`db.sqlite3`,
 `poststrat_frame.csv`, `*.otreezip`) are gitignored.
