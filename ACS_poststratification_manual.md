@@ -94,9 +94,61 @@ This is lighter but loses cross-classification; MRP with the PUMS joint frame
 | Household income | `HINCP` | the nine B19001 brackets, Under $15,000 … $200,000 or more |
 | State | `ST` | FIPS → state name (incl. DC) |
 
+---
+
+## Survey ↔ ACS alignment for MRP (verified against ACS 2024)
+
+For MRP, **every survey demographic must map onto an ACS category** so a population
+cell exists for it. Checked against the live ACS 2024 tables and PUMS codings:
+
+| Survey variable | Survey categories | ACS source | Aligns? |
+|---|---|---|---|
+| **Age** | 7 bins, 18–24 … 75+ | PUMS `AGEP` (continuous); B01001 5-yr groups | ✅ exact |
+| **Sex / gender** | Male / Female / non-binary / prefer-not-to-say | `SEX`, B01001: **Male / Female only** | ⚠️ partial |
+| **Education** | 6 categories | `SCHL`; B15003 (**25+ only**) | ✅ via PUMS |
+| **Household income** | 9 brackets | `HINCP`; B19001 | ✅ exact |
+| **State** | 50 + DC | `ST` / state FIPS | ✅ exact |
+
+**Age — ✅.** The survey's bins aggregate cleanly from B01001's 5-year groups
+(18–24 = 18–19 + 20 + 21 + 22–24; 25–34 = 25–29 + 30–34; … 75+ = 75–79 + 80–84 + 85+),
+and PUMS `AGEP` is continuous so it bins to the survey boundaries exactly. No change.
+
+**Sex / gender — ⚠️ the one real mismatch.** ACS records **only Male and Female** — there
+is no population count for the survey's third option, **"Other or prefer not to say,"** so
+those responses cannot form a post-stratification cell. The question collapses the previous
+non-binary and prefer-not-to-say options into this one group. Keep the inclusive question
+(good practice), but for the MRP *sex* variable decide how to handle that group; pre-register
+one of:
+1. **Allocate** "Other or prefer not to say" to Male/Female (e.g. proportional, or by
+   another covariate) — the protocol's current stated approach;
+2. **Drop** them from the sex margin, post-stratify the rest, and report the group
+   descriptively;
+3. **Sensitivity analysis** comparing (1) and (2).
+This is a values/measurement call, not a coding fix.
+
+**Education — ✅ via PUMS, with a caveat.** The 6 survey categories collapse cleanly
+from B15003's 25 detailed levels (<HS = everything below "Regular high school diploma";
+HS grad = Regular diploma **+** GED; some college = <1 yr **+** 1+ yr no degree;
+associate; bachelor; grad/professional = Master's **+** Professional **+** Doctorate).
+**Caveat:** the *summary table* B15003 covers **age 25+ only** — it has no education for
+18–24-year-olds. So if you rake on summary tables you cannot post-stratify education for
+the 18–24 cell. **Use the PUMS frame** (`SCHL` is present for all ages), which the
+scripts here do. No change needed.
+
+**Household income — ✅.** The 9 survey brackets aggregate cleanly from B19001's 16
+(Under $15,000 = <$10k + $10–15k; $15–25k = $15–20k + $20–25k; … $100–150k = $100–125k +
+$125–150k; $150–200k and $200k+ map 1:1). B19001 is **household** income, matching the
+survey wording. Group-quarters persons (PUMS `HINCP` sentinel **−60000**, ~4% of adults:
+dorms, military, nursing homes) have no household income and are excluded from the
+household-income frame. No change.
+
+**State — ✅.** All 50 + DC, exact.
+
+**Bottom line:** age, education, income and state were designed to ACS boundaries and
+need **no survey changes**. The only open decision is **gender handling** for the
+post-stratification step — pick an approach and pre-register it.
+
 Notes:
-- **Gender:** ACS records only Male/Female, so the survey's non-binary / prefer-not-to-say
-  responses are allocated for weighting (protocol's stated approach).
 - **Income** is household-level; each adult is assigned their household's income.
 - **State reporting threshold:** only publish per-state estimates where the survey's
   effective n clears the pre-registered threshold (protocol §5 / Appendix A).

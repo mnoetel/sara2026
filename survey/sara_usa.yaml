@@ -700,12 +700,12 @@ pages:
         options:
           - Male
           - Female
-          - "In another way / non-binary"
-          - "Prefer not to say"
+          - "Other or prefer not to say"
         rationale: >
           MRP weighting variable. Post-stratification uses the Census ACS sex
-          controls; the additional category is kept descriptively and
-          allocated for weighting.
+          controls (Male / Female only); the combined "Other or prefer not to
+          say" group has no ACS population cell and is allocated for weighting
+          (or handled per the pre-registered approach — see the ACS manual).
         triangulates: []
 
       - id: demo_education

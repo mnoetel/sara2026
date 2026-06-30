@@ -19,3 +19,4 @@ staticfiles/
 # R / analysis outputs (regenerated from scripts)
 poststrat_frame.csv
 .Rproj.user
+.Renviron
