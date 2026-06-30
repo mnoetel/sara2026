@@ -113,15 +113,16 @@ cell exists for it. Checked against the live ACS 2024 tables and PUMS codings:
 (18–24 = 18–19 + 20 + 21 + 22–24; 25–34 = 25–29 + 30–34; … 75+ = 75–79 + 80–84 + 85+),
 and PUMS `AGEP` is continuous so it bins to the survey boundaries exactly. No change.
 
-**Sex / gender — ⚠️ the one real mismatch.** ACS records **only Male and Female** —
-there is no population count for "In another way / non-binary" or "Prefer not to say,"
-so those responses cannot form a post-stratification cell. Keep the inclusive question
-(good practice), but for the MRP *sex* variable you must decide how to handle the others.
-Pre-register one of:
-1. **Allocate** non-binary / PNS to Male/Female (e.g. proportional, or by another
-   covariate) — the protocol's current stated approach;
-2. **Drop** them from the sex margin, post-stratify the rest, and report the excluded
-   group descriptively;
+**Sex / gender — ⚠️ the one real mismatch.** ACS records **only Male and Female** — there
+is no population count for the survey's third option, **"Other or prefer not to say,"** so
+those responses cannot form a post-stratification cell. The question collapses the previous
+non-binary and prefer-not-to-say options into this one group. Keep the inclusive question
+(good practice), but for the MRP *sex* variable decide how to handle that group; pre-register
+one of:
+1. **Allocate** "Other or prefer not to say" to Male/Female (e.g. proportional, or by
+   another covariate) — the protocol's current stated approach;
+2. **Drop** them from the sex margin, post-stratify the rest, and report the group
+   descriptively;
 3. **Sensitivity analysis** comparing (1) and (2).
 This is a values/measurement call, not a coding fix.
 
