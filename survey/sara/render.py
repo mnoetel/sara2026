@@ -59,10 +59,23 @@ def input_html(item, scales):
     return "".join(out)
 
 
+def _info_bits(rationale):
+    """Return (info-button html, inline-note html) for a rationale string."""
+    rationale = (rationale or "").strip()
+    if not rationale:
+        return "", ""
+    info = ('<span class="sara-info" tabindex="0" data-tip="%s" '
+            'title="Why this question is designed this way">i</span>' % esc(rationale))
+    note = '<div class="sara-rat"><b>Why this is designed this way.</b> %s</div>' % esc(rationale)
+    return info, note
+
+
 def item_block(item, player, scales):
     text = substitute(item["text"].strip(), player)
-    return ('<div class="sara-item"><p class="sara-q">%s</p>%s</div>'
-            % (text, input_html(item, scales)))
+    info, note = _info_bits(item.get("rationale"))
+    return ('<div class="sara-item"><div class="sara-qhead">'
+            '<p class="sara-q">%s</p>%s</div>%s%s</div>'
+            % (text, info, input_html(item, scales), note))
 
 
 def page_body(page, player, scales, body_html=""):
@@ -88,7 +101,7 @@ _DCE_ROWS = [
 ]
 
 
-def dce_body(task_num, total, t):
+def dce_body(task_num, total, t, rationale=""):
     rows = "".join(
         '<tr><th>%s</th><td>%s</td><td>%s</td></tr>'
         % (esc(lbl), esc(t.get(ka, "—")), esc(t.get(kb, "—")))
@@ -99,12 +112,15 @@ def dce_body(task_num, total, t):
         % (field, i, lbl)
         for i, lbl in [(1, "Option A"), (2, "Option B"),
                        (3, "Neither — keep today's status quo")])
+    info, note = _info_bits(rationale)
     return (
+        '<div class="sara-item"><div class="sara-qhead">'
         '<p class="sara-q">Here are two possible futures for advanced AI in the US, '
         'plus the option to keep things as they are. Which do you prefer? '
-        '(Task %d of %d)</p>'
+        '(Task %d of %d)</p>%s</div>'
         '<table class="sara-dce"><tr><th></th><th>Option A</th><th>Option B</th></tr>'
-        '%s</table><div class="sara-opts">%s</div>' % (task_num, total, rows, radios))
+        '%s</table><div class="sara-opts">%s</div>%s</div>'
+        % (task_num, total, info, rows, radios, note))
 
 
 def paragraphs(text):
