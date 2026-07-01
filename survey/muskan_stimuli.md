@@ -10,12 +10,12 @@ or xlsx copy of this content — edit it here and nothing else needs to change.
 design workbook the passages were drafted in; it's kept for provenance/audit
 but is no longer read by the pipeline.)
 
-**For reviewers:** leave comments anywhere in this doc (HackMD / Google Docs
-style), same as `sara_usa.md`.
+**For reviewers:** review changes in the GitHub pull request and comment inline
+on the diff, same as `sara_usa.md`.
 
 **For editors:** the fenced ```yaml block below is parsed as-is. Do not add
-prose inside the fence; keep commentary outside it (in this preamble, or in
-HackMD comment threads).
+prose inside the fence; keep commentary outside it (in this preamble, or as PR
+review comments).
 
 Referenced from the `superintelligence_brief` page in `survey/sara_usa.md`,
 which only describes this module in prose and does not restate the passages.

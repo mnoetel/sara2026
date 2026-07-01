@@ -1,6 +1,6 @@
 # SARA USA 2026 Survey
 
-Single-source survey pipeline for the SARA USA 2026 project. All item text, response scales, page ordering, design rationale, and triangulation mappings live in one file, `sara_usa.md` — Markdown wrapping a YAML spec, so it can be co-edited/commented in HackMD or Google Docs. Both the live oTree survey and the peer-review table are generated from it.
+Single-source survey pipeline for the SARA USA 2026 project. All item text, response scales, page ordering, design rationale, and triangulation mappings live in one file, `sara_usa.md` — Markdown wrapping a YAML spec, so changes read as clean diffs reviewed in GitHub pull requests. Both the live oTree survey and the peer-review table are generated from it.
 
 ## Project structure
 
@@ -8,7 +8,7 @@ Single-source survey pipeline for the SARA USA 2026 project. All item text, resp
 survey/
 ├── settings.py            # oTree project settings
 ├── sara_usa.md            # Single source of truth: YAML spec in a fenced block
-│                          #   (Markdown, so it's HackMD/Google-Docs-editable)
+│                          #   (Markdown, so it's reviewed as a GitHub PR diff)
 ├── spec_loader.py         # Extracts + parses the fenced block; shared by the
 │                          #   app and render/ — the only place that knows the format
 ├── sara/

@@ -17,22 +17,25 @@ as a **single-source-of-truth pipeline**. See `README.md` for the overview.
   file directly via `spec_loader.load_spec()`. Edit it there.
   `Muskan's Expiermnet/Superintelligence_3x3_stimuli_v2.xlsx` is kept only as the original
   design workbook for provenance; the pipeline no longer reads it.
-- **It's Markdown on purpose** — collaborators can co-edit and comment on it in HackMD or
-  Google Docs without touching YAML directly. Content outside the fence is prose/commentary
-  and is ignored by the parser; only the fenced block is read. Keep the fence's contents
-  valid YAML.
+- **It's Markdown on purpose** — a change reads as a clean diff in a GitHub pull request,
+  where reviewers comment inline without touching YAML directly. (HackMD round-tripping was
+  dropped — it drifted from the repo; the repo is the single source of truth and review
+  happens on the PR.) Content outside the fence is prose/commentary and is ignored by the
+  parser; only the fenced block is read. Keep the fence's contents valid YAML.
 - **The protocol (`SARA USA — Survey Protocol v10.md`) is context only** — rationale,
   assumptions, criticisms, MRP plan. It must **not** restate items, the fielding list, or
   the dumpster (those are the instrument's job). When you change the instrument, update the
-  protocol's *reasoning* if needed, but don't copy item text into it. **The few places the
-  protocol must quote instrument values** (the worked-example expert anchors, the
-  tolerability/ladder scales, the Method-3 live/cut split) live inside
-  `<!-- BEGIN:auto:KEY -->…<!-- END:auto:KEY -->` markers and are **generated** by
-  `render/sync_protocol.py` from `sara_usa.md` (+ the comparator/sanity pools in
-  `sara/__init__.py`) — never hand-edit between those markers; run `make -C render` (or
-  `python3 render/sync_protocol.py`) to refresh, and `make -C render check-protocol` to
+  protocol's *reasoning* if needed, but don't copy item text into it. **Where the protocol
+  shows actual survey items** — the worked examples for Methods 1/3/4 and the
+  superintelligence module (as collapsible `<details>` blocks so readers can skim or
+  expand), plus the tolerability scale — that content lives inside
+  `<!-- BEGIN:auto:KEY -->…<!-- END:auto:KEY -->` markers and is **generated** by
+  `render/sync_protocol.py` from `sara_usa.md` and the comparator/sanity pools in
+  `sara/__init__.py`. It's **page-based**: add/edit an item on a page and it flows into the
+  briefing on the next build. Never hand-edit between those markers; run `make -C render`
+  (or `python3 render/sync_protocol.py`) to refresh, and `make -C render check-protocol` to
   fail CI on drift. This is the guard against the protocol silently diverging from the
-  instrument.
+  instrument — edit the instrument, not the briefing.
 
 ## How the survey is built
 - `survey/spec_loader.py` — extracts the fenced ` ```yaml ` block from `sara_usa.md` and
