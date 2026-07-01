@@ -36,13 +36,11 @@ meta:
     Four methods triangulate public risk tolerance; see protocol v10.
 
 scales:
-  tolerability4:
+  tolerability2:
     type: likert
     labels:
-      - Acceptable
-      - Tolerable
-      - Intolerable
-      - "Unacceptable / should be illegal"
+      - "Tolerable: okay to live with, if monitored"
+      - "Intolerable: too dangerous, must be fixed"
 
   agree5:
     type: likert
@@ -382,7 +380,7 @@ pages:
           Yann LeCun (Meta) has put the chance that AI wipes out humanity at
           about 1 in 1,000,000 — "less likely than an asteroid wiping us out."
           Accepting a risk at that level would be:
-        scale: tolerability4
+        scale: tolerability2
         widget: radio
         required: true
         rationale: >
@@ -405,7 +403,7 @@ pages:
           Expert forecasters in a large forecasting tournament put the chance
           that AI causes human extinction this century at about 1 in 250.
           Accepting a risk at that level would be:
-        scale: tolerability4
+        scale: tolerability2
         widget: radio
         required: true
         rationale: >
@@ -421,10 +419,10 @@ pages:
 
       - id: m2_experts_fri_domain
         text: >
-          AI-domain experts in the same tournament put the chance that AI
-          causes human extinction this century at about 1 in 30. Accepting a
-          risk at that level would be:
-        scale: tolerability4
+          AI-domain experts in a large forecasting tournament put the chance
+          that AI causes human extinction this century at about 1 in 30.
+          Accepting a risk at that level would be:
+        scale: tolerability2
         widget: radio
         required: true
         rationale: >
@@ -444,7 +442,7 @@ pages:
           Dario Amodei (Anthropic) has estimated the chance that AI goes
           catastrophically wrong at between 1 in 10 and 1 in 4. Accepting a
           risk at that level would be:
-        scale: tolerability4
+        scale: tolerability2
         widget: radio
         required: true
         rationale: >
