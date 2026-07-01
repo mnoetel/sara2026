@@ -574,68 +574,8 @@ pages:
           safety, and competition.
         triangulates: [m5b_delay_uncond, m5b_delay_cond, dce_choice]
 
-  # ── Page 9: Policy ───────────────────────────────────────────────
-  - id: policy
-    title: "Policy preferences"
-    items:
-      - id: m6_firm_approval
-        text: >
-          Some propose regulating frontier AI companies the way regulators
-          oversee banks: instead of approving each AI model, the government
-          would license the company itself — auditing its safety practices
-          and revoking the licence if it falls short. This could catch unsafe
-          practices before release, but requires costly expert audits, ongoing
-          access to company secrets, and could slow the benefits of AI. Do you
-          support or oppose this?
-        scale: null
-        widget: radio
-        required: true
-        options:
-          - "Strongly support"
-          - "Somewhat support"
-          - "Somewhat oppose"
-          - "Strongly oppose"
-          - "Unsure"
-        rationale: >
-          Entity-level regulation: license and audit the frontier lab as a
-          firm, the way financial regulators supervise banks and broker-dealers,
-          rather than approving individual models (the retired FAA-style
-          m6_faa item). This is the direction of Dean Ball's June 2026
-          "independent verification organizations" / Fathom proposal and the
-          Obernolte–Trahan Great American AI Act, which regulate the company
-          not the model because models are numerous, short-lived, and change
-          faster than any per-model threshold can track. Presented neutrally
-          as "some have proposed". Tests the single most consequential
-          mitigation directly.
-        triangulates: [m6_offswitch]
-
-      - id: m6_offswitch
-        text: >
-          Some experts propose that governments build the capability to
-          monitor advanced AI development and, if it becomes dangerous,
-          coordinate internationally to pause or shut it down. This would
-          preserve the option to stop dangerous AI before it is deployed,
-          but requires costly monitoring of computer chips, an enforceable
-          international agreement, and would slow down the benefits of AI.
-          How far should this capability go?
-        scale: null
-        widget: radio
-        required: true
-        options:
-          - "Governments should build the capability for an indefinite, internationally coordinated halt"
-          - "Governments should also be able to pause the whole field for a set period if needed"
-          - "Governments should be able to shut down a specific AI system found to be dangerous"
-          - "No, the costs and risks of concentrated control outweigh the benefit"
-          - "No, voluntary industry safeguards are enough"
-          - "Unsure"
-        rationale: >
-          Tests support for MIRI's proposed "Off Switch": jurisdiction-level
-          infrastructure to monitor and, if needed, halt frontier AI
-          development, not a per-system kill switch. Graduated options track
-          MIRI's own levels (acute shutdown, short pause, long moratorium)
-          and reveal where public support drops as scope widens. Distinct
-          from post-deployment intervention in the RAISE Act or SB 53.
-        triangulates: [m6_firm_approval]
+  # (Page 9: Policy — both items, m6_firm_approval and m6_offswitch, moved to
+  #  the dumpster 1 Jul 2026. The whole policy page is retired.)
 
   # (The old Stem-A/B superintelligence wording item and the accel/safety
   #  counter-message arm were retired 29 Jun 2026 — superseded by Muskan's 3x3
@@ -761,9 +701,7 @@ pages:
         required: true
         rationale: >
           Standard covariate (Jost, 2006). Lets us report across the
-          political spectrum, which matters for a US sample and for
-          the AI-governance items.
-        triangulates: [m6_firm_approval, m6_offswitch]
+          political spectrum, which matters for a US sample.
 
       - id: m9_ai_use
         text: >
@@ -1049,6 +987,58 @@ dumpster:
       hands revealed WTP back to the stated item m5_wtp. Recoverable by
       re-adding cost_usd to sara_dce_design.R if a revealed-WTP number is
       later wanted.
+  - name: m6_firm_approval (regulate frontier AI companies like banks — license and audit the firm)
+    reason: >
+      Cut 1 Jul 2026 along with m6_offswitch, retiring the whole policy page.
+      The entity-level licensing/auditing question probes a specific policy
+      instrument (Ball's "independent verification organizations" / Fathom,
+      the Obernolte–Trahan Great American AI Act) rather than the tolerable-
+      risk headline the survey is built to identify; policy-instrument
+      preference is downstream of the acceptable-risk number the DCE and the
+      m3/m5 items already measure. Recoverable if an entity-vs-model
+      regulation read is later wanted.
+    items:
+      - id: m6_firm_approval
+        text: >
+          Some propose regulating frontier AI companies the way regulators
+          oversee banks: instead of approving each AI model, the government
+          would license the company itself — auditing its safety practices
+          and revoking the licence if it falls short. This could catch unsafe
+          practices before release, but requires costly expert audits, ongoing
+          access to company secrets, and could slow the benefits of AI. Do you
+          support or oppose this?
+        options:
+          - "Strongly support"
+          - "Somewhat support"
+          - "Somewhat oppose"
+          - "Strongly oppose"
+          - "Unsure"
+  - name: m6_offswitch (governments build capability to monitor and, if dangerous, halt frontier AI)
+    reason: >
+      Cut 1 Jul 2026 along with m6_firm_approval, retiring the whole policy
+      page. Tested support for MIRI's proposed jurisdiction-level "Off Switch"
+      (monitor and, if needed, halt frontier AI development). Like
+      m6_firm_approval, it measures preference over a specific policy
+      instrument rather than the tolerable-risk headline; the graduated-scope
+      signal isn't needed for the headline number. Recoverable if a
+      monitor/pause/halt read is later wanted.
+    items:
+      - id: m6_offswitch
+        text: >
+          Some experts propose that governments build the capability to
+          monitor advanced AI development and, if it becomes dangerous,
+          coordinate internationally to pause or shut it down. This would
+          preserve the option to stop dangerous AI before it is deployed,
+          but requires costly monitoring of computer chips, an enforceable
+          international agreement, and would slow down the benefits of AI.
+          How far should this capability go?
+        options:
+          - "Governments should build the capability for an indefinite, internationally coordinated halt"
+          - "Governments should also be able to pause the whole field for a set period if needed"
+          - "Governments should be able to shut down a specific AI system found to be dangerous"
+          - "No, the costs and risks of concentrated control outweigh the benefit"
+          - "No, voluntary industry safeguards are enough"
+          - "Unsure"
   - name: m6_certify (before deployment, who should certify that an AI system is safe?)
     reason: >
       Cut 1 Jul 2026: the certifier question is subsumed by m6_firm_approval
