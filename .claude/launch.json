@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "sara-survey",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-c", "cd survey && otree devserver $PORT"],
+      "port": 8000,
+      "autoPort": true
+    }
+  ]
+}
