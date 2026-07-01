@@ -100,27 +100,35 @@ _DCE_ROWS = [
     ("America's position in AI development", "a_competition", "b_competition"),
 ]
 
-# Plain-language definitions of the "benefit" levels, shown once under each
-# choice table so the short in-cell labels are unambiguous.
-_BENEFIT_LEGEND = [
-    ("Modest", "AI stays roughly as capable as it is today. It becomes more "
-               "reliable and makes fewer mistakes, so it gets used more widely"),
-    ("Major", "AI clearly improves daily life: better, cheaper health care, "
-              "lower prices, and more time for what people care about"),
-    ("Transformative", "AI cures most major diseases. It also makes life's "
-                       "essentials cheap and plentiful, so almost everyone "
-                       "is far better off"),
-]
+# Plain-language definitions of the "benefit" levels. Rendered inline in each
+# benefit cell (below the short label) so the level is unambiguous in place.
+_BENEFIT_DEFS = {
+    "Modest": "AI stays roughly as capable as it is today. It becomes more "
+              "reliable and makes fewer mistakes, so it gets used more widely",
+    "Major": "AI clearly improves daily life: better, cheaper health care, "
+             "lower prices, and more time for what people care about",
+    "Transformative": "AI cures most major diseases. It also makes life's "
+                      "essentials cheap and plentiful, so almost everyone "
+                      "is far better off",
+}
+_BENEFIT_KEYS = ("a_benefit", "b_benefit")
+
+
+def _dce_cell(key, t):
+    """Cell HTML for one attribute value; benefit cells append a definition."""
+    val = t.get(key, "—")
+    if key in _BENEFIT_KEYS and val in _BENEFIT_DEFS:
+        return ('<span class="dce-lvl">%s:</span> '
+                '<span class="dce-def">%s</span>'
+                % (esc(val), esc(_BENEFIT_DEFS[val])))
+    return esc(val)
 
 
 def dce_body(task_num, total, t, rationale=""):
     rows = "".join(
         '<tr><th>%s</th><td>%s</td><td>%s</td></tr>'
-        % (esc(lbl), esc(t.get(ka, "—")), esc(t.get(kb, "—")))
+        % (esc(lbl), _dce_cell(ka, t), _dce_cell(kb, t))
         for lbl, ka, kb in _DCE_ROWS)
-    legend = '<dl class="sara-dce-legend">%s</dl>' % "".join(
-        '<div><dt>%s</dt><dd>%s</dd></div>' % (esc(name), esc(desc))
-        for name, desc in _BENEFIT_LEGEND)
     field = "dce_%d" % task_num
     radios = "".join(
         '<label class="sara-opt"><input type="radio" name="%s" value="%d"><span>%s</span></label>'
@@ -134,8 +142,8 @@ def dce_body(task_num, total, t, rationale=""):
         'plus the option to keep things as they are. Which do you prefer? '
         '(Task %d of %d)</p>%s</div>'
         '<table class="sara-dce"><tr><th></th><th>Option A</th><th>Option B</th></tr>'
-        '%s</table>%s<div class="sara-opts">%s</div>%s</div>'
-        % (task_num, total, info, rows, legend, radios, note))
+        '%s</table><div class="sara-opts">%s</div>%s</div>'
+        % (task_num, total, info, rows, radios, note))
 
 
 def paragraphs(text):
