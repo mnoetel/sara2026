@@ -41,8 +41,14 @@ def input_html(item, scales, player=None):
     iid = item["id"]
     widget = item.get("widget", "radio")
     if widget == "number":
-        return ('<input type="number" inputmode="numeric" class="sara-num" '
-                'name="%s" id="id_%s">' % (iid, iid))
+        box = ('<input type="number" inputmode="numeric" class="sara-num" '
+               'name="%s" id="id_%s">' % (iid, iid))
+        suffix = item.get("suffix")
+        if suffix:
+            return ('<span class="sara-numwrap">%s'
+                    '<span class="sara-suffix">%s</span></span>'
+                    % (box, esc(suffix)))
+        return box
     pairs = _numbered_options(item, scales, player)
     if widget == "select":
         out = ['<select class="sara-select" name="%s" id="id_%s">'
