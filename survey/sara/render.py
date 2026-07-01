@@ -97,7 +97,7 @@ _DCE_ROWS = [
     ("Worst catastrophe it could cause", "a_severity", "b_severity"),
     ("Annual chance of that catastrophe", "a_risk_annual", "b_risk_annual"),
     ("What AI delivers for society", "a_benefit", "b_benefit"),
-    ("Global position", "a_competition", "b_competition"),
+    ("America's position in AI development", "a_competition", "b_competition"),
 ]
 
 # Plain-language definitions of the "benefit" levels, shown once under each

@@ -41,7 +41,8 @@ profiles <- cbc_profiles(
   risk_annual = c("1 in 100", "1 in 1,000", "1 in 10,000",
                   "1 in 100,000", "1 in 1,000,000"),          # PROBABILITY (5)
   benefit     = c("Modest", "Major", "Transformative"),       # UTILITY (3)
-  competition = c("Others lead", "Keep pace", "US leads")     # COMPETITION (3)
+  competition = c("Other countries are ahead", "The US keeps pace",
+                  "The US is ahead")                          # COMPETITION (3)
 )
 # Full factorial = 4 * 5 * 3 * 3 = 180 profiles.
 # Benefit levels are shown to respondents as short labels; render.py prints a
@@ -57,7 +58,7 @@ priors <- cbc_priors(
   severity    = c(-0.8, -1.6, -2.4),   # vs ref "A single death" (worse = lower)
   risk_annual = c(0.6, 1.2, 1.8, 2.4), # vs ref "1 in 100" (safer = higher)
   benefit     = c(0.6, 1.4),           # vs ref "Minor"
-  competition = c(0.3, 0.7),           # vs ref "Others lead"
+  competition = c(0.3, 0.7),           # vs ref "Other countries are ahead"
   no_choice   = -0.2
 )
 
