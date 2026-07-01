@@ -1,7 +1,7 @@
 # SARA USA 2026: Plan and Survey Protocol (v10)
 
 **Survey Assessing Risks from AI 2026**
-**v10, 26 June 2026**
+**v10, 26 June 2026** (prose reconciled with the instrument `survey/sara_usa.md`, 01 Jul 2026)
 
 > "Hadfield argues that governance of any complex technology implicates two distinct types of question: first, democratic questions: what kinds of deception by AI developers count as unfair? **What tradeoffs between utility, safety, and competition does the polity wish to make? What level of catastrophic risk are we willing to tolerate?**"
 > Dean W. Ball, *Leviathan Waking*, Hyperdimensional.[^ball]
@@ -72,8 +72,9 @@ The four methods run from least anchoring to most. We start by asking for the re
 > Every row uses the same scale: 1 in 10 / 1 in 100 / 1 in 1,000 / 1 in 10,000 / 1 in 100,000 / 1 in 1,000,000 / 1 in 10,000,000 / 1 in 1,000,000,000 / Should never be allowed.
 > *(Respondents see only the plain outcome wording above; the source anchors behind each rung — RAISE Act "critical harm", MIT AI Risk Repository "catastrophic", and FRI/XPT "catastrophe"[^catdef][^fri] — are internal and never shown. Severity rises down the ladder, so a considered respondent's acceptable chance should fall; one who picks the same chance regardless of severity is flagged scope-insensitive. Row order randomised. This traces each person's stated frequency-number, F–N, curve and is the stated-preference cross-check on the DCE's revealed surface, §3.2.)*
 >
-> **(b) Willingness to pay (log scale).** What is the most you would be willing to pay each year, through higher prices and taxes, to cut the annual chance of an AI catastrophe from 1 in 20 to 1 in 100?
-> ◯ $0  ◯ $1–10  ◯ $10–100  ◯ $100–1,000  ◯ $1,000–10,000  ◯ More than $10,000
+> **(b) Willingness to pay (log scale).** What is the most you would pay each year, through taxes or higher prices, to cut the chance of an AI catastrophe from 1 in 20 to 1 in 100 over the next 30 years?
+> ◯ $0  ◯ $1–10  ◯ $10–100  ◯ $100–1,000  ◯ $1,000–10,000  ◯ More than $10,000  ◯ Don't know
+> *(Fielded on the costed-tradeoffs page as `m5_wtp`, not adjacent to (a); it is the primary willingness-to-pay estimate now that the DCE has dropped its cost attribute.)*
 
 ### 3.2 Method 2: Reveal preferences through choices (the discrete choice experiment)
 
@@ -152,27 +153,23 @@ The adaptation is **between-respondent only**: it sharpens *which* tradeoffs the
 **Strengths.** Comparative judgements are far easier and more stable than absolute ones; the comparators are concrete and familiar; the result maps onto how regulators actually argue.
 
 **Limitations.**
-- **Category error.** "AI should be *stricter*" can mean stricter *rules* or safer *outcomes*. v7 split these into two items (standards vs safety-in-practice) after Gradient flagged the Figure-11 conflation.
+- **Category error.** "AI should be *stricter*" can mean stricter *rules* or safer *outcomes*. v7 split these into two items (standards vs safety-in-practice) after Gradient flagged the Figure-11 conflation; the safety-in-practice half was later cut to the dumpster (01 Jul 2026), leaving the standards item as the single live comparator (see "How we respond").
 - **The denominator problem (the big one).** "One death per what?" Expert AI risk figures are about the *whole technology*, the equivalent of every nuclear reactor or every flight worldwide, not a single unit. A naive comparison to "a plane crash" is apples to oranges. We make it apples to apples by specifying the comparator at the *industry* level (all reactors, the whole aviation system), matching the scope of the AI estimate.
 - **Quantifiability.** Some respondents reject the premise that AI risk can be put on a number at all. We must not force them onto a scale they reject.
 
-**How we respond.** Two separate items (rules vs outcomes); comparators specified at industry scope to fix the denominator; a *frame-applicability* item that lets people say "AI's risk is too uncertain to put a number on," with primaries reported separately for those who reject the frame; and a dangerous-activity sanity anchor at the risky end (BASE jumping, Everest) so we can confirm people can place AI across the full range. Any F–N back-out is illustrative, gated on the cognitive pre-test, and never published as an "N times safer" headline.
+**How we respond.** One live comparator item on *standards* (rules), the comparator randomised across five familiar industries (nuclear power, commercial aviation, new prescription drugs, cars, large dams) and specified at industry scope to fix the denominator; the safety-in-practice (outcomes) twin and the standalone frame-applicability item were both cut to the dumpster (01 Jul 2026), but the "reject the frame" escape survives as a **"Cannot compare these technologies"** option on the response scale, so no one is forced onto a scale they reject; and a dangerous-activity sanity anchor at the risky end (Everest, BASE jumping, bungee jumping) so we can confirm people can place AI across the full range. Any F–N back-out is illustrative, gated on the cognitive pre-test, and never published as an "N times safer" headline.
 
 **Worked example items.**
 
-> **(a) Standards.** Compared with how strictly the US government regulates **[randomise: nuclear power / commercial aviation / new prescription drugs / cars / large dams]**, regulation of advanced AI should be:
-> ◯ Much less strict  ◯ Somewhat less strict  ◯ About the same  ◯ Somewhat stricter  ◯ Much stricter
+> **(a) Standards (the live item).** Compared with the safety regulations on **[randomise: nuclear power / commercial aviation / new prescription drugs / cars / large dams]**, regulation of advanced AI should be:
+> ◯ Much stricter  ◯ Stricter  ◯ About the same  ◯ Less strict  ◯ Much less strict  ◯ Cannot compare these technologies
+> *(The final option is the frame-rejection escape — see "How we respond". Comparator randomised across respondents.)*
 >
-> **(b) Safety in practice.** Compared with how safe **[same comparator]** is *in practice today*, advanced AI systems should be:
-> ◯ Much less safe  ◯ Somewhat less safe  ◯ About as safe  ◯ Somewhat safer  ◯ Much safer
+> **(b) Sanity anchor (the live check).** Compared with how safe a high-risk voluntary activity is — e.g. **[randomise: climbing Everest kills ~1 in 100; BASE jumping ~1 in 2,300; bungee jumping ~1 in 500,000]** — advanced AI systems should be:
+> ◯ Much safer  ◯ Safer  ◯ About as safe  ◯ Less safe  ◯ Much less safe  ◯ Cannot compare these technologies
+> *(Almost everyone should say AI must be far safer; anyone who does not is flagged. Death rates are approximate and must be verified before fielding.)*
 >
-> **(c) Frame-applicability.** Some technologies (flying, nuclear power) are held to a strict number for how risky they are allowed to be. Which is closer to your view about advanced AI?
-> ◯ "You can put a number on its risk and hold it to a safety limit too"
-> ◯ "Its risk is too uncertain to put a useful number on"
-> ◯ Unsure
-> *(Both options matched for length and reading level; the example sits in the stem so neither option is easier to pick.)*
->
-> **(d) Sanity anchor.** Compared with a high-risk voluntary activity **[randomise: bungee jumping, BASE jumping, climbing Everest]**, how safe should advanced AI be? *(Almost everyone should say "much safer"; anyone who does not is flagged. Comparator death rates are approximate and must be verified before fielding.)*
+> *(Two items retired to the dumpster on 01 Jul 2026: a safety-in-practice/outcomes twin of (a), and a standalone frame-applicability item asking whether AI's risk is "too uncertain to put a useful number on." The outcomes twin wasn't needed for the headline number, and the frame-rejection function it shared with the frame-applicability item now lives in the "Cannot compare these technologies" scale option. A pair of disguised attention checks — same stem and scale, on biological and nuclear weapons — is also embedded among these comparator items; see §8.1 #9.)*
 
 ### 3.4 Method 4: Judge a named expert's number
 
@@ -186,26 +183,26 @@ The adaptation is **between-respondent only**: it sharpens *which* tradeoffs the
 
 **Limitations.** (a) Anchoring: people may cluster around whatever number they are shown. (b) The figures must be real and fairly quoted, or the whole item is indefensible. (c) A tolerability rating can still be affect ("I dislike AI") rather than a considered threshold.
 
-**How we respond.** We show a *symmetric* set of figures within person — from roughly 0% (LeCun) through Altman (~2%) and Musk (~20%) to Amodei (~25%) (superforecaster / XPT medians can be added) — and we report results *by source* so the spread is visible rather than collapsed into one average. Showing several at once also dampens the pull of any single anchor. Every figure is verified against a citable public statement before fielding (see the flag below). And this method is only one of four; if affect were driving it, the choice-based method (§3.2) would not agree.
+**How we respond.** We show a set of figures within person that spans the credible range — from near-zero (LeCun, ~1 in 1,000,000, "less likely than an asteroid wiping us out") through careful forecasters (FRI/XPT superforecasters ~1 in 250, then FRI AI-domain experts ~1 in 30) to the top of the range (Amodei, between 1 in 10 and 1 in 4) — and we report results *by source* so the spread is visible rather than collapsed into one average. (The earlier Altman/Musk anchors were replaced by the two FRI forecaster medians on 01 Jul 2026, so the set now spans named individuals *and* expert-forecaster groups.) Showing several at once also dampens the pull of any single anchor. Every figure is verified against a citable public statement before fielding (see the flag below). And this method is only one of four; if affect were driving it, the choice-based method (§3.2) would not agree.
 
 **Worked example item.**
 
-> Several public figures have estimated the chance that advanced AI leads to a catastrophe killing a large fraction of humanity. For each, accepting a risk at that level would be:
+> Public figures and expert-forecaster groups have estimated the chance that advanced AI leads to a catastrophe (for the two forecaster rows, human extinction this century). Each is judged on the same two-point scale — **Tolerable** ("okay to live with, if monitored") vs **Intolerable** ("too dangerous, must be fixed"):
 >
-> | Source (illustrative figure) | Acceptable | Tolerable | Intolerable | Unacceptable |
-> |---|---|---|---|---|
-> | Yann LeCun (Meta): less than 1 in 10,000 | ◯ | ◯ | ◯ | ◯ |
-> | Sam Altman (OpenAI): about 1 in 50 | ◯ | ◯ | ◯ | ◯ |
-> | Elon Musk (xAI / Tesla): about 1 in 5 | ◯ | ◯ | ◯ | ◯ |
-> | Dario Amodei (Anthropic): about 1 in 4 | ◯ | ◯ | ◯ | ◯ |
+> | Source | Tolerable | Intolerable |
+> |---|---|---|
+> | Yann LeCun (Meta): ~1 in 1,000,000 ("less likely than an asteroid wiping us out") | ◯ | ◯ |
+> | Expert forecasters in a large tournament (FRI/XPT superforecasters): ~1 in 250 | ◯ | ◯ |
+> | AI-domain experts in the same tournament: ~1 in 30 | ◯ | ◯ |
+> | Dario Amodei (Anthropic): between 1 in 10 and 1 in 4 | ◯ | ◯ |
 >
-> *[Judged within-person; reported by source. Figures illustrative — replace with exact, citable quotations (source, date, wording) before fielding.]*
+> *(Each row is a separate item on one page, judged within-person and reported by source. In the fielded instrument the four rows carry their own source citations — LeCun via Wikipedia "P(doom)"; the two forecaster medians via Karger, Rosenberg, Tetlock et al. 2023, the FRI Existential Risk Persuasion Tournament; Amodei via Axios, Morrone 2023 — each flagged "verify before fielding.")*
 
-> **Field flag.** Every named figure above is illustrative and must be replaced with an exact, citable quotation (source, date, wording) before fielding. Do not field a number we cannot source. This is non-negotiable given the named-attribution design.
+> **Field flag.** Each figure now carries a provisional source (above), but every one must still be verified against an exact, citable statement (source, date, wording) before fielding. Do not field a number we cannot source. This is non-negotiable given the named-attribution design.
 
 ### A note on the tolerability scale
 
-All Cluster B items use one monotonic four-point scale: **Acceptable < Tolerable < Intolerable < Unacceptable (should be illegal).** An earlier draft used "negligent / grossly negligent." Barnett pointed out that "negligent" reads as *weaker* than "intolerable," breaking monotonicity, so the scale was relabelled. We mention this because it is a case where a reviewer's small wording point changed the instrument.
+The named-expert items (§3.4) use one **two-point** tolerability scale: **Tolerable** ("okay to live with, if monitored") vs **Intolerable** ("too dangerous, must be fixed"). Earlier drafts used a four-point monotonic scale (Acceptable < Tolerable < Intolerable < Unacceptable / should be illegal); it was collapsed to the two-point forced choice on 01 Jul 2026 for a cleaner, lower-effort judgement across the four within-person anchors. An even earlier draft labelled the middle points "negligent / grossly negligent"; Barnett pointed out that "negligent" reads as *weaker* than "intolerable," breaking monotonicity, so those labels were dropped. We keep the history because it is a case where reviewers' small wording points reshaped the instrument.
 
 ---
 
@@ -263,10 +260,10 @@ Cut from the live instrument and parked in Appendix C. The module measured an AI
 | 3 | Peter Barnett | Tolerability Likert = affect, not a threshold | Accepted; triangulated across four methods, consistency-checked, counter-messaged, numeracy-moderated |
 | 4 | Peter Barnett | F–N overshoots and may be dismissed | Headline reframed to the robust *gap*, not a point threshold; back-out is illustrative only |
 | 5 | Peter Barnett | "All technologies carry risk" framing misleads | Removed from public-facing items (it imports a wrong "last order of magnitude" frame) |
-| 6 | Peter Barnett | "Negligent" is weaker than "Intolerable" | Scale relabelled to a monotonic Acceptable < Tolerable < Intolerable < Unacceptable |
-| 7 | Peter Barnett | Depends what you call "experts" | Every source named and randomised (LeCun, Altman, Musk, Amodei; superforecasters; XPT); reported by anchor (§3.4) |
+| 6 | Peter Barnett | "Negligent" is weaker than "Intolerable" | "Negligent / grossly negligent" labels dropped for a monotonic tolerability scale, later collapsed to a two-point **Tolerable / Intolerable** forced choice (01 Jul 2026) for the named-expert items (§3.4) |
+| 7 | Peter Barnett | Depends what you call "experts" | Every source named and attributed — LeCun, FRI/XPT superforecasters, FRI AI-domain experts, Amodei — and reported by anchor, never as an undifferentiated "experts" (§3.4) |
 | 8 | Oscar Delaney | Test counter-messages (a16z talking points) | Folded into Muskan's 3×3 ELM briefing experiment (§6/§7.1) — the final module, testing source-cue vs argument framing on ban support, kept off the tolerance core |
-| 9 | Peter Barnett | One attention check should be "more strict," one "less strict" | Bidirectional attention-check pair, embedded next to the comparative-standard items so it blends in |
+| 9 | Peter Barnett | One attention check should be "more strict," one "less strict" | Two disguised attention checks embedded among the comparator items (biological weapons, nuclear weapons); both now demand the same endpoint ("Much less strict") because the panel requires *two* failures to exclude and a shared fail criterion is likelier to catch a straightliner on both — so the pair is same-direction by design rather than bidirectional (instrument: m3_att_bioweapons / m3_att_nuclear + the att_failed screen-out) |
 | 10 | Barnett / Delaney | Give people a neutral intuition for risk levels by comparing to other fields | Relative-standards method (§3.3) plus the dangerous-activity sanity anchor |
 | 11 | Gradient (Carroll, A. Reid, Caetano) | Open with a clear purpose; two question classes | §1–§2 rewrite; Cluster A (attitudes) vs Cluster B (tolerance) split |
 | 12 | Gradient | Don't assume a latent quantitative preference exists | Stated explicitly; convergence test (§5); ordinal reporting where it fails |
@@ -274,9 +271,9 @@ Cut from the live instrument and parked in Appendix C. The module measured an AI
 | 14 | Gradient | Don't conflate conditional with unconditional support | Strict conditional-reporting rule; separate unconditional and conditional delay items |
 | 15 | Gradient | A citizens' assembly may beat a poll | Deliberative mini-public recommended as Phase 2 (complement, not replacement) |
 | 16 | Gradient | Drop "public want AI 4000× safer" | Removed; back-out downgraded to illustration |
-| 17 | Gradient | Figure 11 category error ("systems should be stricter") | Split into stricter *standards* (§3.3a) and safer *systems* (§3.3b) |
+| 17 | Gradient | Figure 11 category error ("systems should be stricter") | Split into stricter *standards* and safer *systems*; the standards item is the live comparator, the safer-systems twin was cut to the dumpster (01 Jul 2026) as not needed for the headline number (§3.3) |
 | 18 | Ball-style skeptical review (reconstructed) | "Advocacy in a lab coat" | Pre-registered disconfirmation list + adversarial review: a regulation-skeptic and an environment-skeptic review the instrument pre-launch; their unedited critiques are published with the results |
-| 19 | Ball-style review | Curated alarming anchors | Symmetric anchor pool (LeCun ~0% to Amodei 25%), reported by anchor |
+| 19 | Ball-style review | Curated alarming anchors | Full-range anchor set (LeCun ~1 in 1,000,000 → Amodei 1 in 10–1 in 4, with two FRI forecaster medians in between), reported by anchor |
 | 20 | Ball-style review | Liability options biased | Negligence / duty-of-care middle option added |
 
 ### 8.2 Open, not yet resolved
