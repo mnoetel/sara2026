@@ -62,6 +62,10 @@ def information_sheet_html():
     try:
         with open(_INFO_SHEET_PATH, encoding='utf-8') as fh:
             raw = fh.read()
+        # The canonical doc ends with two ballot-box (☐) consent lines. On this
+        # screen the real consent control is the radio question below the sheet,
+        # so strip the non-functional checkboxes to stop people clicking them.
+        raw = "".join(ln for ln in raw.splitlines(keepends=True) if '☐' not in ln)
     except OSError as e:
         _INFO_SHEET_CACHE = (
             '<div class="alert alert-danger">The Participant Information Sheet '
