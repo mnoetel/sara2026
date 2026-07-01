@@ -116,14 +116,12 @@ scales:
       - Oppose
       - Strongly oppose
 
-  politics7:
+  politics5:
     type: likert
     labels:
       - Very liberal
       - Liberal
-      - Slightly liberal
       - Moderate
-      - Slightly conservative
       - Conservative
       - Very conservative
 
@@ -148,7 +146,7 @@ scales:
       - "1 in 100,000"
       - "1 in 1,000,000"
       - "1 in 10,000,000"
-      - "1 in 1,000,000,000"
+      - "1 in 100,000,000"
       - Never allowed
 
   # ascending agree scale for Muskan's ban-support DV (top-2-box reporting)
@@ -365,7 +363,7 @@ pages:
       - id: m3_att_bioweapons
         text: >
           Compared with the safety regulations on biological weapons, this is an
-          attention check, so you must select "Much less strict":
+          attention check, so you must select much less strict:
         scale: strictness5_cantcompare
         widget: radio
         required: true
@@ -385,7 +383,7 @@ pages:
       - id: m3_att_nuclear
         text: >
           Compared with the safety regulations on nuclear weapons, this is
-          an attention check, so you must select "Much less strict":
+          an attention check, so you must select much less strict:
         scale: strictness5_cantcompare
         widget: radio
         required: true
@@ -410,7 +408,7 @@ pages:
     title: "Thank you for your time"
     condition: att_failed
     body: |
-      <p>Thank you for your time. Based on your responses, you do not qualify
+      <p>Thank you for your time. Because you failed two attention checks, you do not qualify
       to continue this study.</p>
       <p>You are being returned to Prolific now. If you are not redirected
       automatically within a few seconds, please
@@ -428,7 +426,7 @@ pages:
       # only thing that changes is the number the respondent is judging.
       - id: m2_experts_lecun
         text: >
-          Yann LeCun (Meta) has put the chance that AI wipes out humanity at
+          Yann LeCun (Turing Award winner) has put the chance that AI wipes out humanity at
           about 1 in 1,000,000 — "less likely than an asteroid wiping us out."
           Accepting a risk at that level would be:
         scale: tolerability2
@@ -490,7 +488,7 @@ pages:
 
       - id: m2_experts_amodei
         text: >
-          Dario Amodei (Anthropic) has estimated the chance that AI goes
+          Dario Amodei (CEO of Top AI Company, Anthropic) has estimated the chance that AI goes
           catastrophically wrong at between 1 in 10 and 1 in 4. Accepting a
           risk at that level would be:
         scale: tolerability2
@@ -774,7 +772,7 @@ pages:
       - id: m9_politics
         text: >
           In general, how would you describe your political views?
-        scale: politics7
+        scale: politics5
         widget: radio
         required: true
         rationale: >
