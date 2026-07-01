@@ -345,8 +345,8 @@ pages:
 
       - id: m3_att_elevator
         text: >
-          Compared with the safety regulations on elevators, this is an
-          attention check, so you must select "Somewhat stricter":
+          Compared with the safety regulations on biological weapons, this is an
+          attention check, so you must select much less strict:
         scale: strictness5_cantcompare
         widget: radio
         required: true
@@ -359,8 +359,8 @@ pages:
 
       - id: m3_att_playground
         text: >
-          Compared with the safety regulations on playground equipment, this is
-          an attention check, so you must select "Somewhat stricter":
+          Compared with the safety regulations on nuclear weapons, this is
+          an attention check, so you must select much less strict:
         scale: strictness5_cantcompare
         widget: radio
         required: true
