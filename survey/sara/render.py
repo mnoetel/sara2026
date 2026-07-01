@@ -9,6 +9,7 @@ Submitted ``name=<item_id> value=<1-based index>`` matches each item's oTree
 IntegerField(choices=...), so answers still save the normal way.
 """
 import html
+import random
 
 # default arm values (used before creating_session / in admin previews)
 _DEF_COMPARATOR = "nuclear power"
@@ -36,23 +37,37 @@ def _options_for(item, scales):
     return None
 
 
-def input_html(item, scales):
+def _numbered_options(item, scales, player=None):
+    """(value, label) pairs where value is the option's ORIGINAL 1-based index
+    (so the saved answer maps to the same option regardless of display order).
+    If the item sets ``shuffle_options: true``, the display order is shuffled
+    per-participant (seeded on participant.code + item id) so it's stable across
+    re-renders but the correct answer isn't always in a fixed position."""
+    pairs = list(enumerate(_options_for(item, scales) or [], 1))
+    if item.get("shuffle_options") and player is not None:
+        code = getattr(getattr(player, "participant", None), "code", None)
+        if code:
+            random.Random("%s|%s" % (code, item["id"])).shuffle(pairs)
+    return pairs
+
+
+def input_html(item, scales, player=None):
     iid = item["id"]
     widget = item.get("widget", "radio")
     if widget == "number":
         return ('<input type="number" inputmode="numeric" class="sara-num" '
                 'name="%s" id="id_%s">' % (iid, iid))
-    opts = _options_for(item, scales) or []
+    pairs = _numbered_options(item, scales, player)
     if widget == "select":
         out = ['<select class="sara-select" name="%s" id="id_%s">'
                '<option value="">— select —</option>' % (iid, iid)]
-        for i, o in enumerate(opts, 1):
+        for i, o in pairs:
             out.append('<option value="%d">%s</option>' % (i, esc(o)))
         out.append("</select>")
         return "".join(out)
     # radio (default)
     out = ['<div class="sara-opts">']
-    for i, o in enumerate(opts, 1):
+    for i, o in pairs:
         out.append('<label class="sara-opt"><input type="radio" name="%s" value="%d">'
                    '<span>%s</span></label>' % (iid, i, esc(o)))
     out.append("</div>")
@@ -75,7 +90,7 @@ def item_block(item, player, scales):
     info, note = _info_bits(item.get("rationale"))
     return ('<div class="sara-item"><div class="sara-qhead">'
             '<p class="sara-q">%s</p>%s</div>%s%s</div>'
-            % (text, info, input_html(item, scales), note))
+            % (text, info, input_html(item, scales, player), note))
 
 
 def page_body(page, player, scales, body_html=""):

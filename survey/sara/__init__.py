@@ -172,6 +172,8 @@ def _page_displayed(player, page):
         return bool(player.field_maybe_none('info_arm'))
     if cond == 'muskan_not_control':
         return not muskan.is_control(player.field_maybe_none('muskan_stim') or '')
+    if cond == 'muskan_control':
+        return muskan.is_control(player.field_maybe_none('muskan_stim') or '')
     return True
 
 

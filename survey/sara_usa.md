@@ -956,6 +956,35 @@ pages:
           omitted from this prototype build.
         triangulates: [muskan_support]
 
+  # Comprehension check shown ONLY to the pure-control cell (cell 9,
+  # none x none). These participants read no argument and only the neutral
+  # definition, so we verify they grasp what "superintelligence" means —
+  # i.e. what they were just asked whether to ban. Non-control cells skip it
+  # (their briefing already re-states the concept). Correct answer is the
+  # 4th option ("does almost everything more intelligently than most humans").
+  - id: superintelligence_check
+    title: "One quick check"
+    condition: muskan_control
+    items:
+      - id: muskan_si_comprehension
+        text: >
+          Which of the following is closest to artificial superintelligence?
+          A computer program that…
+        options:
+          - "does writing as intelligently as most humans"
+          - "does some things as intelligently as most humans"
+          - "does almost everything as intelligently as most humans"
+          - "does almost everything more intelligently than most humans"
+        widget: radio
+        shuffle_options: true
+        required: true
+        rationale: >
+          Comprehension check for the pure-control cell only. Control
+          participants get no argument and only the neutral definition, so this
+          confirms they understood what they were asked to (dis)allow banning.
+          Correct = option 4 ("more intelligently than most humans"). Used to
+          flag/weight low-comprehension control responses, not scored as a DV.
+
   # ── End page ────────────────────────────────────────────────────
   - id: end
     title: "Thank you"
