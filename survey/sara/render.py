@@ -203,11 +203,21 @@ def dce_body(task_num, total, t, rationale=""):
         % (esc(lbl), _dce_cell(ka, t), _dce_cell(kb, t))
         for lbl, ka, kb in _DCE_ROWS)
     field = "dce_%d" % task_num
-    radios = "".join(
-        '<label class="sara-opt"><input type="radio" name="%s" value="%d"><span>%s</span></label>'
-        % (field, i, lbl)
-        for i, lbl in [(1, "Option A"), (2, "Option B"),
-                       (3, "Neither — keep today's status quo")])
+    # Pick controls sit at the foot of each column so the choice is spatially
+    # contiguous with the option it refers to (click under the one you prefer).
+    pick = (
+        '<tr class="dce-pickrow"><th></th>'
+        '<td class="dce-pickcell">'
+        '<label class="sara-opt dce-pick"><input type="radio" name="%s" value="1">'
+        '<span>Choose Option A</span></label></td>'
+        '<td class="dce-pickcell">'
+        '<label class="sara-opt dce-pick"><input type="radio" name="%s" value="2">'
+        '<span>Choose Option B</span></label></td></tr>'
+        % (field, field))
+    neither = (
+        '<label class="sara-opt dce-neither"><input type="radio" name="%s" value="3">'
+        '<span>Neither &mdash; keep today\'s status quo</span></label>'
+        % field)
     info, note = _info_bits(rationale)
     return (
         '<div class="sara-item"><div class="sara-qhead">'
@@ -215,8 +225,8 @@ def dce_body(task_num, total, t, rationale=""):
         'plus the option to keep things as they are. Which do you prefer? '
         '(Task %d of %d)</p>%s</div>'
         '<table class="sara-dce"><tr><th></th><th>Option A</th><th>Option B</th></tr>'
-        '%s</table><div class="sara-opts">%s</div>%s</div>'
-        % (task_num, total, info, rows, radios, note))
+        '%s%s</table>%s%s</div>'
+        % (task_num, total, info, rows, pick, neither, note))
 
 
 def paragraphs(text):
