@@ -68,13 +68,13 @@ The four methods run from least anchoring to most. We start by asking for the re
 <summary>Method 1 — the severity-ladder items, as fielded — 4 items (click to expand)</summary>
 
 - **`m4c_single`** — For an AI disaster that causes a single death, the highest annual chance you would find acceptable is:
-  - _Scale:_ 1 in 10 / 1 in 100 / 1 in 1,000 / 1 in 10,000 / 1 in 100,000 / 1 in 1,000,000 / 1 in 10,000,000 / 1 in 1,000,000,000 / Never allowed
+  - _Scale:_ 1 in 10 / 1 in 100 / 1 in 1,000 / 1 in 10,000 / 1 in 100,000 / 1 in 1,000,000 / 1 in 10,000,000 / 1 in 100,000,000 / Never allowed
 - **`m4c_100`** — For an AI disaster causing 100 deaths or serious injuries, or $1 billion in damage, the highest annual chance you would find acceptable is:
-  - _Scale:_ 1 in 10 / 1 in 100 / 1 in 1,000 / 1 in 10,000 / 1 in 100,000 / 1 in 1,000,000 / 1 in 10,000,000 / 1 in 1,000,000,000 / Never allowed
+  - _Scale:_ 1 in 10 / 1 in 100 / 1 in 1,000 / 1 in 10,000 / 1 in 100,000 / 1 in 1,000,000 / 1 in 10,000,000 / 1 in 100,000,000 / Never allowed
 - **`m4c_1m`** — For an AI disaster causing 1,000,000 deaths or $100 billion in damage, the highest annual chance you would find acceptable is:
-  - _Scale:_ 1 in 10 / 1 in 100 / 1 in 1,000 / 1 in 10,000 / 1 in 100,000 / 1 in 1,000,000 / 1 in 10,000,000 / 1 in 1,000,000,000 / Never allowed
+  - _Scale:_ 1 in 10 / 1 in 100 / 1 in 1,000 / 1 in 10,000 / 1 in 100,000 / 1 in 1,000,000 / 1 in 10,000,000 / 1 in 100,000,000 / Never allowed
 - **`m4c_800m`** — For an AI disaster causing around 800,000,000 deaths (about 10% of humanity), the highest annual chance you would find acceptable is:
-  - _Scale:_ 1 in 10 / 1 in 100 / 1 in 1,000 / 1 in 10,000 / 1 in 100,000 / 1 in 1,000,000 / 1 in 10,000,000 / 1 in 1,000,000,000 / Never allowed
+  - _Scale:_ 1 in 10 / 1 in 100 / 1 in 1,000 / 1 in 10,000 / 1 in 100,000 / 1 in 1,000,000 / 1 in 10,000,000 / 1 in 100,000,000 / Never allowed
 
 </details>
 
@@ -238,13 +238,13 @@ Cut from this method (retired to the dumpster, recoverable):
 <details>
 <summary>Method 4 — the named-source items, as fielded — 4 items (click to expand)</summary>
 
-- **`m2_experts_lecun`** — Yann LeCun (Meta) has put the chance that AI wipes out humanity at about 1 in 1,000,000 — "less likely than an asteroid wiping us out." Accepting a risk at that level would be:
+- **`m2_experts_lecun`** — Yann LeCun (Turing Award winner) has put the chance that AI wipes out humanity at about 1 in 1,000,000 — "less likely than an asteroid wiping us out." Accepting a risk at that level would be:
   - _Scale:_ Tolerable: okay to live with, if monitored / Intolerable: too dangerous, must be fixed
 - **`m2_experts_fri_super`** — Expert forecasters in a large forecasting tournament put the chance that AI causes human extinction this century at about 1 in 250. Accepting a risk at that level would be:
   - _Scale:_ Tolerable: okay to live with, if monitored / Intolerable: too dangerous, must be fixed
 - **`m2_experts_fri_domain`** — AI-domain experts in a large forecasting tournament put the chance that AI causes human extinction this century at about 1 in 30. Accepting a risk at that level would be:
   - _Scale:_ Tolerable: okay to live with, if monitored / Intolerable: too dangerous, must be fixed
-- **`m2_experts_amodei`** — Dario Amodei (Anthropic) has estimated the chance that AI goes catastrophically wrong at between 1 in 10 and 1 in 4. Accepting a risk at that level would be:
+- **`m2_experts_amodei`** — Dario Amodei (CEO of Top AI Company, Anthropic) has estimated the chance that AI goes catastrophically wrong at between 1 in 10 and 1 in 4. Accepting a risk at that level would be:
   - _Scale:_ Tolerable: okay to live with, if monitored / Intolerable: too dangerous, must be fixed
 
 </details>

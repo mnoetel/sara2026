@@ -107,15 +107,6 @@ scales:
       - Not worthwhile
       - Clearly not worthwhile
 
-  support_delay5:
-    type: likert
-    labels:
-      - Strongly support
-      - Support
-      - Neither
-      - Oppose
-      - Strongly oppose
-
   politics5:
     type: likert
     labels:
@@ -535,7 +526,7 @@ pages:
         text: >
           Putting risk to one side, would you support or oppose delaying the
           deployment of advanced AI by several years?
-        scale: support_delay5
+        scale: support5
         widget: radio
         required: true
         rationale: >
@@ -575,12 +566,15 @@ pages:
   - id: policy
     title: "Policy preferences"
     items:
-      - id: m6_faa
+      - id: m6_firm_approval
         text: >
-          Some have proposed regulating frontier AI like the FAA regulates
-          aircraft: models would have to pass independent safety testing
-          before release, and the government could block or reverse a release
-          that fails to meet safety standards. Do you support or oppose this?
+          Some propose regulating frontier AI companies the way regulators
+          oversee banks: instead of approving each AI model, the government
+          would license the company itself — auditing its safety practices
+          and revoking the licence if it falls short. This could catch unsafe
+          practices before release, but requires costly expert audits, ongoing
+          access to company secrets, and could slow the benefits of AI. Do you
+          support or oppose this?
         scale: null
         widget: radio
         required: true
@@ -591,67 +585,45 @@ pages:
           - "Strongly oppose"
           - "Unsure"
         rationale: >
-          The FAA model: binding pre-release testing. This is Anthropic's
-          stated proposal, presented neutrally as "some have proposed". It
-          goes beyond the June 2026 White House executive order, which is
-          security-focused and explicitly voluntary. Tests the single most
-          consequential mitigation directly.
-        triangulates: [m6_liability, m6_killswitch]
+          Entity-level regulation: license and audit the frontier lab as a
+          firm, the way financial regulators supervise banks and broker-dealers,
+          rather than approving individual models (the retired FAA-style
+          m6_faa item). This is the direction of Dean Ball's June 2026
+          "independent verification organizations" / Fathom proposal and the
+          Obernolte–Trahan Great American AI Act, which regulate the company
+          not the model because models are numerous, short-lived, and change
+          faster than any per-model threshold can track. Presented neutrally
+          as "some have proposed". Tests the single most consequential
+          mitigation directly.
+        triangulates: [m6_offswitch]
 
-      - id: m6_fedstate
+      - id: m6_offswitch
         text: >
-          Should the US have one national AI policy, or let each state set
-          its own rules?
+          Some experts propose that governments build the capability to
+          monitor advanced AI development and, if it becomes dangerous,
+          coordinate internationally to pause or shut it down. This would
+          preserve the option to stop dangerous AI before it is deployed,
+          but requires costly monitoring of computer chips, an enforceable
+          international agreement, and would slow down the benefits of AI.
+          How far should this capability go?
         scale: null
         widget: radio
         required: true
         options:
-          - "Strongly prefer one federal policy"
-          - "Somewhat prefer federal"
-          - "Somewhat prefer state-by-state"
-          - "Strongly prefer state-by-state"
-        rationale: >
-          Federal pre-emption vs a state patchwork. Central to whether the
-          RAISE Act can model federal law. Four-point forced choice with no
-          midpoint to avoid fence-sitting on a binary policy question.
-        triangulates: [m6_faa]
-
-      - id: m6_killswitch
-        text: >
-          Should advanced AI be legally required to have an emergency "kill
-          switch" to shut it down if it behaves dangerously?
-        scale: null
-        widget: radio
-        required: true
-        options:
-          - "Yes, for all AI systems"
-          - "Yes, but only for high-risk systems"
-          - "No, voluntary guidelines are enough"
+          - "Governments should build the capability for an indefinite, internationally coordinated halt"
+          - "Governments should also be able to pause the whole field for a set period if needed"
+          - "Governments should be able to shut down a specific AI system found to be dangerous"
+          - "No, the costs and risks of concentrated control outweigh the benefit"
+          - "No, voluntary industry safeguards are enough"
           - "Unsure"
         rationale: >
-          Fills a gap in current bills. Neither the RAISE Act nor SB 53
-          addresses post-deployment intervention.
-        triangulates: [m6_faa, m6_liability]
-
-      - id: m6_liability
-        text: >
-          If an AI system causes a catastrophe, under what conditions should
-          the company that built it be financially liable?
-        scale: null
-        widget: radio
-        required: true
-        options:
-          - "Fully liable, even if it followed every rule (strict liability)"
-          - "Liable only if it failed to take reasonable care (negligence / duty of care)"
-          - "Liable only if it broke a specific written rule"
-          - "Not liable if it followed all safety standards"
-          - "Unsure"
-        rationale: >
-          Liability rules, with a real middle option. Tests appetite for
-          proposals like the RAISE Act and SB 53. The negligence /
-          duty-of-care middle was added so support for strict liability
-          is not overstated (Ball's point).
-        triangulates: [m6_faa, m6_killswitch]
+          Tests support for MIRI's proposed "Off Switch": jurisdiction-level
+          infrastructure to monitor and, if needed, halt frontier AI
+          development, not a per-system kill switch. Graduated options track
+          MIRI's own levels (acute shutdown, short pause, long moratorium)
+          and reveal where public support drops as scope widens. Distinct
+          from post-deployment intervention in the RAISE Act or SB 53.
+        triangulates: [m6_firm_approval]
 
   # (The old Stem-A/B superintelligence wording item and the accel/safety
   #  counter-message arm were retired 29 Jun 2026 — superseded by Muskan's 3x3
@@ -778,8 +750,8 @@ pages:
         rationale: >
           Standard covariate (Jost, 2006). Lets us report across the
           political spectrum, which matters for a US sample and for
-          federal-vs-state questions.
-        triangulates: [m6_fedstate]
+          the AI-governance items.
+        triangulates: [m6_firm_approval, m6_offswitch]
 
       - id: m9_ai_use
         text: >
@@ -962,11 +934,8 @@ pages:
     items:
       - id: muskan_support
         text: >
-          How much do you agree with the following? "The development of
-          superintelligence should be prohibited until there is broad
-          scientific agreement that it can be done safely and controllably,
-          and strong public support."
-        scale: agree5_asc
+          Do you support or oppose a ban on the development of superintelligence, not lifted before there is (1) broad scientific consensus that it will be done safely and controllably, and (2)strong public buy-in.
+        scale: supp
         widget: radio
         required: true
         rationale: >
@@ -974,23 +943,7 @@ pages:
           reported as top-2-box prevalence. In the two-sided "contested" cells
           this is the considered-support estimate (support after hearing both
           sides). Shown in every cell.
-        triangulates: [muskan_oppose]
-
-      - id: muskan_oppose
-        text: >
-          And how much do you agree? "Companies should be free to keep
-          developing superintelligence without any government ban or pause."
-        scale: agree5_asc
-        widget: radio
-        required: true
-        rationale: >
-          The anti-ban DV item, kept separate (not reverse-scored) so both
-          prevalences are reportable and acquiescence is detectable. Continuous
-          score for models = support − oppose (−4…+4). The ELM route mediators
-          (one-sided cells only) follow on the superintelligence_route page;
-          attitude certainty is part of the full design but omitted from this
-          prototype build.
-        triangulates: [muskan_support]
+        triangulates: []
 
   # ELM route mediators, shown ONLY to the one-sided cells (3, 6, 7, 8 —
   # exactly one side's argument presented). With a single message on screen we
@@ -1086,10 +1039,10 @@ dumpster:
       later wanted.
   - name: m6_certify (before deployment, who should certify that an AI system is safe?)
     reason: >
-      Cut 1 Jul 2026: the certifier question is subsumed by m6_faa (binding
-      pre-release testing, which implies government/independent certification)
-      and m6_liability (who bears the consequences if certification fails);
-      a separate certifier item wasn't adding decision-relevant information.
+      Cut 1 Jul 2026: the certifier question is subsumed by m6_firm_approval
+      (entity-level licensing/auditing, which implies government or independent
+      certification of the firm); a separate certifier item wasn't adding
+      decision-relevant information.
     items:
       - id: m6_certify
         text: "Before deployment, who should certify that an AI system is safe?"
@@ -1098,6 +1051,42 @@ dumpster:
           - Government agencies
           - Independent third-party auditors
           - No certification needed; the market will sort it out
+  - name: m6_fedstate (one national AI policy vs state-by-state)
+    reason: >
+      Cut 1 Jul 2026 to make room on page 9 and because the entity-level
+      m6_firm_approval item already gets at the "who regulates" question more
+      directly. The federal-vs-state framing was tied to the RAISE-Act-models-
+      federal-law story, but the redesigned policy page now leads with the
+      firm-licensing and off-switch items. Recoverable if a pre-emption /
+      patchwork read is later wanted.
+    items:
+      - id: m6_fedstate
+        text: "Should the US have one national AI policy, or let each state set its own rules?"
+        options:
+          - "Strongly prefer one federal policy"
+          - "Somewhat prefer federal"
+          - "Somewhat prefer state-by-state"
+          - "Strongly prefer state-by-state"
+  - name: m6_liability (when should the company that built an AI be financially liable?)
+    reason: >
+      Cut 1 Jul 2026. Liability is largely subsumed by m6_firm_approval:
+      Ball's entity-licensing framing folds the consequences of failure into
+      the certification/safe-harbour regime (a certified firm enjoys liability
+      protection; an uncertified one is effectively uninsurable), so a separate
+      strict-vs-negligence liability item was no longer carrying independent
+      decision-relevant signal on a tightened page. Recoverable if an explicit
+      strict-liability-vs-duty-of-care read is later wanted.
+    items:
+      - id: m6_liability
+        text: >-
+          If an AI system causes a catastrophe, under what conditions should
+          the company that built it be financially liable?
+        options:
+          - "Fully liable, even if it followed every rule (strict liability)"
+          - "Liable only if it failed to take reasonable care (negligence / duty of care)"
+          - "Liable only if it broke a specific written rule"
+          - "Not liable if it followed all safety standards"
+          - "Unsure"
   - name: m3a_ii_safety (compared with how safe {comparator} is in practice, AI systems should be)
     reason: >
       Cut 1 Jul 2026: page 9 now asks only about standards (m3a_i_standards),
@@ -1290,7 +1279,7 @@ dumpster:
           counter-message testing … of how people's views change after being given
           various a16z type talking points."
   - name: Mitigations battery ("I'd trust AI more if…") and priority-risks battery
-    reason: "Removed from the live instrument (17 Jun 2026); the FAA-style item (m6_faa) carries the single most important mitigation."
+    reason: "Removed from the live instrument (17 Jun 2026); the entity-licensing item (m6_firm_approval, which replaced the FAA-style m6_faa on 1 Jul 2026) carries the single most important mitigation."
     items:
       - id: mit
         text: '"I would be more likely to trust AI if…" How much do you agree with each?'
@@ -1364,7 +1353,7 @@ dumpster:
       refers to risks like 1 in 100,000 … This is not the case with AI, we are talking
       about risks far greater than 1/100, not trying to push risks below 1/100,000."
   - name: Off-the-shelf scales (AIAS-4, GAAIS, GRIPS, DOSPERT)
-    reason: "Measure general attitudes / trait risk, not AI-specific tolerance; cannot build an F–N curve."
+    reason: "Measure general attitudes / trait risk, not AI-specific tolerance, no meaningful scale or intepretation; cannot build an F–N curve."
   - name: "\"4000x safer\" multiplier from a qualitative item"
     reason: "Conflates a qualitative answer with expert estimates (Gradient #16)."
     note: >-
