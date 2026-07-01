@@ -249,6 +249,73 @@ def _make_rgroup_page(page, slot, ordn, total):
     return _R
 
 
+def _adaptive_max_depth(page):
+    """Longest possible path (number of items shown) through a `type: adaptive`
+    branch tree, so the engine can reserve that many slot pages. Walks the tree
+    from `root`, following each item's next_if_correct / next_if_incorrect; a
+    target that isn't another item (e.g. a `quartile_*` scoring outcome) ends
+    that branch."""
+    by_id = {it['id']: it for it in page.get('items', [])}
+
+    def depth(node, seen):
+        if node not in by_id or node in seen:
+            return 0
+        it = by_id[node]
+        seen = seen | {node}
+        return 1 + max(depth(it.get('next_if_correct'), seen),
+                       depth(it.get('next_if_incorrect'), seen))
+
+    return depth(page['root'], frozenset())
+
+
+def _adaptive_path(player, page):
+    """The ordered list of items this participant is routed through so far.
+    Walks the branch tree from `root`, and at each answered item follows
+    next_if_correct or next_if_incorrect depending on whether the recorded
+    answer equals the item's correct_answer. Stops at the first unanswered item
+    (the one to show now) or when a branch ends at a non-item target."""
+    by_id = {it['id']: it for it in page.get('items', [])}
+    path = []
+    cur = page['root']
+    while cur in by_id:
+        it = by_id[cur]
+        path.append(it)
+        ans = player.field_maybe_none(it['id'])
+        if ans is None:
+            break
+        cur = it['next_if_correct'] if ans == it.get('correct_answer') \
+            else it['next_if_incorrect']
+    return path
+
+
+def _make_adaptive_page(page, slot, ordn, total):
+    """One page per position (slot) on the longest branch of a `type: adaptive`
+    page. The item shown at slot s is the s-th item on the participant's routed
+    path (see _adaptive_path); the page is hidden once the path is shorter than
+    s+1 (their branch terminated earlier)."""
+    class _A(Page):
+        form_model = 'player'
+        template_name = 'sara/Page.html'
+
+        def get_form_fields(player, ps=page, slot=slot):
+            path = _adaptive_path(player, ps)
+            return [path[slot]['id']] if len(path) > slot else []
+
+        def vars_for_template(player, ps=page, slot=slot, ordn=ordn, total=total):
+            it = _adaptive_path(player, ps)[slot]
+            single = dict(ps)
+            single['items'] = [it]
+            return dict(page_title=ps.get('title', ''),
+                        page_index=ordn, page_total=total,
+                        body=render.page_body(single, player, _SCALES))
+
+        def is_displayed(player, ps=page, slot=slot):
+            return _page_displayed(player, ps) and len(_adaptive_path(player, ps)) > slot
+
+    _A.__name__ = _clsname('%s_slot%d' % (page['id'], slot + 1))
+    return _A
+
+
 def _make_dce_page(page, tn, ordn, total):
     rat = page.get('rationale', '')
 
@@ -279,6 +346,9 @@ for _ps in _PAGES:
     elif _ps.get('type') == 'random_group':
         for _si in range(len(_ps.get('items', []))):
             _units.append(('rgroup', _ps, _si))
+    elif _ps.get('type') == 'adaptive':
+        for _si in range(_adaptive_max_depth(_ps)):
+            _units.append(('adaptive', _ps, _si))
     else:
         _units.append(('content', _ps, None))
 _TOTAL = len(_units)
@@ -289,6 +359,8 @@ for _ordn, (_kind, _ps, _arg) in enumerate(_units, 1):
         _cls = _make_dce_page(_ps, _arg, _ordn, _TOTAL)
     elif _kind == 'rgroup':
         _cls = _make_rgroup_page(_ps, _arg, _ordn, _TOTAL)
+    elif _kind == 'adaptive':
+        _cls = _make_adaptive_page(_ps, _arg, _ordn, _TOTAL)
     else:
         _cls = _make_content_page(_ps, _ordn, _TOTAL)
     globals()[_cls.__name__] = _cls

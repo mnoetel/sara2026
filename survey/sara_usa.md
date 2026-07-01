@@ -582,9 +582,10 @@ pages:
   # type: adaptive — like the DCE's `type: dce`, this page shows one item
   # at a time; which item comes next depends on whether the previous one was
   # answered correctly (see each item's next_if_correct / next_if_incorrect).
-  # NOT YET WIRED UP in the oTree engine (survey/sara/__init__.py today only
-  # special-cases `type: dce`); this fully specifies the branching so that
-  # engine support can be added. Item wording is verbatim from Cokely,
+  # Wired up in the oTree engine: __init__.py reserves one page per slot on the
+  # longest branch (_adaptive_max_depth) and routes each participant through
+  # _adaptive_path, hiding slots past where their branch terminates.
+  # Item wording is verbatim from Cokely,
   # Galesic, Schulz, Ghazal, & Garcia-Retamero (2012), "Measuring Risk
   # Literacy: The Berlin Numeracy Test," Judgment and Decision Making 7(1),
   # 25–47, Appendix II (computer-adaptive format) — do not paraphrase.
