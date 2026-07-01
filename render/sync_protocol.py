@@ -47,11 +47,32 @@ MD_INSTRUMENT = os.path.join(REPO_ROOT, "survey", "sara_usa.md")
 APP_INIT = os.path.join(REPO_ROOT, "survey", "sara", "__init__.py")
 PROTOCOL = os.path.join(REPO_ROOT, "SARA USA — Survey Protocol v10.md")
 
-# Which instrument items back each Method's worked example (authoring decision).
-EXPERT_IDS = ["m2_experts_lecun", "m2_experts_fri_super",
-              "m2_experts_fri_domain", "m2_experts_amodei"]
-METHOD3_LIVE = [("Standards", "m3a_i_standards"), ("Sanity anchor", "m3_sanity")]
-METHOD3_CUT = ["m3a_ii_safety", "m2_frame_applicable"]
+# Which instrument content backs each collapsible "as fielded" block in the
+# protocol. Page-based where possible (add an item to the page → it shows up in
+# the briefing automatically, no edit here). `pools` pulls the comparator/sanity
+# randomisation lists from the oTree app; `ids` names dumpster items explicitly.
+ITEM_BLOCKS = {
+    "ladder-items": dict(
+        pages=["severity_ladder"],
+        summary="Method 1 — the severity-ladder items, as fielded"),
+    "wtp-item": dict(
+        ids=["m5_wtp"],
+        summary="Method 1 — the willingness-to-pay item, as fielded"),
+    "experts": dict(
+        pages=["expert_judgement"],
+        summary="Method 4 — the named-source items, as fielded"),
+    "method3-live": dict(
+        pages=["safety_comparators"], pools=True,
+        summary="Method 3 — comparator items (incl. the embedded attention "
+                "checks) and randomisation pools, as fielded"),
+    "method3-cut": dict(
+        ids=["m3a_ii_safety", "m2_frame_applicable"],
+        summary="Method 3 — items retired to the dumpster (recoverable)"),
+    "muskan-items": dict(
+        pages=["superintelligence_support", "superintelligence_route"],
+        summary="Superintelligence module — ban-support DV and ELM route "
+                "mediators, as fielded"),
+}
 
 # The prefix group captures any blockquote/indent markers ("> ", "  ") that sit
 # in front of the BEGIN marker on its line, so generated lines can be re-prefixed
@@ -100,6 +121,13 @@ def _find_dumpster(spec, item_id):
     return None
 
 
+def _find_page(spec, page_id):
+    for page in spec.get("pages", []):
+        if page.get("id") == page_id:
+            return page
+    return None
+
+
 def _read_list(varname):
     """Pull a simple string-list literal (COMPARATORS/SANITY_ACTS) out of the
     oTree app source, without importing oTree."""
@@ -111,72 +139,70 @@ def _read_list(varname):
             re.findall(r'"([^"]*)"|\'([^\']*)\'', m.group(1))]
 
 
-# ── block generators (return the inner body, no markers) ────────────────
+# ── rendering helpers ───────────────────────────────────────────────────
+
+def _details(summary, body_lines):
+    """Wrap generated content in a collapsible <details> block. GitHub renders
+    this folded (skimmable) and expandable (shows the real items). The blank
+    lines around the body are required for the Markdown inside to render."""
+    n = sum(1 for ln in body_lines if ln.startswith("- **`"))
+    label = summary + (" — %d item%s" % (n, "" if n == 1 else "s") if n else "")
+    return "\n".join(["<details>",
+                      "<summary>%s (click to expand)</summary>" % label,
+                      ""] + body_lines + ["", "</details>"])
+
+
+def _item_lines(spec, item, dumpster=False):
+    tag = " _(dumpster)_" if dumpster else ""
+    lines = ["- **`%s`**%s — %s" % (item["id"], tag, _flat(item["text"]))]
+    scale = _scale_text(spec, item)
+    if scale and scale != "(no fixed scale)":
+        lines.append("  - _Scale:_ %s" % scale)
+    return lines
+
+
+# ── the one generator that backs every collapsible item block ───────────
+
+def gen_item_block(spec, cfg):
+    body = []
+    for page_id in cfg.get("pages", []):
+        page = _find_page(spec, page_id)
+        for it in (page or {}).get("items") or []:
+            body += _item_lines(spec, it)
+    for item_id in cfg.get("ids", []):
+        it = _find_live(spec, item_id)
+        if it:
+            body += _item_lines(spec, it)
+        else:
+            it = _find_dumpster(spec, item_id)
+            body += (_item_lines(spec, it, dumpster=True) if it
+                     else ["- **`%s`** — _(not found in instrument)_" % item_id])
+    if cfg.get("pools"):
+        body += ["",
+                 "_Comparator pool_ (`survey/sara/__init__.py`): %s"
+                 % (" / ".join(_read_list("COMPARATORS")) or "_(none)_"),
+                 "",
+                 "_Sanity-activity pool_: %s"
+                 % (" / ".join(_read_list("SANITY_ACTS")) or "_(none)_")]
+    if not body:
+        body = ["_(no items found)_"]
+    return _details(cfg["summary"], body)
+
+
+# ── short inline scale blocks (not collapsed — one line each) ────────────
 
 def gen_tolerability_scale(spec):
     labels = spec["scales"]["tolerability2"]["labels"]
     return "**" + "** vs **".join(_flat(l) for l in labels) + "**"
 
 
-def gen_ladder_scale(spec):
-    labels = spec["scales"]["ladder9"]["labels"]
-    return " / ".join(_flat(l) for l in labels)
-
-
-def gen_experts(spec):
-    items = [_find_live(spec, i) for i in EXPERT_IDS]
-    items = [it for it in items if it]
-    if not items:
-        return "_(no expert items found in the instrument)_"
-    scale = _scale_text(spec, items[0])
-    lines = ["The named-source items, judged within-person and reported by "
-             "source (text verbatim from the instrument):", ""]
-    for n, it in enumerate(items, 1):
-        lines.append("%d. %s" % (n, _flat(it["text"])))
-    lines.append("")
-    lines.append("_Each judged on:_ %s" % scale)
-    return "\n".join(lines)
-
-
-def gen_method3_live(spec):
-    comparators = _read_list("COMPARATORS")
-    sanity = _read_list("SANITY_ACTS")
-    lines = ["Live comparator items (text verbatim; `{comparator}` / `{sanity}` "
-             "are filled per respondent):", ""]
-    for label, item_id in METHOD3_LIVE:
-        it = _find_live(spec, item_id)
-        if not it:
-            lines.append("- **%s** (`%s`): _(missing from instrument)_" % (label, item_id))
-            continue
-        lines.append("- **%s** (`%s`): %s" % (label, item_id, _flat(it["text"])))
-        lines.append("  _Scale:_ %s" % _scale_text(spec, it))
-    lines.append("")
-    lines.append("Comparator pool (`survey/sara/__init__.py`): %s"
-                 % (" / ".join(comparators) or "_(none)_"))
-    lines.append("")
-    lines.append("Sanity-activity pool: %s" % (" / ".join(sanity) or "_(none)_"))
-    return "\n".join(lines)
-
-
-def gen_method3_cut(spec):
-    lines = ["Retired to the dumpster (recoverable — see the instrument's "
-             "`dumpster:` key):", ""]
-    for item_id in METHOD3_CUT:
-        it = _find_dumpster(spec, item_id)
-        if not it:
-            lines.append("- `%s`: _(not currently in the dumpster)_" % item_id)
-            continue
-        lines.append("- `%s`: %s" % (item_id, _flat(it["text"])))
-    return "\n".join(lines)
-
-
+# Marker key → generator. Item blocks are data-driven from ITEM_BLOCKS; each
+# item already prints its own scale, so there is no separate ladder-scale block.
 GENERATORS = {
     "tolerability-scale": gen_tolerability_scale,
-    "ladder-scale": gen_ladder_scale,
-    "experts": gen_experts,
-    "method3-live": gen_method3_live,
-    "method3-cut": gen_method3_cut,
 }
+for _key, _cfg in ITEM_BLOCKS.items():
+    GENERATORS[_key] = (lambda spec, cfg=_cfg: gen_item_block(spec, cfg))
 
 
 # ── driver ──────────────────────────────────────────────────────────────
