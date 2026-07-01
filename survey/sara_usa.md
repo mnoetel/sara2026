@@ -882,8 +882,8 @@ pages:
     items:
       - id: muskan_support
         text: >
-          Do you support or oppose a ban on the development of superintelligence, not lifted before there is (1) broad scientific consensus that it will be done safely and controllably, and (2)strong public buy-in.
-        scale: supp
+          Do you support or oppose a ban on the development of superintelligence, not lifted before there is (1) broad scientific consensus that it will be done safely and controllably, and (2) strong public buy-in?
+        scale: support5
         widget: radio
         required: true
         rationale: >

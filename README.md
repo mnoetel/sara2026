@@ -32,7 +32,7 @@ sara_dce_design.R  DCE design → survey/sara/dce_blocks.csv (the choice tasks)
 build_poststrat.py / acs_poststrat.R   MRP frame from ACS PUMS → poststrat_frame.csv
 ACS_poststratification_manual.md   how to get ACS data + survey↔ACS alignment check
 ethics consent form/   canonical Participant Information Sheet (v2.1)
-Muskan's Expiermnet/   the 3×3 superintelligence-briefing sub-study
+Muskan's Experiment/   the 3×3 superintelligence-briefing sub-study
 ARCHIVED/          superseded drafts, old prototypes
 ```
 
@@ -47,18 +47,31 @@ ARCHIVED/          superseded drafts, old prototypes
 4. **Judge the experts' numbers** — LeCun → Altman → Musk → Amodei.
 
 Then costed tradeoffs, policy, demographics, and last, **Muskan's 3×3 ELM briefing
-experiment** on superintelligence-ban support. Between-subjects arms (comparator,
-sanity activity, information-provision half, DCE block, briefing) and a consent gate are
-wired in the engine, not the YAML items.
+experiment** on superintelligence-ban support. Between-subjects arms
+(information-provision half, DCE block, briefing — assigned balanced within each
+session), the consent gate, and the attention-check screen-out are wired in the engine,
+not the YAML items.
 
 ## Run it
 
 ```bash
+pip install -r requirements.txt    # pinned: otree, pyyaml, markdown
 cd survey && otree devserver        # http://localhost:8000  (config: sara_usa)
 make -C render                      # rebuild render/review.html (the review table)
 ```
 
 Schema changes (adding/removing items) need a DB reset: `rm survey/db.sqlite3*`.
+
+## Test it
+
+```bash
+cd survey
+python3 spec_loader.py sara_usa.md muskan_stimuli.md   # spec lint (fail-loud)
+otree test sara_usa 27      # bots walk every page & arm (27 = one per stimulus)
+```
+
+CI (`.github/workflows/ci.yml`) runs the spec lint, the bots, and the protocol drift
+guard (`make -C render check-protocol`) on every push and PR.
 
 ## Collaborating on the instrument (GitHub PRs)
 

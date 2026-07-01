@@ -12,7 +12,6 @@
 
 SPEC   := ../survey/sara_usa.md
 LOADER := ../survey/spec_loader.py
-APP    := ../survey/sara/__init__.py
 OUT    := review.html
 
 .PHONY: all review-r review-py sync-protocol check-protocol clean
@@ -21,11 +20,11 @@ all: $(OUT) sync-protocol
 
 # Refresh the protocol doc's auto-blocks from the instrument (the volatile
 # facts that would otherwise drift — expert anchors, scales, live/cut split).
-sync-protocol: $(SPEC) $(LOADER) $(APP) sync_protocol.py
+sync-protocol: $(SPEC) $(LOADER) sync_protocol.py
 	python3 sync_protocol.py
 
 # CI guard: fail if the protocol's auto-blocks have drifted from the instrument.
-check-protocol: $(SPEC) $(LOADER) $(APP) sync_protocol.py
+check-protocol: $(SPEC) $(LOADER) sync_protocol.py
 	python3 sync_protocol.py --check
 
 $(OUT): $(SPEC) $(LOADER) review.R review_fallback.py

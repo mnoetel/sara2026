@@ -1,0 +1,34 @@
+# The instrument-PR safety net: every change to the spec (or the engine)
+# must still parse, validate, survive a full bot walk of every page and arm,
+# and leave the protocol's auto-blocks in sync. See CLAUDE.md → Testing.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install pinned dependencies
+        run: pip install -r requirements.txt
+
+      - name: Validate the instrument spec
+        working-directory: survey
+        run: python3 spec_loader.py sara_usa.md muskan_stimuli.md
+
+      - name: Bot-walk every page and arm (27 = one participant per stimulus)
+        working-directory: survey
+        run: otree test sara_usa 27
+
+      - name: Protocol auto-blocks in sync with the instrument
+        run: make -C render check-protocol

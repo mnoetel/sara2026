@@ -4,14 +4,16 @@ SARA USA 2026 oTree app.
 All item text, response scales, page order, rationale, and triangulation are
 defined in survey/sara_usa.md — the single source of truth (a Markdown doc
 wrapping the YAML spec, so it can be edited/reviewed in HackMD, Google Docs,
-or GitHub). This file reads it at class-definition time and builds the Player
-fields and Page classes from it. It also wires the features the content needs
-but plain items cannot express: between-subjects randomisation arms
-(information-provision half, DCE block, Muskan briefing), per-participant
-page ordering (random_group), the consent gate, the DCE
-(expanded into one page per task from sara_dce_design.R's output), and
-Muskan's 3x3 superintelligence-briefing module. No item content is duplicated
-here — see sara_usa.md.
+or GitHub). This file reads it at class-definition time, validates it (fail loudly at
+import rather than degrade silently at render), and builds the Player fields
+and Page classes from it. It also wires the features the content needs but
+plain items cannot express: between-subjects randomisation arms
+(information-provision half, DCE block, Muskan briefing — assigned balanced,
+see creating_session), per-participant page ordering (random_group), the
+consent gate, the attention-check screen-out, the DCE (expanded into one page
+per task from sara_dce_design.R's output), and Muskan's 3x3
+superintelligence-briefing module. No item content is duplicated here — see
+sara_usa.md.
 """
 
 import os
@@ -32,10 +34,10 @@ from . import render, dce, muskan
 
 # ── Load the single source of truth ─────────────────────────────────
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
-from spec_loader import load_spec  # noqa: E402
+from spec_loader import load_spec, validate_spec  # noqa: E402
 
 _MD_PATH = os.path.join(os.path.dirname(__file__), '..', 'sara_usa.md')
-SPEC = load_spec(_MD_PATH)
+SPEC = validate_spec(load_spec(_MD_PATH), _MD_PATH)
 
 _SCALES = SPEC['scales']
 _PAGES = SPEC['pages']
@@ -52,7 +54,10 @@ NUM_DCE_TASKS = (_DCE_PAGE or {}).get('n_tasks', 10)
 _ATT_IDS = ('m3_att_bioweapons', 'm3_att_nuclear')
 _ATT_REQUIRED = _SCALES['strictness5_cantcompare']['labels'].index('Much less strict') + 1
 _PAGE_IDS = [p['id'] for p in _PAGES]
-_SCREENOUT_POS = _PAGE_IDS.index('screen_out') if 'screen_out' in _PAGE_IDS else None
+# The screen-out gate is the page marked `condition: att_failed` in the spec;
+# every page after it is hidden for a screened-out participant.
+_SCREENOUT_POS = next(
+    (i for i, p in enumerate(_PAGES) if p.get('condition') == 'att_failed'), None)
 
 
 # ── Field builder ─────────────────────────────────────────────────────
@@ -65,14 +70,17 @@ def _make_field(item):
     options = item.get('options')
     scale = item.get('scale')
     labels = options if options else (_SCALES[scale]['labels'] if scale in _SCALES else None)
-    if labels:
-        choices = list(zip(range(1, len(labels) + 1), labels))
-        w = None if widget == 'select' else widgets.RadioSelect()
-        kw = dict(label=label, choices=choices, blank=not required)
-        if w is not None:
-            kw['widget'] = w
-        return db.IntegerField(**kw)
-    return db.StringField(label=label, blank=True)
+    if not labels:
+        # validate_spec catches this first; keep the belt-and-braces guard so
+        # a choice item can never silently degrade to a free-text field.
+        raise ValueError("item %r: no scale/options to build choices from"
+                         % item['id'])
+    choices = list(zip(range(1, len(labels) + 1), labels))
+    w = None if widget == 'select' else widgets.RadioSelect()
+    kw = dict(label=label, choices=choices, blank=not required)
+    if w is not None:
+        kw['widget'] = w
+    return db.IntegerField(**kw)
 
 
 # ── Constants / models ────────────────────────────────────────────────
@@ -86,12 +94,30 @@ class Subsession(BaseSubsession):
     pass
 
 
+def _balanced(rng, pool, n):
+    """n assignments drawn from pool in balanced blocks: the pool is repeated
+    whole (shuffled anew each repeat) so counts never differ by more than one.
+    Independent per-participant draws leave cell sizes binomially imbalanced;
+    blocked assignment is the standard for between-subjects arms."""
+    out = []
+    while len(out) < n:
+        block = list(pool)
+        rng.shuffle(block)
+        out.extend(block)
+    return out[:n]
+
+
 def creating_session(subsession):
-    for i, p in enumerate(subsession.get_players()):
-        r = random.Random(p.participant.code)
-        p.info_arm = r.choice([True, False])
-        p.dce_block = (i % dce.N_BLOCKS) + 1
-        st = r.choice(muskan.STIMULI)
+    players = subsession.get_players()
+    # Seeded on the session code so re-creating the session reproduces the
+    # assignment; balanced within the session across every arm.
+    rng = random.Random(subsession.session.code)
+    info_arms = _balanced(rng, [True, False], len(players))
+    stimuli = _balanced(rng, muskan.STIMULI, len(players))
+    dce_blocks = _balanced(rng, range(1, dce.N_BLOCKS + 1), len(players))
+    for p, arm, st, blk in zip(players, info_arms, stimuli, dce_blocks):
+        p.info_arm = arm
+        p.dce_block = blk
         p.muskan_stim = st['stimulus_id']
         p.muskan_cell = st['cell']
         p.muskan_for = st['for_arg']
@@ -147,14 +173,17 @@ def _page_displayed(player, page):
     pid = page['id']
     if _declined(player) and pid not in ('consent', 'end'):
         return False
-    # attention-check screen-out gate: both checks wrong -> show the screen_out
-    # page and hide every page after it (they are redirected to Prolific).
+    # attention-check screen-out: both checks wrong -> show the page marked
+    # `condition: att_failed` and hide every page after it (they are
+    # redirected to Prolific).
     failed = _att_failed(player)
-    if pid == 'screen_out':
+    cond = page.get('condition')
+    if cond == 'att_failed':
         return failed
     if failed and _SCREENOUT_POS is not None and _PAGE_IDS.index(pid) > _SCREENOUT_POS:
         return False
-    cond = page.get('condition')
+    if cond is None:
+        return True
     if cond == 'info_arm':
         return bool(player.field_maybe_none('info_arm'))
     if cond == 'muskan_not_control':
@@ -163,7 +192,9 @@ def _page_displayed(player, page):
         return muskan.is_control(player.field_maybe_none('muskan_stim') or '')
     if cond == 'muskan_one_sided':
         return muskan.is_one_sided(player.field_maybe_none('muskan_stim') or '')
-    return True
+    # validate_spec rejects unknown conditions at import; never show a
+    # conditioned page to everyone because of a typo.
+    raise ValueError("page %r: unknown condition %r" % (pid, cond))
 
 
 def _clsname(pid):

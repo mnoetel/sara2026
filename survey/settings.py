@@ -23,6 +23,11 @@ DEMO_PAGE_TITLE = 'SARA USA 2026'
 PARTICIPANT_FIELDS = []
 SESSION_FIELDS = []
 
-SECRET_KEY = 'sara-usa-2026-dev-key'
+# Production fielding MUST set these in the environment; the fallbacks are
+# for local devserver only. With the defaults, session URLs are forgeable
+# and the admin (with participant data) is open — do not field with them.
+SECRET_KEY = environ.get('OTREE_SECRET_KEY', 'sara-usa-2026-dev-key')
 ADMIN_USERNAME = 'admin'
 ADMIN_PASSWORD = environ.get('OTREE_ADMIN_PASSWORD', 'admin')
+# 'STUDY' locks down the demo/admin pages; unset = open (devserver only).
+AUTH_LEVEL = environ.get('OTREE_AUTH_LEVEL')
