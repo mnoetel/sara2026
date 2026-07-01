@@ -1,3 +1,9 @@
+# ═══════════════════════════════════════════════════════════════════════
+# 📝 REVIEW COPY — leave inline comments on this PR (do NOT merge it).
+# The real source of truth is sara_usa.yaml on `main`; approved changes get
+# applied there. To comment on any line: open "Files changed", click the blue
+# "Expand" arrows to reveal the whole file, then hover a line and click the +.
+# ═══════════════════════════════════════════════════════════════════════
 # SARA USA 2026 — single source of truth
 # Every item, scale, page order, rationale, and triangulation link lives here.
 # oTree reads this at class-definition time to build the Player model and page sequence.
