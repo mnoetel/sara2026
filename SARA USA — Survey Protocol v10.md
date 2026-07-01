@@ -188,20 +188,12 @@ The adaptation is **between-respondent only**: it sharpens *which* tradeoffs the
 <details>
 <summary>Method 3 — comparator items (incl. the embedded attention checks) and randomisation pools, as fielded — 4 items (click to expand)</summary>
 
-- **`m3a_i_standards`** — Compared with the safety regulations on {comparator}, regulation of advanced AI should be:
-  - _Scale:_ Much stricter / Stricter / About the same / Less strict / Much less strict / Cannot compare these technologies
-- **`m3_sanity`** — {sanity}. Compared with how safe that is, advanced AI systems should be:
-  - _Scale:_ Much safer / Safer / About as safe / Less safe / Much less safe / Cannot compare these technologies
-- **`m3_att_bioweapons`** — Compared with the safety regulations on biological weapons, this is an attention check, so you must select "Much less strict":
-  - _Scale:_ Much stricter / Stricter / About the same / Less strict / Much less strict / Cannot compare these technologies
-- **`m3_att_nuclear`** — Compared with the safety regulations on nuclear weapons, this is an attention check, so you must select "Much less strict":
-  - _Scale:_ Much stricter / Stricter / About the same / Less strict / Much less strict / Cannot compare these technologies
+- **Standards** (`m3a_i_standards`): _(missing from instrument)_
+- **Sanity anchor** (`m3_sanity`): _(missing from instrument)_
 
-_Comparator pool_ (`survey/sara/__init__.py`): nuclear power / commercial aviation / new prescription drugs / cars / large dams
+Comparator pool (`survey/sara/__init__.py`): _(none)_
 
-_Sanity-activity pool_: Climbing Mount Everest kills roughly 1 in 100 people who attempt the summit / BASE jumping kills roughly 1 in 2,300 jumps / Bungee jumping kills roughly 1 in 500,000 jumps
-
-</details>
+Sanity-activity pool: _(none)_
 
 <!-- END:auto:method3-live -->
 

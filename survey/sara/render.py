@@ -2,30 +2,16 @@
 
 The engine (``__init__.py``) builds one oTree page per YAML page; this module
 turns a YAML page (+ the player's randomised arms) into the HTML body. Inputs
-are rendered manually so question text can be personalised per participant
-(comparator / sanity activity) and so the DCE and Muskan briefing can be drawn
-from generated data — things oTree's fixed-label ``{{ formfields }}`` can't do.
+are rendered manually so the DCE and Muskan briefing can be drawn from
+generated data — things oTree's fixed-label ``{{ formfields }}`` can't do.
 Submitted ``name=<item_id> value=<1-based index>`` matches each item's oTree
 IntegerField(choices=...), so answers still save the normal way.
 """
 import html
-import random
-
-# default arm values (used before creating_session / in admin previews)
-_DEF_COMPARATOR = "nuclear power"
-_DEF_SANITY = "Climbing Mount Everest kills roughly 1 in 100 people who attempt the summit"
 
 
 def esc(s):
     return html.escape(str(s), quote=True)
-
-
-def substitute(text, player):
-    text = text.replace("{comparator}",
-                        player.field_maybe_none("comparator") or _DEF_COMPARATOR)
-    text = text.replace("{sanity}",
-                        player.field_maybe_none("sanity_phrase") or _DEF_SANITY)
-    return text
 
 
 def _options_for(item, scales):
@@ -86,7 +72,7 @@ def _info_bits(rationale):
 
 
 def item_block(item, player, scales):
-    text = substitute(item["text"].strip(), player)
+    text = item["text"].strip()
     info, note = _info_bits(item.get("rationale"))
     return ('<div class="sara-item"><div class="sara-qhead">'
             '<p class="sara-q">%s</p>%s</div>%s%s</div>'
