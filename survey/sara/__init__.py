@@ -7,8 +7,8 @@ wrapping the YAML spec, so it can be edited/reviewed in HackMD, Google Docs,
 or GitHub). This file reads it at class-definition time and builds the Player
 fields and Page classes from it. It also wires the features the content needs
 but plain items cannot express: between-subjects randomisation arms
-(comparator, sanity activity, information-provision half, DCE block, Muskan
-briefing), per-participant text substitution, the consent gate, the DCE
+(information-provision half, DCE block, Muskan briefing), per-participant
+page ordering (random_group), the consent gate, the DCE
 (expanded into one page per task from sara_dce_design.R's output), and
 Muskan's 3x3 superintelligence-briefing module. No item content is duplicated
 here — see sara_usa.md.
@@ -54,15 +54,6 @@ _ATT_REQUIRED = _SCALES['strictness5_cantcompare']['labels'].index('Much less st
 _PAGE_IDS = [p['id'] for p in _PAGES]
 _SCREENOUT_POS = _PAGE_IDS.index('screen_out') if 'screen_out' in _PAGE_IDS else None
 
-# randomisation pools
-COMPARATORS = ["nuclear power", "commercial aviation", "new prescription drugs",
-               "cars", "large dams"]
-SANITY_ACTS = [
-    "Climbing Mount Everest kills roughly 1 in 100 people who attempt the summit",
-    "BASE jumping kills roughly 1 in 2,300 jumps",
-    "Bungee jumping kills roughly 1 in 500,000 jumps",
-]
-
 
 # ── Field builder ─────────────────────────────────────────────────────
 def _make_field(item):
@@ -98,8 +89,6 @@ class Subsession(BaseSubsession):
 def creating_session(subsession):
     for i, p in enumerate(subsession.get_players()):
         r = random.Random(p.participant.code)
-        p.comparator = r.choice(COMPARATORS)
-        p.sanity_phrase = r.choice(SANITY_ACTS)
         p.info_arm = r.choice([True, False])
         p.dce_block = (i % dce.N_BLOCKS) + 1
         st = r.choice(muskan.STIMULI)
@@ -117,8 +106,6 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
     # between-subjects arms (internal, not form fields)
-    comparator = db.StringField(blank=True)
-    sanity_phrase = db.StringField(blank=True)
     info_arm = db.BooleanField(blank=True)
     dce_block = db.IntegerField(blank=True)
     muskan_stim = db.StringField(blank=True)
@@ -213,7 +200,12 @@ def _make_rgroup_page(page, slot, ordn, total):
     """One page per item in a `type: random_group` page. Each participant sees
     the group's items one-per-page in a randomised order (seeded on their
     participant.code), so the sequence can't cue a monotone answering pattern.
-    Every participant sees every item exactly once; fields save normally."""
+    Every participant sees every item exactly once; fields save normally.
+
+    An item flagged `not_first: true` is never placed in the first slot: after
+    the shuffle, if slot 0 holds a `not_first` item it is swapped with the
+    earliest slot holding an allowed item. Used so an attention check never
+    leads the block — the respondent always meets a real item first."""
     gid = page['id']
     items = page.get('items', [])
     n = len(items)
@@ -222,6 +214,11 @@ def _make_rgroup_page(page, slot, ordn, total):
         r = random.Random('%s|%s' % (player.participant.code, gid))
         idx = list(range(n))
         r.shuffle(idx)
+        if items[idx[0]].get('not_first'):
+            for j in range(1, n):
+                if not items[idx[j]].get('not_first'):
+                    idx[0], idx[j] = idx[j], idx[0]
+                    break
         return idx
 
     class _R(Page):

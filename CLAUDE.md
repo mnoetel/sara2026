@@ -24,7 +24,15 @@ as a **single-source-of-truth pipeline**. See `README.md` for the overview.
 - **The protocol (`SARA USA — Survey Protocol v10.md`) is context only** — rationale,
   assumptions, criticisms, MRP plan. It must **not** restate items, the fielding list, or
   the dumpster (those are the instrument's job). When you change the instrument, update the
-  protocol's *reasoning* if needed, but don't copy item text into it.
+  protocol's *reasoning* if needed, but don't copy item text into it. **The few places the
+  protocol must quote instrument values** (the worked-example expert anchors, the
+  tolerability/ladder scales, the Method-3 live/cut split) live inside
+  `<!-- BEGIN:auto:KEY -->…<!-- END:auto:KEY -->` markers and are **generated** by
+  `render/sync_protocol.py` from `sara_usa.md` (+ the comparator/sanity pools in
+  `sara/__init__.py`) — never hand-edit between those markers; run `make -C render` (or
+  `python3 render/sync_protocol.py`) to refresh, and `make -C render check-protocol` to
+  fail CI on drift. This is the guard against the protocol silently diverging from the
+  instrument.
 
 ## How the survey is built
 - `survey/spec_loader.py` — extracts the fenced ` ```yaml ` block from `sara_usa.md` and
@@ -68,6 +76,8 @@ one-per-page in randomised order). An item has `id`, `text` (may contain
 - Run: `cd survey && otree devserver`. Walk a participant via a session's `/join/<room>`
   link; POST does **not** need a CSRF token on devserver.
 - Review table: `make -C render` (R path) or `python3 render/review_fallback.py`.
+  `make -C render` also runs `sync-protocol` (refreshes the protocol's auto-blocks);
+  `make -C render check-protocol` is a read-only drift guard for CI.
 
 ## Analysis & data
 - `sara_dce_design.R` → `survey/sara/dce_blocks.csv` (varied-severity 720-grid, Bayesian

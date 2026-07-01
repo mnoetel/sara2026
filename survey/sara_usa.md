@@ -308,38 +308,59 @@ pages:
     items: []
 
   # ── Page 6: Anchor to accepted safety (Method 3, §3.3) ───────────
-  - id: safety_comparators
+  # Every respondent sees all five items — three benchmark comparators (nuclear
+  # power, commercial aviation, large dams) and two disguised attention checks —
+  # one per page, in a per-participant shuffled order (type: random_group), so
+  # the sequence can't cue a monotone answering pattern and the checks stay
+  # interleaved among real items (their disguise). The comparators carry
+  # published, annual (or annualisable) tolerable-risk figures, so answers can
+  # be laid against an annualised superforecaster AI estimate. The attention
+  # checks are flagged `not_first: true` so a check is never the first page a
+  # respondent sees — they always warm up on a real comparator first.
+  - id: safety_standards
+    type: random_group
     title: "Compared with existing safety standards"
     items:
-      - id: m3a_i_standards
+      - id: m3_std_nuclear
         text: >
-          Compared with the safety regulations on {comparator}, regulation of
+          Compared with the safety regulations on nuclear power, regulation of
           advanced AI should be:
         scale: strictness5_cantcompare
         widget: radio
         required: true
         rationale: >
-          Relative anchoring (Method 3). Instead of asking for a number, we
-          ask how AI should compare with a technology people already live with.
-          The named comparator carries a known risk level so the answer implies
-          a band. Comparator randomised across respondents.
-        triangulates: [m3_sanity]
+          Relative anchoring (Method 3). Rather than asking for a number, we ask
+          how AI should compare with a technology people already live with.
+          Nuclear power carries a known, published tolerable-risk level (NRC
+          core-damage / large-release frequencies per reactor-year), so the
+          answer implies a band.
+        triangulates: [m3_std_aviation, m3_std_dams]
 
-      - id: m3_sanity
+      - id: m3_std_aviation
         text: >
-          {sanity}. Compared with how safe that is, advanced AI systems
-          should be:
-        scale: safety5_cantcompare
+          Compared with the safety regulations on commercial aviation,
+          regulation of advanced AI should be:
+        scale: strictness5_cantcompare
         widget: radio
         required: true
         rationale: >
-          A deliberately easy, high-risk sanity anchor. Almost everyone should
-          say AI must be far safer than a 1-in-100-death activity. Anyone
-          choosing "as safe" or "less safe" is probably not engaging.
-          Comparator randomised across high-risk voluntary activities (bungee
-          jumping, BASE jumping, Everest). Death rates are approximate; verify
-          before fielding.
-        triangulates: [m3a_i_standards]
+          Relative anchoring (Method 3). Commercial aviation carries a known
+          tolerable-risk target (FAA/EASA catastrophic-failure rate per flight
+          hour, aggregable to an industry-annual figure). See m3_std_nuclear.
+        triangulates: [m3_std_nuclear, m3_std_dams]
+
+      - id: m3_std_dams
+        text: >
+          Compared with the safety regulations on large dams, regulation of
+          advanced AI should be:
+        scale: strictness5_cantcompare
+        widget: radio
+        required: true
+        rationale: >
+          Relative anchoring (Method 3). Large dams carry a known tolerable-risk
+          level (ANCOLD / dam-safety failure probability per dam-year, with F–N
+          curves at the installation level). See m3_std_nuclear.
+        triangulates: [m3_std_nuclear, m3_std_aviation]
 
       - id: m3_att_bioweapons
         text: >
@@ -348,15 +369,17 @@ pages:
         scale: strictness5_cantcompare
         widget: radio
         required: true
+        not_first: true
         rationale: >
           Attention check disguised as a comparator item — same stem and scale
-          as the real items, buried among them so a careless pattern-clicker is
-          caught. The required answer ("Much less strict") is an extreme endpoint
-          a default-clicker or straightliner will miss. Both checks demand the
-          same endpoint on purpose: Prolific/Bastical needs two failures to
-          exclude someone, and a shared fail criterion is more likely to catch a
-          straightliner on both. The other (nuclear) sits later so they are not
-          adjacent.
+          as the real comparators it is shuffled among, so a careless
+          pattern-clicker carries the same answering habit straight into it. The
+          required answer ("Much less strict") is an extreme endpoint a
+          default-clicker or straightliner will miss. Both checks demand the same
+          endpoint on purpose: Prolific/Bastical needs two failures to exclude
+          someone, and a shared fail criterion is more likely to catch a
+          straightliner on both. `not_first` keeps it out of the first slot so
+          the respondent meets a real comparator before any check.
         triangulates: [m3_att_nuclear]
 
       - id: m3_att_nuclear
@@ -366,12 +389,13 @@ pages:
         scale: strictness5_cantcompare
         widget: radio
         required: true
+        not_first: true
         rationale: >
           Second attention check, same disguised-comparator format and same
           required answer ("Much less strict"). Sharing the fail criterion with
           the bioweapons check is deliberate — two failures are needed to
-          exclude, and identical criteria catch straightliners on both. See
-          m3_att_bioweapons.
+          exclude, and identical criteria catch straightliners on both. Also
+          flagged `not_first`. See m3_att_bioweapons.
         triangulates: [m3_att_bioweapons]
 
   # ── Attention-check screen-out ──────────────────────────────────────
@@ -1089,6 +1113,50 @@ dumpster:
           And compared with how safe {comparator} is in practice today, advanced
           AI systems themselves should be:
         scale: safety5_cantcompare
+  - name: m3_sanity (compared with how safe {sanity} is, AI systems should be)
+    reason: >
+      Cut 1 Jul 2026: the deliberately-easy sanity anchor was meant to catch
+      non-engaged respondents (almost everyone should say AI must be far safer
+      than a 1-in-100-death activity). Dropped because (a) attention is already
+      screened by the disguised comparators m3_att_bioweapons / m3_att_nuclear,
+      and (b) the screen's logic only holds for the high-risk anchor (Everest,
+      1-in-100); with the low-risk anchors (bungee jumping ~1-in-500,000) a
+      respondent could reasonably decline to demand AI be *safer* and still be
+      engaging, muddying the pass/fail rule. Recoverable if a dedicated
+      risk-anchored engagement screen is later wanted (restore SANITY_ACTS and
+      the sanity_phrase assignment in survey/sara/__init__.py).
+    items:
+      - id: m3_sanity
+        text: >-
+          {sanity}. Compared with how safe that is, advanced AI systems
+          should be:
+        scale: safety5_cantcompare
+  - name: "\"cars\" as a safety-standards comparator (m3_std_* pool)"
+    reason: >
+      Cut 1 Jul 2026 from the comparator pool (was one of five; pool is now
+      nuclear power / commercial aviation / large dams, all shown to everyone).
+      Cars carry a *realized, descriptive* fatality rate society tolerates
+      (~40k US deaths/yr, ~12 per 100k), but there is no *designed* regulatory
+      tolerable-risk target the way nuclear (NRC core-damage/large-release per
+      reactor-year), aviation (FAA/EASA per flight-hour) and dams (ANCOLD per
+      dam-year) have. Since the plan is to anchor AI against an annualised,
+      industry-wide tolerable-risk figure and compare it to a superforecaster
+      AI estimate, a comparator with no published tolerable-risk standard
+      couldn't carry that comparison and would invite "AI vs cars" answers on a
+      revealed-tolerance rather than a set-standard basis. Recoverable by
+      re-adding "cars" to the m3_std_* items if a revealed-tolerance anchor is
+      later wanted.
+  - name: "\"new prescription drugs\" as a safety-standards comparator (m3_std_* pool)"
+    reason: >
+      Cut 1 Jul 2026 from the comparator pool (see the cars entry). Drug safety
+      is governed case-by-case by benefit–risk balance, not by a single
+      societal tolerable-risk number; there is no annual, industry-wide
+      tolerable fatality figure comparable to nuclear/aviation/dam targets to
+      annualise against the superforecaster AI estimate. It also blurs the
+      question — respondents may read "regulation of new drugs" as speed of
+      approval / efficacy gatekeeping rather than catastrophic-risk tolerance.
+      Recoverable by re-adding it to the m3_std_* items if a benefit–risk
+      comparator is later wanted.
   - name: m2_frame_applicable (can you put a number on AI's risk, or is it too uncertain?)
     reason: >
       Cut 1 Jul 2026: the frame-applicability check was judged not important
