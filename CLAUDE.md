@@ -35,7 +35,9 @@ as a **single-source-of-truth pipeline**. See `README.md` for the overview.
   **randomisation arms** (comparator, sanity activity, `info_arm` half, `dce_block`, Muskan
   stimulus) assigned in `creating_session`; the **consent gate** (declining → skip to end);
   the **DCE** (a `type: dce` page expands into one page per task, drawn from
-  `dce_blocks.csv`); **Muskan's** assigned briefing + control-cell skip. Page conditions use
+  `dce_blocks.csv`); a **`type: random_group`** page expands into one page per item, shown
+  in a per-participant randomised order (seeded on `participant.code`) — every participant
+  sees every item exactly once; **Muskan's** assigned briefing + control-cell skip. Page conditions use
   the `condition:` key (`info_arm`, `muskan_not_control`).
 - `survey/sara/render.py` — builds each page's HTML body server-side (so text can be
   personalised: `{comparator}` / `{sanity}` tokens) and emits the UX layer (info-button
@@ -50,7 +52,8 @@ as a **single-source-of-truth pipeline**. See `README.md` for the overview.
 
 ## Spec schema (4 top-level keys, inside the fenced block)
 `meta`, `scales`, `pages`, `dumpster`. A page may have `body:` (HTML), `note:`,
-`condition:`, or `type: dce` + `n_tasks:`. An item has `id`, `text` (may contain
+`condition:`, `type: dce` + `n_tasks:`, or `type: random_group` (its `items:` are shown
+one-per-page in randomised order). An item has `id`, `text` (may contain
 `{comparator}`/`{sanity}`), `scale` or `options`, `widget` (radio/select/number),
 `required`, `rationale`, `triangulates`.
 
