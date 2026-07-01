@@ -212,40 +212,15 @@ pages:
       and more manageable. The next questions ask what level of risk you find acceptable.</p>
     items: []
 
-  # ── Page 4: Free number estimation (Method 1, §3.1) ─────────────
-  - id: free_estimate
-    title: "Your own estimate"
-    items:
-      - id: m4b_reasonable
-        text: >
-          What is the highest annual chance of an AI disaster killing 100,000
-          people that you would consider reasonable? That is, any higher would
-          be unreasonable.
-        scale: null
-        widget: radio
-        required: true
-        options:
-          - "1 in 100"
-          - "1 in 1,000"
-          - "1 in 10,000"
-          - "1 in 100,000"
-          - "1 in 1,000,000"
-          - "1 in 10,000,000 or less"
-          - "Zero risk only is reasonable"
-          - "Too speculative to answer"
-        rationale: >
-          A direct single-shot elicitation, kept as a cross-check on the DCE.
-          The RAISE Act bars "unreasonable" risk but never defines it; public
-          expectation is a legitimate input. Secondary to the DCE; reported as
-          validation, not the headline.
-        triangulates: [dce_choice, m4c_p1e3, m4c_p1e5, m4c_p1e7]
-
-  - id: severity_ladder
+  # ── Page 4: Severity ladder, rung 1 of 4 (Method 1, §3.1) ────────
+  # One severity level per page (was a single page with all four rows);
+  # page order randomised so the ladder format doesn't cue a mechanically
+  # monotonic answer.
+  - id: severity_single
     title: "Highest acceptable risk, by severity"
     note: >
       This is about societal risk — the chance somewhere in the population —
-      not your personal risk. Severity rises down the list, so a considered
-      answer accepts a lower chance as the outcome gets worse.
+      not your personal risk.
     items:
       - id: m4c_single
         text: >
@@ -258,11 +233,21 @@ pages:
           Lower anchor of the within-person severity ladder (Method 1, v10
           §3.1). Each person sets an acceptable annual chance across outcomes
           from one death up to a global catastrophe, tracing their stated
-          frequency–number (F–N) curve. A flat answer down the ladder is flagged
-          scope-insensitive. Row order randomised. The source anchors behind the
-          rungs (RAISE Act, MIT AI Risk Repository, FRI/XPT) are internal.
-        triangulates: [m4c_100, m4c_1m, m4c_800m, m4b_reasonable, dce_choice]
+          frequency–number (F–N) curve. Shown one severity level per page,
+          page order randomised, so a considered answer reflects genuine
+          judgement rather than a mechanical read-down of a visible list; a
+          flat answer across pages is still flagged scope-insensitive. The
+          source anchors behind the rungs (RAISE Act, MIT AI Risk Repository,
+          FRI/XPT) are internal.
+        triangulates: [m4c_100, m4c_1m, m4c_800m, dce_choice]
 
+  # ── Page 5: Severity ladder, rung 2 of 4 (Method 1, §3.1) ────────
+  - id: severity_100
+    title: "Highest acceptable risk, by severity"
+    note: >
+      This is about societal risk — the chance somewhere in the population —
+      not your personal risk.
+    items:
       - id: m4c_100
         text: >
           For an AI disaster causing 100 deaths or serious injuries, or $1
@@ -273,8 +258,15 @@ pages:
         required: true
         rationale: >
           RAISE Act "critical harm" rung of the severity ladder. See m4c_single.
-        triangulates: [m4c_single, m4c_1m, m4c_800m, m4b_reasonable, dce_choice]
+        triangulates: [m4c_single, m4c_1m, m4c_800m, dce_choice]
 
+  # ── Page 6: Severity ladder, rung 3 of 4 (Method 1, §3.1) ────────
+  - id: severity_1m
+    title: "Highest acceptable risk, by severity"
+    note: >
+      This is about societal risk — the chance somewhere in the population —
+      not your personal risk.
+    items:
       - id: m4c_1m
         text: >
           For an AI disaster causing 1,000,000 deaths or $100 billion in damage,
@@ -284,8 +276,15 @@ pages:
         required: true
         rationale: >
           MIT AI Risk Repository "catastrophic" rung. See m4c_single.
-        triangulates: [m4c_single, m4c_100, m4c_800m, m4b_reasonable, dce_choice]
+        triangulates: [m4c_single, m4c_100, m4c_800m, dce_choice]
 
+  # ── Page 7: Severity ladder, rung 4 of 4 (Method 1, §3.1) ────────
+  - id: severity_800m
+    title: "Highest acceptable risk, by severity"
+    note: >
+      This is about societal risk — the chance somewhere in the population —
+      not your personal risk.
+    items:
       - id: m4c_800m
         text: >
           For an AI disaster causing around 800,000,000 deaths (about 10% of
@@ -295,9 +294,9 @@ pages:
         required: true
         rationale: >
           FRI/XPT "catastrophe" rung (top of the ladder). See m4c_single.
-        triangulates: [m4c_single, m4c_100, m4c_1m, m4b_reasonable, dce_choice]
+        triangulates: [m4c_single, m4c_100, m4c_1m, dce_choice]
 
-  # ── Page 5: DCE (Method 2, §3.2) ────────────────────────────────
+  # ── Page 8: DCE (Method 2, §3.2) ─────────────────────────────────
   # type: dce — the engine expands this into one page per task (dce_1 … dce_N),
   # drawing each respondent's block from sara_dce_design.R's output
   # (sara/dce_blocks.csv). Fields dce_1 … dce_N store the A/B/Neither choice.
@@ -314,10 +313,10 @@ pages:
       the DCE traces a full frequency–severity (F–N) surface. Tasks are assigned
       by Bayesian D-efficient block (cbcTools); the YAML does not enumerate them
       because the design is generated programmatically.
-    triangulates: [m4b_reasonable, m4c_single, m4c_100, m4c_1m, m4c_800m, m5_wtp]
+    triangulates: [m4c_single, m4c_100, m4c_1m, m4c_800m, m5_wtp]
     items: []
 
-  # ── Page 6: Anchor to accepted safety (Method 3, §3.3) ──────────
+  # ── Page 9: Anchor to accepted safety (Method 3, §3.3) ───────────
   - id: safety_comparators
     title: "Compared with existing safety standards"
     items:
@@ -333,20 +332,7 @@ pages:
           ask how AI should compare with a technology people already live with.
           The named comparator carries a known risk level so the answer implies
           a band. Comparator randomised across respondents.
-        triangulates: [m3a_ii_safety, m3_sanity, m2_frame_applicable]
-
-      - id: m3a_ii_safety
-        text: >
-          And compared with how safe {comparator} is in practice today,
-          advanced AI systems themselves should be:
-        scale: safety5_cantcompare
-        widget: radio
-        required: true
-        rationale: >
-          Splits the standards vs outcomes question. Stricter standards and
-          safer systems are different questions; splitting them fixes the
-          category error Gradient identified in Figure 11.
-        triangulates: [m3a_i_standards, m3_sanity, m2_frame_applicable]
+        triangulates: [m3_sanity]
 
       - id: m3_sanity
         text: >
@@ -362,7 +348,7 @@ pages:
           Comparator randomised across high-risk voluntary activities (bungee
           jumping, BASE jumping, Everest). Death rates are approximate; verify
           before fielding.
-        triangulates: [m3a_i_standards, m3a_ii_safety]
+        triangulates: [m3a_i_standards]
 
       - id: m3_att_elevator
         text: >
@@ -390,29 +376,10 @@ pages:
           answer. See m3_att_elevator.
         triangulates: [m3_att_elevator]
 
-  # ── Page 7: Judge the experts' numbers (Method 4, §3.4) ─────────
+  # ── Page 10: Judge the experts' numbers (Method 4, §3.4) ─────────
   - id: expert_judgement
     title: "Judging expert estimates"
     items:
-      - id: m2_frame_applicable
-        text: >
-          Some technologies, like flying or nuclear power, are held to a strict
-          number for how risky they are allowed to be. Which is closer to your
-          view about advanced AI?
-        scale: null
-        widget: radio
-        required: true
-        options:
-          - "You can put a number on its risk and hold companies to a safety limit"
-          - "Its risk is too uncertain to put a useful number on"
-          - "Unsure"
-        rationale: >
-          Frame-applicability check. Later questions assume risk can be
-          quantified; this measures that premise. Results are reported
-          separately for people who reject the frame. Both options are
-          matched for length and reading level.
-        triangulates: [m3a_i_standards, m3a_ii_safety]
-
       - id: m2_experts_lecun
         text: >
           Yann LeCun (Meta) has estimated the chance of an AI catastrophe
@@ -432,7 +399,6 @@ pages:
           - m2_experts_altman
           - m2_experts_musk
           - m2_experts_amodei
-          - m4b_reasonable
 
       - id: m2_experts_altman
         text: >
@@ -449,7 +415,6 @@ pages:
           - m2_experts_lecun
           - m2_experts_musk
           - m2_experts_amodei
-          - m4b_reasonable
 
       - id: m2_experts_musk
         text: >
@@ -466,7 +431,6 @@ pages:
           - m2_experts_lecun
           - m2_experts_altman
           - m2_experts_amodei
-          - m4b_reasonable
 
       - id: m2_experts_amodei
         text: >
@@ -483,9 +447,8 @@ pages:
           - m2_experts_lecun
           - m2_experts_altman
           - m2_experts_musk
-          - m4b_reasonable
 
-  # ── Page 8: Costed tradeoffs ─────────────────────────────────────
+  # ── Page 11: Costed tradeoffs ────────────────────────────────────
   - id: tradeoffs
     title: "Costs and tradeoffs"
     items:
@@ -552,26 +515,10 @@ pages:
           safety, and competition.
         triangulates: [m5b_delay_uncond, m5b_delay_cond, dce_choice]
 
-  # ── Page 9: Policy ──────────────────────────────────────────────
+  # ── Page 12: Policy ───────────────────────────────────────────────
   - id: policy
     title: "Policy preferences"
     items:
-      - id: m6_certify
-        text: >
-          Before deployment, who should certify that an AI system is safe?
-        scale: null
-        widget: radio
-        required: true
-        options:
-          - "The companies that build them"
-          - "Government agencies"
-          - "Independent third-party auditors"
-          - "No certification needed; the market will sort it out"
-        rationale: >
-          A decision-relevant policy lever. Distinguishes appetite for self-,
-          government, and third-party oversight.
-        triangulates: [m6_faa, m6_liability]
-
       - id: m6_faa
         text: >
           Some have proposed regulating frontier AI like the FAA regulates
@@ -593,7 +540,7 @@ pages:
           goes beyond the June 2026 White House executive order, which is
           security-focused and explicitly voluntary. Tests the single most
           consequential mitigation directly.
-        triangulates: [m6_certify, m6_liability, m6_killswitch]
+        triangulates: [m6_liability, m6_killswitch]
 
       - id: m6_fedstate
         text: >
@@ -611,7 +558,7 @@ pages:
           Federal pre-emption vs a state patchwork. Central to whether the
           RAISE Act can model federal law. Four-point forced choice with no
           midpoint to avoid fence-sitting on a binary policy question.
-        triangulates: [m6_certify, m6_faa]
+        triangulates: [m6_faa]
 
       - id: m6_killswitch
         text: >
@@ -648,30 +595,124 @@ pages:
           proposals like the RAISE Act and SB 53. The negligence /
           duty-of-care middle was added so support for strict liability
           is not overstated (Ball's point).
-        triangulates: [m6_certify, m6_faa, m6_killswitch]
+        triangulates: [m6_faa, m6_killswitch]
 
   # (The old Stem-A/B superintelligence wording item and the accel/safety
   #  counter-message arm were retired 29 Jun 2026 — superseded by Muskan's 3x3
   #  superintelligence-briefing experiment, the final module below.)
 
-  # ── Page 10: Individual differences and demographics ────────────
+  # ── Page 13: Numeracy check — Berlin Numeracy Test, adaptive ─────
+  # type: adaptive — like the DCE's `type: dce`, this page shows one item
+  # at a time; which item comes next depends on whether the previous one was
+  # answered correctly (see each item's next_if_correct / next_if_incorrect).
+  # NOT YET WIRED UP in the oTree engine (survey/sara/__init__.py today only
+  # special-cases `type: dce`); this fully specifies the branching so that
+  # engine support can be added. Item wording is verbatim from Cokely,
+  # Galesic, Schulz, Ghazal, & Garcia-Retamero (2012), "Measuring Risk
+  # Literacy: The Berlin Numeracy Test," Judgment and Decision Making 7(1),
+  # 25–47, Appendix II (computer-adaptive format) — do not paraphrase.
+  - id: numeracy
+    title: "A quick numeracy check"
+    type: adaptive
+    root: bnt_choir
+    scoring:
+      quartile_1: Lowest statistical-numeracy quartile
+      quartile_2: Second quartile
+      quartile_3: Third quartile
+      quartile_4: Highest statistical-numeracy quartile
+    rationale: >
+      Replaces the single die-roll item (formerly m9_numeracy) with the full
+      validated Berlin Numeracy Test instead of a home-grown numeracy item.
+      Respondents answer 2–3 of the 4 items depending on branching; the path
+      taken estimates their statistical-numeracy quartile. Used to report
+      results for high- vs low-numeracy respondents and to test the
+      scope-sensitivity interaction (Ben's thesis). Each question is
+      calibrated to be answered correctly by about 50% of respondents at
+      that branch (Cokely et al., 2012); a wrong/right answer routes to an
+      easier/harder follow-up.
+    items:
+      - id: bnt_choir
+        node: 1
+        text: >
+          Out of 1,000 people in a small town, 500 are members of a choir.
+          Out of these 500 members in the choir, 100 are men. Out of the 500
+          inhabitants that are not in the choir, 300 are men. What is the
+          probability that a randomly drawn man is a member of the choir?
+          Please indicate the probability in percent.
+        scale: null
+        widget: number
+        suffix: "%"
+        required: true
+        correct_answer: 25
+        next_if_correct: bnt_loaded_die
+        next_if_incorrect: bnt_five_die
+        rationale: >
+          Root item of the adaptive tree; about half of respondents answer
+          it correctly by design.
+
+      - id: bnt_five_die
+        node: 2a
+        text: >
+          Imagine we are throwing a five-sided die 50 times. On average, out
+          of these 50 throws, how many times would this five-sided die show
+          an odd number (1, 3 or 5)?
+        scale: null
+        widget: number
+        suffix: "out of 50 throws"
+        required: true
+        correct_answer: 30
+        next_if_correct: quartile_2
+        next_if_incorrect: quartile_1
+        rationale: >
+          Easier follow-up, shown only if bnt_choir was answered incorrectly.
+          Terminal either way — 2 items total on this branch.
+
+      - id: bnt_loaded_die
+        node: 2b
+        text: >
+          Imagine we are throwing a loaded die (6 sides). The probability
+          that the die shows a 6 is twice as high as the probability of each
+          of the other numbers. On average, out of these 70 throws, how many
+          times would the die show the number 6?
+        scale: null
+        widget: number
+        suffix: "out of 70 throws"
+        required: true
+        correct_answer: 20
+        next_if_correct: quartile_4
+        next_if_incorrect: bnt_mushroom
+        rationale: >
+          Harder follow-up, shown only if bnt_choir was answered correctly.
+          Getting this right too ends the test at 2 items (top quartile);
+          getting it wrong routes to a third, tie-breaking item.
+
+      - id: bnt_mushroom
+        node: 3
+        text: >
+          In a forest, 20% of mushrooms are red, 50% brown and 30% white. A
+          red mushroom is poisonous with a probability of 20%. A mushroom
+          that is not red is poisonous with a probability of 5%. What is the
+          probability that a poisonous mushroom in the forest is red?
+        scale: null
+        widget: number
+        suffix: "%"
+        required: true
+        correct_answer: 50
+        next_if_correct: quartile_4
+        next_if_incorrect: quartile_3
+        rationale: >
+          Third, tie-breaking item — shown only after bnt_choir correct and
+          bnt_loaded_die incorrect. Answering it right still recovers the
+          top quartile (getting the harder gatekeeper item right outweighs
+          one later miss); answering it wrong lands at quartile 3, still
+          above either outcome of the easy branch — reflecting item
+          difficulty rather than raw count correct, per Berlin Numeracy Test
+          norms.
+
+  # ── Page 14: Individual differences and demographics ─────────────
   - id: demographics
     title: "About you"
     items:
-      - id: m9_numeracy
-        text: >
-          Imagine rolling a fair six-sided die 1,000 times. Out of 1,000
-          rolls, how many times do you think it would land on an even number
-          (2, 4, or 6)?
-        scale: null
-        widget: number
-        required: true
-        rationale: >
-          Risk-literacy / numeracy (Berlin-style item). Used to report
-          results for high- vs low-numeracy respondents and to test the
-          scope-sensitivity interaction (Ben's thesis).
-        triangulates: [m4c_p1e3, m4c_p1e5, m4c_p1e7]
-
       - id: m9_politics
         text: >
           In general, how would you describe your political views?
@@ -906,6 +947,29 @@ pages:
 # Kept here so the instrument's full decision record lives in one place; the
 # protocol gives the deeper rationale and assumptions, this gives the ledger.
 dumpster:
+  - name: m6_certify (before deployment, who should certify that an AI system is safe?)
+    reason: >
+      Cut 1 Jul 2026: the certifier question is subsumed by m6_faa (binding
+      pre-release testing, which implies government/independent certification)
+      and m6_liability (who bears the consequences if certification fails);
+      a separate certifier item wasn't adding decision-relevant information.
+  - name: m3a_ii_safety (compared with how safe {comparator} is in practice, AI systems should be)
+    reason: >
+      Cut 1 Jul 2026: page 9 now asks only about standards (m3a_i_standards),
+      not about outcomes/practice. Splitting standards from safety-in-practice
+      fixed a category error (Gradient Figure 11), but the outcomes half isn't
+      needed for the headline number. Recoverable if the standards-vs-outcomes
+      gap becomes a finding worth probing directly.
+  - name: m2_frame_applicable (can you put a number on AI's risk, or is it too uncertain?)
+    reason: >
+      Cut 1 Jul 2026: the frame-applicability check was judged not important
+      enough to keep in the live instrument.
+  - name: free_estimate / m4b_reasonable (highest annual chance of an AI disaster killing 100,000 people you'd find reasonable)
+    reason: >
+      Cut 1 Jul 2026: redundant with the severity-ladder rung m4c_1m (1,000,000
+      deaths), which asks essentially the same thing but is anchored to a
+      published source (MIT AI Risk Repository "catastrophic" rung); the
+      100,000 figure here wasn't anchored to any prior work.
   - name: Environment / data-centre module (env_label, env_reversal, env_forgo, env_attitude)
     reason: >
       Reverse-halo framing experiment, fielded first in v10. Cut 29 Jun 2026:
