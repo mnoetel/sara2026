@@ -174,6 +174,8 @@ def _page_displayed(player, page):
         return not muskan.is_control(player.field_maybe_none('muskan_stim') or '')
     if cond == 'muskan_control':
         return muskan.is_control(player.field_maybe_none('muskan_stim') or '')
+    if cond == 'muskan_one_sided':
+        return muskan.is_one_sided(player.field_maybe_none('muskan_stim') or '')
     return True
 
 
