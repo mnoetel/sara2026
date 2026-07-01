@@ -8,10 +8,77 @@ Submitted ``name=<item_id> value=<1-based index>`` matches each item's oTree
 IntegerField(choices=...), so answers still save the normal way.
 """
 import html
+import os
+import re
 
 
 def esc(s):
     return html.escape(str(s), quote=True)
+
+
+# ── Participant Information Sheet ─────────────────────────────────────
+# The consent page must present the *canonical* Participant Information Sheet
+# in full (see the note on the `consent` page in sara_usa.md). The sheet is NOT
+# duplicated into the spec — it lives at ethics consent form/…v2.1.md and the
+# engine pulls it in here, converting Markdown → HTML at render time. This keeps
+# the single source of truth: edit the ethics .md, the consent screen follows.
+_INFO_SHEET_PATH = os.path.join(
+    os.path.dirname(__file__), '..', '..',
+    'ethics consent form',
+    'Participant Information Sheet and Consent Form Version 2.1.md')
+
+_INFO_SHEET_CACHE = None
+
+
+def _fallback_md_to_html(text):
+    """Minimal Markdown→HTML used only if the `markdown` package is absent, so
+    the consent screen still renders readable text (headings, bold, paragraphs)
+    rather than crashing the server."""
+    out = []
+    for block in re.split(r"\n\s*\n", text.strip()):
+        block = block.strip()
+        if not block:
+            continue
+        if block.startswith('---'):
+            out.append('<hr>')
+            continue
+        m = re.match(r'^(#+)\s+(.*)', block)
+        if m:
+            lvl = min(len(m.group(1)), 4)
+            out.append('<h%d>%s</h%d>' % (lvl, esc(m.group(2).strip()), lvl))
+            continue
+        para = esc(block)
+        para = re.sub(r'\*\*(.+?)\*\*', r'<b>\1</b>', para)
+        out.append('<p>%s</p>' % para.replace('\n', '<br>'))
+    return "".join(out)
+
+
+def information_sheet_html():
+    """The full Participant Information Sheet & Consent Form as HTML, read from
+    the canonical ethics document and cached for the process."""
+    global _INFO_SHEET_CACHE
+    if _INFO_SHEET_CACHE is not None:
+        return _INFO_SHEET_CACHE
+    try:
+        with open(_INFO_SHEET_PATH, encoding='utf-8') as fh:
+            raw = fh.read()
+        # The canonical doc ends with two ballot-box (☐) consent lines. On this
+        # screen the real consent control is the radio question below the sheet,
+        # so strip the non-functional checkboxes to stop people clicking them.
+        raw = "".join(ln for ln in raw.splitlines(keepends=True) if '☐' not in ln)
+    except OSError as e:
+        _INFO_SHEET_CACHE = (
+            '<div class="alert alert-danger">The Participant Information Sheet '
+            'could not be loaded (%s). Do not field the survey until this is '
+            'fixed.</div>' % esc(e))
+        return _INFO_SHEET_CACHE
+    try:
+        import markdown
+        body = markdown.markdown(raw, extensions=['tables', 'sane_lists'])
+    except ImportError:
+        body = _fallback_md_to_html(raw)
+    _INFO_SHEET_CACHE = '<div class="sara-infosheet">%s</div>' % body
+    return _INFO_SHEET_CACHE
 
 
 def _options_for(item, scales):
