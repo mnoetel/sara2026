@@ -17,10 +17,11 @@ as a **single-source-of-truth pipeline**. See `README.md` for the overview.
   file directly via `spec_loader.load_spec()`. Edit it there.
   `Muskan's Expiermnet/Superintelligence_3x3_stimuli_v2.xlsx` is kept only as the original
   design workbook for provenance; the pipeline no longer reads it.
-- **It's Markdown on purpose** — collaborators can co-edit and comment on it in HackMD or
-  Google Docs without touching YAML directly. Content outside the fence is prose/commentary
-  and is ignored by the parser; only the fenced block is read. Keep the fence's contents
-  valid YAML.
+- **It's Markdown on purpose** — a change reads as a clean diff in a GitHub pull request,
+  where reviewers comment inline without touching YAML directly. (HackMD round-tripping was
+  dropped — it drifted from the repo; the repo is the single source of truth and review
+  happens on the PR.) Content outside the fence is prose/commentary and is ignored by the
+  parser; only the fenced block is read. Keep the fence's contents valid YAML.
 - **The protocol (`SARA USA — Survey Protocol v10.md`) is context only** — rationale,
   assumptions, criticisms, MRP plan. It must **not** restate items, the fielding list, or
   the dumpster (those are the instrument's job). When you change the instrument, update the

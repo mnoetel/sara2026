@@ -5,13 +5,13 @@ rationale, and the dumpster (cut items) live in the YAML block below. Editing it
 here and syncing back to the repo rebuilds both the live oTree survey and the
 generated review table — nothing else needs to change.
 
-**For reviewers:** leave comments anywhere in this doc (HackMD / Google Docs
-style). Structural edits should stay valid YAML inside the fenced block — ask
-if you're not sure a change is safe.
+**For reviewers:** review changes in the GitHub pull request and comment inline
+on the diff. Structural edits should stay valid YAML inside the fenced block —
+ask if you're not sure a change is safe.
 
 **For editors:** the fenced ```yaml block below is parsed as-is. Do not add
-prose inside the fence; keep commentary outside it (in this preamble, or in
-HackMD comment threads).
+prose inside the fence; keep commentary outside it (in this preamble, or as PR
+review comments).
 
 **Companion file:** the full 27-passage text for Muskan's superintelligence-
 briefing experiment (final module, near the end of this doc) is its own
