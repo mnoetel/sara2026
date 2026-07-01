@@ -174,17 +174,23 @@ def _clsname(pid):
 def _make_content_page(page, ordn, total):
     item_ids = [it['id'] for it in page.get('items', [])]
     is_brief = page['id'] == 'superintelligence_brief'
+    is_consent = page['id'] == 'consent'
 
     class _P(Page):
         form_model = 'player'
         form_fields = item_ids
         template_name = 'sara/Page.html'
 
-        def vars_for_template(player, ps=page, brief=is_brief, ordn=ordn, total=total):
+        def vars_for_template(player, ps=page, brief=is_brief, consent=is_consent,
+                              ordn=ordn, total=total):
             body_html = ""
             if brief:
                 st = muskan.get(player.field_maybe_none('muskan_stim') or '')
                 body_html = render.paragraphs(st['body_text']) if st else ""
+            elif consent:
+                # The spec `body:` is a short lead-in; the full canonical
+                # Participant Information Sheet is pulled in from the ethics doc.
+                body_html = (ps.get('body') or '') + render.information_sheet_html()
             return dict(page_title=ps.get('title', ''),
                         page_index=ordn, page_total=total,
                         body=render.page_body(ps, player, _SCALES, body_html))

@@ -155,17 +155,14 @@ pages:
   - id: consent
     title: Information sheet and consent
     # The full Participant Information Sheet is NOT duplicated here — it is the
-    # canonical document at ethics consent form/…v2.1. This page is the consent
-    # gate; the engine should present that sheet in full on this screen at fielding.
+    # canonical document at ethics consent form/…v2.1. The engine (render.py ->
+    # information_sheet_html, wired in __init__.py) pulls that sheet in and
+    # renders it in full below this lead-in. Edit the ethics .md, not this body.
     body: |
-      <p>This study runs under University of Queensland ethics approval <b>2023/HE002257</b>.</p>
-      <p><b>The Participant Information Sheet (v2.1)</b> — purpose, what's involved, risks, data
-      handling and your rights — is the canonical consent document. It is <b>not duplicated
-      here</b>; the full sheet is in
-      <code>ethics consent form/Participant Information Sheet and Consent Form Version 2.1.md</code>
-      and is to be presented in full on this screen before fielding.</p>
-      <p>By selecting "I consent" you confirm you have read the Information Sheet, are 18 or
-      older, and freely agree to take part.</p>
+      <p>This study runs under University of Queensland ethics approval <b>2023/HE002257</b>.
+      Please read the Participant Information Sheet below before deciding whether to take part.
+      By selecting "I consent" you confirm you have read it, are 18 or older, and freely agree
+      to take part.</p>
     items:
       - id: consent
         text: "Do you consent to take part in this research?"
