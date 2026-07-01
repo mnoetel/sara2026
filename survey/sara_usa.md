@@ -36,13 +36,11 @@ meta:
     Four methods triangulate public risk tolerance; see protocol v10.
 
 scales:
-  tolerability4:
+  tolerability2:
     type: likert
     labels:
-      - Acceptable
-      - Tolerable
-      - Intolerable
-      - "Unacceptable / should be illegal"
+      - "Tolerable: okay to live with, if monitored"
+      - "Intolerable: too dangerous, must be fixed"
 
   agree5:
     type: likert
@@ -400,73 +398,88 @@ pages:
   - id: expert_judgement
     title: "Judging expert estimates"
     items:
+      # Ascending distribution of credible estimates: near-zero (LeCun) →
+      # careful forecasters (FRI superforecasters, then FRI domain experts) →
+      # top of the range (Amodei). Frame held constant across items so the
+      # only thing that changes is the number the respondent is judging.
       - id: m2_experts_lecun
         text: >
-          Yann LeCun (Meta) has estimated the chance of an AI catastrophe
-          killing a large fraction of humanity at less than 1 in 10,000.
+          Yann LeCun (Meta) has put the chance that AI wipes out humanity at
+          about 1 in 1,000,000 — "less likely than an asteroid wiping us out."
           Accepting a risk at that level would be:
-        scale: tolerability4
+        scale: tolerability2
         widget: radio
         required: true
         rationale: >
-          Recognition not generation (Method 4). People judge a named,
-          real figure rather than producing one. Shown within-person
-          alongside other expert estimates to dampen anchoring from any
-          single source. Reported by source, never as a single average.
-          Figures are illustrative; replace with exact, citable quotations
-          before fielding.
+          Near-zero anchor. Recognition not generation (Method 4): people
+          judge a named, real figure rather than producing one. The four
+          experts are shown within-person to span the credible range and
+          dampen anchoring from any single source; reported by source, never
+          averaged. Source: LeCun's stated p(doom) <0.01% — "Less likely than
+          an asteroid wiping us out" (Wikipedia, "P(doom)", Note 4). Rendered
+          as ~1 in 1,000,000 to sit in "1 in X" form beside the other three;
+          this matches asteroid-extinction odds of roughly 1 in a million per
+          century (Ord, "The Precipice", 2020). Verify before fielding.
         triangulates:
-          - m2_experts_altman
-          - m2_experts_musk
+          - m2_experts_fri_super
+          - m2_experts_fri_domain
           - m2_experts_amodei
 
-      - id: m2_experts_altman
+      - id: m2_experts_fri_super
         text: >
-          Sam Altman (OpenAI) has estimated the chance of an AI catastrophe
-          killing a large fraction of humanity at about 1 in 50. Accepting
-          a risk at that level would be:
-        scale: tolerability4
+          Expert forecasters in a large forecasting tournament put the chance
+          that AI causes human extinction this century at about 1 in 250.
+          Accepting a risk at that level would be:
+        scale: tolerability2
         widget: radio
         required: true
         rationale: >
-          See m2_experts_lecun rationale. Figures illustrative; verify before
+          Low-but-careful anchor from professional forecasters. Source:
+          Forecasting Research Institute, Existential Risk Persuasion
+          Tournament — superforecaster median for AI-caused extinction by 2100
+          ≈ 0.38% (~1 in 250) (Karger, Rosenberg, Tetlock et al., 2023,
+          "Forecasting Existential Risks"). Verify figure before fielding.
+        triangulates:
+          - m2_experts_lecun
+          - m2_experts_fri_domain
+          - m2_experts_amodei
+
+      - id: m2_experts_fri_domain
+        text: >
+          AI-domain experts in a large forecasting tournament put the chance
+          that AI causes human extinction this century at about 1 in 30.
+          Accepting a risk at that level would be:
+        scale: tolerability2
+        widget: radio
+        required: true
+        rationale: >
+          Mid anchor from the same tournament, showing how much higher subject
+          experts sit than generalist forecasters. Source: FRI Existential
+          Risk Persuasion Tournament — AI-domain-expert median for AI-caused
+          extinction by 2100 ≈ 3% (~1 in 30) (Karger, Rosenberg, Tetlock et
+          al., 2023, "Forecasting Existential Risks"). Verify figure before
           fielding.
         triangulates:
           - m2_experts_lecun
-          - m2_experts_musk
-          - m2_experts_amodei
-
-      - id: m2_experts_musk
-        text: >
-          Elon Musk (xAI / Tesla) has estimated the chance of an AI
-          catastrophe killing a large fraction of humanity at about 1 in 5.
-          Accepting a risk at that level would be:
-        scale: tolerability4
-        widget: radio
-        required: true
-        rationale: >
-          See m2_experts_lecun rationale. Figures illustrative; verify before
-          fielding.
-        triangulates:
-          - m2_experts_lecun
-          - m2_experts_altman
+          - m2_experts_fri_super
           - m2_experts_amodei
 
       - id: m2_experts_amodei
         text: >
-          Dario Amodei (Anthropic) has estimated the chance of an AI
-          catastrophe killing a large fraction of humanity at about 1 in 4.
-          Accepting a risk at that level would be:
-        scale: tolerability4
+          Dario Amodei (Anthropic) has estimated the chance that AI goes
+          catastrophically wrong at between 1 in 10 and 1 in 4. Accepting a
+          risk at that level would be:
+        scale: tolerability2
         widget: radio
         required: true
         rationale: >
-          See m2_experts_lecun rationale. Figures illustrative; verify before
-          fielding.
+          Top anchor. Source: Amodei's stated p(doom) 10–25% — "there's a 25%
+          chance that things go really, really badly" (Axios, Morrone 2023).
+          Verify figure before fielding.
         triangulates:
           - m2_experts_lecun
-          - m2_experts_altman
-          - m2_experts_musk
+          - m2_experts_fri_super
+          - m2_experts_fri_domain
 
   # ── Page 8: Costed tradeoffs ────────────────────────────────────
   - id: tradeoffs
