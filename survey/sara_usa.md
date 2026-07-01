@@ -548,7 +548,7 @@ pages:
       - id: m5b_delay_cond
         text: >
           If delaying advanced AI by 10 years would cut the chance of a
-          catastrophe from 5% to 1%, that delay would be:
+          catastrophe from 1 in 20 to 1 in 100, that delay would be:
         scale: worthwhile5
         widget: radio
         required: true
@@ -561,7 +561,7 @@ pages:
       - id: m5_race
         text: >
           If slowing US AI development let other countries catch up, but cut
-          the chance of a catastrophe from 5% to 1%, that slowdown would be:
+          the chance of a catastrophe from 1 in 20 to 1 in 100, that slowdown would be:
         scale: worthwhile5
         widget: radio
         required: true
