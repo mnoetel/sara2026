@@ -300,12 +300,13 @@ pages:
   # Every respondent sees all five items — three benchmark comparators (nuclear
   # power, commercial aviation, large dams) and two disguised attention checks —
   # one per page, in a per-participant shuffled order (type: random_group), so
-  # the sequence can't cue a monotone answering pattern and the checks stay
-  # interleaved among real items (their disguise). The comparators carry
+  # the sequence can't cue a monotone answering pattern. The comparators carry
   # published, annual (or annualisable) tolerable-risk figures, so answers can
-  # be laid against an annualised superforecaster AI estimate. The attention
-  # checks are flagged `not_first: true` so a check is never the first page a
-  # respondent sees — they always warm up on a real comparator first.
+  # be laid against an annualised superforecaster AI estimate. The three real
+  # comparators are shuffled among themselves and shown first; the two attention
+  # checks are flagged `last: true` so they always trail the real comparators —
+  # every respondent warms up on all three real items before either check, and
+  # the checks land in the last two slots (shuffled between themselves).
   - id: safety_standards
     type: random_group
     title: "Compared with existing safety standards"
@@ -358,17 +359,17 @@ pages:
         scale: strictness5_cantcompare
         widget: radio
         required: true
-        not_first: true
+        last: true
         rationale: >
           Attention check disguised as a comparator item — same stem and scale
-          as the real comparators it is shuffled among, so a careless
-          pattern-clicker carries the same answering habit straight into it. The
-          required answer ("Much less strict") is an extreme endpoint a
-          default-clicker or straightliner will miss. Both checks demand the same
-          endpoint on purpose: Prolific/Bastical needs two failures to exclude
-          someone, and a shared fail criterion is more likely to catch a
-          straightliner on both. `not_first` keeps it out of the first slot so
-          the respondent meets a real comparator before any check.
+          as the real comparators it trails, so a careless pattern-clicker
+          carries the same answering habit straight into it. The required answer
+          ("Much less strict") is an extreme endpoint a default-clicker or
+          straightliner will miss. Both checks demand the same endpoint on
+          purpose: Prolific/Bastical needs two failures to exclude someone, and a
+          shared fail criterion is more likely to catch a straightliner on both.
+          `last` forces it after all three real comparators, so the respondent
+          settles into the answering pattern on genuine items before any check.
         triangulates: [m3_att_nuclear]
 
       - id: m3_att_nuclear
@@ -378,13 +379,13 @@ pages:
         scale: strictness5_cantcompare
         widget: radio
         required: true
-        not_first: true
+        last: true
         rationale: >
           Second attention check, same disguised-comparator format and same
           required answer ("Much less strict"). Sharing the fail criterion with
           the bioweapons check is deliberate — two failures are needed to
           exclude, and identical criteria catch straightliners on both. Also
-          flagged `not_first`. See m3_att_bioweapons.
+          flagged `last`. See m3_att_bioweapons.
         triangulates: [m3_att_bioweapons]
 
   # ── Attention-check screen-out ──────────────────────────────────────
@@ -408,13 +409,19 @@ pages:
     items: []
 
   # ── Page 7: Judge the experts' numbers (Method 4, §3.4) ─────────
+  # type: random_group — each expert estimate goes on its own page, shown in a
+  # per-participant randomised order (seeded on participant.code), so a fixed
+  # ascending sequence can't cue a monotone read-down. The four estimates still
+  # span the credible range (near-zero → top) and are reported by source, never
+  # averaged; only the presentation order is randomised.
   - id: expert_judgement
     title: "Judging expert estimates"
+    type: random_group
     items:
-      # Ascending distribution of credible estimates: near-zero (LeCun) →
-      # careful forecasters (FRI superforecasters, then FRI domain experts) →
-      # top of the range (Amodei). Frame held constant across items so the
-      # only thing that changes is the number the respondent is judging.
+      # The credible range of estimates: near-zero (LeCun) → careful forecasters
+      # (FRI superforecasters, then FRI domain experts) → top of the range
+      # (Amodei). Frame held constant across items so the only thing that changes
+      # is the number the respondent is judging; page order is randomised.
       - id: m2_experts_lecun
         text: >
           Yann LeCun (Turing Award winner) has put the chance that AI wipes out humanity at
@@ -495,8 +502,13 @@ pages:
           - m2_experts_fri_domain
 
   # ── Page 8: Costed tradeoffs ────────────────────────────────────
+  # type: random_group — the willingness-to-pay item and the delay/slowdown
+  # tradeoffs each go on their own page, shown in a per-participant randomised
+  # order (seeded on participant.code), so no fixed sequence cues a pattern.
+  # Fields save normally; each participant sees every item exactly once.
   - id: tradeoffs
     title: "Costs and tradeoffs"
+    type: random_group
     items:
       - id: m5_wtp
         text: >
