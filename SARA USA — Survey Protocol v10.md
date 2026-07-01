@@ -334,28 +334,87 @@ Cut from the live instrument and parked in Appendix C. The module measured an AI
 
 ### 8.1 Resolved or actioned
 
-| # | Reviewer | Criticism | Our response |
-|---|---|---|---|
-| 1 | Oscar Delaney (+Barnett) | Don't trust public probabilities; relative comparisons are more useful | Direct elicitation demoted to a validation cross-check; named-expert recognition (§3.4) and relative-standard anchoring (§3.3) are primary |
-| 2 | Peter Barnett | Scope insensitivity (treat 1/100k ≈ 1/10M) | **Measured, not designed away:** within-person probability/severity, scope-slope × risk-literacy interaction, rows two OOMs apart, order randomised + between-subjects cross-check (§3.1) |
-| 3 | Peter Barnett | Tolerability Likert = affect, not a threshold | Accepted; triangulated across four methods, consistency-checked, counter-messaged, numeracy-moderated |
-| 4 | Peter Barnett | F–N overshoots and may be dismissed | Headline reframed to the robust *gap*, not a point threshold; back-out is illustrative only |
-| 5 | Peter Barnett | "All technologies carry risk" framing misleads | Removed from public-facing items (it imports a wrong "last order of magnitude" frame) |
-| 6 | Peter Barnett | "Negligent" is weaker than "Intolerable" | "Negligent / grossly negligent" labels dropped for a monotonic tolerability scale, later collapsed to a two-point **Tolerable / Intolerable** forced choice (01 Jul 2026) for the named-expert items (§3.4) |
-| 7 | Peter Barnett | Depends what you call "experts" | Every source named and attributed — LeCun, FRI/XPT superforecasters, FRI AI-domain experts, Amodei — and reported by anchor, never as an undifferentiated "experts" (§3.4) |
-| 8 | Oscar Delaney | Test counter-messages (a16z talking points) | Folded into Muskan's 3×3 ELM briefing experiment (§6/§7.1) — the final module, testing source-cue vs argument framing on ban support, kept off the tolerance core |
-| 9 | Peter Barnett | One attention check should be "more strict," one "less strict" | Two disguised attention checks embedded among the comparator items (biological weapons, nuclear weapons); both now demand the same endpoint ("Much less strict") because the panel requires *two* failures to exclude and a shared fail criterion is likelier to catch a straightliner on both — so the pair is same-direction by design rather than bidirectional (instrument: m3_att_bioweapons / m3_att_nuclear + the att_failed screen-out) |
-| 10 | Barnett / Delaney | Give people a neutral intuition for risk levels by comparing to other fields | Relative-standards method (§3.3) plus the dangerous-activity sanity anchor |
-| 11 | Gradient (Carroll, A. Reid, Caetano) | Open with a clear purpose; two question classes | §1–§2 rewrite; Cluster A (attitudes) vs Cluster B (tolerance) split |
-| 12 | Gradient | Don't assume a latent quantitative preference exists | Stated explicitly; convergence test (§5); ordinal reporting where it fails |
-| 13 | Gradient | Define risk precisely (prob × impact; whose risk; control vs application) | Standard definitions in the instrument preface; every Cluster B item labelled; application risks anchored to today's baseline |
-| 14 | Gradient | Don't conflate conditional with unconditional support | Strict conditional-reporting rule; separate unconditional and conditional delay items |
-| 15 | Gradient | A citizens' assembly may beat a poll | Deliberative mini-public recommended as Phase 2 (complement, not replacement) |
-| 16 | Gradient | Drop "public want AI 4000× safer" | Removed; back-out downgraded to illustration |
-| 17 | Gradient | Figure 11 category error ("systems should be stricter") | Split into stricter *standards* and safer *systems*; the standards item is the live comparator, the safer-systems twin was cut to the dumpster (01 Jul 2026) as not needed for the headline number (§3.3) |
-| 18 | Ball-style skeptical review (reconstructed) | "Advocacy in a lab coat" | Pre-registered disconfirmation list + adversarial review: a regulation-skeptic and an environment-skeptic review the instrument pre-launch; their unedited critiques are published with the results |
-| 19 | Ball-style review | Curated alarming anchors | Full-range anchor set (LeCun ~1 in 1,000,000 → Amodei 1 in 10–1 in 4, with two FRI forecaster medians in between), reported by anchor |
-| 20 | Ball-style review | Liability options biased | Negligence / duty-of-care middle option added |
+Each entry gives the reviewer's concern in fuller form and what we changed in response. The compact one-line version of this table lived in v9; reviewers asked for the concern *and* the fix spelled out, so both are expanded here.
+
+**1. Oscar Delaney (Barnett agreeing) — don't trust public probabilities; relative comparisons are more useful.**
+*Concern.* Delaney doesn't trust a general sample to understand or reason well about probabilities and severities, so a directly elicited number is "somewhat made up when forced" — it reflects affect, not a considered threshold — and politicians are unlikely to weight it. Comparative judgements ("should AI be held stricter than nuclear power?") are cognitively easier and more stable than absolute ones.
+*Response.* We demoted the direct number (§3.1) from headline to a validation cross-check, and made the two methods that lean on *judgement rather than generation* primary: named-expert recognition (§3.4, where the respondent judges a real published figure rather than inventing one) and relative-standard anchoring (§3.3, comparison to industries whose risk we already tolerate). The direct number is only reported as a single public figure if it agrees with the revealed-preference DCE within about one order of magnitude (the convergence go/no-go, §5); otherwise we report a bound and a qualitative finding.
+
+**2. Peter Barnett — scope insensitivity (treating 1 in 100,000 ≈ 1 in 10,000,000).**
+*Concern.* Many respondents feel both very small probabilities as the same undifferentiated "small," so a single elicited threshold reflects that affect rather than a considered number, and a naive elicitation would report a spuriously precise figure.
+*Response.* We *measure* scope sensitivity instead of designing it away. Severity varies within person across the ladder (a single death → ~800M deaths) and the respondent sets the highest acceptable annual chance at each rung, with rows about two orders of magnitude apart and order randomised; anyone flat across the ladder is flagged scope-insensitive. A between-subjects arm cross-checks for demand effects, and the per-person scope slope is interacted with risk literacy (an honours thesis) to ask *who* is insensitive rather than assuming everyone is (§3.1).
+
+**3. Peter Barnett — a tolerability Likert measures affect, not a threshold.**
+*Concern.* A tolerability rating ("acceptable / intolerable") may capture nothing more than "I like or dislike AI," not a considered risk threshold the respondent would defend.
+*Response.* Accepted — which is the whole reason we triangulate rather than trust any one method. The tolerability reading (§3.4) must agree with the revealed-preference DCE (§3.2) before we report a number; within-person consistency, the information-provision contrast (§6), and numeracy moderation all test whether the rating is stable or pure affect. If affect were driving it, the choice-based method would not converge.
+
+**4. Peter Barnett — the F–N exercise overshoots and may be dismissed.**
+*Concern.* Expert AI-risk estimates sit so far above any tolerated engineering standard that a precise frequency–number chart risks "overshooting the graph" and being discounted as absurd.
+*Response.* The headline is reframed to the robust *gap* between what experts estimate and what the public will tolerate, not a point on an F–N curve. Any F–N back-out is illustrative only, gated on the cognitive pre-test, and never published as an "N times safer" headline (see also open item B, where the residual dismissal risk remains).
+
+**5. Peter Barnett — the "all technologies carry risk" framing misleads.**
+*Concern.* A preamble that "every technology carries some residual risk" quietly imports a "we're only haggling over the last order of magnitude" frame, nudging respondents toward acceptance.
+*Response.* Removed from all public-facing items and parked in the dumpster; the instrument does not tell respondents that residual risk is inevitable before asking what they will tolerate.
+
+**6. Peter Barnett — "negligent" reads as weaker than "intolerable."**
+*Concern.* An earlier scale used "negligent / grossly negligent" for the middle points; "negligent" reads as *milder* than "intolerable," breaking the monotonic ordering the scale depends on.
+*Response.* Those labels were dropped for a strictly monotonic tolerability scale, later collapsed to the two-point **Tolerable / Intolerable** forced choice (01 Jul 2026) for the named-expert items, giving a cleaner low-effort judgement across the four within-person anchors (§3.4).
+
+**7. Peter Barnett — it depends what you call "experts."**
+*Concern.* A finding stated as "experts think X" hinges on the contested question of who counts as an expert, and is easy to wave away on that ground.
+*Response.* We never say "experts." Every anchor is a named individual or a specified forecaster group — LeCun, the FRI/XPT superforecaster median, the FRI AI-domain-expert median, Amodei — shown within person and reported *by source*, so the reader sees the spread and its attribution rather than an undifferentiated average (§3.4).
+
+**8. Oscar Delaney — test counter-messages (a16z / accelerationist talking points).**
+*Concern.* Poll answers may be shallow and shift under industry counter-messaging; we should test whether accelerationist framing moves opinion rather than assume our numbers are stable.
+*Response.* Folded into Muskan's 3×3 ELM briefing experiment (§6/§7.1): each respondent gets one briefing crossing an argument *for* a ban × an argument *against*, each at three levels (elite source-cue / substantive argument / none). It runs last, off the tolerance core, so the persuasion test cannot contaminate the tolerance estimate.
+
+**9. Peter Barnett — one attention check should point "more strict," one "less strict."**
+*Concern.* Barnett suggested bidirectional attention checks (one demanding a high answer, one a low answer) to catch straightliners who pick the same option throughout.
+*Response.* We embed two disguised checks among the comparator items (biological weapons, nuclear weapons) but made them *same-direction* on purpose: Prolific excludes a respondent only when they fail *both* checks, so a shared fail endpoint ("Much less strict") is more likely to catch someone straightlining across both than a split criterion would (instrument: `m3_att_bioweapons` / `m3_att_nuclear` + the `att_failed` screen-out).
+
+**10. Barnett / Delaney — give people a neutral intuition for risk magnitudes by comparing to other fields.**
+*Concern.* Absolute risk numbers are meaningless to most respondents without a reference point drawn from domains they already understand.
+*Response.* The relative-standards method (§3.3) anchors AI against industries whose risk society already tolerates (nuclear, aviation, pharmaceuticals, cars, dams), and the dangerous-activity sanity anchor (Everest, BASE jumping, bungee jumping) fixes the risky end of the range so we can confirm respondents can place AI across the full scale.
+
+**11. Gradient (Carroll, A. Reid, Caetano) — open with a clear purpose; separate the two question classes.**
+*Concern.* The instrument should state its purpose up front and not blur descriptive-attitude questions together with the values question about tolerance.
+*Response.* §1–§2 were rewritten around the single purpose (how much catastrophic risk the public will tolerate), and the instrument separates Cluster A (descriptive attitudes) from Cluster B (tolerance), with only the balanced information arm allowed to touch the tolerance block.
+
+**12. Gradient — don't assume a latent quantitative preference exists.**
+*Concern.* Respondents may simply not hold a pre-formed numeric risk threshold, so eliciting one manufactures a preference that isn't there.
+*Response.* Stated explicitly in the protocol; the convergence test (§5) is the check on whether a stable number exists at all, and where it fails we report ordinal findings and bounds rather than forcing a point estimate.
+
+**13. Gradient — define risk precisely (probability × impact; whose risk; loss-of-control vs application).**
+*Concern.* "Risk" is ambiguous across probability and severity, personal versus societal exposure, and loss-of-control versus ordinary application harms; leaving it undefined makes answers uninterpretable.
+*Response.* Standard definitions (probability vs impact, personal vs societal, loss-of-control vs application anchored to today's baseline) are shown before any Cluster B item, and every tolerance item is labelled with which sense of risk it asks about.
+
+**14. Gradient — don't conflate conditional with unconditional support.**
+*Concern.* "I'd support a pause *if* China also paused" is a different measurement from unconditional support, and merging them overstates agreement.
+*Response.* A strict conditional-reporting rule, with separate unconditional and conditional delay items so the two are never collapsed in the headline.
+
+**15. Gradient — a citizens' assembly may beat a poll.**
+*Concern.* A deliberative mini-public might elicit more considered views than a one-shot survey, and could be the better instrument for a values question.
+*Response.* Accepted as a complement, not a replacement: a deliberative Phase 2 is recommended (see open item D — recommended but not yet scoped or funded).
+
+**16. Gradient — drop the "public want AI 4000× safer" claim.**
+*Concern.* Headlining a precise multiplier backed out of an F–N comparison is indefensible and invites ridicule.
+*Response.* Removed; the multiplier back-out is downgraded to an illustration only, governed by the go/no-go rule (§5), and never published as a headline.
+
+**17. Gradient — the Figure-11 category error ("systems should be stricter").**
+*Concern.* Asking whether AI "should be stricter" conflates stricter *rules* (standards) with safer *outcomes* (systems in practice) — two different judgements collapsed into one.
+*Response.* Split into a standards item and a safety-in-practice item; the standards comparator is the single live item, and the safer-systems twin was cut to the dumpster (01 Jul 2026) as not needed for the headline number (§3.3).
+
+**18. Ball-style skeptical review (reconstructed) — "advocacy in a lab coat."**
+*Concern.* A hostile reader could see the whole exercise as advocacy dressed as neutral research, with design choices quietly tilted toward an alarming result.
+*Response.* A pre-registered disconfirmation list plus adversarial pre-launch review: a regulation-skeptic and an environment-skeptic critique the instrument before fielding, and their unedited critiques are published alongside the results.
+
+**19. Ball-style review — curated alarming anchors.**
+*Concern.* Showing only high risk estimates would bias respondents toward alarm.
+*Response.* A full-range anchor set spanning the credible spread — LeCun (~1 in 1,000,000) up to Amodei (1 in 10 to 1 in 4), with the two FRI forecaster medians in between — every figure reported by anchor so the range is visible.
+
+**20. Ball-style review — liability options biased.**
+*Concern.* The liability response options were skewed, offering no middle ground between no liability and full strict liability.
+*Response.* A negligence / duty-of-care middle option was added so the liability item spans the realistic range of standards.
 
 ### 8.2 Open, not yet resolved
 
