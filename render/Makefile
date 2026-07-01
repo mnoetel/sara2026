@@ -1,5 +1,5 @@
 # render/Makefile
-# Regenerate the review table from the YAML source of truth.
+# Regenerate the review table from sara_usa.md (the single source of truth).
 #
 # If R and reactable are available:
 #   make review-r
@@ -7,14 +7,15 @@
 #   make review-py
 # Default target tries R first, falls back to Python.
 
-YAML := ../survey/sara_usa.yaml
-OUT  := review.html
+SPEC   := ../survey/sara_usa.md
+LOADER := ../survey/spec_loader.py
+OUT    := review.html
 
 .PHONY: all review-r review-py clean
 
 all: $(OUT)
 
-$(OUT): $(YAML) review.R review_fallback.py
+$(OUT): $(SPEC) $(LOADER) review.R review_fallback.py
 	@if command -v Rscript >/dev/null 2>&1 && Rscript -e 'library(reactable)' 2>/dev/null; then \
 		echo "Building review table with R + reactable..."; \
 		Rscript review.R; \
@@ -23,10 +24,10 @@ $(OUT): $(YAML) review.R review_fallback.py
 		python3 review_fallback.py; \
 	fi
 
-review-r: $(YAML) review.R
+review-r: $(SPEC) review.R
 	Rscript review.R
 
-review-py: $(YAML) review_fallback.py
+review-py: $(SPEC) $(LOADER) review_fallback.py
 	python3 review_fallback.py
 
 clean:

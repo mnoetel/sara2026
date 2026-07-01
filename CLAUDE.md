@@ -7,32 +7,41 @@ SARA USA 2026: a public-opinion survey measuring tolerable AI catastrophic risk,
 as a **single-source-of-truth pipeline**. See `README.md` for the overview.
 
 ## The golden rule: don't duplicate content
-- **`survey/sara_usa.yaml` is the instrument.** All item text, scales, page order, and the
-  `dumpster:` (cut items) live there. Edit the YAML; the oTree app and the review table
-  follow. **Never hardcode item content in `survey/sara/__init__.py`.**
+- **`survey/sara_usa.md` is the instrument.** A Markdown doc with the YAML spec inside one
+  fenced ` ```yaml ` block. All item text, scales, page order, and the `dumpster:` (cut
+  items) live there. Edit it there; the oTree app and the review table follow.
+  **Never hardcode item content in `survey/sara/__init__.py`.**
+- **It's Markdown on purpose** — collaborators can co-edit and comment on it in HackMD or
+  Google Docs without touching YAML directly. Content outside the fence is prose/commentary
+  and is ignored by the parser; only the fenced block is read. Keep the fence's contents
+  valid YAML.
 - **The protocol (`SARA USA — Survey Protocol v10.md`) is context only** — rationale,
   assumptions, criticisms, MRP plan. It must **not** restate items, the fielding list, or
-  the dumpster (those are the YAML's job). When you change the instrument, update the
+  the dumpster (those are the instrument's job). When you change the instrument, update the
   protocol's *reasoning* if needed, but don't copy item text into it.
 
-## How the survey is built (survey/sara/)
-- `__init__.py` — reads the YAML and builds Player fields + one oTree Page per YAML page.
-  It also wires what plain items can't express: **randomisation arms** (comparator,
-  sanity activity, `info_arm` half, `dce_block`, Muskan stimulus) assigned in
-  `creating_session`; the **consent gate** (declining → skip to end); the **DCE**
-  (a `type: dce` page expands into one page per task, drawn from `dce_blocks.csv`);
-  **Muskan's** assigned briefing + control-cell skip. Page conditions use the YAML
-  `condition:` key (`info_arm`, `muskan_not_control`).
-- `render.py` — builds each page's HTML body server-side (so text can be personalised:
-  `{comparator}` / `{sanity}` tokens) and emits the UX layer (info-button tooltips from
-  each item's `rationale`, card options). Inputs are `name=<item_id> value=<1-based index>`
-  to match each item's `IntegerField(choices=...)`, so answers save normally.
-- `Page.html` — the single template: `{{ body|safe }}` + `{{ next_button }}`, plus the
-  progress bar / single-click-advance / tooltip JS.
+## How the survey is built
+- `survey/spec_loader.py` — extracts the fenced ` ```yaml ` block from `sara_usa.md` and
+  parses it. The **only** place that knows the file format; both the oTree app and the
+  review-table renderers import it. If you change the wrapper format, change it here once.
+- `survey/sara/__init__.py` — loads the spec via `spec_loader`, builds Player fields + one
+  oTree Page per page in the spec. It also wires what plain items can't express:
+  **randomisation arms** (comparator, sanity activity, `info_arm` half, `dce_block`, Muskan
+  stimulus) assigned in `creating_session`; the **consent gate** (declining → skip to end);
+  the **DCE** (a `type: dce` page expands into one page per task, drawn from
+  `dce_blocks.csv`); **Muskan's** assigned briefing + control-cell skip. Page conditions use
+  the `condition:` key (`info_arm`, `muskan_not_control`).
+- `survey/sara/render.py` — builds each page's HTML body server-side (so text can be
+  personalised: `{comparator}` / `{sanity}` tokens) and emits the UX layer (info-button
+  tooltips from each item's `rationale`, card options). Inputs are
+  `name=<item_id> value=<1-based index>` to match each item's `IntegerField(choices=...)`,
+  so answers save normally.
+- `survey/sara/Page.html` — the single template: `{{ body|safe }}` + `{{ next_button }}`,
+  plus the progress bar / single-click-advance / tooltip JS.
 - Data files: `dce_blocks.csv` (from `sara_dce_design.R`), `muskan_stimuli.json` (from
   Muskan's xlsx). Regenerate upstream, don't hand-edit.
 
-## YAML schema (4 top-level keys)
+## Spec schema (4 top-level keys, inside the fenced block)
 `meta`, `scales`, `pages`, `dumpster`. A page may have `body:` (HTML), `note:`,
 `condition:`, or `type: dce` + `n_tasks:`. An item has `id`, `text` (may contain
 `{comparator}`/`{sanity}`), `scale` or `options`, `widget` (radio/select/number),

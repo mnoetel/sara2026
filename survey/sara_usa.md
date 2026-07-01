@@ -1,3 +1,21 @@
+# SARA USA 2026 — Survey instrument (single source of truth)
+
+This document **is** the survey. Every item, response scale, page order, design
+rationale, and the dumpster (cut items) live in the YAML block below. Editing it
+here and syncing back to the repo rebuilds both the live oTree survey and the
+generated review table — nothing else needs to change.
+
+**For reviewers:** leave comments anywhere in this doc (HackMD / Google Docs
+style). Structural edits should stay valid YAML inside the fenced block — ask
+if you're not sure a change is safe.
+
+**For editors:** the fenced ```yaml block below is parsed as-is. Do not add
+prose inside the fence; keep commentary outside it (in this preamble, or in
+HackMD comment threads).
+
+---
+
+```yaml
 # SARA USA 2026 — single source of truth
 # Every item, scale, page order, rationale, and triangulation link lives here.
 # oTree reads this at class-definition time to build the Player model and page sequence.
@@ -33,8 +51,8 @@ scales:
     type: likert
     labels:
       - Strongly support
-      - Somewhat support
-      - Somewhat oppose
+      - Support
+      - Oppose
       - Strongly oppose
       - "Don't know"
 
@@ -42,27 +60,27 @@ scales:
     type: likert
     labels:
       - Much stricter
-      - Somewhat stricter
+      - Stricter
       - About the same
-      - Somewhat less strict
+      - Less strict
       - Much less strict
 
   safety5:
     type: likert
     labels:
       - Much safer
-      - Somewhat safer
+      - Safer
       - About as safe
-      - Somewhat less safe
+      - Less safe
       - Much less safe
 
   strictness5_cantcompare:
     type: likert
     labels:
       - Much stricter
-      - Somewhat stricter
+      - Stricter
       - About the same
-      - Somewhat less strict
+      - Less strict
       - Much less strict
       - Cannot compare these technologies
 
@@ -70,9 +88,9 @@ scales:
     type: likert
     labels:
       - Much safer
-      - Somewhat safer
+      - Safer
       - About as safe
-      - Somewhat less safe
+      - Less safe
       - Much less safe
       - Cannot compare these technologies
 
@@ -80,18 +98,18 @@ scales:
     type: likert
     labels:
       - Clearly worthwhile
-      - Probably worthwhile
+      - Worthwhile
       - Difficult to judge
-      - Probably not worthwhile
+      - Not worthwhile
       - Clearly not worthwhile
 
   support_delay5:
     type: likert
     labels:
       - Strongly support
-      - Somewhat support
+      - Support
       - Neither
-      - Somewhat oppose
+      - Oppose
       - Strongly oppose
 
   politics7:
@@ -921,3 +939,4 @@ dumpster:
     reason: "Dropped on cost; consistency handled within-survey."
   - name: "\"I'd pay whatever it takes\" WTP option"
     reason: "Strategic and unbounded; breaks the WTP scale."
+```

@@ -2,7 +2,8 @@
 """
 render/review_fallback.py
 
-Reads survey/sara_usa.yaml and produces render/review.html as a
+Reads survey/sara_usa.md (the single source of truth — a Markdown doc
+wrapping the survey YAML) and produces render/review.html as a
 self-contained, standalone HTML file with a sortable, searchable,
 grouped review table.
 
@@ -18,20 +19,19 @@ import os
 import sys
 import html as html_lib
 
-# PyYAML is required
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(SCRIPT_DIR, "..", "survey"))
 try:
-    import yaml
+    from spec_loader import load_spec
 except ImportError:
     sys.exit("PyYAML is required: pip install pyyaml")
 
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-YAML_PATH = os.path.join(SCRIPT_DIR, "..", "survey", "sara_usa.yaml")
+MD_PATH = os.path.join(SCRIPT_DIR, "..", "survey", "sara_usa.md")
 OUT_PATH = os.path.join(SCRIPT_DIR, "review.html")
 
 
 def main():
-    with open(YAML_PATH) as f:
-        spec = yaml.safe_load(f)
+    spec = load_spec(MD_PATH)
 
     scales = spec["scales"]
     pages = spec["pages"]
@@ -151,7 +151,7 @@ def main():
 </head>
 <body>
 <h1>SARA USA 2026 -- Item Review Table</h1>
-<p class="subtitle">Generated from survey/sara_usa.yaml v{version}. {n_items} items across {n_pages} pages; {len(dumpster)} in the dumpster.</p>
+<p class="subtitle">Generated from survey/sara_usa.md v{version}. {n_items} items across {n_pages} pages; {len(dumpster)} in the dumpster.</p>
 
 <div class="controls">
   <input class="search" type="text" id="search" placeholder="Search items, IDs, scales...">

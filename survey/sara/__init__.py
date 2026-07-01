@@ -2,20 +2,21 @@
 SARA USA 2026 oTree app.
 
 All item text, response scales, page order, rationale, and triangulation are
-defined in survey/sara_usa.yaml — the single source of truth. This file reads
-the YAML at class-definition time and builds the Player fields and Page classes
-from it. It also wires the features the content needs but plain items cannot
-express: between-subjects randomisation arms (comparator, sanity activity,
-information-provision half, DCE block, Muskan briefing), per-participant text
-substitution, the consent gate, the DCE (expanded into one page per task from
-sara_dce_design.R's output), and Muskan's 3x3 superintelligence-briefing module.
-No item content is duplicated here — see sara_usa.yaml.
+defined in survey/sara_usa.md — the single source of truth (a Markdown doc
+wrapping the YAML spec, so it can be edited/reviewed in HackMD, Google Docs,
+or GitHub). This file reads it at class-definition time and builds the Player
+fields and Page classes from it. It also wires the features the content needs
+but plain items cannot express: between-subjects randomisation arms
+(comparator, sanity activity, information-provision half, DCE block, Muskan
+briefing), per-participant text substitution, the consent gate, the DCE
+(expanded into one page per task from sara_dce_design.R's output), and
+Muskan's 3x3 superintelligence-briefing module. No item content is duplicated
+here — see sara_usa.md.
 """
 
 import os
 import random
-
-import yaml
+import sys
 
 from otree.api import (
     BaseConstants,
@@ -30,9 +31,11 @@ import otree.forms.widgets as widgets
 from . import render, dce, muskan
 
 # ── Load the single source of truth ─────────────────────────────────
-_YAML_PATH = os.path.join(os.path.dirname(__file__), '..', 'sara_usa.yaml')
-with open(_YAML_PATH) as _f:
-    SPEC = yaml.safe_load(_f)
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+from spec_loader import load_spec  # noqa: E402
+
+_MD_PATH = os.path.join(os.path.dirname(__file__), '..', 'sara_usa.md')
+SPEC = load_spec(_MD_PATH)
 
 _SCALES = SPEC['scales']
 _PAGES = SPEC['pages']

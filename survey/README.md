@@ -1,13 +1,16 @@
 # SARA USA 2026 Survey
 
-Single-source survey pipeline for the SARA USA 2026 project. All item text, response scales, page ordering, design rationale, and triangulation mappings live in one YAML file. Both the live oTree survey and the peer-review table are generated from it.
+Single-source survey pipeline for the SARA USA 2026 project. All item text, response scales, page ordering, design rationale, and triangulation mappings live in one file, `sara_usa.md` — Markdown wrapping a YAML spec, so it can be co-edited/commented in HackMD or Google Docs. Both the live oTree survey and the peer-review table are generated from it.
 
 ## Project structure
 
 ```
 survey/
 ├── settings.py            # oTree project settings
-├── sara_usa.yaml          # Single source of truth (items, scales, pages, dumpster)
+├── sara_usa.md            # Single source of truth: YAML spec in a fenced block
+│                          #   (Markdown, so it's HackMD/Google-Docs-editable)
+├── spec_loader.py         # Extracts + parses the fenced block; shared by the
+│                          #   app and render/ — the only place that knows the format
 ├── sara/
 │   ├── __init__.py        # oTree app: reads YAML, builds Player fields + Pages,
 │   │                      #   randomisation arms, DCE expansion, consent gate, Muskan
@@ -29,7 +32,7 @@ render/
 
 ## YAML schema
 
-`sara_usa.yaml` has four top-level keys: `meta`, `scales`, `pages`, and `dumpster`.
+`sara_usa.md` has four top-level keys: `meta`, `scales`, `pages`, and `dumpster`.
 
 ```yaml
 meta:
@@ -110,7 +113,7 @@ Both produce `render/review.html`, a self-contained HTML file with a searchable,
 
 ## Editing items
 
-1. Edit `survey/sara_usa.yaml` (the only file you need to touch).
+1. Edit `survey/sara_usa.md` (the only file you need to touch).
 2. Rebuild the review table: `make -C render`
 3. Restart the oTree devserver to pick up the changes.
 

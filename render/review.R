@@ -1,7 +1,9 @@
 #!/usr/bin/env Rscript
 # render/review.R
-# Reads survey/sara_usa.yaml and produces render/review.html
-# using reactable for an interactive, self-contained review table.
+# Reads survey/sara_usa.md (the single source of truth — a Markdown doc
+# wrapping the survey YAML in a fenced ```yaml block, so it can be edited and
+# reviewed in HackMD/Google Docs/GitHub) and produces render/review.html using
+# reactable for an interactive, self-contained review table.
 #
 # Usage:
 #   Rscript render/review.R
@@ -28,11 +30,16 @@ script_dir <- {
   }
 }
 
-# ── Load YAML ────────────────────────────────────────────────────────
+# ── Load the spec (extract the ```yaml fenced block from sara_usa.md) ─
 
-yaml_path <- file.path(script_dir, "..", "survey", "sara_usa.yaml")
-if (!file.exists(yaml_path)) yaml_path <- file.path("..", "survey", "sara_usa.yaml")
-spec <- yaml.load_file(yaml_path)
+md_path <- file.path(script_dir, "..", "survey", "sara_usa.md")
+if (!file.exists(md_path)) md_path <- file.path("..", "survey", "sara_usa.md")
+md_text <- paste(readLines(md_path, warn = FALSE), collapse = "\n")
+m <- regmatches(md_text, regexpr("(?s)```ya?ml\\n(.*?)\\n```", md_text, perl = TRUE))
+if (length(m) == 0) stop("No ```yaml fenced block found in ", md_path)
+fenced <- sub("^```ya?ml\\n", "", m)
+fenced <- sub("\\n```$", "", fenced)
+spec <- yaml.load(fenced)
 
 scales <- spec$scales
 pages <- spec$pages
@@ -148,7 +155,7 @@ saveWidget(tbl, out_path, selfcontained = TRUE, title = "SARA USA 2026 — Item 
 header_html <- paste0(
   "<h1 style='color:#2e5496;font-size:22px;margin:24px 24px 4px'>SARA USA 2026 — Item Review Table</h1>",
   "<p class='subtitle' style='color:#647281;font-size:14px;margin:0 24px 16px'>",
-  "Generated from survey/sara_usa.yaml v", spec$meta$version, ". ",
+  "Generated from survey/sara_usa.md v", spec$meta$version, ". ",
   nrow(df), " items across ", length(unique(df$Page)),
   " pages; ", length(dump), " in the dumpster.</p>")
 style_html <- paste0(

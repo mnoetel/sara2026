@@ -9,19 +9,22 @@ multilevel regression and post-stratification (MRP).
 
 The whole project is meant to be built and reviewed from **two files**:
 
-- **`survey/sara_usa.yaml`** — the instrument: every item, response scale, page order,
-  and the *dumpster* (items considered and cut). Editing this rebuilds both the live
-  survey and the review table.
+- **`survey/sara_usa.md`** — the instrument: every item, response scale, page order,
+  and the *dumpster* (items considered and cut), as a YAML spec inside a fenced
+  ` ```yaml ` block in a Markdown document. Editing it rebuilds both the live survey
+  and the review table. Being Markdown means it can be edited/reviewed collaboratively
+  in **HackMD**, Google Docs, or GitHub — not just a code editor.
 - **`SARA USA — Survey Protocol v10.md`** — the *context and assumptions* (methodology,
-  rationale, criticisms, MRP plan). It deliberately **does not duplicate** the YAML.
+  rationale, criticisms, MRP plan). It deliberately **does not duplicate** the instrument.
 
 Everything else is generated from, or supports, those two.
 
 ## Layout
 
 ```
-survey/            oTree app — reads sara_usa.yaml, builds the Player model + pages
-  sara_usa.yaml    THE instrument (items, scales, order, dumpster)
+survey/            oTree app — reads sara_usa.md, builds the Player model + pages
+  sara_usa.md      THE instrument (YAML inside a fenced block; editable in HackMD)
+  spec_loader.py   extracts + parses the fenced block (shared by the app and render/)
   sara/            engine (__init__.py), render.py, Page.html, data files
 render/            review table generator (review.R / review_fallback.py → review.html)
 SARA USA — Survey Protocol v10.md   design rationale & assumptions
@@ -56,6 +59,22 @@ make -C render                      # rebuild render/review.html (the review tab
 ```
 
 Schema changes (adding/removing items) need a DB reset: `rm survey/db.sqlite3*`.
+
+## Collaborating on the instrument (HackMD)
+
+`survey/sara_usa.md` is plain Markdown with the survey's YAML inside one fenced
+` ```yaml ` block, so it can be dropped straight into **HackMD** (or Google Docs) for
+real-time co-editing and comments — reviewers don't need to touch YAML syntax directly
+to leave feedback in the surrounding prose or inline.
+
+- **Structural edits** (rewording an item, changing options, reordering) must stay
+  inside the fence and remain valid YAML — indentation matters. If you're not
+  comfortable with that, leave a comment instead and let an editor apply it.
+- To sync changes back: replace `survey/sara_usa.md` with the edited version and run
+  `make -C render` to confirm it still parses and rebuilds the review table.
+- `spec_loader.py` is what extracts the fenced block; both the oTree app and the
+  review-table renderers import it, so there's exactly one place that knows the
+  file format.
 
 ## Analysis
 
