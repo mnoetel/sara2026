@@ -1,10 +1,15 @@
 # =====================================================================
 # SARA USA 2026 — Module 4 (DCE): design generation + export for oTree
 # Catastrophic-risk tolerance and the severity / probability / utility /
-# competition / cost tradeoff.
+# competition tradeoff.
 #
 # v11 (29 Jun 2026): severity is now a VARIED attribute (the four-tier
-# ladder), per protocol v10. Full factorial = 4 x 5 x 3 x 3 x 4 = 720.
+# ladder), per protocol v10.
+# v12 (01 Jul 2026): COST dropped (moved to the dumpster) — money is an
+# implementation question, not the democratic tradeoff the DCE measures
+# (Hadfield); WTP now comes from the stated item m5_wtp. Benefit levels
+# reworded (Minor / Major / Transformational). Full factorial now
+# 4 x 5 x 3 x 3 = 180.
 # This script (a) generates a Bayesian D-efficient design, (b) EXPORTS the
 # 10 blocks x 10 tasks as a flat CSV that the oTree app consumes, and
 # (c) keeps the simulate/estimate/recover sections for identification.
@@ -16,7 +21,12 @@
 library(cbcTools)
 suppressMessages(library(dplyr))
 
-OUT_CSV <- "/Users/michaelnoetel/git/sara2026/survey/sara/dce_blocks.csv"
+# Write next to THIS script's checkout (works from any CWD / git worktree),
+# with a sensible fallback when the script path can't be resolved.
+.argv <- commandArgs(trailingOnly = FALSE)
+.self <- sub("^--file=", "", .argv[grep("^--file=", .argv)])
+.root <- if (length(.self)) dirname(normalizePath(.self)) else getwd()
+OUT_CSV <- file.path(.root, "survey", "sara", "dce_blocks.csv")
 
 # ---------------------------------------------------------------------
 # 1. THE GRID  (attributes x levels)  — severity now varied
@@ -31,23 +41,23 @@ profiles <- cbc_profiles(
   risk_annual = c("1 in 100", "1 in 1,000", "1 in 10,000",
                   "1 in 100,000", "1 in 1,000,000"),          # PROBABILITY (5)
   benefit     = c("Modest", "Major", "Transformative"),       # UTILITY (3)
-  competition = c("Others lead", "Keep pace", "US leads"),    # COMPETITION (3)
-  cost_usd    = c(0, 100, 400, 1000)                          # COST $/hh/yr (4)
+  competition = c("Others lead", "Keep pace", "US leads")     # COMPETITION (3)
 )
-# Full factorial = 4 * 5 * 3 * 3 * 4 = 720 profiles.
+# Full factorial = 4 * 5 * 3 * 3 = 180 profiles.
+# Benefit levels are shown to respondents as short labels; render.py prints a
+# one-line legend under each task with a plain-English gloss of each.
 
 # ---------------------------------------------------------------------
 # 2. PRIORS for a Bayesian D-efficient design
 #    Signs: safer (lower severity / lower prob) better; benefit & US-leading
-#    positive; cost negative. Ordered attributes get increasing part-worths.
+#    positive. Ordered attributes get increasing part-worths.
 # ---------------------------------------------------------------------
 priors <- cbc_priors(
   profiles    = profiles,
   severity    = c(-0.8, -1.6, -2.4),   # vs ref "A single death" (worse = lower)
   risk_annual = c(0.6, 1.2, 1.8, 2.4), # vs ref "1 in 100" (safer = higher)
-  benefit     = c(0.6, 1.4),           # vs ref "Modest"
+  benefit     = c(0.6, 1.4),           # vs ref "Minor"
   competition = c(0.3, 0.7),           # vs ref "Others lead"
-  cost_usd    = -0.001,                # per dollar
   no_choice   = -0.2
 )
 
@@ -75,7 +85,7 @@ cat("\n--- design head ---\n"); print(utils::head(design, 8))
 # ---------------------------------------------------------------------
 # Keep one representative respondent per block, drop the no-choice alt, and
 # pivot the two AI alternatives wide so each row is a full choice task.
-attrs <- c("severity","risk_annual","benefit","competition","cost_usd")
+attrs <- c("severity","risk_annual","benefit","competition")
 
 # Identify the per-block question set (blocks repeat across respondents).
 blk <- design %>%
@@ -116,15 +126,14 @@ try({
   sim <- cbc_choices(design, priors = priors)
   dat <- sim %>%
     mutate(logp  = risk_to_logp[as.character(risk_annual)],
-           logn  = sev_to_logn[as.character(severity)],
-           cost_k = cost_usd / 1000)
+           logn  = sev_to_logn[as.character(severity)])
 
   m <- logitr(
     data    = dat,
     outcome = "choice",
     obsID   = "obsID",
-    pars    = c("logp","logn","benefit","competition","cost_k"),
-    randPars = c(logp = "n", cost_k = "n"),
+    pars    = c("logp","logn","benefit","competition"),
+    randPars = c(logp = "n"),
     numMultiStarts = 5
   )
   print(summary(m))

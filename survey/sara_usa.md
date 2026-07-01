@@ -296,11 +296,15 @@ pages:
     rationale: >
       The primary instrument for the public number. People choose between
       concrete AI-future options rather than stating a probability. Across
-      ~10 tasks a mixed-logit model recovers acceptable catastrophe risk and
-      willingness-to-pay. Attributes match Ball's tradeoff: severity (4-tier
-      ladder), probability, utility, competition, cost. Severity is varied so
-      the DCE traces a full frequency–severity (F–N) surface. Tasks are assigned
-      by Bayesian D-efficient block (cbcTools); the YAML does not enumerate them
+      ~10 tasks a mixed-logit model recovers acceptable catastrophe risk from
+      the point at which a future ties the "keep today's status quo" opt-out.
+      Attributes are the democratic tradeoff: severity (4-tier ladder),
+      probability, utility (Modest / Major / Transformative), competition.
+      Cost was dropped (dumpster, 01 Jul 2026) — money is an implementation
+      question, not a democratic-preference one (Hadfield); willingness-to-pay
+      now comes from the stated item m5_wtp. Severity is varied so the DCE
+      traces a full frequency–severity (F–N) surface. Tasks are assigned by
+      Bayesian D-efficient block (cbcTools); the YAML does not enumerate them
       because the design is generated programmatically.
     triangulates: [m4c_single, m4c_100, m4c_1m, m4c_800m, m5_wtp]
     items: []
@@ -459,9 +463,10 @@ pages:
           - "Don't know"
         rationale: >
           A costed tradeoff on a log scale. Each band is about ten times the
-          last because willingness-to-pay is roughly log-normal. The
-          continuous WTP estimate comes from the DCE cost coefficient; this
-          is the cross-check.
+          last because willingness-to-pay is roughly log-normal. This is now
+          the primary willingness-to-pay estimate: the DCE dropped its cost
+          attribute (dumpster, 01 Jul 2026), so WTP is measured here directly
+          rather than backed out of a DCE cost coefficient.
         triangulates: [dce_choice, m5b_delay_cond, m5_race]
 
       - id: m5b_delay_uncond
@@ -936,6 +941,20 @@ pages:
 # Kept here so the instrument's full decision record lives in one place; the
 # protocol gives the deeper rationale and assumptions, this gives the ledger.
 dumpster:
+  - name: DCE cost attribute ($0 / $100 / $400 / $1,000 per household per year)
+    reason: >
+      Dropped from the discrete choice experiment 01 Jul 2026. Following
+      Hadfield's regulatory-markets distinction, the DCE measures the
+      *democratic* tradeoff — what catastrophic risk the polity will accept
+      against severity, utility, and competition — while price is a
+      second-order *implementation* question left to (competing, publicly
+      overseen) private governance bodies. Cost was never needed for the
+      headline number: acceptable risk p* is identified by the "keep today's
+      status quo" opt-out, not by the money column. Removing it shrinks the
+      grid 720 → 180 profiles (sharper identification, lighter tasks) and
+      hands revealed WTP back to the stated item m5_wtp. Recoverable by
+      re-adding cost_usd to sara_dce_design.R if a revealed-WTP number is
+      later wanted.
   - name: m6_certify (before deployment, who should certify that an AI system is safe?)
     reason: >
       Cut 1 Jul 2026: the certifier question is subsumed by m6_faa (binding
