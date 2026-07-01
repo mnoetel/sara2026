@@ -3,17 +3,19 @@
 
 The final module of the SARA survey: each participant is randomly assigned one
 of 27 pre-built briefings (9 ELM cells x 3 versions; cell 9 = neutral control),
-reads it, then answers the ban-support DV. Passages are pre-generated in
-`Muskan's Expiermnet/Superintelligence_3x3_stimuli_v2.xlsx` and baked here as
-`muskan_stimuli.json`.
+reads it, then answers the ban-support DV. Passages are the single source of
+truth in `survey/muskan_stimuli.md` (a fenced ```yaml``` block, same pattern
+as `sara_usa.md`), parsed here via `spec_loader.load_spec()`.
 """
-import json
 import os
+import sys
 
-_PATH = os.path.join(os.path.dirname(__file__), "muskan_stimuli.json")
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+from spec_loader import load_spec  # noqa: E402
 
-with open(_PATH, encoding="utf-8") as f:
-    _DATA = json.load(f)
+_PATH = os.path.join(os.path.dirname(__file__), "..", "muskan_stimuli.md")
+
+_DATA = load_spec(_PATH)
 
 NEUTRAL_DEFINITION = _DATA["neutral_definition"]
 STIMULI = _DATA["stimuli"]

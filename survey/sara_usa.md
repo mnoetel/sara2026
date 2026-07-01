@@ -13,6 +13,12 @@ if you're not sure a change is safe.
 prose inside the fence; keep commentary outside it (in this preamble, or in
 HackMD comment threads).
 
+**Companion file:** the full 27-passage text for Muskan's superintelligence-
+briefing experiment (final module, near the end of this doc) is its own
+instrument, [`survey/muskan_stimuli.md`](muskan_stimuli.md) — same
+fenced-```yaml``` pattern as this file, kept separate for length, not
+omitted. Edit passages there, not here.
+
 ---
 
 ```yaml
@@ -834,7 +840,10 @@ pages:
   # Runs last so its briefing cannot contaminate the rest of the survey.
   # Each participant is randomly assigned 1 of 27 pre-built passages
   # (9 ELM cells x 3 versions; cell 9 = neutral control = no passage), drawn
-  # from sara/muskan_stimuli.json (built from the study's stimulus workbook).
+  # from survey/muskan_stimuli.md — its own instrument file (same fenced-yaml
+  # pattern as this one), holding the neutral definition and the full text of
+  # all 27 passages. This page only describes the module; it does not
+  # restate the passages — edit them in that file, not here.
   - id: superintelligence_def
     title: "One last topic"
     body: |
