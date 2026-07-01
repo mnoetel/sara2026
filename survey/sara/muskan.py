@@ -30,3 +30,14 @@ def get(stim_id):
 def is_control(stim_id):
     s = _BY_ID.get(stim_id)
     return bool(s) and s["cell"] == 9
+
+
+def is_one_sided(stim_id):
+    """True for cells that show exactly one side of the argument (for OR against,
+    not both, and not the pure control) — cells 3, 6, 7, 8. The ELM mediators
+    are asked only here, where a single message's route can be isolated."""
+    s = _BY_ID.get(stim_id)
+    if not s:
+        return False
+    shown = [a for a in (s["for_arg"], s["against_arg"]) if a != "none"]
+    return len(shown) == 1

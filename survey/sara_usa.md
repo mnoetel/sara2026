@@ -964,10 +964,77 @@ pages:
         rationale: >
           The anti-ban DV item, kept separate (not reverse-scored) so both
           prevalences are reportable and acquiescence is detectable. Continuous
-          score for models = support − oppose (−4…+4). Attitude certainty and the
-          ELM mediators (one-sided cells only) are part of the full design but
-          omitted from this prototype build.
+          score for models = support − oppose (−4…+4). The ELM route mediators
+          (one-sided cells only) follow on the superintelligence_route page;
+          attitude certainty is part of the full design but omitted from this
+          prototype build.
         triangulates: [muskan_support]
+
+  # ELM route mediators, shown ONLY to the one-sided cells (3, 6, 7, 8 —
+  # exactly one side's argument presented). With a single message on screen we
+  # can ask whether the response was driven by the argument's substance (central
+  # route) or by who backed it (peripheral route). Two-sided and control cells
+  # skip this page: in two-sided cells the routes are confounded across the two
+  # messages, and the control cell has no argument to have processed.
+  - id: superintelligence_route
+    title: "How you weighed it"
+    condition: muskan_one_sided
+    note: "Thinking about the case you just read, how much do you agree?"
+    items:
+      - id: muskan_central_route
+        text: >
+          "I tried to judge the reasons given, not just who was giving them."
+        scale: agree5_asc
+        widget: radio
+        required: true
+        rationale: >
+          Central-route mediator (depth of processing) for the ELM model. Asked
+          only in one-sided cells, where a single message isolates the route.
+          Higher = more elaboration on argument substance.
+        triangulates: [muskan_peripheral_route]
+
+      - id: muskan_peripheral_route
+        text: >
+          "My reaction depended more on who backed the idea than on the reasons
+          they gave."
+        scale: agree5_asc
+        widget: radio
+        required: true
+        rationale: >
+          Peripheral-route mediator (reliance on source cues) for the ELM model.
+          Kept separate (not reverse-scored) from the central-route item so both
+          routes are measured independently. Higher = more reliance on endorser
+          identity than on argument content.
+        triangulates: [muskan_central_route]
+
+  # Comprehension check shown ONLY to the pure-control cell (cell 9,
+  # none x none). These participants read no argument and only the neutral
+  # definition, so we verify they grasp what "superintelligence" means —
+  # i.e. what they were just asked whether to ban. Non-control cells skip it
+  # (their briefing already re-states the concept). Correct answer is the
+  # 4th option ("does almost everything more intelligently than most humans").
+  - id: superintelligence_check
+    title: "One quick check"
+    condition: muskan_control
+    items:
+      - id: muskan_si_comprehension
+        text: >
+          Which of the following is closest to artificial superintelligence?
+          A computer program that…
+        options:
+          - "does writing as intelligently as most humans"
+          - "does some things as intelligently as most humans"
+          - "does almost everything as intelligently as most humans"
+          - "does almost everything more intelligently than most humans"
+        widget: radio
+        shuffle_options: true
+        required: true
+        rationale: >
+          Comprehension check for the pure-control cell only. Control
+          participants get no argument and only the neutral definition, so this
+          confirms they understood what they were asked to (dis)allow banning.
+          Correct = option 4 ("more intelligently than most humans"). Used to
+          flag/weight low-comprehension control responses, not scored as a DV.
 
   # ── End page ────────────────────────────────────────────────────
   - id: end
