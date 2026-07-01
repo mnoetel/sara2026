@@ -688,7 +688,10 @@ pages:
           norms.
 
   # ── Page 11: Individual differences and demographics ─────────────
-  - id: demographics
+  # One item per page so each advances on a single click (the Page.html
+  # auto-advance fires when a page has exactly one radio group and no select).
+  # demo_state stays a `select` dropdown (51+ options) and needs the Next button.
+  - id: demo_politics
     title: "About you"
     items:
       - id: m9_politics
@@ -701,6 +704,9 @@ pages:
           Standard covariate (Jost, 2006). Lets us report across the
           political spectrum, which matters for a US sample.
 
+  - id: demo_ai_use
+    title: "About you"
+    items:
       - id: m9_ai_use
         text: >
           In your personal life, work, or studies, how often do you
@@ -714,10 +720,13 @@ pages:
           expertise, which people misjudge.
         triangulates: []
 
+  - id: demo_age_page
+    title: "About you"
+    items:
       - id: demo_age
         text: "What is your age?"
         scale: null
-        widget: select
+        widget: radio
         required: true
         options:
           - "18-24"
@@ -733,6 +742,9 @@ pages:
           adult age groups (table B01001, collapsed).
         triangulates: []
 
+  - id: demo_gender_page
+    title: "About you"
+    items:
       - id: demo_gender
         text: "What is your gender?"
         scale: null
@@ -749,6 +761,9 @@ pages:
           (or handled per the pre-registered approach — see the ACS manual).
         triangulates: []
 
+  - id: demo_education_page
+    title: "About you"
+    items:
       - id: demo_education
         text: "What is the highest level of education you have completed?"
         scale: null
@@ -767,6 +782,9 @@ pages:
           educational-attainment table (B15003, collapsed).
         triangulates: []
 
+  - id: demo_state_page
+    title: "About you"
+    items:
       - id: demo_state
         text: "Which state do you live in?"
         scale: null
@@ -831,10 +849,13 @@ pages:
           pre-registered threshold.
         triangulates: []
 
+  - id: demo_income_page
+    title: "About you"
+    items:
       - id: demo_income
         text: "What was your total household income last year, before taxes?"
         scale: null
-        widget: select
+        widget: radio
         required: true
         options:
           - "Under $15,000"
