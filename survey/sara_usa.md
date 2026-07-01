@@ -308,13 +308,15 @@ pages:
     items: []
 
   # ── Page 6: Anchor to accepted safety (Method 3, §3.3) ───────────
-  # Every respondent sees all three benchmark comparators — nuclear power,
-  # commercial aviation, large dams — one per page, in a per-participant
-  # shuffled order (type: random_group), so the sequence can't cue a monotone
-  # answering pattern. All three carry published, annual (or annualisable)
-  # tolerable-risk figures, so answers can be laid against an annualised
-  # superforecaster AI estimate. The two disguised attention checks follow
-  # together on their own page (safety_attention).
+  # Every respondent sees all five items — three benchmark comparators (nuclear
+  # power, commercial aviation, large dams) and two disguised attention checks —
+  # one per page, in a per-participant shuffled order (type: random_group), so
+  # the sequence can't cue a monotone answering pattern and the checks stay
+  # interleaved among real items (their disguise). The comparators carry
+  # published, annual (or annualisable) tolerable-risk figures, so answers can
+  # be laid against an annualised superforecaster AI estimate. The attention
+  # checks are flagged `not_first: true` so a check is never the first page a
+  # respondent sees — they always warm up on a real comparator first.
   - id: safety_standards
     type: random_group
     title: "Compared with existing safety standards"
@@ -360,10 +362,6 @@ pages:
           curves at the installation level). See m3_std_nuclear.
         triangulates: [m3_std_nuclear, m3_std_aviation]
 
-  # ── Page 6b: Disguised attention checks, together after the comparators ──
-  - id: safety_attention
-    title: "Compared with existing safety standards"
-    items:
       - id: m3_att_bioweapons
         text: >
           Compared with the safety regulations on biological weapons, this is an
@@ -371,15 +369,17 @@ pages:
         scale: strictness5_cantcompare
         widget: radio
         required: true
+        not_first: true
         rationale: >
           Attention check disguised as a comparator item — same stem and scale
-          as the real comparators that immediately precede it, so a careless
+          as the real comparators it is shuffled among, so a careless
           pattern-clicker carries the same answering habit straight into it. The
           required answer ("Much less strict") is an extreme endpoint a
           default-clicker or straightliner will miss. Both checks demand the same
           endpoint on purpose: Prolific/Bastical needs two failures to exclude
           someone, and a shared fail criterion is more likely to catch a
-          straightliner on both.
+          straightliner on both. `not_first` keeps it out of the first slot so
+          the respondent meets a real comparator before any check.
         triangulates: [m3_att_nuclear]
 
       - id: m3_att_nuclear
@@ -389,12 +389,13 @@ pages:
         scale: strictness5_cantcompare
         widget: radio
         required: true
+        not_first: true
         rationale: >
           Second attention check, same disguised-comparator format and same
           required answer ("Much less strict"). Sharing the fail criterion with
           the bioweapons check is deliberate — two failures are needed to
-          exclude, and identical criteria catch straightliners on both. See
-          m3_att_bioweapons.
+          exclude, and identical criteria catch straightliners on both. Also
+          flagged `not_first`. See m3_att_bioweapons.
         triangulates: [m3_att_bioweapons]
 
   # ── Attention-check screen-out ──────────────────────────────────────

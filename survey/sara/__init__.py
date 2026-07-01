@@ -200,7 +200,12 @@ def _make_rgroup_page(page, slot, ordn, total):
     """One page per item in a `type: random_group` page. Each participant sees
     the group's items one-per-page in a randomised order (seeded on their
     participant.code), so the sequence can't cue a monotone answering pattern.
-    Every participant sees every item exactly once; fields save normally."""
+    Every participant sees every item exactly once; fields save normally.
+
+    An item flagged `not_first: true` is never placed in the first slot: after
+    the shuffle, if slot 0 holds a `not_first` item it is swapped with the
+    earliest slot holding an allowed item. Used so an attention check never
+    leads the block — the respondent always meets a real item first."""
     gid = page['id']
     items = page.get('items', [])
     n = len(items)
@@ -209,6 +214,11 @@ def _make_rgroup_page(page, slot, ordn, total):
         r = random.Random('%s|%s' % (player.participant.code, gid))
         idx = list(range(n))
         r.shuffle(idx)
+        if items[idx[0]].get('not_first'):
+            for j in range(1, n):
+                if not items[idx[j]].get('not_first'):
+                    idx[0], idx[j] = idx[j], idx[0]
+                    break
         return idx
 
     class _R(Page):
