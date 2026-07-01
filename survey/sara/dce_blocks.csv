@@ -1,101 +1,101 @@
-"block","task","a_severity","a_risk_annual","a_benefit","a_competition","a_cost_usd","b_severity","b_risk_annual","b_benefit","b_competition","b_cost_usd"
-1,1,"100 deaths or $1B damage","1 in 100,000","Major","US leads",400,"1,000,000 deaths or $100B damage","1 in 10,000","Transformative","Keep pace",0
-1,2,"A single death","1 in 10,000","Major","US leads",0,"100 deaths or $1B damage","1 in 100,000","Transformative","Keep pace",0
-1,3,"100 deaths or $1B damage","1 in 1,000,000","Major","Others lead",0,"A single death","1 in 10,000","Transformative","US leads",1000
-1,4,"~800,000,000 deaths (10% of humanity)","1 in 1,000","Major","US leads",1000,"1,000,000 deaths or $100B damage","1 in 10,000","Major","Others lead",1000
-1,5,"100 deaths or $1B damage","1 in 1,000,000","Modest","US leads",1000,"~800,000,000 deaths (10% of humanity)","1 in 100,000","Transformative","Others lead",0
-1,6,"A single death","1 in 1,000","Modest","US leads",1000,"~800,000,000 deaths (10% of humanity)","1 in 10,000","Transformative","Keep pace",0
-1,7,"~800,000,000 deaths (10% of humanity)","1 in 1,000,000","Transformative","Keep pace",400,"100 deaths or $1B damage","1 in 100,000","Modest","US leads",1000
-1,8,"~800,000,000 deaths (10% of humanity)","1 in 10,000","Modest","Keep pace",400,"1,000,000 deaths or $100B damage","1 in 1,000","Transformative","Others lead",1000
-1,9,"100 deaths or $1B damage","1 in 1,000,000","Modest","Others lead",400,"A single death","1 in 100","Major","US leads",0
-1,10,"1,000,000 deaths or $100B damage","1 in 1,000,000","Modest","Keep pace",100,"A single death","1 in 1,000","Transformative","US leads",1000
-2,1,"100 deaths or $1B damage","1 in 100,000","Modest","Others lead",1000,"1,000,000 deaths or $100B damage","1 in 100","Transformative","US leads",100
-2,2,"1,000,000 deaths or $100B damage","1 in 1,000,000","Transformative","US leads",1000,"A single death","1 in 10,000","Major","Keep pace",100
-2,3,"A single death","1 in 1,000","Transformative","US leads",400,"100 deaths or $1B damage","1 in 1,000,000","Major","Keep pace",1000
-2,4,"A single death","1 in 1,000","Modest","Keep pace",100,"100 deaths or $1B damage","1 in 1,000,000","Major","Others lead",1000
-2,5,"A single death","1 in 100,000","Major","Others lead",1000,"~800,000,000 deaths (10% of humanity)","1 in 1,000,000","Transformative","US leads",0
-2,6,"~800,000,000 deaths (10% of humanity)","1 in 10,000","Transformative","Others lead",400,"100 deaths or $1B damage","1 in 1,000","Modest","Keep pace",100
-2,7,"~800,000,000 deaths (10% of humanity)","1 in 1,000,000","Transformative","Others lead",100,"100 deaths or $1B damage","1 in 100,000","Modest","US leads",100
-2,8,"100 deaths or $1B damage","1 in 10,000","Major","Others lead",0,"~800,000,000 deaths (10% of humanity)","1 in 100,000","Transformative","Keep pace",0
-2,9,"A single death","1 in 1,000,000","Major","Others lead",1000,"~800,000,000 deaths (10% of humanity)","1 in 100,000","Transformative","Keep pace",0
-2,10,"100 deaths or $1B damage","1 in 1,000,000","Major","Keep pace",1000,"1,000,000 deaths or $100B damage","1 in 10,000","Transformative","US leads",100
-3,1,"A single death","1 in 1,000","Transformative","Keep pace",400,"1,000,000 deaths or $100B damage","1 in 1,000,000","Major","Others lead",100
-3,2,"100 deaths or $1B damage","1 in 1,000","Major","US leads",400,"1,000,000 deaths or $100B damage","1 in 1,000,000","Modest","Keep pace",0
-3,3,"A single death","1 in 100,000","Transformative","Others lead",1000,"100 deaths or $1B damage","1 in 1,000,000","Modest","Keep pace",0
-3,4,"1,000,000 deaths or $100B damage","1 in 100,000","Modest","Keep pace",1000,"~800,000,000 deaths (10% of humanity)","1 in 1,000","Transformative","US leads",100
-3,5,"1,000,000 deaths or $100B damage","1 in 1,000,000","Modest","US leads",1000,"100 deaths or $1B damage","1 in 1,000","Major","Keep pace",0
-3,6,"A single death","1 in 10,000","Modest","Keep pace",1000,"1,000,000 deaths or $100B damage","1 in 100","Transformative","US leads",100
-3,7,"100 deaths or $1B damage","1 in 100,000","Modest","US leads",100,"A single death","1 in 10,000","Major","Others lead",100
-3,8,"~800,000,000 deaths (10% of humanity)","1 in 1,000,000","Major","Keep pace",400,"1,000,000 deaths or $100B damage","1 in 1,000","Transformative","US leads",400
-3,9,"100 deaths or $1B damage","1 in 100","Major","US leads",1000,"~800,000,000 deaths (10% of humanity)","1 in 1,000,000","Modest","Keep pace",100
-3,10,"100 deaths or $1B damage","1 in 10,000","Modest","US leads",1000,"~800,000,000 deaths (10% of humanity)","1 in 100,000","Major","Keep pace",0
-4,1,"~800,000,000 deaths (10% of humanity)","1 in 100,000","Major","US leads",1000,"1,000,000 deaths or $100B damage","1 in 1,000","Transformative","Others lead",1000
-4,2,"100 deaths or $1B damage","1 in 10,000","Transformative","Others lead",1000,"1,000,000 deaths or $100B damage","1 in 100,000","Major","Keep pace",0
-4,3,"A single death","1 in 10,000","Major","Keep pace",0,"100 deaths or $1B damage","1 in 100,000","Transformative","Others lead",100
-4,4,"~800,000,000 deaths (10% of humanity)","1 in 100,000","Transformative","US leads",1000,"100 deaths or $1B damage","1 in 1,000","Major","Others lead",0
-4,5,"1,000,000 deaths or $100B damage","1 in 100,000","Transformative","Others lead",400,"~800,000,000 deaths (10% of humanity)","1 in 1,000,000","Major","US leads",0
-4,6,"1,000,000 deaths or $100B damage","1 in 10,000","Major","Keep pace",1000,"~800,000,000 deaths (10% of humanity)","1 in 1,000","Transformative","Others lead",100
-4,7,"1,000,000 deaths or $100B damage","1 in 1,000","Major","Keep pace",0,"100 deaths or $1B damage","1 in 10,000","Modest","US leads",1000
-4,8,"A single death","1 in 10,000","Major","US leads",1000,"100 deaths or $1B damage","1 in 100,000","Modest","Keep pace",100
-4,9,"100 deaths or $1B damage","1 in 10,000","Modest","Keep pace",1000,"~800,000,000 deaths (10% of humanity)","1 in 100,000","Major","Others lead",400
-4,10,"100 deaths or $1B damage","1 in 100,000","Major","Others lead",1000,"1,000,000 deaths or $100B damage","1 in 1,000","Transformative","US leads",0
-5,1,"1,000,000 deaths or $100B damage","1 in 10,000","Transformative","Others lead",0,"100 deaths or $1B damage","1 in 1,000","Major","US leads",1000
-5,2,"1,000,000 deaths or $100B damage","1 in 1,000","Modest","Keep pace",1000,"~800,000,000 deaths (10% of humanity)","1 in 10,000","Modest","US leads",1000
-5,3,"100 deaths or $1B damage","1 in 100","Transformative","Keep pace",400,"~800,000,000 deaths (10% of humanity)","1 in 100,000","Major","US leads",400
-5,4,"A single death","1 in 1,000","Modest","Others lead",1000,"1,000,000 deaths or $100B damage","1 in 100","Transformative","Keep pace",100
-5,5,"1,000,000 deaths or $100B damage","1 in 1,000,000","Transformative","Others lead",1000,"A single death","1 in 100,000","Modest","Keep pace",0
-5,6,"~800,000,000 deaths (10% of humanity)","1 in 10,000","Transformative","Others lead",0,"100 deaths or $1B damage","1 in 100","Major","US leads",1000
-5,7,"100 deaths or $1B damage","1 in 1,000","Transformative","Keep pace",0,"1,000,000 deaths or $100B damage","1 in 1,000,000","Major","US leads",400
-5,8,"A single death","1 in 100,000","Major","Keep pace",1000,"~800,000,000 deaths (10% of humanity)","1 in 1,000,000","Modest","US leads",0
-5,9,"1,000,000 deaths or $100B damage","1 in 100","Transformative","Keep pace",1000,"~800,000,000 deaths (10% of humanity)","1 in 1,000","Major","Others lead",100
-5,10,"~800,000,000 deaths (10% of humanity)","1 in 10,000","Major","Others lead",1000,"~800,000,000 deaths (10% of humanity)","1 in 1,000","Major","Keep pace",1000
-6,1,"~800,000,000 deaths (10% of humanity)","1 in 100,000","Modest","US leads",1000,"1,000,000 deaths or $100B damage","1 in 1,000","Major","Others lead",1000
-6,2,"~800,000,000 deaths (10% of humanity)","1 in 100,000","Major","Others lead",0,"100 deaths or $1B damage","1 in 10,000","Modest","Keep pace",1000
-6,3,"100 deaths or $1B damage","1 in 100","Transformative","US leads",1000,"1,000,000 deaths or $100B damage","1 in 10,000","Major","Keep pace",0
-6,4,"A single death","1 in 100,000","Modest","Others lead",1000,"100 deaths or $1B damage","1 in 100","Transformative","Keep pace",100
-6,5,"A single death","1 in 1,000","Transformative","Keep pace",1000,"100 deaths or $1B damage","1 in 1,000,000","Major","Others lead",0
-6,6,"A single death","1 in 1,000,000","Modest","Keep pace",1000,"100 deaths or $1B damage","1 in 100","Transformative","US leads",0
-6,7,"100 deaths or $1B damage","1 in 1,000,000","Transformative","Others lead",1000,"1,000,000 deaths or $100B damage","1 in 10,000","Major","US leads",0
-6,8,"A single death","1 in 100","Major","Keep pace",1000,"100 deaths or $1B damage","1 in 10,000","Modest","Others lead",0
-6,9,"A single death","1 in 10,000","Major","Others lead",1000,"~800,000,000 deaths (10% of humanity)","1 in 1,000,000","Modest","US leads",100
-6,10,"1,000,000 deaths or $100B damage","1 in 1,000,000","Modest","US leads",1000,"100 deaths or $1B damage","1 in 10,000","Major","Others lead",0
-7,1,"100 deaths or $1B damage","1 in 100","Major","Keep pace",0,"1,000,000 deaths or $100B damage","1 in 1,000,000","Modest","Others lead",1000
-7,2,"A single death","1 in 1,000,000","Modest","Keep pace",1000,"1,000,000 deaths or $100B damage","1 in 100,000","Transformative","Others lead",0
-7,3,"1,000,000 deaths or $100B damage","1 in 1,000","Major","Keep pace",0,"~800,000,000 deaths (10% of humanity)","1 in 100,000","Transformative","US leads",1000
-7,4,"1,000,000 deaths or $100B damage","1 in 1,000,000","Transformative","Others lead",0,"A single death","1 in 10,000","Major","Keep pace",0
-7,5,"~800,000,000 deaths (10% of humanity)","1 in 10,000","Transformative","Keep pace",1000,"1,000,000 deaths or $100B damage","1 in 1,000","Major","Others lead",100
-7,6,"100 deaths or $1B damage","1 in 1,000","Major","US leads",0,"1,000,000 deaths or $100B damage","1 in 1,000,000","Transformative","Keep pace",1000
-7,7,"1,000,000 deaths or $100B damage","1 in 100,000","Modest","US leads",0,"~800,000,000 deaths (10% of humanity)","1 in 1,000,000","Transformative","Keep pace",1000
-7,8,"A single death","1 in 100,000","Major","US leads",1000,"100 deaths or $1B damage","1 in 1,000,000","Modest","Keep pace",0
-7,9,"100 deaths or $1B damage","1 in 100","Transformative","US leads",0,"A single death","1 in 1,000","Modest","Keep pace",0
-7,10,"A single death","1 in 100,000","Modest","Keep pace",1000,"100 deaths or $1B damage","1 in 1,000","Transformative","Others lead",0
-8,1,"1,000,000 deaths or $100B damage","1 in 100","Transformative","Keep pace",400,"~800,000,000 deaths (10% of humanity)","1 in 10,000","Major","Others lead",100
-8,2,"1,000,000 deaths or $100B damage","1 in 100","Transformative","Keep pace",400,"~800,000,000 deaths (10% of humanity)","1 in 1,000","Major","US leads",0
-8,3,"1,000,000 deaths or $100B damage","1 in 10,000","Modest","US leads",100,"A single death","1 in 1,000","Major","Keep pace",1000
-8,4,"100 deaths or $1B damage","1 in 1,000","Transformative","Keep pace",1000,"~800,000,000 deaths (10% of humanity)","1 in 10,000","Major","US leads",0
-8,5,"A single death","1 in 100","Major","US leads",400,"100 deaths or $1B damage","1 in 100,000","Modest","Others lead",0
-8,6,"100 deaths or $1B damage","1 in 10,000","Transformative","Others lead",0,"A single death","1 in 1,000,000","Major","Keep pace",1000
-8,7,"100 deaths or $1B damage","1 in 100,000","Major","US leads",0,"A single death","1 in 1,000,000","Transformative","Keep pace",1000
-8,8,"100 deaths or $1B damage","1 in 1,000","Transformative","US leads",1000,"1,000,000 deaths or $100B damage","1 in 100,000","Modest","Keep pace",0
-8,9,"1,000,000 deaths or $100B damage","1 in 1,000,000","Modest","Keep pace",100,"~800,000,000 deaths (10% of humanity)","1 in 100,000","Transformative","US leads",0
-8,10,"A single death","1 in 10,000","Modest","US leads",0,"100 deaths or $1B damage","1 in 100,000","Transformative","Keep pace",1000
-9,1,"100 deaths or $1B damage","1 in 10,000","Modest","US leads",0,"1,000,000 deaths or $100B damage","1 in 100,000","Transformative","Others lead",0
-9,2,"1,000,000 deaths or $100B damage","1 in 1,000","Transformative","US leads",0,"100 deaths or $1B damage","1 in 100,000","Major","Others lead",1000
-9,3,"~800,000,000 deaths (10% of humanity)","1 in 100,000","Modest","Keep pace",0,"100 deaths or $1B damage","1 in 10,000","Major","Others lead",1000
-9,4,"~800,000,000 deaths (10% of humanity)","1 in 1,000,000","Transformative","Keep pace",1000,"1,000,000 deaths or $100B damage","1 in 100,000","Major","US leads",100
-9,5,"A single death","1 in 100,000","Major","Others lead",400,"~800,000,000 deaths (10% of humanity)","1 in 1,000,000","Transformative","Keep pace",0
-9,6,"1,000,000 deaths or $100B damage","1 in 100,000","Modest","Keep pace",0,"~800,000,000 deaths (10% of humanity)","1 in 1,000,000","Transformative","Others lead",1000
-9,7,"A single death","1 in 1,000","Transformative","Others lead",1000,"100 deaths or $1B damage","1 in 100","Major","US leads",100
-9,8,"1,000,000 deaths or $100B damage","1 in 1,000,000","Major","US leads",1000,"~800,000,000 deaths (10% of humanity)","1 in 10,000","Transformative","Keep pace",0
-9,9,"A single death","1 in 10,000","Major","Keep pace",1000,"100 deaths or $1B damage","1 in 1,000","Modest","US leads",100
-9,10,"1,000,000 deaths or $100B damage","1 in 1,000,000","Major","Others lead",1000,"100 deaths or $1B damage","1 in 1,000","Modest","US leads",0
-10,1,"1,000,000 deaths or $100B damage","1 in 1,000","Major","US leads",0,"100 deaths or $1B damage","1 in 10,000","Transformative","Keep pace",1000
-10,2,"1,000,000 deaths or $100B damage","1 in 100,000","Major","Keep pace",0,"100 deaths or $1B damage","1 in 10,000","Transformative","Others lead",1000
-10,3,"A single death","1 in 1,000","Major","Keep pace",100,"1,000,000 deaths or $100B damage","1 in 10,000","Transformative","Others lead",0
-10,4,"1,000,000 deaths or $100B damage","1 in 100,000","Transformative","Others lead",1000,"~800,000,000 deaths (10% of humanity)","1 in 1,000,000","Modest","US leads",100
-10,5,"1,000,000 deaths or $100B damage","1 in 10,000","Major","US leads",0,"A single death","1 in 1,000","Transformative","Others lead",1000
-10,6,"100 deaths or $1B damage","1 in 1,000,000","Major","Others lead",0,"A single death","1 in 100,000","Modest","US leads",1000
-10,7,"~800,000,000 deaths (10% of humanity)","1 in 1,000","Transformative","Others lead",1000,"100 deaths or $1B damage","1 in 100","Major","Keep pace",1000
-10,8,"1,000,000 deaths or $100B damage","1 in 1,000,000","Major","Others lead",0,"A single death","1 in 10,000","Transformative","Keep pace",1000
-10,9,"1,000,000 deaths or $100B damage","1 in 1,000","Major","Keep pace",100,"~800,000,000 deaths (10% of humanity)","1 in 10,000","Transformative","US leads",1000
-10,10,"~800,000,000 deaths (10% of humanity)","1 in 1,000","Major","Others lead",0,"1,000,000 deaths or $100B damage","1 in 100,000","Modest","US leads",1000
+block,task,a_severity,a_risk_annual,a_benefit,a_competition,b_severity,b_risk_annual,b_benefit,b_competition
+1,1,"1,000,000 deaths or $100B damage","1 in 1,000,000",Transformative,Others lead,A single death,"1 in 100,000",Major,Keep pace
+1,2,"1,000,000 deaths or $100B damage","1 in 1,000,000",Transformative,Others lead,100 deaths or $1B damage,"1 in 100,000",Modest,US leads
+1,3,100 deaths or $1B damage,"1 in 10,000",Major,Others lead,"~800,000,000 deaths (10% of humanity)","1 in 1,000,000",Modest,US leads
+1,4,100 deaths or $1B damage,1 in 100,Transformative,US leads,A single death,"1 in 1,000",Modest,Keep pace
+1,5,A single death,"1 in 1,000",Modest,US leads,100 deaths or $1B damage,1 in 100,Transformative,Keep pace
+1,6,100 deaths or $1B damage,"1 in 1,000",Modest,Keep pace,"1,000,000 deaths or $100B damage",1 in 100,Transformative,US leads
+1,7,100 deaths or $1B damage,"1 in 1,000,000",Major,Others lead,A single death,"1 in 100,000",Modest,US leads
+1,8,"1,000,000 deaths or $100B damage",1 in 100,Transformative,US leads,A single death,"1 in 1,000",Modest,Keep pace
+1,9,"1,000,000 deaths or $100B damage","1 in 100,000",Major,Others lead,A single death,"1 in 10,000",Modest,Keep pace
+1,10,100 deaths or $1B damage,"1 in 100,000",Modest,Others lead,"~800,000,000 deaths (10% of humanity)","1 in 1,000,000",Major,Keep pace
+2,1,"~800,000,000 deaths (10% of humanity)","1 in 1,000,000",Modest,Keep pace,100 deaths or $1B damage,1 in 100,Major,US leads
+2,2,"1,000,000 deaths or $100B damage","1 in 100,000",Major,Others lead,A single death,"1 in 1,000",Modest,US leads
+2,3,100 deaths or $1B damage,"1 in 100,000",Modest,Keep pace,A single death,"1 in 1,000",Transformative,Others lead
+2,4,100 deaths or $1B damage,1 in 100,Transformative,US leads,A single death,"1 in 100,000",Modest,Others lead
+2,5,"1,000,000 deaths or $100B damage","1 in 1,000,000",Modest,US leads,100 deaths or $1B damage,"1 in 100,000",Major,Keep pace
+2,6,"~800,000,000 deaths (10% of humanity)","1 in 1,000",Modest,US leads,"~800,000,000 deaths (10% of humanity)",1 in 100,Major,Keep pace
+2,7,A single death,"1 in 10,000",Modest,Keep pace,"1,000,000 deaths or $100B damage",1 in 100,Transformative,US leads
+2,8,"1,000,000 deaths or $100B damage","1 in 1,000",Major,US leads,"~800,000,000 deaths (10% of humanity)","1 in 10,000",Transformative,Others lead
+2,9,"~800,000,000 deaths (10% of humanity)","1 in 1,000,000",Transformative,Keep pace,"1,000,000 deaths or $100B damage","1 in 100,000",Modest,US leads
+2,10,100 deaths or $1B damage,"1 in 1,000,000",Modest,Keep pace,"1,000,000 deaths or $100B damage","1 in 100,000",Major,US leads
+3,1,A single death,1 in 100,Transformative,Keep pace,100 deaths or $1B damage,"1 in 1,000,000",Modest,Others lead
+3,2,"~800,000,000 deaths (10% of humanity)","1 in 1,000,000",Modest,US leads,100 deaths or $1B damage,1 in 100,Transformative,Keep pace
+3,3,"~800,000,000 deaths (10% of humanity)","1 in 1,000,000",Transformative,Others lead,A single death,"1 in 1,000",Major,Keep pace
+3,4,"~800,000,000 deaths (10% of humanity)","1 in 1,000,000",Transformative,Keep pace,100 deaths or $1B damage,"1 in 100,000",Major,US leads
+3,5,A single death,"1 in 100,000",Transformative,Others lead,100 deaths or $1B damage,"1 in 1,000,000",Modest,US leads
+3,6,"1,000,000 deaths or $100B damage","1 in 1,000,000",Modest,Keep pace,"~800,000,000 deaths (10% of humanity)","1 in 10,000",Transformative,US leads
+3,7,100 deaths or $1B damage,"1 in 1,000",Transformative,Keep pace,A single death,"1 in 100,000",Major,Others lead
+3,8,"~800,000,000 deaths (10% of humanity)","1 in 1,000",Major,Others lead,"1,000,000 deaths or $100B damage",1 in 100,Major,Keep pace
+3,9,"1,000,000 deaths or $100B damage","1 in 100,000",Major,Keep pace,"~800,000,000 deaths (10% of humanity)","1 in 10,000",Transformative,US leads
+3,10,100 deaths or $1B damage,"1 in 1,000",Major,Others lead,"1,000,000 deaths or $100B damage","1 in 100,000",Modest,Keep pace
+4,1,100 deaths or $1B damage,"1 in 100,000",Transformative,Others lead,A single death,"1 in 10,000",Major,US leads
+4,2,A single death,"1 in 10,000",Modest,Keep pace,"~800,000,000 deaths (10% of humanity)","1 in 1,000,000",Transformative,Others lead
+4,3,100 deaths or $1B damage,"1 in 1,000",Major,Keep pace,"~800,000,000 deaths (10% of humanity)","1 in 100,000",Transformative,US leads
+4,4,"1,000,000 deaths or $100B damage","1 in 1,000",Major,US leads,"~800,000,000 deaths (10% of humanity)","1 in 10,000",Transformative,Keep pace
+4,5,"1,000,000 deaths or $100B damage","1 in 1,000,000",Modest,Keep pace,"~800,000,000 deaths (10% of humanity)","1 in 100,000",Major,US leads
+4,6,100 deaths or $1B damage,"1 in 10,000",Modest,US leads,"~800,000,000 deaths (10% of humanity)","1 in 100,000",Major,Keep pace
+4,7,A single death,"1 in 10,000",Modest,Others lead,100 deaths or $1B damage,1 in 100,Major,US leads
+4,8,A single death,"1 in 1,000",Major,Others lead,100 deaths or $1B damage,"1 in 10,000",Modest,US leads
+4,9,A single death,"1 in 1,000",Major,Others lead,"1,000,000 deaths or $100B damage","1 in 100,000",Modest,US leads
+4,10,"1,000,000 deaths or $100B damage","1 in 10,000",Major,Keep pace,"~800,000,000 deaths (10% of humanity)","1 in 100,000",Transformative,Others lead
+5,1,"1,000,000 deaths or $100B damage","1 in 1,000",Transformative,Others lead,"~800,000,000 deaths (10% of humanity)","1 in 10,000",Major,US leads
+5,2,100 deaths or $1B damage,"1 in 100,000",Major,Others lead,"1,000,000 deaths or $100B damage","1 in 1,000",Transformative,US leads
+5,3,100 deaths or $1B damage,"1 in 1,000",Transformative,Keep pace,"~800,000,000 deaths (10% of humanity)","1 in 1,000,000",Major,US leads
+5,4,"~800,000,000 deaths (10% of humanity)","1 in 100,000",Major,Keep pace,100 deaths or $1B damage,"1 in 1,000",Transformative,Others lead
+5,5,"1,000,000 deaths or $100B damage","1 in 10,000",Modest,US leads,100 deaths or $1B damage,1 in 100,Transformative,Keep pace
+5,6,100 deaths or $1B damage,"1 in 1,000",Transformative,US leads,A single death,"1 in 10,000",Major,Keep pace
+5,7,"~800,000,000 deaths (10% of humanity)","1 in 10,000",Modest,Keep pace,"~800,000,000 deaths (10% of humanity)","1 in 1,000",Major,Others lead
+5,8,100 deaths or $1B damage,"1 in 10,000",Transformative,Others lead,"1,000,000 deaths or $100B damage","1 in 1,000,000",Modest,US leads
+5,9,100 deaths or $1B damage,"1 in 1,000",Major,US leads,"~800,000,000 deaths (10% of humanity)","1 in 10,000",Transformative,Keep pace
+5,10,A single death,"1 in 1,000",Major,US leads,100 deaths or $1B damage,"1 in 100,000",Transformative,Others lead
+6,1,"1,000,000 deaths or $100B damage","1 in 1,000",Transformative,Keep pace,"~800,000,000 deaths (10% of humanity)","1 in 10,000",Major,US leads
+6,2,"1,000,000 deaths or $100B damage","1 in 100,000",Modest,Keep pace,"~800,000,000 deaths (10% of humanity)","1 in 1,000,000",Major,Others lead
+6,3,"1,000,000 deaths or $100B damage","1 in 100,000",Transformative,Keep pace,100 deaths or $1B damage,"1 in 1,000,000",Major,Others lead
+6,4,100 deaths or $1B damage,"1 in 10,000",Modest,US leads,A single death,1 in 100,Transformative,Keep pace
+6,5,"1,000,000 deaths or $100B damage","1 in 10,000",Major,Others lead,"~800,000,000 deaths (10% of humanity)","1 in 1,000",Transformative,US leads
+6,6,100 deaths or $1B damage,"1 in 100,000",Modest,US leads,"1,000,000 deaths or $100B damage","1 in 1,000,000",Transformative,Others lead
+6,7,"1,000,000 deaths or $100B damage","1 in 1,000,000",Modest,Others lead,"~800,000,000 deaths (10% of humanity)","1 in 1,000",Transformative,US leads
+6,8,"1,000,000 deaths or $100B damage","1 in 10,000",Modest,US leads,"~800,000,000 deaths (10% of humanity)","1 in 1,000,000",Major,Others lead
+6,9,"1,000,000 deaths or $100B damage","1 in 10,000",Transformative,US leads,100 deaths or $1B damage,"1 in 1,000,000",Major,Keep pace
+6,10,"1,000,000 deaths or $100B damage",1 in 100,Major,Keep pace,"~800,000,000 deaths (10% of humanity)","1 in 1,000",Modest,US leads
+7,1,"~800,000,000 deaths (10% of humanity)","1 in 1,000,000",Major,Keep pace,"1,000,000 deaths or $100B damage","1 in 10,000",Modest,US leads
+7,2,"1,000,000 deaths or $100B damage",1 in 100,Major,US leads,"~800,000,000 deaths (10% of humanity)","1 in 1,000",Transformative,Others lead
+7,3,"1,000,000 deaths or $100B damage","1 in 1,000,000",Major,Others lead,100 deaths or $1B damage,"1 in 1,000",Transformative,Keep pace
+7,4,"1,000,000 deaths or $100B damage","1 in 100,000",Modest,Keep pace,100 deaths or $1B damage,"1 in 10,000",Major,Others lead
+7,5,A single death,1 in 100,Transformative,US leads,100 deaths or $1B damage,"1 in 1,000,000",Modest,Others lead
+7,6,100 deaths or $1B damage,"1 in 1,000,000",Major,Keep pace,A single death,"1 in 10,000",Transformative,US leads
+7,7,100 deaths or $1B damage,"1 in 10,000",Transformative,Others lead,A single death,"1 in 1,000",Major,US leads
+7,8,"1,000,000 deaths or $100B damage","1 in 10,000",Modest,Keep pace,"~800,000,000 deaths (10% of humanity)","1 in 100,000",Major,US leads
+7,9,"~800,000,000 deaths (10% of humanity)","1 in 100,000",Transformative,Keep pace,100 deaths or $1B damage,"1 in 10,000",Major,Others lead
+7,10,"~800,000,000 deaths (10% of humanity)","1 in 100,000",Major,Keep pace,"1,000,000 deaths or $100B damage","1 in 1,000",Transformative,US leads
+8,1,"1,000,000 deaths or $100B damage","1 in 1,000",Major,Keep pace,"~800,000,000 deaths (10% of humanity)","1 in 10,000",Transformative,US leads
+8,2,100 deaths or $1B damage,"1 in 1,000",Transformative,Keep pace,"1,000,000 deaths or $100B damage","1 in 1,000,000",Major,US leads
+8,3,100 deaths or $1B damage,"1 in 10,000",Major,Keep pace,"~800,000,000 deaths (10% of humanity)","1 in 100,000",Transformative,US leads
+8,4,A single death,1 in 100,Transformative,Keep pace,100 deaths or $1B damage,"1 in 1,000,000",Modest,Others lead
+8,5,100 deaths or $1B damage,"1 in 1,000",Transformative,Others lead,"~800,000,000 deaths (10% of humanity)","1 in 1,000,000",Major,US leads
+8,6,100 deaths or $1B damage,"1 in 100,000",Modest,US leads,"1,000,000 deaths or $100B damage","1 in 1,000,000",Major,Keep pace
+8,7,A single death,"1 in 1,000",Major,Others lead,100 deaths or $1B damage,1 in 100,Transformative,US leads
+8,8,"~800,000,000 deaths (10% of humanity)","1 in 10,000",Transformative,Others lead,"1,000,000 deaths or $100B damage","1 in 100,000",Modest,US leads
+8,9,A single death,"1 in 1,000,000",Modest,US leads,100 deaths or $1B damage,"1 in 10,000",Transformative,Keep pace
+8,10,100 deaths or $1B damage,"1 in 1,000,000",Modest,Keep pace,A single death,"1 in 10,000",Major,Others lead
+9,1,"~800,000,000 deaths (10% of humanity)","1 in 1,000,000",Modest,US leads,"1,000,000 deaths or $100B damage","1 in 100,000",Major,Others lead
+9,2,"1,000,000 deaths or $100B damage","1 in 1,000,000",Modest,Others lead,A single death,1 in 100,Major,US leads
+9,3,100 deaths or $1B damage,"1 in 1,000",Major,US leads,"~800,000,000 deaths (10% of humanity)","1 in 10,000",Transformative,Keep pace
+9,4,A single death,1 in 100,Transformative,US leads,100 deaths or $1B damage,"1 in 100,000",Major,Others lead
+9,5,100 deaths or $1B damage,"1 in 10,000",Major,US leads,"1,000,000 deaths or $100B damage","1 in 100,000",Transformative,Keep pace
+9,6,"~800,000,000 deaths (10% of humanity)","1 in 1,000,000",Major,Keep pace,"1,000,000 deaths or $100B damage","1 in 1,000",Transformative,Others lead
+9,7,"~800,000,000 deaths (10% of humanity)","1 in 10,000",Modest,Keep pace,"1,000,000 deaths or $100B damage","1 in 1,000",Modest,Others lead
+9,8,100 deaths or $1B damage,"1 in 1,000",Major,Keep pace,"1,000,000 deaths or $100B damage","1 in 10,000",Transformative,Others lead
+9,9,100 deaths or $1B damage,"1 in 1,000,000",Modest,Keep pace,"1,000,000 deaths or $100B damage","1 in 100,000",Transformative,Others lead
+9,10,100 deaths or $1B damage,"1 in 1,000",Modest,US leads,"1,000,000 deaths or $100B damage","1 in 100,000",Major,Others lead
+10,1,A single death,"1 in 1,000",Major,Others lead,100 deaths or $1B damage,1 in 100,Transformative,Keep pace
+10,2,100 deaths or $1B damage,"1 in 10,000",Major,Keep pace,"1,000,000 deaths or $100B damage","1 in 1,000",Transformative,US leads
+10,3,A single death,"1 in 10,000",Major,Keep pace,100 deaths or $1B damage,"1 in 1,000,000",Modest,US leads
+10,4,"~800,000,000 deaths (10% of humanity)","1 in 100,000",Transformative,Keep pace,"1,000,000 deaths or $100B damage","1 in 10,000",Major,US leads
+10,5,A single death,"1 in 10,000",Modest,Keep pace,100 deaths or $1B damage,"1 in 1,000",Transformative,Others lead
+10,6,"1,000,000 deaths or $100B damage","1 in 10,000",Major,US leads,"~800,000,000 deaths (10% of humanity)","1 in 100,000",Transformative,Others lead
+10,7,"~800,000,000 deaths (10% of humanity)","1 in 100,000",Major,US leads,"1,000,000 deaths or $100B damage","1 in 1,000,000",Modest,Keep pace
+10,8,"~800,000,000 deaths (10% of humanity)","1 in 100,000",Major,US leads,"1,000,000 deaths or $100B damage","1 in 10,000",Transformative,Others lead
+10,9,100 deaths or $1B damage,1 in 100,Major,Keep pace,"~800,000,000 deaths (10% of humanity)","1 in 1,000",Transformative,Others lead
+10,10,"~800,000,000 deaths (10% of humanity)","1 in 1,000,000",Transformative,Others lead,100 deaths or $1B damage,"1 in 10,000",Modest,US leads
