@@ -942,6 +942,14 @@ dumpster:
       pre-release testing, which implies government/independent certification)
       and m6_liability (who bears the consequences if certification fails);
       a separate certifier item wasn't adding decision-relevant information.
+    items:
+      - id: m6_certify
+        text: "Before deployment, who should certify that an AI system is safe?"
+        options:
+          - The companies that build them
+          - Government agencies
+          - Independent third-party auditors
+          - No certification needed; the market will sort it out
   - name: m3a_ii_safety (compared with how safe {comparator} is in practice, AI systems should be)
     reason: >
       Cut 1 Jul 2026: page 9 now asks only about standards (m3a_i_standards),
@@ -949,54 +957,241 @@ dumpster:
       fixed a category error (Gradient Figure 11), but the outcomes half isn't
       needed for the headline number. Recoverable if the standards-vs-outcomes
       gap becomes a finding worth probing directly.
+    items:
+      - id: m3a_ii_safety
+        text: >-
+          And compared with how safe {comparator} is in practice today, advanced
+          AI systems themselves should be:
+        scale: safety5_cantcompare
   - name: m2_frame_applicable (can you put a number on AI's risk, or is it too uncertain?)
     reason: >
       Cut 1 Jul 2026: the frame-applicability check was judged not important
       enough to keep in the live instrument.
+    items:
+      - id: m2_frame_applicable
+        text: >-
+          Some technologies, like flying or nuclear power, are held to a strict number
+          for how risky they're allowed to be. Which is closer to your view about
+          advanced AI?
+        options:
+          - You can put a number on its risk and hold it to a safety limit too
+          - Its risk is too uncertain to put a useful number on
+          - Unsure
   - name: free_estimate / m4b_reasonable (highest annual chance of an AI disaster killing 100,000 people you'd find reasonable)
     reason: >
       Cut 1 Jul 2026: redundant with the severity-ladder rung m4c_1m (1,000,000
       deaths), which asks essentially the same thing but is anchored to a
       published source (MIT AI Risk Repository "catastrophic" rung); the
       100,000 figure here wasn't anchored to any prior work.
+    items:
+      - id: m4b_reasonable
+        text: >-
+          What is the highest annual chance of an AI disaster killing 100,000
+          people that you would consider reasonable? That is, any higher would
+          be unreasonable.
+        options:
+          - "1 in 100"
+          - "1 in 1,000"
+          - "1 in 10,000"
+          - "1 in 100,000"
+          - "1 in 1,000,000"
+          - "1 in 10,000,000 or less"
+          - "Zero risk only is reasonable"
+          - "Too speculative to answer"
   - name: Environment / data-centre module (env_label, env_reversal, env_forgo, env_attitude)
     reason: >
       Reverse-halo framing experiment, fielded first in v10. Cut 29 Jun 2026:
       decision relevance unclear; none of its justifications (predictive
       covariate, halo control, standalone framing study) earned its place
       against the length budget. Recoverable as a standalone study.
+    items:
+      - id: env_label
+        text: >-
+          A company wants to buy land, electricity, and water near you to run a
+          large facility. It would create few local jobs, mainly serve customers
+          elsewhere, and pay about $2,800 per resident a year in local taxes. How
+          acceptable is this if it is an AI data centre?
+        note: >-
+          Label randomised across respondents (AI data centre / manufacturing plant /
+          semiconductor factory / bottling plant); facts held constant, so only the
+          label varies. AI-minus-generic gap = the AI-specific penalty.
+        options: [Completely acceptable, Mostly acceptable, Neither, Mostly unacceptable, Completely unacceptable]
+      - id: env_reversal
+        text: >-
+          Suppose your area already received about $2,800 per resident a year from a
+          local facility like that. Would giving up that money — to avoid its land,
+          water, and energy use — be worth it?
+        options: [Definitely worth giving up the money, Probably worth it, Hard to say, Probably not worth it, Definitely not worth it]
+      - id: env_forgo
+        text: >-
+          What is the most tax revenue per resident, per year, your area should be
+          willing to give up to avoid such a facility's land, water, and energy use?
+        options: ["$0", "$1–50", "$51–150", "$151–500", "$501–1,500", More than $1,500, Don't know]
+      - id: env_attitude
+        text: >-
+          How worried, if at all, are you about advanced AI's impact on the
+          environment, including its energy and water use?
+        options: [Very worried, Fairly worried, Not very worried, Not at all worried, Don't know]
   - name: Module 1 descriptive-attitudes battery (m1_goodharm, m1_worry_control, m1_trust_companies, m1_extinction_priority, m1_reg_toofar, m1_treaty_ban)
     reason: >
       Cluster A descriptive attitudes, not risk tolerance — they don't feed the
       public number. Cut 29 Jun 2026; trend value recoverable from prior SARA
       waves; ban-appetite survives via Muskan's superintelligence module.
+    items:
+      - id: m1_goodharm
+        text: "Overall, do you think advanced AI will do more good or more harm?"
+        options: [More good than harm, About equal, More harm than good, Don't know]
+      - id: m1_worry_control
+        text: "How worried, if at all, are you that humans will lose control of AI?"
+        options: [Very worried, Fairly worried, Not very worried, Not at all worried, Don't know]
+      - id: m1_trust_companies
+        text: "To what extent do you trust technology companies to make sure the AI they build is safe?"
+        options: [A great deal, A fair amount, Not very much, Not at all, Don't know]
+      - id: m1_extinction_priority
+        text: >-
+          How much do you agree? "Reducing the risk of human extinction from AI
+          should be a global priority, alongside risks like pandemics and nuclear
+          war." (The CAIS statement, kept verbatim from prior waves for a clean trend.)
+        options: [Strongly agree, Agree, Neither, Disagree, Strongly disagree]
+      - id: m1_reg_toofar
+        text: "Thinking about AI in the US, are you more concerned that the government will…"
+        options: [Go too far regulating it, Not go far enough regulating it, Not sure]
+      - id: m1_treaty_ban
+        text: "Would you support or oppose an international treaty to ban the development of any 'smarter-than-human' AI?"
+        options: [Strongly support, Somewhat support, Somewhat oppose, Strongly oppose, Don't know]
   - name: m2_pace (tolerability of the current pace of AI disruption)
     reason: "Non-catastrophic disruption is off-aim for a risk-tolerance survey. Cut 29 Jun 2026."
+    items:
+      - id: m2_pace
+        text: >-
+          Setting catastrophic risks aside, how tolerable is the current pace at
+          which AI is changing work, information, and daily life?
+        options: [Acceptable, Tolerable, Intolerable, Unacceptable / should be illegal]
   - name: Stem-A/B superintelligence wording experiment + accel/safety counter-message arm
     reason: >
       The simple 2-cell wording experiment and the one-sided briefing arm.
       Retired 29 Jun 2026 — superseded by Muskan's 3x3 ELM briefing experiment
       (the final module), which is the rigorous version of the same idea.
+    items:
+      - id: m7_si_ban
+        text: >-
+          How much do you agree? "I support a ban on developing smarter-than-human
+          AI until there is broad scientific consensus it can be done safely, and
+          strong public buy-in."
+        note: >-
+          Stem A = this real campaign statement (its conditions inflate agreement).
+          Stem B (seen by a random half) = a symmetric, permission-framed version of
+          the same view; the A-minus-B gap is the wording effect. Stem B was never
+          drafted as final copy — write it before reuse.
+        options: [Strongly agree, Agree, Neither, Disagree, Strongly disagree]
+      - id: counter_message_arm
+        text: >-
+          Before the tolerance block, a random third of respondents saw
+          accelerationist (a16z-style) talking points, a random third saw safety
+          talking points, and a third saw none. The swing in tolerance across arms
+          was the headline result (requested by Delaney). The two briefs were never
+          finalised as copy — write both before reuse.
+        note: >-
+          The accel/safety counter-message idea lives on: the briefs are now tested
+          inside the superintelligence-statement module (Muskan's 3x3 ELM experiment),
+          not as a standalone arm. Origin: Oscar Delaney's Nov 2025 note — "do some
+          counter-message testing … of how people's views change after being given
+          various a16z type talking points."
   - name: Mitigations battery ("I'd trust AI more if…") and priority-risks battery
     reason: "Removed from the live instrument (17 Jun 2026); the FAA-style item (m6_faa) carries the single most important mitigation."
+    items:
+      - id: mit
+        text: '"I would be more likely to trust AI if…" How much do you agree with each?'
+        note: "Matrix, agree/disagree scale; each respondent saw a random 5–8 of the rows to limit length."
+        rows:
+          - there were a national AI Safety Institute advising government on the risks
+          - the most powerful models had to pass safety testing before release
+          - large AI developers had independent annual safety audits
+          - developers had to report safety incidents to authorities within 72 hours
+          - developers were liable for catastrophic harms their models cause
+          - models had a reliable emergency shutdown that genuinely reduces risk
+          - AI-generated content was clearly labelled
+        options: [Strongly agree, Agree, Neither, Disagree, Strongly disagree]
+      - id: prio
+        text: '"The government should focus its AI regulation on…" How much do you agree with each?'
+        note: "Matrix (International AI Safety Report taxonomy in plain English); random 5–8 rows shown, order randomised."
+        rows:
+          - fake content used for scams, extortion, or non-consensual images
+          - AI-generated content used to manipulate public opinion
+          - AI-enabled cyber-attacks on people and infrastructure
+          - AI lowering the barrier to biological or chemical weapons
+          - scenarios where AI systems operate outside human control
+          - AI's impact on jobs and the labour market
+          - AI systems that process personal data or enable surveillance
+        options: [Strongly agree, Agree, Neither, Disagree, Strongly disagree]
   - name: Cognitive Reflection Test (CRT) battery
     reason: "Overlaps the numeracy item we keep (r ≈ 0.3–0.5), classic items are leaked in online panels, likely-small moderation. Recoverable if a hypothesis emerges that numeracy cannot test."
+    items:
+      - id: m9_crt_pig
+        text: >-
+          A quick puzzle: a man buys a pig for $60, sells it for $70, buys it back
+          for $80, and sells it again for $90. How much money has he made? ($)
+        widget: number
+        note: >-
+          The one CRT item that reached the prototype. The full battery is the
+          expanded set from Benjamin Reid, Additional Questions for SARA (after
+          Thomson & Oppenheimer 2013) — recover those items from Reid's document
+          before reuse.
   - name: Need-for-cognition short form
     reason: "A disposition, not an ability; its plausible effect is already captured by numeracy; rationale too weak to justify the items."
+    items:
+      - id: nfc
+        text: "How much do you agree with each? (efficient 6-item form; (R) = reverse-scored)"
+        note: "Cacioppo & Petty 1982; 6-item efficient form."
+        rows:
+          - I would prefer complex to simple problems.
+          - I like to have the responsibility of handling a situation that requires a lot of thinking.
+          - Thinking is not my idea of fun. (R)
+          - I would rather do something that requires little thought than something that is sure to challenge my thinking abilities. (R)
+          - I really enjoy a task that involves coming up with new solutions to problems.
+          - I would prefer a task that is intellectual, difficult, and important to one that is somewhat important but does not require much thought.
+        options: [Strongly agree, Agree, Neither, Disagree, Strongly disagree]
   - name: Icon arrays
     reason: "Bias judgements upward; kept only as a randomised arm to measure that bias, not as the default presentation."
   - name: Verbal societal-risk anchors ("1 in 100 = a pandemic")
     reason: "Confused 2024 Australian respondents; replaced by familiar-technology comparators (Method 3)."
+    note: >-
+      Verbatim anchor wordings (MIT AIRI briefing, Nov 2025): personal = "1 in 10 is
+      your chance of catching a cold"; societal = "1 in 100 is the chance of a
+      pandemic". Used in the 2024 Australian wave; they introduced confusion, so the
+      US wave asks the probability ladder directly, without verbal anchors.
   - name: Micromorts
     reason: "Not clearly validated or intuitive for a general US sample."
   - name: "\"All technologies carry residual risk\" preamble"
     reason: "Primes acceptance; imports a wrong 'last order of magnitude' frame for AI."
+    note: >-
+      Source phrasing (MIT AIRI briefing core-assumptions bullet, Nov 2025 — internal,
+      not confirmed respondent-facing): "Absolute safety is unattainable — All
+      technologies carry risk; the question is what level society deems acceptable."
+      Cut on Peter Barnett's objection: "'All technologies carry risk' in normal cases
+      refers to risks like 1 in 100,000 … This is not the case with AI, we are talking
+      about risks far greater than 1/100, not trying to push risks below 1/100,000."
   - name: Off-the-shelf scales (AIAS-4, GAAIS, GRIPS, DOSPERT)
     reason: "Measure general attitudes / trait risk, not AI-specific tolerance; cannot build an F–N curve."
   - name: "\"4000x safer\" multiplier from a qualitative item"
     reason: "Conflates a qualitative answer with expert estimates (Gradient #16)."
+    note: >-
+      Not a survey item — a reporting claim from the 2025 Australian wave (Figure 11)
+      that Gradient Institute recommended removing. Liam Carroll (Gradient), 24 Nov
+      2025: "remove the claim that the public want AI to be '4000x safer than current
+      estimates'. If this claim is based on Figure 11, then the question posed to the
+      cohort was qualitative: the public wanted the safety standards to be as if not
+      more strict as aviation standards … there is no need to conflate that with expert
+      estimates in order to convert it into a quantity." Gradient also flagged that the
+      Figure 11 wording conflated stricter standards with safer systems — the split now
+      fixed by m3a_i_standards / m3a_ii_safety.
   - name: Direct "do you support SB 53 / the RAISE Act"
     reason: "Reads as advocacy; we ask the underlying values question instead."
+    note: >-
+      Original rejected phrasing (MIT AIRI briefing, Nov 2025), given as the example to
+      avoid: "do you agree with the provisions in CA SB 53" — contrasted there with the
+      preferred "in your opinion, what level of risk is acceptable". (SB 53 specifically;
+      the RAISE Act framing came later.)
   - name: Test–retest recontact wave
     reason: "Dropped on cost; consistency handled within-survey."
   - name: "\"I'd pay whatever it takes\" WTP option"
