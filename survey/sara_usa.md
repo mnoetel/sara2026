@@ -343,31 +343,58 @@ pages:
           before fielding.
         triangulates: [m3a_i_standards]
 
-      - id: m3_att_elevator
+      - id: m3_att_bioweapons
         text: >
           Compared with the safety regulations on biological weapons, this is an
-          attention check, so you must select much less strict:
+          attention check, so you must select "Much less strict":
         scale: strictness5_cantcompare
         widget: radio
         required: true
         rationale: >
           Attention check disguised as a comparator item — same stem and scale
           as the real items, buried among them so a careless pattern-clicker is
-          caught. One of two with the same required answer ("Somewhat
-          stricter"); the other (playground) sits later so they are not adjacent.
-        triangulates: [m3_att_playground]
+          caught. The required answer ("Much less strict") is an extreme endpoint
+          a default-clicker or straightliner will miss. Both checks demand the
+          same endpoint on purpose: Prolific/Bastical needs two failures to
+          exclude someone, and a shared fail criterion is more likely to catch a
+          straightliner on both. The other (nuclear) sits later so they are not
+          adjacent.
+        triangulates: [m3_att_nuclear]
 
-      - id: m3_att_playground
+      - id: m3_att_nuclear
         text: >
           Compared with the safety regulations on nuclear weapons, this is
-          an attention check, so you must select much less strict:
+          an attention check, so you must select "Much less strict":
         scale: strictness5_cantcompare
         widget: radio
         required: true
         rationale: >
-          Second attention check, same disguised-comparator format and required
-          answer. See m3_att_elevator.
-        triangulates: [m3_att_elevator]
+          Second attention check, same disguised-comparator format and same
+          required answer ("Much less strict"). Sharing the fail criterion with
+          the bioweapons check is deliberate — two failures are needed to
+          exclude, and identical criteria catch straightliners on both. See
+          m3_att_bioweapons.
+        triangulates: [m3_att_bioweapons]
+
+  # ── Attention-check screen-out ──────────────────────────────────────
+  # Shown ONLY when BOTH disguised attention checks (m3_att_bioweapons,
+  # m3_att_nuclear) are answered with anything other than "Much less strict".
+  # Prolific/Bastical needs two failures to exclude, so a single miss is not
+  # screened out. The gate (condition: att_failed), the redirect, and hiding
+  # every later page are wired in survey/sara/__init__.py. BEFORE FIELDING:
+  # replace REPLACE_WITH_SCREENOUT_CODE below with the screen-out ("return
+  # submission") completion code from your Prolific study.
+  - id: screen_out
+    title: "Thank you for your time"
+    condition: att_failed
+    body: |
+      <p>Thank you for your time. Based on your responses, you do not qualify
+      to continue this study.</p>
+      <p>You are being returned to Prolific now. If you are not redirected
+      automatically within a few seconds, please
+      <a href="https://app.prolific.com/submissions/complete?cc=REPLACE_WITH_SCREENOUT_CODE">click here to return your submission</a>.</p>
+      <script>window.location.replace("https://app.prolific.com/submissions/complete?cc=REPLACE_WITH_SCREENOUT_CODE");</script>
+    items: []
 
   # ── Page 7: Judge the experts' numbers (Method 4, §3.4) ─────────
   - id: expert_judgement
