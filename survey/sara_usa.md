@@ -212,15 +212,25 @@ pages:
       and more manageable. The next questions ask what level of risk you find acceptable.</p>
     items: []
 
-  # ── Page 4: Severity ladder, rung 1 of 4 (Method 1, §3.1) ────────
-  # One severity level per page (was a single page with all four rows);
-  # page order randomised so the ladder format doesn't cue a mechanically
-  # monotonic answer.
-  - id: severity_single
+  # ── Page 4: Severity ladder (Method 1, §3.1) ───────────────────
+  # type: random_group — the engine puts each item on its own page and shows
+  # those pages in a per-participant randomised order (seeded on participant.code),
+  # so the ladder format can't cue a mechanically monotonic answer. Fields still
+  # save normally; each participant sees every severity exactly once.
+  - id: severity_ladder
     title: "Highest acceptable risk, by severity"
+    type: random_group
     note: >
       This is about societal risk — the chance somewhere in the population —
       not your personal risk.
+    rationale: >
+      The within-person severity ladder (Method 1, v10 §3.1). Each person sets
+      an acceptable annual chance across outcomes from a single death up to a
+      global catastrophe, tracing their stated frequency–number (F–N) curve.
+      Presented one severity per page in randomised order so the ordering can't
+      cue a monotone pattern; a set of answers that ignores severity is flagged
+      scope-insensitive. The source anchors behind the rungs (RAISE Act, MIT AI
+      Risk Repository, FRI/XPT) are internal.
     items:
       - id: m4c_single
         text: >
@@ -241,13 +251,6 @@ pages:
           FRI/XPT) are internal.
         triangulates: [m4c_100, m4c_1m, m4c_800m, dce_choice]
 
-  # ── Page 5: Severity ladder, rung 2 of 4 (Method 1, §3.1) ────────
-  - id: severity_100
-    title: "Highest acceptable risk, by severity"
-    note: >
-      This is about societal risk — the chance somewhere in the population —
-      not your personal risk.
-    items:
       - id: m4c_100
         text: >
           For an AI disaster causing 100 deaths or serious injuries, or $1
@@ -260,13 +263,6 @@ pages:
           RAISE Act "critical harm" rung of the severity ladder. See m4c_single.
         triangulates: [m4c_single, m4c_1m, m4c_800m, dce_choice]
 
-  # ── Page 6: Severity ladder, rung 3 of 4 (Method 1, §3.1) ────────
-  - id: severity_1m
-    title: "Highest acceptable risk, by severity"
-    note: >
-      This is about societal risk — the chance somewhere in the population —
-      not your personal risk.
-    items:
       - id: m4c_1m
         text: >
           For an AI disaster causing 1,000,000 deaths or $100 billion in damage,
@@ -278,13 +274,6 @@ pages:
           MIT AI Risk Repository "catastrophic" rung. See m4c_single.
         triangulates: [m4c_single, m4c_100, m4c_800m, dce_choice]
 
-  # ── Page 7: Severity ladder, rung 4 of 4 (Method 1, §3.1) ────────
-  - id: severity_800m
-    title: "Highest acceptable risk, by severity"
-    note: >
-      This is about societal risk — the chance somewhere in the population —
-      not your personal risk.
-    items:
       - id: m4c_800m
         text: >
           For an AI disaster causing around 800,000,000 deaths (about 10% of
@@ -296,7 +285,7 @@ pages:
           FRI/XPT "catastrophe" rung (top of the ladder). See m4c_single.
         triangulates: [m4c_single, m4c_100, m4c_1m, dce_choice]
 
-  # ── Page 8: DCE (Method 2, §3.2) ─────────────────────────────────
+  # ── Page 5: DCE (Method 2, §3.2) ─────────────────────────────────
   # type: dce — the engine expands this into one page per task (dce_1 … dce_N),
   # drawing each respondent's block from sara_dce_design.R's output
   # (sara/dce_blocks.csv). Fields dce_1 … dce_N store the A/B/Neither choice.
@@ -316,7 +305,7 @@ pages:
     triangulates: [m4c_single, m4c_100, m4c_1m, m4c_800m, m5_wtp]
     items: []
 
-  # ── Page 9: Anchor to accepted safety (Method 3, §3.3) ───────────
+  # ── Page 6: Anchor to accepted safety (Method 3, §3.3) ───────────
   - id: safety_comparators
     title: "Compared with existing safety standards"
     items:
@@ -376,7 +365,7 @@ pages:
           answer. See m3_att_elevator.
         triangulates: [m3_att_elevator]
 
-  # ── Page 10: Judge the experts' numbers (Method 4, §3.4) ─────────
+  # ── Page 7: Judge the experts' numbers (Method 4, §3.4) ─────────
   - id: expert_judgement
     title: "Judging expert estimates"
     items:
@@ -448,7 +437,7 @@ pages:
           - m2_experts_altman
           - m2_experts_musk
 
-  # ── Page 11: Costed tradeoffs ────────────────────────────────────
+  # ── Page 8: Costed tradeoffs ────────────────────────────────────
   - id: tradeoffs
     title: "Costs and tradeoffs"
     items:
@@ -515,7 +504,7 @@ pages:
           safety, and competition.
         triangulates: [m5b_delay_uncond, m5b_delay_cond, dce_choice]
 
-  # ── Page 12: Policy ───────────────────────────────────────────────
+  # ── Page 9: Policy ───────────────────────────────────────────────
   - id: policy
     title: "Policy preferences"
     items:
@@ -601,7 +590,7 @@ pages:
   #  counter-message arm were retired 29 Jun 2026 — superseded by Muskan's 3x3
   #  superintelligence-briefing experiment, the final module below.)
 
-  # ── Page 13: Numeracy check — Berlin Numeracy Test, adaptive ─────
+  # ── Page 10: Numeracy check — Berlin Numeracy Test, adaptive ─────
   # type: adaptive — like the DCE's `type: dce`, this page shows one item
   # at a time; which item comes next depends on whether the previous one was
   # answered correctly (see each item's next_if_correct / next_if_incorrect).
@@ -709,7 +698,7 @@ pages:
           difficulty rather than raw count correct, per Berlin Numeracy Test
           norms.
 
-  # ── Page 14: Individual differences and demographics ─────────────
+  # ── Page 11: Individual differences and demographics ─────────────
   - id: demographics
     title: "About you"
     items:

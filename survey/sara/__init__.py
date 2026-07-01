@@ -179,6 +179,44 @@ def _make_content_page(page, ordn, total):
     return _P
 
 
+def _make_rgroup_page(page, slot, ordn, total):
+    """One page per item in a `type: random_group` page. Each participant sees
+    the group's items one-per-page in a randomised order (seeded on their
+    participant.code), so the sequence can't cue a monotone answering pattern.
+    Every participant sees every item exactly once; fields save normally."""
+    gid = page['id']
+    items = page.get('items', [])
+    n = len(items)
+
+    def _order(player):
+        r = random.Random('%s|%s' % (player.participant.code, gid))
+        idx = list(range(n))
+        r.shuffle(idx)
+        return idx
+
+    class _R(Page):
+        form_model = 'player'
+        template_name = 'sara/Page.html'
+
+        def get_form_fields(player, _order=_order, slot=slot, items=items):
+            return [items[_order(player)[slot]]['id']]
+
+        def vars_for_template(player, ps=page, _order=_order, slot=slot,
+                              items=items, ordn=ordn, total=total):
+            it = items[_order(player)[slot]]
+            single = dict(ps)
+            single['items'] = [it]
+            return dict(page_title=ps.get('title', ''),
+                        page_index=ordn, page_total=total,
+                        body=render.page_body(single, player, _SCALES))
+
+        def is_displayed(player, ps=page):
+            return _page_displayed(player, ps)
+
+    _R.__name__ = _clsname('%s_slot%d' % (gid, slot + 1))
+    return _R
+
+
 def _make_dce_page(page, tn, ordn, total):
     rat = page.get('rationale', '')
 
@@ -206,13 +244,20 @@ for _ps in _PAGES:
     if _ps.get('type') == 'dce':
         for _tn in range(1, NUM_DCE_TASKS + 1):
             _units.append(('dce', _ps, _tn))
+    elif _ps.get('type') == 'random_group':
+        for _si in range(len(_ps.get('items', []))):
+            _units.append(('rgroup', _ps, _si))
     else:
         _units.append(('content', _ps, None))
 _TOTAL = len(_units)
 
 page_sequence = []
-for _ordn, (_kind, _ps, _tn) in enumerate(_units, 1):
-    _cls = (_make_dce_page(_ps, _tn, _ordn, _TOTAL) if _kind == 'dce'
-            else _make_content_page(_ps, _ordn, _TOTAL))
+for _ordn, (_kind, _ps, _arg) in enumerate(_units, 1):
+    if _kind == 'dce':
+        _cls = _make_dce_page(_ps, _arg, _ordn, _TOTAL)
+    elif _kind == 'rgroup':
+        _cls = _make_rgroup_page(_ps, _arg, _ordn, _TOTAL)
+    else:
+        _cls = _make_content_page(_ps, _ordn, _TOTAL)
     globals()[_cls.__name__] = _cls
     page_sequence.append(_cls)
