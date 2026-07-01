@@ -43,6 +43,17 @@ _PAGES = SPEC['pages']
 _DCE_PAGE = next((p for p in _PAGES if p.get('type') == 'dce'), None)
 NUM_DCE_TASKS = (_DCE_PAGE or {}).get('n_tasks', 10)
 
+# ── Attention-check screen-out ────────────────────────────────────────
+# The two disguised comparators (m3_att_bioweapons, m3_att_nuclear) both
+# require the extreme endpoint "Much less strict". Prolific/Bastical needs two
+# failures to exclude someone, so we screen a participant out only when BOTH
+# are wrong. The screen_out page (defined in the spec) redirects them back to
+# Prolific; every page after it is then hidden — see _page_displayed.
+_ATT_IDS = ('m3_att_bioweapons', 'm3_att_nuclear')
+_ATT_REQUIRED = _SCALES['strictness5_cantcompare']['labels'].index('Much less strict') + 1
+_PAGE_IDS = [p['id'] for p in _PAGES]
+_SCREENOUT_POS = _PAGE_IDS.index('screen_out') if 'screen_out' in _PAGE_IDS else None
+
 # randomisation pools
 COMPARATORS = ["nuclear power", "commercial aviation", "new prescription drugs",
                "cars", "large dams"]
@@ -138,8 +149,23 @@ def _declined(player):
     return player.field_maybe_none('consent') == 2  # 2 = "I do not consent"
 
 
+def _att_failed(player):
+    """True once BOTH attention checks are answered and both are wrong. Guarded
+    on being answered so it can't fire spuriously while the fields are blank."""
+    vals = [player.field_maybe_none(i) for i in _ATT_IDS]
+    return all(v is not None for v in vals) and all(v != _ATT_REQUIRED for v in vals)
+
+
 def _page_displayed(player, page):
-    if _declined(player) and page['id'] not in ('consent', 'end'):
+    pid = page['id']
+    if _declined(player) and pid not in ('consent', 'end'):
+        return False
+    # attention-check screen-out gate: both checks wrong -> show the screen_out
+    # page and hide every page after it (they are redirected to Prolific).
+    failed = _att_failed(player)
+    if pid == 'screen_out':
+        return failed
+    if failed and _SCREENOUT_POS is not None and _PAGE_IDS.index(pid) > _SCREENOUT_POS:
         return False
     cond = page.get('condition')
     if cond == 'info_arm':
