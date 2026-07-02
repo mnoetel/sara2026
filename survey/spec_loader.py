@@ -39,6 +39,7 @@ def load_spec(md_path):
 # the page to *everyone* — so an unknown one is a validation error, not a
 # silent default.
 KNOWN_CONDITIONS = frozenset([
+    "declined",
     "info_arm",
     "att_failed",
     "wtp_zero",

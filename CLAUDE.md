@@ -48,14 +48,15 @@ as a **single-source-of-truth pipeline**. See `README.md` for the overview.
   fields + one oTree Page per page in the spec. It also wires what plain items can't
   express: **randomisation arms** (`info_arm` half, `dce_block`, Muskan stimulus) assigned
   **balanced** in `creating_session` (shuffled blocks, seeded on the session code); the
-  **consent gate** (declining → skip to end); the **attention-check screen-out** (the page
+  **consent gate** (declining → only the `condition: declined` close-out page, never the
+  debrief); the **attention-check screen-out** (the page
   with `condition: att_failed`, shown when both disguised checks are wrong; everything
   after it is hidden); the **DCE** (a `type: dce` page expands into one page per task,
   drawn from `dce_blocks.csv`); a **`type: random_group`** page expands into one page per
   item, shown in a per-participant randomised order (seeded on `participant.code`) — every
   participant sees every item exactly once; **Muskan's** assigned briefing + control-cell
-  skip. Page conditions use the `condition:` key (`info_arm`, `att_failed`,
-  `muskan_not_control`, `muskan_control`, `muskan_one_sided`) — the valid set lives in
+  skip. Page conditions use the `condition:` key (`declined`, `info_arm`, `att_failed`,
+  `wtp_zero`, `muskan_not_control`, `muskan_control`, `muskan_one_sided`) — the valid set lives in
   `spec_loader.KNOWN_CONDITIONS`; add the engine logic and the validator entry together.
   The **bots** (`survey/sara/tests.py`) walk every page and arm.
 - `survey/sara/render.py` — builds each page's HTML body server-side and emits the UX
