@@ -103,9 +103,8 @@ def _numbered_options(item, scales, player=None):
     per-participant (seeded on participant.code + item id) so it's stable across
     re-renders but the correct answer isn't always in a fixed position.
     ``shuffle_keep_last: true`` anchors the final option in place and shuffles
-    only the rest — this reproduces Pew's rotation of a bipolar item's two
-    directional options while pinning the neutral "Equally…/Not sure" option
-    last."""
+    only the rest — rotates a bipolar item's two directional options while
+    pinning the neutral "Equally…/Not sure" option last."""
     pairs = list(enumerate(_options_for(item, scales) or [], 1))
     if item.get("shuffle_options") and player is not None:
         code = getattr(getattr(player, "participant", None), "code", None)

@@ -58,7 +58,9 @@ uncertainty, not directional hypotheses.
   versions).
 - **Within-person randomisation (seeded on participant code):** severity-
   ladder page order; comparator-block item order (attention checks always
-  last); option order on the comprehension check.
+  last); option order on the comprehension check; on each Pew benchmark
+  item, the two directional options are rotated with the neutral/"Not sure"
+  option anchored last.
 - **Adaptive elements:** Berlin Numeracy Test branching (validated adaptive
   format); the DCE's *population-level* sequential re-optimisation between
   waves (see §5 — mechanical, pre-registered algorithm with archival
@@ -152,14 +154,16 @@ No other exclusions. Any additional cleaning is labelled exploratory.
 A single quantitative public number is published only if the Method 1
 (stated) and Method 2 (DCE) estimates agree within **one order of
 magnitude** in the overlap of severity tiers, on the disclosed-arm data.
-Otherwise: report a bound and qualitative findings. The expert-to-public
-multiplier is computed only on a pass, as a distribution conditioned on a
-stated benefit scenario.
+Otherwise: report a bound and qualitative findings. Any expert-vs-public
+multiplier (e.g. "4,000× safer") is computed only on a pass, as a
+distribution conditioned on a stated benefit scenario, and is always
+labelled as researcher interpretation — never presented as a public-opinion
+finding (protocol §5, §7.1 #16).
 
 ### 4.7 Superintelligence module (Rev 3 plan, §9)
 - **Aim 2 headline:** top-2-box ban support in cell 5, with CI; bracketed by
-  the other contested cells, control, and one-sided cells. Both DV items
-  reported; continuous score = pro-ban − reverse(anti-ban), "Don't know"
+  the other contested cells, control, and one-sided cells. Both DV items (fielded on
+  separate consecutive pages) reported; continuous score = pro-ban − reverse(anti-ban), "Don't know"
   missing.
 - **H2:** For/Against direction × route (C2) interaction on support.
   **H3:** For/Against main effects. Planned contrasts C1/C2 as in the plan.
@@ -252,7 +256,9 @@ candidate; it could not change what was fielded or how it is analysed.
 Prolific is an opt-in panel; MRP adjusts demographics only. Two verbatim
 Pew ATP items are fielded before any treatment: `bench_pew_cncexc`
 (excited vs concerned; Pew Jun 2025: 10/50/38) and `bench_pew_aireg`
-(regulation won't go far enough; Pew Aug 2024: 21/58/21). **Every
+(regulation won't go far enough; Pew Aug 2024: 21/58/21). On each item the
+two directional options are rotated per respondent with the neutral/"Not
+sure" option anchored last. **Every
 population-level headline is published next to the sample-vs-Pew gap on
 these two items**, with direction-of-bias reasoning. If our raw sample
 differs from the Pew topline by more than 10 percentage points on either
@@ -264,7 +270,8 @@ raking-to-benchmark sensitivity estimate is reported.
 ## 8. What we will NOT do (registered negative commitments)
 
 - No "N times safer than experts' estimates" multiplier headline from the
-  Method 3 back-out.
+  Method 3 back-out; any multiplier reported anywhere is labelled as
+  researcher interpretation, never as a public belief.
 - No pooling of Method 4 sources into a single "experts say" figure.
 - No point estimate of p\* — distributions with intervals only.
 - No state map below the effective-sample threshold.

@@ -5,7 +5,7 @@
 > "Hadfield argues that governance of any complex technology implicates two distinct types of question: first, democratic questions: what kinds of deception by AI developers count as unfair? **What tradeoffs between utility, safety, and competition does the polity wish to make? What level of catastrophic risk are we willing to tolerate?**"
 > Dean W. Ball, *Leviathan Waking*, Hyperdimensional.[^ball]
 
-This survey aims to fill what Hadfield and Clark call the *democratic deficit*: the values-based decisions that shape AI "must be made by democratically accountable public, not private, actors."[^clark] As is, it not clear what level of risk the public is willing to tolerate. It does not aim to have the public estimate the actual risk or prescribe mitigiations[^1], but to judge how much risk the public will tolerate (a values question the public is entitled to answer).
+This survey aims to fill what Hadfield and Clark call the *democratic deficit*: the values-based decisions that shape AI "must be made by democratically accountable public, not private, actors."[^clark] As is, it is not clear what level of risk the public is willing to tolerate. It does not aim to have the public estimate the actual risk or prescribe mitigations[^1], but to judge how much risk the public will tolerate (a values question the public is entitled to answer).
 
 ---
 
@@ -31,9 +31,9 @@ The obvious survey is one question: "What annual chance of an AI catastrophe is 
 
 **People are scope insensitive.** Many respondents treat 1 in 1,000 and 1 in 1,000,000 as the same feeling of "small," so a single elicited number reflects affect, not a considered threshold.
 
-**People are framing sensitive.** The same question shifts with wording, anchors, and who is quoted. Because some faming is often necessary, this is an effect we want to quantify, rather than something we can eliminate (see §6).
+**People are framing sensitive.** The same question shifts with wording, anchors, and who is quoted. Because some framing is often necessary, this is an effect we want to quantify, rather than something we can eliminate (see §6).
 
-**So we plan to trianguate rather than trusting any single method.** We plan to assess risk tolerance in four different ways. A conclusion that survives all four survives whichever method a given critic distrusts. Where the methods converge, we increase our confidence in the estimate. Where they diverge, we plan to report bounds and qualitative findings. Together, we hope the methods assess the gap between what experts estimate and what the public will tolerate.
+**So we plan to triangulate rather than trusting any single method.** We plan to assess risk tolerance in four different ways. A conclusion that survives all four survives whichever method a given critic distrusts. Where the methods converge, we increase our confidence in the estimate. Where they diverge, we plan to report bounds and qualitative findings. Together, we hope the methods assess the gap between what experts estimate and what the public will tolerate.
 
 ---
 
@@ -193,7 +193,7 @@ The adaptation is **between-respondent only**: it sharpens *which* tradeoffs the
 
 **Limitations, and how we respond.**
 - **Category error.** "AI should be *stricter*" can mean stricter *rules* or safer *outcomes*.
-  - We now focuse exclusivly on stricter standards than safer outcomes because policymakers set standards and we can't measure catastrophic AI outcomes.
+  - We now focus exclusively on stricter standards rather than safer outcomes because policymakers set standards and we can't measure catastrophic AI outcomes.
 - **The denominator problem (the big one).** "One death per what?" Expert AI risk figures are about the *whole technology*, the equivalent of every nuclear reactor or every flight worldwide, not a single unit. A naive comparison to "a plane crash" is apples to oranges.
   - We make it apples to apples by specifying each comparator at the *industry* level (all reactors, the whole aviation system), matching the scope of the AI estimate.
 - **Quantifiability.** Some respondents reject the premise that AI risk can be put on a number at all. We must not force them onto a scale they reject.
@@ -281,12 +281,12 @@ Earlier drafts used a four-point monotonic scale (Acceptable < Tolerable < Intol
 
 ## 4. Moderators: who we measure, and why
 
-These are viables to measure and control for, rather than for exluding participats. Covariates moderate the estimate and let us ask whether, for example, young people are less tolerant of low-probability futures that foreclose the long-term future. Default analysis enters them as controls or via MRP (§5) so the headline is a population estimate net of sample composition.
+These are variables to measure and control for, rather than for excluding participants. Covariates moderate the estimate and let us ask whether, for example, young people are less tolerant of low-probability futures that foreclose the long-term future. Default analysis enters them as controls or via MRP (§5) so the headline is a population estimate net of sample composition.
 
 - **Demographics for weighting.** Age, gender, education, income, state, all aligned to US Census / ACS categories so they post-stratify to population controls (see Appendix A for the exact brackets).
 - **AI familiarity.** Frequency of intentional AI use (Gillespie et al. 2025; item validated as a proxy for technology experience per Hargittai 2005).[^gillespie]
 - **Political orientation.** 7-point Very Liberal to Very Conservative (Jost 2006).[^jost]
-- **Risk literacy / numeracy.** Berlin Numeracy Test style items. The key interaction for one of my honours students projects: does higher risk literacy reduce increase scope sensitivity?
+- **Risk literacy / numeracy.** Berlin Numeracy Test style items. The key interaction for one of my honours students' projects: does higher risk literacy increase scope sensitivity?
 
 ---
 
@@ -294,7 +294,7 @@ These are viables to measure and control for, rather than for exluding participa
 
 A convenience or panel sample is not the US public. We use **multilevel regression and post-stratification (MRP)**: model the outcome with demographic and geographic predictors, then re-weight model predictions to ACS population counts to recover the population-level risk tolerance (and, if the per-state effective sample is large enough, state-level estimates). MRP is validated by posterior predictive checks and leave-one-state-out cross-validation. **No state map is published unless the effective per-state sample clears a pre-registered threshold.**
 
-**Panel-selection calibration.** MRP adjusts demographics, not the attitudinal self-selection of an opt-in panel (§7.2-E). Two verbatim Pew ATP benchmark items are fielded before any treatment (`bench_pew_cncexc`, `bench_pew_aireg`); the gap between our sample and Pew's probability-sample toplines is reported alongside every population claim.
+**Panel-selection calibration.** MRP adjusts demographics, not the attitudinal self-selection of an opt-in panel — Prolific self-selects on tech engagement and AI familiarity, traits correlated with the outcome, and that residual selection is a named limitation in all reporting. Two verbatim Pew ATP benchmark items are fielded before any treatment (`bench_pew_cncexc`, `bench_pew_aireg`); the gap between our sample and Pew's probability-sample toplines is reported alongside every population claim.
 
 **Convergence go/no-go (pre-registered).** A single quantitative public number is reported only if the DCE (§3.2) and the direct scope instrument (§3.1) agree within about one order of magnitude in an overlap subsample. If they diverge, we report a bound plus a qualitative finding. The expert assessment vs. public expectations multiplier (e.g., 4,000x safer) is reported, if at all, as researcher interpretations and never as public opinions.
 
@@ -319,24 +319,20 @@ The 27 briefing passages (9 cells × 3 versions) live in `survey/muskan_stimuli.
 <!-- BEGIN:auto:muskan-items (generated by render/sync_protocol.py — edit the instrument, not here) -->
 
 <details>
-<summary>Superintelligence module — ban-support DV and ELM route mediators, as fielded — 4 items (click to expand)</summary>
+<summary>Superintelligence module — ban-support DV and ELM route mediators, as fielded — 2 items (click to expand)</summary>
 
 - **`muskan_support`** — Do you support or oppose a ban on the development of superintelligence, not lifted before there is (1) broad scientific consensus that it will be done safely and controllably, and (2) strong public buy-in?
   - _Scale:_ Strongly support / Support / Oppose / Strongly oppose / Don't know
-- **`muskan_support_anti`** — How much do you agree? "Companies should be free to build machines smarter than humans, even without public support or guarantees of safety."
-  - _Scale:_ Strongly agree / Agree / Neither / Disagree / Strongly disagree
-- **`muskan_central_route`** — "I tried to judge the reasons given, not just who was giving them."
-  - _Scale:_ Strongly disagree / Disagree / Neither agree nor disagree / Agree / Strongly agree
-- **`muskan_peripheral_route`** — "My reaction depended more on who backed the idea than on the reasons they gave."
+- **`muskan_central_route`** — I tried to judge the reasons given, not just who was giving them.
   - _Scale:_ Strongly disagree / Disagree / Neither agree nor disagree / Agree / Strongly agree
 
 </details>
 
 <!-- END:auto:muskan-items -->
 
-### 6.3 Argument vs social proof (proposed decomposition)
+### 6.3 Argument vs social proof (considered, cut)
 
-Mike's question, and the same central-vs-peripheral logic as §6.2 in miniature: when framing moves people, is it the *content* of the argument or the *social signal* (for example, "Prince Harry signed it")? Proposed design: cross the argument (present / absent) with a prestige-signatory cue (present / absent) so we can attribute any movement to the substance or to the social proof. **This is a proposed addition; flag for sign-off (§8).**
+Mike's question, and the same central-vs-peripheral logic as §6.2 in miniature: when framing moves people, is it the *content* of the argument or the *social signal* (for example, "Prince Harry signed it")? The proposed design crossed the argument (present / absent) with a prestige-signatory cue (present / absent). **Cut to the dumpster 2 Jul 2026, never built:** Muskan's 3×3 (§6.2) already makes this decomposition — its one-sided cells separate the elite source-cue (peripheral route) from the substantive argument (central route) — so a standalone 2×2 would duplicate it. Recoverable if a prestige-signatory cue distinct from the elite-cue cells is later wanted (Appendix C).
 
 A data-centre reverse-halo module was also considered as a framing experiment (does an "AI data centre" label draw more objection than an identical generic plant?) but was cut to the dumpster on 29 Jun 2026; see Appendix C.
 
@@ -434,20 +430,20 @@ Each entry gives the reviewer's concern in fuller form and what we changed in re
 
 *Concern.* A deliberative mini-public might elicit more considered views than a one-shot survey, and could be the better instrument for a values question.
 
-*Response.* Accepted as a complement, not a replacement: a deliberative Phase 2 is recommended (see open item D — recommended but not yet scoped or funded).
+*Response.* Accepted as a complement, not a replacement: a deliberative Phase 2 is recommended, though not yet scoped or funded.
 
 **16. Gradient — drop the "public want AI 4000× safer" claim.**
 
 *Concern.* Headlining a precise multiplier backed out of an F–N comparison is indefensible and invites ridicule.
 
-*Response.* Plan to avoid this framing; any multipliers will be clearly the researchers' intepretations not the public's beliefs.
+*Response.* Plan to avoid this framing; any multipliers will be clearly the researchers' interpretations not the public's beliefs.
 
 **17. Gradient — the Figure-11 category error ("systems should be stricter").**
 *Concern.* Asking whether AI "should be stricter" conflates stricter *rules* (standards) with safer *outcomes* (systems in practice) — two different judgements collapsed into one.
 
 *Response.* All questions are now 'safety standards' not 'in practice' because standards are what policymakers have more control over, especially for catastrophic risks.
 
-**18. Claude as Dean Ball skeptical review — adoiding advocacy.**
+**18. Claude as Dean Ball skeptical review — avoiding advocacy.**
 
 *Concern.* A hostile reader could see the exercise as advocacy, with design choices quietly tilted toward an alarming result.
 
@@ -495,7 +491,7 @@ The authoritative item list, response scales, and exact page order **are the ins
 
 ## Appendix C: The dumpster (considered, deliberately not asking)
 
-The full ledger of items and modules considered and cut — with the reason for each — lives in the instrument, `survey/sara_usa.md`, under the top-level **`dumpster:`** key, so the decision record sits beside the items themselves. It covers the icon arrays, verbal/micromort risk anchors, the "all technologies carry residual risk" preamble, off-the-shelf scales (AIAS-4/GAAIS/GRIPS/DOSPERT), the "4000× safer" multiplier, the direct "support SB 53/RAISE" item, the DCE cost attribute, the test–retest wave, the unbounded-WTP option, the mitigations and priority-risks batteries, CRT and need-for-cognition, the environment/data-centre module, the Module 1 descriptive-attitudes battery, m2_pace, and the retired Stem-A/B wording experiment + counter-message arm (superseded by Muskan's 3×3). The deeper rationale for the methodologically interesting cuts is in §2–§3 and §6.
+The full ledger of items and modules considered and cut — with the reason for each — lives in the instrument, `survey/sara_usa.md`, under the top-level **`dumpster:`** key, so the decision record sits beside the items themselves. It covers the icon arrays, verbal/micromort risk anchors, the "all technologies carry residual risk" preamble, off-the-shelf scales (AIAS-4/GAAIS/GRIPS/DOSPERT), the "4000× safer" multiplier, the direct "support SB 53/RAISE" item, the DCE cost attribute, the test–retest wave, the unbounded-WTP option, the mitigations and priority-risks batteries, CRT and need-for-cognition, the environment/data-centre module, the Module 1 descriptive-attitudes battery, m2_pace, the retired Stem-A/B wording experiment + counter-message arm (superseded by Muskan's 3×3), and the argument-vs-social-proof 2×2 (subsumed by the same 3×3, §6.3). The deeper rationale for the methodologically interesting cuts is in §2–§3 and §6.
 
 ---
 
