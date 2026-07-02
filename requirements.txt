@@ -1,0 +1,7 @@
+# Pinned so the fielded instrument is reproducible. otree is the app server;
+# pyyaml parses the instrument spec; markdown renders the consent sheet
+# (render.py has a plain-text fallback, but pin it so participants see the
+# properly formatted sheet).
+otree==6.0.15
+pyyaml>=6.0,<7
+markdown>=3.4,<4

@@ -13,7 +13,6 @@ bits that rot. This script regenerates *only* those bits, inside HTML-comment
 markers, from:
 
   - survey/sara_usa.md          (item text + scales + dumpster — via spec_loader)
-  - survey/sara/__init__.py     (COMPARATORS / SANITY_ACTS randomisation pools)
 
 Everything outside the markers — the "why", the pedagogy — stays hand-written.
 
@@ -29,6 +28,10 @@ Usage:
 
 The item->block mapping below is a protocol-authoring decision (the instrument
 doesn't tag items by method), so it lives here, explicitly.
+
+(The comparator/sanity randomisation pools this script once scraped from the
+oTree app were retired with their items to the instrument's dumpster; blocks
+are now generated from the instrument alone.)
 """
 
 import os
@@ -44,13 +47,12 @@ except ImportError:
 
 REPO_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, ".."))
 MD_INSTRUMENT = os.path.join(REPO_ROOT, "survey", "sara_usa.md")
-APP_INIT = os.path.join(REPO_ROOT, "survey", "sara", "__init__.py")
 PROTOCOL = os.path.join(REPO_ROOT, "SARA USA — Survey Protocol v10.md")
 
 # Which instrument content backs each collapsible "as fielded" block in the
 # protocol. Page-based where possible (add an item to the page → it shows up in
-# the briefing automatically, no edit here). `pools` pulls the comparator/sanity
-# randomisation lists from the oTree app; `ids` names dumpster items explicitly.
+# the briefing automatically, no edit here); `ids` names dumpster items
+# explicitly.
 ITEM_BLOCKS = {
     "ladder-items": dict(
         pages=["severity_ladder"],
@@ -62,9 +64,9 @@ ITEM_BLOCKS = {
         pages=["expert_judgement"],
         summary="Method 4 — the named-source items, as fielded"),
     "method3-live": dict(
-        pages=["safety_comparators"], pools=True,
+        pages=["safety_standards"],
         summary="Method 3 — comparator items (incl. the embedded attention "
-                "checks) and randomisation pools, as fielded"),
+                "checks), as fielded"),
     "method3-cut": dict(
         ids=["m3a_ii_safety", "m2_frame_applicable"],
         summary="Method 3 — items retired to the dumpster (recoverable)"),
@@ -128,17 +130,6 @@ def _find_page(spec, page_id):
     return None
 
 
-def _read_list(varname):
-    """Pull a simple string-list literal (COMPARATORS/SANITY_ACTS) out of the
-    oTree app source, without importing oTree."""
-    src = open(APP_INIT, encoding="utf-8").read()
-    m = re.search(varname + r"\s*=\s*\[(.*?)\]", src, re.DOTALL)
-    if not m:
-        return []
-    return [a or b for a, b in
-            re.findall(r'"([^"]*)"|\'([^\']*)\'', m.group(1))]
-
-
 # ── rendering helpers ───────────────────────────────────────────────────
 
 def _details(summary, body_lines):
@@ -167,7 +158,13 @@ def gen_item_block(spec, cfg):
     body = []
     for page_id in cfg.get("pages", []):
         page = _find_page(spec, page_id)
-        for it in (page or {}).get("items") or []:
+        if page is None:
+            # Fail loudly: a renamed/removed page would otherwise silently
+            # empty this block of the protocol.
+            sys.exit("sync_protocol: page %r (auto-block %r) is not in the "
+                     "instrument — update ITEM_BLOCKS in render/sync_protocol.py"
+                     % (page_id, cfg["summary"]))
+        for it in page.get("items") or []:
             body += _item_lines(spec, it)
     for item_id in cfg.get("ids", []):
         it = _find_live(spec, item_id)
@@ -177,13 +174,6 @@ def gen_item_block(spec, cfg):
             it = _find_dumpster(spec, item_id)
             body += (_item_lines(spec, it, dumpster=True) if it
                      else ["- **`%s`** — _(not found in instrument)_" % item_id])
-    if cfg.get("pools"):
-        body += ["",
-                 "_Comparator pool_ (`survey/sara/__init__.py`): %s"
-                 % (" / ".join(_read_list("COMPARATORS")) or "_(none)_"),
-                 "",
-                 "_Sanity-activity pool_: %s"
-                 % (" / ".join(_read_list("SANITY_ACTS")) or "_(none)_")]
     if not body:
         body = ["_(no items found)_"]
     return _details(cfg["summary"], body)

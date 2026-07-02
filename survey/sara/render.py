@@ -9,6 +9,7 @@ IntegerField(choices=...), so answers still save the normal way.
 """
 import html
 import os
+import random
 import re
 
 
@@ -67,11 +68,12 @@ def information_sheet_html():
         # so strip the non-functional checkboxes to stop people clicking them.
         raw = "".join(ln for ln in raw.splitlines(keepends=True) if '☐' not in ln)
     except OSError as e:
-        _INFO_SHEET_CACHE = (
+        # Deliberately NOT cached: once the file is fixed the next render
+        # recovers without a server restart.
+        return (
             '<div class="alert alert-danger">The Participant Information Sheet '
             'could not be loaded (%s). Do not field the survey until this is '
             'fixed.</div>' % esc(e))
-        return _INFO_SHEET_CACHE
     try:
         import markdown
         body = markdown.markdown(raw, extensions=['tables', 'sane_lists'])
