@@ -1,19 +1,19 @@
-# Superintelligence-Ban Study: Project Plan and Survey-Build Handoff
+# Superintelligence-Ban Study: Project Plan (as fielded in SARA)
 
-**Audience:** the agent (or person) building the full survey inside the SARA program in Qualtrics.
-**Status:** stimuli built and fact-checked; mediators specified here for the first time (none existed in the folder). Items below are drafts for the supervisor to approve, not yet validated scales.
-**Rev 2 (2026-06-17):** primary DV is now two 5-point Likert items (for top-2-box prevalence); mediators and manipulation checks are collected in the one-sided cells only; the contested (two-sided) cells are kept and their job is the considered-support estimate (Aim 2). The earlier separate durability probe is removed.
-**Author of this handoff:** prepared 2026-06-17 from the project folder (presentation script, intro/theory-of-change docs, the 3×3 design table, and the source materials).
+**Audience:** anyone analysing or extending the superintelligence module of SARA USA 2026.
+**Status:** **fielded design.** The module runs as the final block of the SARA oTree survey, not as a standalone Qualtrics study. Item text lives in the instrument (`survey/sara_usa.md`); passages live in `survey/muskan_stimuli.md`. This plan states the design, hypotheses, and analysis for what is actually fielded.
+**Rev 3 (2026-07-02): reconciled to the fielded SARA module.** SARA's length budget cut the standalone battery. Fielded measures are: the **two 5-point support items** (pro-ban + anti-ban), the **two single-item route self-reports** (elaboration / cue-reliance, one-sided cells only, doubling as quasi-manipulation-checks), and the **comprehension check** (control cell only). Cut relative to Rev 2: pre-exposure prior attitude, attitude certainty/strength (F), MC1–MC3 as separate items, D3/D4, thought-listing, Need for Cognition, and social desirability. Hypotheses that depended on cut measures (old H1 certainty, H4 prior-extremity) are out of scope for this wave — see §4. SARA's demographics, political orientation, AI-use, and numeracy items are available as moderators instead. Debrief is delivered as links on the survey's end page.
+**Rev 2 (2026-06-17):** primary DV became two 5-point Likert items (top-2-box); mediators/manipulation checks limited to one-sided cells; durability probe removed.
 **Australian/US note:** stimuli and measures use plain English; the sample is US (US spelling fine in participant-facing text). Internal docs use Australian English.
 
 ---
 
 ## 0. How to use this document
 
-1. The participant-facing **message stimuli already exist**: `Superintelligence_3x3_stimuli_v2.xlsx` (27 rows). Do not rewrite them; load them as described in §5.
-2. The **measures and mediators** (§6–§7) are new. Build them in Qualtrics in the order in §6.
+1. The participant-facing **message stimuli** are the single source of truth in `survey/muskan_stimuli.md` (27 passages; the xlsx is kept for provenance only). Do not rewrite them.
+2. The **fielded measures** are in `survey/sara_usa.md` (pages `superintelligence_def` → `superintelligence_check`); §7 below describes them and maps them to the original item bank.
 3. The **analysis plan** (§9) is written for R (the supervisor codes in R).
-4. Anything marked **[DECISION]** needs a human call before launch (collected in §12).
+4. Decisions previously marked **[DECISION]** are recorded in §12 with their outcomes.
 5. Source provenance for every stimulus is in `Materials for generating design/` (files 01–05 and the README index).
 
 ---
@@ -77,20 +77,20 @@ The 3×3 **adds** the four *two-sided* ("contested") cells (1, 2, 4, 5), where t
 
 ---
 
-## 4. Hypotheses
+## 4. Hypotheses (as testable with the fielded measures)
 
-From the presentation (re-expressed for the 3×3), plus two new mediation hypotheses the mediators make testable.
+Re-expressed for the fielded module. The DV throughout is **ban support**: the pro-ban item, the (reverse-scored) anti-ban item, and their difference (§7-A).
 
-- **H1 (route → certainty).** Substantive (central) conditions produce greater attitude **certainty** than elite (peripheral) conditions, regardless of framing direction. → C2 on the certainty DV.
-- **H2 (route × framing).** The pro-vs-anti swing in **ban support** is larger under substantive than under elite messaging (people who engaged with content are more responsive to its direction). → For/Against direction × C2 interaction.
+- **H2 (route × framing).** The pro-vs-anti swing in **ban support** is larger under substantive than under elite messaging (people who engaged with content are more responsive to its direction). → For/Against direction × C2 interaction. *This is now the primary Aim-1 test.*
 - **H3 (direction).** Pro-ban messaging raises support; anti-ban messaging lowers it, across both routes. → main effects of For and Against.
-- **H4 (prior-attitude moderation).** Manipulation effects shrink for participants with extreme prior attitudes; the biggest movement is among the genuinely uncertain. → manipulation × prior-attitude-extremity interaction.
-- **H5 (central-route mediation) [new].** The effect of substantive (vs elite) messaging on attitude certainty is **mediated by elaboration** (depth of processing). Substantive → more elaboration → more certain attitude.
-- **H6 (peripheral-route mediation) [new].** The effect of elite (vs substantive) messaging on ban support is **mediated by perceived source credibility / reliance on source cues**. Elite → more cue reliance → attitude shift driven by the source rather than the argument.
+- **H5′ (central-route engagement, exploratory).** In the one-sided cells, substantive (vs elite) messages produce higher self-reported elaboration (the central-route item), and elaboration mediates the message's effect on support. Single-item mediator → treat as exploratory.
+- **H6′ (peripheral-route engagement, exploratory).** In the one-sided cells, elite (vs substantive) messages produce higher self-reported cue reliance (the peripheral-route item), and cue reliance mediates the effect on support. Same single-item caveat.
 
-H5 and H6 are the point of adding mediators: they let the study **demonstrate the ELM route directly** rather than infer it only from the certainty outcome (the limitation the presentation flags).
+**Out of scope this wave (measures not fielded; candidates for a follow-up):**
+- **H1 (route → certainty).** Requires the attitude-certainty/strength DV, cut for length. The strongest ELM claim (central-route attitudes are more certain/durable) is therefore *not tested here* — say so plainly when reporting.
+- **H4 (prior-attitude moderation).** Requires a pre-exposure support measure; asking the DV before the stimulus inside SARA would prime the whole module. SARA's political orientation, AI-use, and numeracy items are available as *proxy* moderators (exploratory only).
 
-- **Aim 2 (descriptive, not a directional hypothesis).** Estimate the considered level of public support for the conditional ban — the top-2-box proportion who endorse it after balanced exposure to both sides (the contested cells) — bracketed by the naive (control) and one-sided estimates. Estimand and caveats in §9.0 and §11.
+- **Aim 2 (descriptive, not a directional hypothesis).** Estimate the considered level of public support for the conditional ban — the top-2-box proportion who endorse it after balanced exposure to both sides (the contested cells) — bracketed by the naive (control) and one-sided estimates. Estimand and caveats in §9.0 and §11. *Unchanged by the descope: the two support items carry it.*
 
 ---
 
@@ -121,99 +121,69 @@ H5 and H6 are the point of adding mediators: they let the study **demonstrate th
 
 ---
 
-## 6. Survey flow (build in this order)
+## 6. Survey flow (as fielded — the final block of SARA)
 
-1. **Consent.**
-2. **Demographics + context** (§7-J): age, gender, education, US region, political orientation, AI-use frequency, prior familiarity with the superintelligence-ban debate.
-3. **Need for Cognition** short scale (§7-H) — optional moderator. *Place before the stimulus.*
-4. **Prior attitude** (§7-A) — the two support items, measured BEFORE any message (safeguard 2).
-5. **Neutral definition** of superintelligence (all participants).
-6. **Knowledge check** (§7-B) — the 4-option ASI item (safeguard 1).
-7. **Stimulus** — piped from the xlsx per §5. (Control cell 9: neutral definition only.)
-8. **Branch on cell type (display logic):**
-   - **One-sided cells (3, 6, 7, 8):** manipulation checks (§7-C) → mediators (§7-D) → attitude certainty/strength (§7-F). These are the Aim-1 / ELM-mechanism measures and need a single, unambiguous message.
-   - **Two-sided cells (1, 2, 4, 5) and control (9):** skip C, D, F — go straight to the DV.
-9. **Primary DV — ban support** (§7-A, post-exposure): the two 5-point items. **Shown in every cell** (this is the Aim-2 estimate in the contested cells, and the outcome everywhere else).
-10. **Social desirability** — Strahan–Gerbasi M-C short form (safeguard 3, §7-I).
-11. **Debrief** — explain the manipulation, note stimuli are composites of real positions, link to the FLI statement and an anti-ban source for balance.
+The module runs **last** in SARA (after the tolerance core and demographics), so its persuasion cannot contaminate SARA's risk-tolerance estimates. Sequence (pages in `survey/sara_usa.md`):
 
-**Why the branch.** The mediators ("how much did you think about *the* argument", "how credible was *the* source") only have a clean referent when one message was shown. In the contested cells two messages of possibly different routes appeared, so those items are uninterpretable there — and the contested cells do not need them, because their job is the Aim-2 support estimate, not the mechanism.
+1. **Neutral definition** of superintelligence (`superintelligence_def`, all participants).
+2. **Stimulus** (`superintelligence_brief`) — the assigned passage from `survey/muskan_stimuli.md`, balanced-assigned in the oTree engine (`creating_session`). Control cell 9 skips this page (neutral definition only).
+3. **Primary DV — ban support** (`superintelligence_support`): the two 5-point items (§7-A), **shown in every cell**.
+4. **Route self-reports** (`superintelligence_route`) — **one-sided cells (3, 6, 7, 8) only**: the elaboration item and the cue-reliance item (§7-D). These are the mediators and double as the quasi-manipulation-checks (§7-C).
+5. **Comprehension check** (`superintelligence_check`) — **control cell only**: the 4-option ASI item. Non-control cells skip it (their briefing restates the concept).
+6. **Debrief** — on SARA's end page: a note that the briefings were assembled from real published arguments, with links to the FLI statement (pro) and Andreessen's manifesto (anti) so participants can read both sides in full.
 
-Attention checks: at least one instructed-response item in a long block, plus a minimum-time gate on the stimulus page.
+**Why the branch.** The route items ("the reasons given", "who backed the idea") only have a clean referent when one message was shown. In the contested cells two messages of possibly different routes appeared, so those items are uninterpretable there — and the contested cells do not need them, because their job is the Aim-2 support estimate, not the mechanism.
+
+**Data quality** comes from SARA's shared machinery: two disguised attention checks earlier in the survey (failing both screens the respondent out before this module), and page-time paradata recorded by oTree (pre-register a minimum stimulus read-time flag rather than an exclusion).
+
+**Order note.** The DV pages come before the route items so the support measure is never contaminated by self-reflection prompts. For/Against order within two-sided passages is rotated across the three stimulus versions (see §5).
 
 ---
 
-## 7. Measure and mediator item bank
+## 7. Measures (fielded set, with the original item bank noted where cut)
 
-Scales: the **two support items (A) use a 5-point** Likert (Strongly disagree … Strongly agree) so responses collapse to top-2-box prevalence ("% who agree"). All other multi-item constructs use **1 = Strongly disagree … 7 = Strongly agree** (more variance helps the continuous mediation models). Items marked (R) are reverse-scored. Compute each multi-item construct as the mean after reverse-scoring; report Cronbach's α / McDonald's ω.
+Item text below is descriptive; **the instrument (`survey/sara_usa.md`) is authoritative**.
 
-### A. Ban support — primary DV (two 5-point items; also the prior-attitude measure)
-Both on a **5-point** scale: Strongly disagree / Disagree / Neither / Agree / Strongly agree. Framing is the **conditional** ban (the actual FLI *Statement on Superintelligence* policy), held constant across both items.
+### A. Ban support — primary DV (two 5-point items, as fielded)
 
-- **SUPPORT item (pro-ban):** "The development of superintelligence should be prohibited until there is broad scientific agreement that it can be done safely and controllably, and strong public support."
-- **OPPOSE item (anti-ban):** "Companies should be free to keep developing superintelligence without any government ban or pause."
+- **SUPPORT item (`muskan_support`, pro-ban):** "Do you support or oppose a ban on the development of superintelligence, not lifted before there is (1) broad scientific consensus that it will be done safely and controllably, and (2) strong public buy-in?" — Strongly support / Support / Oppose / Strongly oppose / Don't know.
+- **OPPOSE item (`muskan_support_anti`, anti-ban):** "How much do you agree? 'Companies should be free to build machines smarter than humans, even without public support or guarantees of safety.'" — Strongly agree … Strongly disagree.
 
-Reporting: collapse the top two boxes of the SUPPORT item → "**X% agree** superintelligence should be paused until proven safe"; same for the OPPOSE item. Keeping them as two separate items (not one reverse-scored composite) lets you report both prevalences and catch acquiescence — anyone who top-2-boxes *both* is responding carelessly (use as a data-quality flag).
-- **Continuous score** for the models: `support = SUPPORT − OPPOSE` (−4…+4), or treat the SUPPORT item as ordinal.
-- **Prior attitude:** the same two items pre-exposure. **Prior extremity** = |prior continuous score| (distance from 0).
+Reporting: top-2-box on each item separately, plus the **continuous difference** after reverse-scoring the OPPOSE item (map both to −2…+2 with "Don't know" set missing; `support = SUPPORT − reverse(OPPOSE)`). Keeping them as two separate items (not one composite) lets you report both prevalences and catch acquiescence — anyone who top-2-boxes *both* (supports the ban AND agrees companies should be free) is responding carelessly (data-quality flag, not an exclusion).
+- **Not fielded (Rev 3):** the pre-exposure administration of these items (prior attitude / prior extremity) — see H4 in §4.
 - *(Note: any "% of Americans" claim is a population estimate — see the sampling/weighting caveat in §9.0 and §11.)*
 
-### B. Knowledge check (safeguard 1)
-"Which of the following is closest to artificial superintelligence?" (single choice)
-- a) A computer program that does some things more intelligently than humans
-- b) A computer program that can write so well you cannot tell if it's a human or an AI
-- c) **A computer program that is much smarter than people at almost everything** ✅ (correct)
-- d) A computer program that is about as clever as a smart adult at most things
+### B. Comprehension check (fielded: control cell only)
+`muskan_si_comprehension`: "Which of the following is closest to artificial superintelligence? A computer program that…" — 4 options, shuffled; correct = "does almost everything more intelligently than most humans." **Fielded only in the control cell** (non-control cells' briefings restate the concept). Used to flag/weight low-comprehension control responses, not as an exclusion.
 
-### C. Manipulation checks (one-sided cells only; the validity test of the ELM operationalisation)
-- **MC1 — source-cue salience (peripheral):** "The information I just read pointed to well-known or respected people who hold this position." → should be higher in **elite** cells.
-- **MC2 — argument salience (central):** "The information I just read gave detailed reasons and evidence for its position." → should be higher in **substantive** cells.
-- **MC3 — direction check:** "The message I read was mostly…" 1 = strongly against a ban … 4 = neutral … 7 = strongly for a ban. → validates pro/anti framing.
-- (Control cell: MC1/MC2 skipped or framed as "no message," used as a floor.)
+### C. Manipulation checks → carried by the route items (quasi-checks)
+The standalone MC battery (source-cue salience, argument salience, direction check) was cut for length. The **route self-reports in D double as quasi-manipulation-checks**, with a pre-registered expected pattern in the one-sided cells:
+- the **cue-reliance item** should be higher in **elite** cells than substantive cells (MC1's job);
+- the **elaboration item** should be higher in **substantive** cells than elite cells (MC2's job).
 
-### D. Mediators (mechanism; one-sided cells only — see §6 branch)
+Honest limits of the quasi-check (state in the method): these measure the respondent's *self-perceived processing*, not the stimulus's properties, so they conflate manipulation success with individual differences; there is no direction check (MC3) — pro/anti direction is instead guaranteed by construction and provenance of the passages; and single items carry unknown reliability. A null on the quasi-check pattern therefore cannot cleanly separate "manipulation failed" from "self-report failed" — which is exactly why the original MC battery is the first thing to restore in any standalone follow-up.
 
-**D1. Elaboration / depth of processing** (central-route mediator; H5)
-1. I thought carefully about the arguments in the message.
-2. I tried to evaluate the reasons given, not just who was giving them.
-3. While reading, I weighed points for and against the position.
-4. (R) I skimmed the message without thinking much about it.
+### D. Mediators (fielded: one single item per route, one-sided cells only)
+- **Elaboration / central route** (`muskan_central_route`, ≈ D1-2 of the original bank): "I tried to judge the reasons given, not just who was giving them." — 5-point agree.
+- **Cue reliance / peripheral route** (`muskan_peripheral_route`, ≈ D2-1): "My reaction depended more on who backed the idea than on the reasons they gave." — 5-point agree.
 
-**D2. Reliance on source cues** (peripheral-route mediator; H6)
-1. My reaction was shaped by who supported the position more than by the reasons given.
-2. I was influenced by how prominent or credible the people involved seemed.
-3. Who held this view mattered more to me than the details of the argument.
-
-**D3. Perceived source credibility / prestige** (peripheral mediator; only where a source is present)
-1. The people or sources behind this position are credible.
-2. The people or sources behind this position are knowledgeable about this issue.
-3. The people or sources behind this position are highly respected.
-
-**D4. Perceived argument quality** (central mediator)
-1. The argument I read was strong.
-2. The argument I read was convincing on its merits.
-3. The argument I read was well supported by evidence.
-
-**D5. Thought-listing (optional, gold-standard cognitive-response measure).** Open text: "In the box below, list the thoughts that went through your mind while reading the message — one per line." Code each thought for (i) valence (pro-ban / anti-ban / neutral) and (ii) relevance (about the argument content vs about the source/other). Mediators derived: number of message-relevant thoughts (elaboration proxy), proportion favourable. *Labour-intensive to code; include only if a coder is available.* **[DECISION]**
+Cut from the original bank: the remaining D1/D2 items (multi-item versions), D3 (source credibility), D4 (argument quality), D5 (thought-listing). Consequence: mediation tests (H5′/H6′) use single-item mediators on 5-point scales — exploratory, no internal-consistency estimate possible.
 
 ### E. (Primary DV — see A, administered post-exposure.)
 
-### F. Attitude strength / certainty — DV2 (H1; one-sided cells only)
-1. **Certainty:** "How certain are you of your opinion about banning superintelligence?" 1 = not at all certain … 7 = extremely certain.
-2. **Importance:** "How personally important is this issue to you?" 1 … 7.
-3. **Perceived knowledge:** "How well-informed do you feel about this issue?" 1 … 7.
-- Strength composite = mean of the three (report separately too).
+### F. Attitude strength / certainty — NOT FIELDED
+Cut for length; old H1 is out of scope this wave (§4). First priority for a standalone follow-up.
 
-### G. (Removed.) The contested cells now serve the "support even when given arguments both ways" function via simultaneous both-sides exposure (Aim 2, §9.0), so a separate counter-message probe is redundant.
+### G. (Removed at Rev 2.) The contested cells carry the both-sides function (Aim 2, §9.0).
 
-### H. Need for Cognition — optional moderator (Cacioppo, Petty & Kao 1984 short form, 6 items, 1–7)
-e.g., "I would prefer complex to simple problems"; "I really enjoy a task that involves coming up with new solutions"; (R) "Thinking is not my idea of fun." High NfC → central route dominates regardless of condition; low NfC → cue-driven. Tests ELM moderation.
+### H. Need for Cognition — NOT FIELDED
+Cut for length despite the §12 decision to include it; SARA's Berlin Numeracy quartile is available as a rough cognitive-engagement proxy (exploratory only — numeracy is not NfC).
 
-### I. Social desirability (safeguard 3)
-Strahan–Gerbasi short form of the Marlowe-Crowne scale (10 items, true/false). The design doc pre-selected five it wants included (Marlowe-Crowne items 16, 17, 26, 19, 22) — confirm whether to use the full 10-item short form or that 5-item subset. **[DECISION]** Use as a covariate.
+### I. Social desirability — NOT FIELDED
+Cut for length. Reporting consequence: the acquiescence flag in A (top-2-boxing both DV items) is the only careless-responding indicator inside the module; SARA's attention-check screen-out handles the rest upstream.
 
-### J. Demographics & exposure
-Age; gender; education; US region; **political orientation** (1 = very liberal … 7 = very conservative — important, ban attitudes are politically loaded); AI-use frequency; prior familiarity with the superintelligence-ban debate (1–7).
+### J. Demographics & moderators (from the parent survey)
+SARA collects age, gender, education, income, state, political orientation (7-point), AI-use frequency, and numeracy (Berlin Numeracy Test) before this module. Prior familiarity with the ban debate is not measured (cut with the prior-attitude block).
 
 ---
 
@@ -221,14 +191,14 @@ Age; gender; education; US region; **political orientation** (1 = very liberal �
 
 | Aim / Hypothesis | Test | Key variables |
 | --- | --- | --- |
-| **Aim 2 — considered support** | top-2-box % in contested cells (headline = cell 5), with CIs; bracketed by control & one-sided | SUPPORT item (A) |
-| H1 route → certainty | C2 contrast on certainty (one-sided cells) | route, certainty (F) |
+| **Aim 2 — considered support** | top-2-box % in contested cells (headline = cell 5), with CIs; bracketed by control & one-sided | both DV items (A) |
 | H2 route × framing | direction × C2 interaction on support | For/Against direction, route, support (A) |
 | H3 direction | main effects of For, Against on support | support (A) |
-| H4 prior moderation | manipulation × prior extremity | prior extremity (A-pre) |
-| H5 central mediation | route → elaboration (D1) → certainty (F); one-sided cells | indirect a×b |
-| H6 peripheral mediation | route → source credibility (D3)/cue reliance (D2) → support; one-sided cells | indirect a×b |
-| Manipulation valid + materials balanced? | MC1 higher in elite; MC2 higher in substantive; MC2 matched across pro vs anti substantive cells (6 vs 8) | MC1, MC2 |
+| H5′ central engagement/mediation (exploratory) | route → elaboration item → support; one-sided cells | `muskan_central_route` (D) |
+| H6′ peripheral engagement/mediation (exploratory) | route → cue-reliance item → support; one-sided cells | `muskan_peripheral_route` (D) |
+| Quasi-manipulation-check | cue-reliance higher in elite cells; elaboration higher in substantive cells; elaboration matched across pro vs anti substantive cells (6 vs 8) | the two route items (C/D) |
+| ~~H1 route → certainty~~ | not testable — certainty DV not fielded | — |
+| ~~H4 prior moderation~~ | not testable — no pre-exposure measure | — |
 
 ---
 
@@ -246,8 +216,8 @@ mean(cell5$support_item >= 4)                                  # 4–5 = Agree/S
 binom.test(sum(cell5$support_item >= 4), nrow(cell5))$conf.int # 95% CI
 # population/weighted version: survey::svyciprop() on a post-stratified design
 ```
-**Weighting.** A "% of Americans" claim needs a representative/quota sample or post-stratification weights (age × sex × region × political affiliation to US margins, `survey` package). Report weighted and unweighted. This is the biggest threat to Aim 2 (see §11).
-**Material balance.** The estimate is only as balanced as the stimuli. Check that pro and anti substantive arguments were perceived as equally strong by comparing MC2 across the one-sided substantive cells (6 vs 8); if they differ, the contested estimate is biased toward the stronger side — report this alongside the number.
+**Weighting.** A "% of Americans" claim rides on SARA's machinery: MRP / post-stratification to ACS margins (age × sex × education × income × state), plus the Pew benchmark items (`bench_pew_cncexc`, `bench_pew_aireg`) that quantify how far the Prolific panel sits from probability-sample toplines on AI attitudes. Report weighted and unweighted, and report the benchmark gap alongside any prevalence claim. This is the biggest threat to Aim 2 (see §11).
+**Material balance.** The estimate is only as balanced as the stimuli. Check that pro and anti substantive arguments prompted equal engagement by comparing the elaboration item across the one-sided substantive cells (6 vs 8); if they differ, the contested estimate is biased toward the stronger side — report this alongside the number. (Weaker than the original MC2 argument-strength comparison — single self-report item; say so.)
 
 **Factorial model with planned contrasts.**
 ```r
@@ -260,57 +230,53 @@ cmat <- cbind(any_vs_none = c(-2, 1, 1),   # C1
 contrasts(df$For)     <- cmat
 contrasts(df$Against) <- cmat
 
-# Primary DV: ban support
-m_support <- lm(support ~ For * Against + prior_support + soc_desirability, data = df)
-
-# DV2: attitude certainty (H1 via C2)
-m_certain <- lm(certainty ~ For * Against + prior_support + soc_desirability, data = df)
+# Primary DV: ban support (the continuous difference score; no prior_support
+# or soc_desirability covariates — neither was fielded)
+m_support <- lm(support ~ For * Against, data = df)
 ```
-Report the C2 (route) terms for H1; the direction × C2 interaction for H2; For/Against main effects for H3.
+Report the direction × C2 interaction for H2; For/Against main effects for H3. (Old H1's certainty model and H4's prior-extremity model are dropped — measures not fielded.)
 
-**Prior-attitude moderation (H4).**
+**Quasi-manipulation-check (pre-registered pattern, one-sided cells).**
 ```r
-df$prior_extremity <- abs(df$prior_support - mid)  # mid = scale midpoint
-m_mod <- lm(support ~ For * Against * prior_extremity + soc_desirability, data = df)
+one_sided <- subset(df, cell %in% c(3, 6, 7, 8))
+# cue-reliance higher under elite; elaboration higher under substantive
+t.test(peripheral_item ~ route, data = one_sided)   # route = elite vs substantive
+t.test(central_item    ~ route, data = one_sided)
 ```
 
-**Mediation (H5, H6), lavaan, bootstrapped.** Restrict to the **one-sided cells (3, 6, 7, 8)** — the only cells where mediators were collected and route is unambiguous — and code `route_sub` = +1 substantive / −1 elite (the C2 contrast).
+**Mediation (H5′, H6′ — exploratory, single-item mediators), lavaan, bootstrapped.** Restrict to the **one-sided cells (3, 6, 7, 8)** and code `route_sub` = +1 substantive / −1 elite (the C2 contrast). The outcome in both models is **support** (there is no certainty DV).
 ```r
 library(lavaan)
-# H5: central route
+# H5': central route
 med_h5 <- '
-  elaboration ~ a*route_sub
-  certainty   ~ b*elaboration + cp*route_sub
+  central_item ~ a*route_sub
+  support      ~ b*central_item + cp*route_sub
   indirect := a*b
   total    := cp + a*b
 '
-fit_h5 <- sem(med_h5, data = subset(df, cell %in% c(3,6,7,8)), se = "bootstrap", bootstrap = 5000)
+fit_h5 <- sem(med_h5, data = one_sided, se = "bootstrap", bootstrap = 5000)
 
-# H6: peripheral route (source credibility as mediator of support)
+# H6': peripheral route (cue reliance as mediator of support)
 med_h6 <- '
-  source_cred ~ a*route_elite      # route_elite = -route_sub
-  support     ~ b*source_cred + cp*route_elite
+  peripheral_item ~ a*route_elite      # route_elite = -route_sub
+  support         ~ b*peripheral_item + cp*route_elite
   indirect := a*b
 '
 ```
-Report indirect effects with 95% bootstrap CIs. Optionally run both mediators in parallel (competing central vs peripheral paths) in one model.
+Report indirect effects with 95% bootstrap CIs, labelled exploratory (single-item mediators, unknown reliability — attenuation likely).
 
-**Moderated mediation (optional):** add NfC as moderator of the a-path (route → elaboration); test index of moderated mediation.
+**Covariates / robustness:** include `version` as a random effect if using `lmer` (`(1|version)`), or confirm version is balanced (the oTree engine balance-assigns all 27 rows) and drop. SARA's political orientation and numeracy quartile enter only pre-registered exploratory moderation models.
 
-**Covariates / robustness:** run all models with and without social desirability; report both. Include `version` as a random effect if using `lmer` (`(1|version)`), or confirm version is balanced and drop.
-
-**Power / sample size [DECISION].** Nine cells; the interaction (H2) and indirect effects (H5/H6) are the power-limiting tests. Plan for ≥ ~60–70 completes per cell after exclusions → **target N ≈ 600–650** on US Prolific. Run a formal power analysis before launch: `pwr` for the ANOVA/contrasts, and a Monte Carlo simulation (e.g., `simsem` / custom lavaan simulation) for the indirect effects, since mediation power depends on assumed a and b paths. Pre-register the contrasts, the mediation models, and the exclusion rules.
+**Power / sample size (resolved by embedding in SARA).** All ~4,000 SARA respondents pass through the module (less consent declines and attention-check screen-outs), giving roughly **~430+ per cell** — far beyond the standalone target of 60–70/cell. H2 (the interaction) is comfortably powered; the binding constraint is now the *exploratory mediation* (single-item mediators attenuate a and b paths), which no realistic n fully rescues — report those as effect estimates with CIs, not hypothesis tests. Run the pre-launch power simulation for H2 contrasts anyway (`pwr`) and record it in PREREGISTRATION.md.
 
 ---
 
-## 10. Qualtrics build notes
-- Evenly allocate `cell` (1–9) via a Randomizer with "evenly present elements"; nest a 3-way Randomizer for `version`.
-- Store `cell, for_arg, against_arg, version, order` as embedded data set BEFORE the stimulus block so they export with the data.
-- Pipe `body_text` from a lookup (loop & merge table or embedded data) keyed on `stimulus_id`.
-- **Display logic for the branch (§6):** show the manipulation-check, mediator, and certainty blocks only when `for_arg = none` OR `against_arg = none` (the one-sided cells 3/6/7/8). Contested cells (1/2/4/5) and control (9) go straight from stimulus to the support DV.
-- For the Aim-2 prevalence claim, recruit a **representative/quota US sample** (e.g., Prolific representative by age × sex × ethnicity × political affiliation) or capture quotas for post-stratification weighting.
-- Force-response on the DV and mediator blocks; allow opt-out on demographics.
-- Timing question on the stimulus page; flag completes below a minimum read time.
+## 10. Build notes (oTree, as implemented)
+- Assignment: `creating_session` in `survey/sara/__init__.py` balance-assigns the 27 stimulus rows in shuffled blocks seeded on the session code, so cells and versions are near-exactly balanced; `muskan_stim, cell, for_arg, against_arg, version, order` are stored on the Player and export with the data.
+- Passages are parsed from `survey/muskan_stimuli.md` by `survey/sara/muskan.py`; the briefing page injects the assigned `body_text`.
+- **Branch display logic:** `condition: muskan_one_sided` shows the route items only in cells 3/6/7/8; `condition: muskan_control` shows the comprehension check only in cell 9; `condition: muskan_not_control` skips the briefing page for cell 9.
+- Population claim: SARA's MRP + the Pew benchmark items (see §9.0), not Prolific quotas.
+- All module items are force-response; oTree records page times (use for the minimum-read-time flag).
 
 ---
 
@@ -322,18 +288,16 @@ Report indirect effects with 95% bootstrap CIs. Optionally run both mediators in
 - **Fei-Fei Li excluded** from the anti-ban cue after fact-check: she has not opposed a superintelligence ban (criticised SB-1047 but co-authored Newsom's report calling for more guardrails). See `README_3x3_design_and_stimulus_plan.md`, §9.
 - **Balanced-information support, not persistence.** Exposure in the contested cells is simultaneous and measured once, so Aim 2 estimates considered support under balanced information — not resistance over time. A delayed re-test (true persistence) is out of scope for the honours timeline; flag as future work.
 - **The Aim-2 estimate is only as balanced as the materials.** If the pro arguments read as stronger than the anti (see elite asymmetry), the contested estimate tilts pro by construction. Check via the per-side MC2 comparison (cells 6 vs 8) and report.
-- **Prevalence claims need a representative/weighted sample.** "% of Americans" requires a representative panel or post-stratification weights, not a convenience sample. This is the single biggest threat to Aim 2.
+- **Prevalence claims need a representative/weighted sample.** "% of Americans" requires a representative panel or post-stratification weights, not a convenience sample. This is the single biggest threat to Aim 2. Fielded mitigation: SARA's MRP plus the verbatim Pew benchmark items, which measure (rather than assume away) the Prolific-vs-population gap on AI attitudes.
+- **Rev-3 descope limitations (from embedding in SARA).** No certainty/strength DV → the flagship ELM durability claim (old H1) is untested here. Single-item mediators → H5′/H6′ are exploratory; reliability unknown, attenuation likely. No standalone manipulation checks → route validity rests on the quasi-check pattern in the route items (see §7-C for why a null there is ambiguous). No social-desirability covariate → the acquiescence flag on the DV pair is the only in-module careless-responding indicator. Debrief is delivered as links on the survey end page rather than a full explanatory debrief screen.
 
 ---
 
-## 12. Open decisions for the supervisor
-1. **Mediators to include:** full battery (D1–D4) vs subset; include the thought-listing task (D5)?
-Answer: No D5, just D1 and D2. D3 and D4 repeat d1 and 2.
-2. **Social desirability:** full 10-item Strahan–Gerbasi short form vs the 5 items the design doc pre-selected?
-Answer: the 5 pre-selected items, to keep the survey shorter.
-3. **Need for Cognition:** include as a moderator, or drop to keep the survey short?
-Answer: include, it's a core ELM variable and the short form is only 6 items.
-4. **Headline Aim-2 estimate:** anchor on cell 5 (substantive both sides, recommended) or the average across all four contested cells?
-5. **Sampling for Aim 2:** representative panel vs quotas + post-stratification weighting; confirm the weighting margins.
-6. **Sample size:** confirm target N (≈600–650) and run the power simulation — the Aim-1 interaction (H2) and the indirect effects (H5/H6) are the binding constraints.
-7. **Order:** keep order randomised within the 27 rows (recommended), or pre-write both orders (39 rows)? Only matters if a primacy/recency check is wanted.
+## 12. Decisions (resolved; history preserved)
+1. **Mediators:** ~~full battery vs subset~~ → D1 and D2 only, and in the fielded module each was further cut to its single best item (`muskan_central_route`, `muskan_peripheral_route`). No D3/D4 (judged to overlap D1/D2), no D5.
+2. **Social desirability:** ~~10-item vs 5-item~~ → superseded: not fielded at all (SARA length budget). The acquiescence flag on the DV pair is the in-module quality indicator.
+3. **Need for Cognition:** the earlier "include" call was reversed by the SARA length budget → not fielded; numeracy quartile available as a rough exploratory proxy.
+4. **Headline Aim-2 estimate:** cell 5 (substantive both sides), bracketed by the other contested cells, control, and one-sided cells — as in §9.0.
+5. **Sampling for Aim 2:** resolved by embedding in SARA — MRP to ACS margins + the Pew benchmark items.
+6. **Sample size:** resolved by embedding in SARA — ~4,000 through the module (~430+/cell); run the H2 power simulation pre-launch and record it in PREREGISTRATION.md.
+7. **Order:** randomised within the 27 rows via version rotation (no 39-row expansion; no primacy/recency factor).

@@ -186,6 +186,10 @@ def _page_displayed(player, page):
         return True
     if cond == 'info_arm':
         return bool(player.field_maybe_none('info_arm'))
+    if cond == 'wtp_zero':
+        # Protest-zero probe: only for respondents who answered "$0" (the
+        # first option) on the willingness-to-pay item.
+        return player.field_maybe_none('m5_wtp') == 1
     if cond == 'muskan_not_control':
         return not muskan.is_control(player.field_maybe_none('muskan_stim') or '')
     if cond == 'muskan_control':

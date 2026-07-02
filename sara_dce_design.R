@@ -10,6 +10,12 @@
 # (Hadfield); WTP now comes from the stated item m5_wtp. Benefit levels
 # reworded (Minor / Major / Transformational). Full factorial now
 # 4 x 5 x 3 x 3 = 180.
+# v13 (02 Jul 2026): internal-validity tasks added (ISPOR guidance). Each
+# block is now 8 Bayesian D-efficient tasks + task 9 = a DOMINATED pair
+# (one option strictly better on every attribute; dominant side alternates
+# by block) + task 10 = an exact REPEAT of task 2 (within-person stability).
+# Tasks 9-10 are excluded from estimation and analysed as quality checks
+# (see protocol Appendix B and PREREGISTRATION.md).
 # This script (a) generates a Bayesian D-efficient design, (b) EXPORTS the
 # 10 blocks x 10 tasks as a flat CSV that the oTree app consumes, and
 # (c) keeps the simulate/estimate/recover sections for identification.
@@ -63,7 +69,8 @@ priors <- cbc_priors(
 )
 
 # ---------------------------------------------------------------------
-# 3. GENERATE THE DESIGN  (Bayesian D-efficient; 2 alts + opt-out; 10 q; 10 blocks)
+# 3. GENERATE THE DESIGN  (Bayesian D-efficient; 2 alts + opt-out;
+#    8 q per block — tasks 9-10 are appended quality checks, see 3c)
 # ---------------------------------------------------------------------
 set.seed(2026)
 design <- cbc_design(
@@ -71,7 +78,7 @@ design <- cbc_design(
   priors    = priors,
   method    = "stochastic",  # Bayesian D-efficient
   n_alts    = 2,
-  n_q       = 10,
+  n_q       = 8,
   n_blocks  = 10,
   n_resp    = 4000,
   no_choice = TRUE,
@@ -104,7 +111,39 @@ names(b)[match(attrs, names(b))] <- paste0("b_", attrs)
 tasks <- a %>%
   inner_join(b, by = c("blockID","qID")) %>%
   arrange(blockID, qID) %>%
-  rename(block = blockID, task = qID)
+  rename(block = blockID, task = qID) %>%
+  mutate(task_type = "defficient")
+
+# ---------------------------------------------------------------------
+# 3c. QUALITY-CONTROL TASKS (excluded from estimation; ISPOR guidance)
+#   task 9  = dominated pair: one option strictly better on every attribute
+#             (least severe outcome, lowest chance, biggest benefit, US ahead
+#             vs the opposite). Choosing the dominated option is a
+#             rationality-check failure; the opt-out is NOT a failure. The
+#             dominant side alternates by block to cancel position bias.
+#   task 10 = exact repeat of task 2: within-person choice stability.
+# ---------------------------------------------------------------------
+best  <- c(severity = "A single death",       risk_annual = "1 in 1,000,000",
+           benefit  = "Transformative",       competition = "The US is ahead")
+worst <- c(severity = "~800,000,000 deaths (10% of humanity)",
+           risk_annual = "1 in 100",
+           benefit  = "Modest",               competition = "Other countries are ahead")
+
+dominated <- lapply(sort(unique(tasks$block)), function(bk) {
+  a_side <- if (bk %% 2 == 1) best else worst   # odd blocks: A dominates
+  b_side <- if (bk %% 2 == 1) worst else best
+  data.frame(block = bk, task = 9L,
+             a_severity = a_side[["severity"]], a_risk_annual = a_side[["risk_annual"]],
+             a_benefit = a_side[["benefit"]],   a_competition = a_side[["competition"]],
+             b_severity = b_side[["severity"]], b_risk_annual = b_side[["risk_annual"]],
+             b_benefit = b_side[["benefit"]],   b_competition = b_side[["competition"]],
+             task_type = "dominated")
+}) %>% bind_rows()
+
+repeat2 <- tasks %>% filter(task == 2) %>%
+  mutate(task = 10L, task_type = "repeat_of_2")
+
+tasks <- bind_rows(tasks, dominated, repeat2) %>% arrange(block, task)
 
 dir.create(dirname(OUT_CSV), showWarnings = FALSE, recursive = TRUE)
 write.csv(tasks, OUT_CSV, row.names = FALSE)

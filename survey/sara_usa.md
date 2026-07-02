@@ -185,6 +185,54 @@ pages:
       answers; we want your honest opinion. It takes about 15 minutes.</p>
     items: []
 
+  # ── Page 2b: Population benchmarks (verbatim Pew ATP items) ──────
+  # Two probability-sample benchmark items, word-for-word from Pew's American
+  # Trends Panel. Their job: quantify how far this opt-in Prolific sample sits
+  # from the US population on AI-risk-relevant attitudes — the panel-selection
+  # gap that demographic MRP cannot adjust for (protocol §8.2). They must sit
+  # BEFORE the disclosure arm, the anchors, and every briefing, so the
+  # comparison with Pew's cold-ask context is clean.
+  - id: benchmarks
+    title: "Two quick questions about AI"
+    items:
+      - id: bench_pew_cncexc
+        text: >
+          Overall, would you say the increased use of artificial intelligence
+          (AI) in daily life makes you feel…
+        options:
+          - "More excited than concerned"
+          - "More concerned than excited"
+          - "Equally concerned and excited"
+        widget: radio
+        required: true
+        rationale: >
+          Verbatim Pew benchmark (CNCEXC; American Trends Panel Wave 173,
+          Jun 9-15 2025, N=5,023, probability-recruited: 10% more excited /
+          50% more concerned / 38% equally). Five-wave trend since 2021.
+          Comparing our sample against this topline measures panel-selection
+          distance on general AI-risk affect. Deviation from Pew: option
+          order fixed rather than rotated.
+        triangulates: [bench_pew_aireg]
+
+      - id: bench_pew_aireg
+        text: >
+          Thinking about the use of artificial intelligence (AI) in the United
+          States, are you more concerned that the U.S. government will…
+        options:
+          - "Go too far regulating its use"
+          - "Not go far enough regulating its use"
+          - "Not sure"
+        widget: radio
+        required: true
+        rationale: >
+          Verbatim Pew benchmark (AIREG; American Trends Panel, Aug 12-18
+          2024, N=5,410: 21% go too far / 58% not far enough / 21% not sure).
+          Directly on-construct for SARA (regulation preference). This
+          restores the dumpstered m1_reg_toofar in Pew's exact wording so
+          the same item does double duty as the population-calibration
+          benchmark. See bench_pew_cncexc.
+        triangulates: [bench_pew_cncexc]
+
   # ── Page 3: Information-provision experiment (balanced; random half) ──
   - id: info_provision
     title: Before the next questions
@@ -349,6 +397,27 @@ pages:
           curves at the installation level). See m3_std_nuclear.
         triangulates: [m3_std_nuclear, m3_std_aviation]
 
+      - id: m3_sanity_everest
+        text: >
+          Compared with the safety rules we accept for climbing Mount Everest,
+          regulation of advanced AI should be:
+        scale: strictness5_cantcompare
+        widget: radio
+        required: true
+        rationale: >
+          Sanity anchor at the risky end of the range (Method 3). Climbing
+          Everest is a famously dangerous activity that society leaves lightly
+          regulated (roughly 1 death per 100 summit attempts), and the risk
+          falls mainly on the climber. Nearly everyone should say AI needs
+          stricter rules than that, so this fixes the risky end of the scale
+          and confirms respondents can place AI across the full range — the
+          real comparators alone only exercise the strict end. One anchor
+          only (restored Jul 2026, single-item version of the retired
+          m3_sanity pool): a second (e.g. BASE jumping) adds length without
+          adding information. Not an exclusion criterion; failures are
+          reported descriptively.
+        triangulates: [m3_std_nuclear]
+
       - id: m3_att_bioweapons
         text: >
           Compared with the safety regulations on biological weapons, this is an
@@ -421,7 +490,8 @@ pages:
       # is the number the respondent is judging; page order is randomised.
       - id: m2_experts_lecun
         text: >
-          Yann LeCun (Turing Award winner) has put the chance that AI wipes out humanity at
+          Yann LeCun (winner of the Turing Award, computer science's Nobel
+          Prize) has put the chance that AI wipes out humanity at
           about 1 in 1,000,000 — "less likely than an asteroid wiping us out."
           Accepting a risk at that level would be:
         scale: tolerability2
@@ -577,6 +647,38 @@ pages:
   # (The old Stem-A/B superintelligence wording item and the accel/safety
   #  counter-message arm were retired 29 Jun 2026 — superseded by Muskan's 3x3
   #  superintelligence-briefing experiment, the final module below.)
+
+  # ── Protest-zero probe: shown only to $0 answers on m5_wtp ───────
+  # `condition: wtp_zero` — the engine shows this page only when m5_wtp was
+  # answered "$0" (value 1). Contingent-valuation practice: a $0 can be a
+  # true zero (the risk cut is worth nothing to them, or they can't afford
+  # more) or a protest against the payment vehicle; the two must be
+  # separated before m5_wtp is summarised.
+  - id: wtp_zero_probe
+    title: "One quick follow-up"
+    condition: wtp_zero
+    items:
+      - id: m5_wtp_zero_reason
+        text: >
+          You said $0. Which of these is closest to your reason?
+        options:
+          - "Cutting this risk is not worth any money to me"
+          - "I cannot afford to pay more than I already do"
+          - "AI companies or the government should pay for this, not households"
+          - "I do not believe the money would really cut the risk"
+          - "Another reason"
+        widget: radio
+        required: true
+        rationale: >
+          Protest-zero diagnostic for the willingness-to-pay item (standard
+          contingent-valuation practice). The first two options are genuine
+          zeros and stay in the WTP estimate; "companies/government should
+          pay" and "money would be wasted" are protest zeros — they reject
+          the payment vehicle, not the value of the risk cut — and are
+          reported separately, with a pre-registered sensitivity analysis
+          excluding them. Asked only of $0 responders so it adds no length
+          for anyone else.
+        triangulates: [m5_wtp]
 
   # ── Page 10: Numeracy check — Berlin Numeracy Test, adaptive ─────
   # type: adaptive — like the DCE's `type: dce`, this page shows one item
@@ -911,8 +1013,27 @@ pages:
           Muskan's primary DV — ban support (the FLI conditional-ban statement),
           reported as top-2-box prevalence. In the two-sided "contested" cells
           this is the considered-support estimate (support after hearing both
-          sides). Shown in every cell.
-        triangulates: []
+          sides). Shown in every cell. Paired with the reverse-keyed
+          muskan_support_anti below so acquiescence ("agree with whatever is
+          asked") can't masquerade as ban support.
+        triangulates: [muskan_support_anti]
+
+      - id: muskan_support_anti
+        text: >
+          How much do you agree? "Companies should be free to build machines
+          smarter than humans, even without public support or guarantees of
+          safety."
+        scale: agree5
+        widget: radio
+        required: true
+        rationale: >
+          Muskan's second DV — the anti-ban statement, the mirror image of the
+          conditional ban above (development allowed without the safety
+          consensus or the public buy-in). Asking a pro-ban and an anti-ban
+          statement guards against acquiescence bias; results are reported as
+          top-2-box on each item and as their difference after this item is
+          reverse-scored. Shown in every cell.
+        triangulates: [muskan_support]
 
   # ELM route mediators, shown ONLY to the one-sided cells (3, 6, 7, 8 —
   # exactly one side's argument presented). With a single message on screen we
@@ -981,10 +1102,25 @@ pages:
           flag/weight low-comprehension control responses, not scored as a DV.
 
   # ── End page ────────────────────────────────────────────────────
+  # The closing note is the debrief for the superintelligence module: the
+  # briefings were assembled from real published arguments, so we point
+  # participants at full statements of both sides rather than restating
+  # them here.
   - id: end
     title: "Thank you"
     body: |
       <p>Thank you — that is the end of the survey. You may now close this window.</p>
+      <p>One note before you go. This survey included short briefings about a proposed
+      ban on "superintelligence" — AI smarter than humans. Those briefings were built
+      from real published arguments, but each one showed only part of the debate. If
+      you would like to read both sides in full:</p>
+      <ul>
+        <li><a href="https://superintelligence-statement.org/" target="_blank"
+        rel="noopener">The case for the statement — Future of Life Institute</a></li>
+        <li><a href="https://a16z.com/the-techno-optimist-manifesto/" target="_blank"
+        rel="noopener">A case against restricting AI development — Marc Andreessen,
+        Andreessen Horowitz</a></li>
+      </ul>
     items: []
 
 # ── Dumpster ───────────────────────────────────────────────────────
@@ -1258,6 +1394,10 @@ dumpster:
       - id: m1_reg_toofar
         text: "Thinking about AI in the US, are you more concerned that the government will…"
         options: [Go too far regulating it, Not go far enough regulating it, Not sure]
+        note: >-
+          Restored 02 Jul 2026 as bench_pew_aireg (benchmarks page) in Pew's
+          verbatim AIREG wording, repurposed as the population-calibration
+          benchmark against Pew's probability-sample topline.
       - id: m1_treaty_ban
         text: "Would you support or oppose an international treaty to ban the development of any 'smarter-than-human' AI?"
         options: [Strongly support, Somewhat support, Somewhat oppose, Strongly oppose, Don't know]
