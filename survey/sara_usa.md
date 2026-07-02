@@ -204,14 +204,18 @@ pages:
           - "More concerned than excited"
           - "Equally concerned and excited"
         widget: radio
+        shuffle_options: true
+        shuffle_keep_last: true
         required: true
         rationale: >
           Verbatim Pew benchmark (CNCEXC; American Trends Panel Wave 173,
           Jun 9-15 2025, N=5,023, probability-recruited: 10% more excited /
           50% more concerned / 38% equally). Five-wave trend since 2021.
           Comparing our sample against this topline measures panel-selection
-          distance on general AI-risk affect. Deviation from Pew: option
-          order fixed rather than rotated.
+          distance on general AI-risk affect. Replicates Pew exactly: the two
+          directional options are rotated per respondent (shuffle_options +
+          shuffle_keep_last) while "Equally concerned and excited" stays
+          anchored last.
         triangulates: [bench_pew_aireg]
 
   - id: benchmark_aireg_page
