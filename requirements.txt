@@ -1,8 +1,14 @@
 # Pinned so the fielded instrument is reproducible. otree is the app server;
 # pyyaml parses the instrument spec; markdown renders the consent sheet
 # (render.py has a plain-text fallback, but pin it so participants see the
-# properly formatted sheet).
+# properly formatted sheet) and the public protocol page (docs/index.html).
+# markdown is pinned *exactly*: the docs drift guard (`make -C render
+# check-docs`) byte-compares a fresh render, and footnote numbering changed
+# across markdown versions (3.9 numbers in reading order, like GitHub).
 otree==6.0.15
 pyyaml>=6.0,<7
-markdown>=3.4,<4
+markdown==3.9
 requests>=2.31,<3
+# Production only: lets oTree talk to Heroku Postgres via DATABASE_URL.
+# Unused on local devserver (which stays on sqlite); harmless to install.
+psycopg2-binary>=2.9,<3

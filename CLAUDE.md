@@ -91,8 +91,22 @@ one-per-page in randomised order), or `type: adaptive` + `root:` (items branch v
 - Manual: `cd survey && otree devserver`. Walk a participant via a session's
   `/join/<room>` link; POST does **not** need a CSRF token on devserver.
 - Review table: `make -C render` (R path) or `python3 render/review_fallback.py`.
-  `make -C render` also runs `sync-protocol` (refreshes the protocol's auto-blocks);
-  `make -C render check-protocol` is a read-only drift guard for CI.
+  `make -C render` also runs `sync-protocol` (refreshes the protocol's auto-blocks) and
+  `docs` (see below); `make -C render check-protocol` / `check-docs` are the read-only
+  drift guards for CI.
+- **`docs/index.html` is generated** — the public GitHub Pages rendering of the protocol
+  for reviewers who don't use GitHub (with a banner telling GitHub users how to comment
+  line-by-line). `render/build_docs.py` renders the protocol Markdown; never hand-edit
+  `docs/`. After editing the protocol, rebuild with `make -C render docs` (or
+  `python3 render/build_docs.py`) and commit the result.
+
+## Fielding / deployment
+- `DEPLOY.md` is the runbook: Heroku + managed Postgres, `Procfile` runs
+  `otree prodserver`, `.python-version` pins 3.11 (same as CI). Responses accumulate in
+  Postgres across the four DCE waves; each `dce_sequential.R --checkpoint` produces a new
+  `dce_blocks.csv` → commit, tag `wave-<k>`, redeploy (schema-safe — task count is fixed).
+  The panel's stable entry link is the `sara_usa` room (`ROOMS` in `settings.py`).
+  **Never edit the instrument (`sara_usa.md`) mid-fielding** — that changes the DB schema.
 
 ## Analysis & data
 - `sara_dce_design.R` → `survey/sara/dce_blocks.csv` (varied-severity 180-grid, Bayesian

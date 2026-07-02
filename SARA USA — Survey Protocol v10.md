@@ -29,9 +29,9 @@ The obvious survey is one question: "What annual chance of an AI catastrophe is 
 
 **People are unreliable with probabilities.** Asked the chance of getting two heads from two coin tosses, only 52% of UK MPs answered correctly.[^rss] If the people who write the laws cannot do two coin flips, a general-population sample will not respond meaningfully with "1 in 1,000" versus "1 in 1,000,000."
 
-**People are scope insensitive.** Many respondents treat 1 in 1,000 and 1 in 1,000,000 as the same feeling of "small," so a single elicited number reflects affect, not a considered threshold.
+**People are scope insensitive.** Many respondents treat 1 in 1,000 and 1 in 1,000,000 as the same feeling of "small," so a single elicited number reflects affect, not a considered threshold.[^kk92][^slovic2007]
 
-**People are framing sensitive.** The same question shifts with wording, anchors, and who is quoted. Because some framing is often necessary, this is an effect we want to quantify, rather than something we can eliminate (see §6).
+**People are framing sensitive.** The same question shifts with wording, anchors, and who is quoted.[^chong][^tk74] Because some faming is often necessary, this is an effect we want to quantify, rather than something we can eliminate (see §6).
 
 **So we plan to triangulate rather than trusting any single method.** We plan to assess risk tolerance in four different ways. A conclusion that survives all four survives whichever method a given critic distrusts. Where the methods converge, we increase our confidence in the estimate. Where they diverge, we plan to report bounds and qualitative findings. Together, we hope the methods assess the gap between what experts estimate and what the public will tolerate.
 
@@ -46,6 +46,14 @@ The four methods run from least anchoring to most. We:
 4. reveal what named experts have said to see if they're tolerable.
 
 Ordering them this way keeps the more suggestive figures from contaminating the unanchored estimate, both in this document and in the fielding sequence (Appendix A).
+
+<details>
+<summary>Background literature — the acceptable-risk tradition this builds on (click to expand)</summary>
+
+Asking what risk society will tolerate is an old question with a serious literature. Starr's founding revealed-preference study concluded the public accepts voluntary risks roughly 1,000 times greater than involuntary ones, with acceptable risk "crudely proportional to the third power of the benefits."[^starr] The psychometric paradigm that followed showed expressed acceptability is structured by dread and unfamiliarity, not just expected fatalities — involuntary, poorly understood, catastrophic hazards (the AI case) are held to far lower probabilities.[^fischhoff][^slovicrisk] Recent AI surveys quantify attitudes and appetite for regulation — more than 8 in 10 Americans say AI requires careful management, and 70% globally believe regulation is needed — but none elicits a *tolerated probability* of catastrophe.[^zhang][^gillespie] To our knowledge no peer-reviewed study directly asks the public what probability of AI catastrophe is acceptable, so SARA has analogues, not precedents; that gap is the contribution.
+
+</details>
+
 Each subsection gives:
 - the approach in plain English,
 - some literature behind the approach
@@ -59,7 +67,14 @@ Each subsection gives:
 
 **Why it is worth doing.** It is the most legible method ("the public's own number"), it provides the within-person scope slope that no other method gives, and it is the convergence cross-check for the discrete choice experiment. I have an honors student checking how scope sensitive people are, and who is more scope sensitive.
 
-**Informing literature.** Scope-insensitivity and embedding effects (contingent-valuation literature, Kahneman & Knetsch). Willingness-to-pay is roughly log-normal, which dictates a log response scale rather than a free-text box.
+**Informing literature.** Scope-insensitivity and embedding effects (contingent-valuation literature, Kahneman & Knetsch).[^kk92] Willingness-to-pay is conventionally modelled as log-normal — a modelling convention that keeps WTP positive with finite moments, not an empirical law — which dictates a log response scale rather than a free-text box.[^trainweeks]
+
+<details>
+<summary>Background literature — scope insensitivity and embedding (click to expand)</summary>
+
+The embedding effect is the founding result: stated WTP for the same public good can differ by more than an order of magnitude depending on whether it is valued alone or inside a more inclusive category.[^kk92] The textbook demonstration is Desvousges et al.: mean stated WTP to save 2,000, 20,000 or 200,000 migrating birds was essentially flat.[^desvousges] The mechanism is affective — valuation by feeling is insensitive to quantity while valuation by calculation is scope-sensitive[^hseerott] — and the same "psychic numbing" extends to human lives, where compassion can begin deteriorating at the second victim.[^slovic2007] At the top of our ladder the pattern persists: people do not spontaneously judge human extinction as uniquely worse than a catastrophe killing most-but-not-all of humanity, drawing that distinction only when prompted to consider the long-term future.[^schubert] This is why Method 1 measures the scope slope as an outcome rather than assuming a considered threshold exists.
+
+</details>
 
 **Strengths.** Directly interpretable; yields the per-person scope slope; cheap; the natural convergence test for the DCE.
 
@@ -122,6 +137,13 @@ Each subsection gives:
 - **Lancsar & Louviere (2008)**, *Conducting Discrete Choice Experiments to Inform Healthcare Decision Making: A User's Guide*, PharmacoEconomics 26(8):661–677. The standard practitioner walkthrough.[^lancsar]
 - **ISPOR good-research-practice trilogy.** Bridges et al. (2011), the **10-item conjoint-analysis checklist**, Value in Health 14(4):403–413;[^bridges] Reed Johnson et al. (2013) on **experimental design**, Value in Health 16(1):3–13;[^johnson] Hauber et al. (2016) on **statistical analysis** of DCEs, Value in Health 19(4):300–315.[^hauber]
 - **Soekhai et al. (2019)**, *Discrete Choice Experiments in Health Economics: Past, Present and Future*, PharmacoEconomics 37:201–226. The comprehensive recent review.[^soekhai]
+
+<details>
+<summary>Background literature — design and estimation choices (click to expand)</summary>
+
+The Bayesian D-efficient approach follows Sándor & Wedel, who introduced prior-informed efficient choice designs,[^sandorwedel] with Bliemer, Rose & Hess supplying the Bayesian-efficiency machinery behind modern implementations.[^bliemer] Log-normal coefficient specifications follow Train & Weeks's preference-space vs WTP-space treatment — a modelling convention, not an empirical law.[^trainweeks] The closest substantive precedents are DCEs valuing mortality-risk reductions,[^tsuge] and the road-safety value-of-statistical-life meta-analysis shows valuations depend strongly on the elicitation method[^deblaeij] — a further argument for triangulating across methods rather than trusting any one.
+
+</details>
 
 <details>
 <summary>SARA's DCE against the ISPOR checklist</summary>
@@ -187,7 +209,14 @@ The adaptation is **between-respondent only**: it sharpens *which* tradeoffs the
 
 **Why it is worth doing.** It uses the public's lived intuitions about which activities society already keeps very safe (flying) and which it lets run hotter. It also lets us "back out" an implied risk band for AI from the band society tolerates for the comparator, as an illustration only.
 
-**Informing literature.** The ALARP / "as low as reasonably practicable" and F–N (frequency–number) curve traditions in engineering safety (nuclear, rail, chemical). These give the comparator standards. We treat them as benchmarks the public can react to, not as ground truth for AI.
+**Informing literature.** The ALARP / "as low as reasonably practicable" and F–N (frequency–number) curve traditions in engineering safety (nuclear, rail, chemical).[^r2p2] These give the comparator standards. We treat them as benchmarks the public can react to, not as ground truth for AI. Comparative judgement is also psychologically easier than absolute judgement: hard-to-evaluate attributes become evaluable against a comparator.[^hsee96]
+
+<details>
+<summary>Background literature — tolerability frameworks and comparative judgement (click to expand)</summary>
+
+UK engineering practice sets societal-risk tolerability inside a three-band framework — unacceptable / tolerable-if-ALARP / broadly acceptable — first developed for nuclear power and generalised in the HSE's *Reducing Risks, Protecting People*, whose societal anchor holds that an accident killing 50 or more people should be regarded as intolerable above a frequency of 1 in 5,000 per year.[^r2p2][^hse1992] Psychologically, the case for comparative rather than absolute elicitation is Hsee's evaluability work: attributes that are hard to evaluate in isolation become evaluable when a comparator is present, so joint evaluation yields more stable, scope-sensitive judgements than separate evaluation.[^hsee96][^hsee99] That is exactly the move Method 3 makes — replacing an impossible absolute number with a comparison to industries whose risk band society already lives with.
+
+</details>
 
 **Strengths.** Comparative judgements are far easier and more stable than absolute ones; the comparators are concrete and familiar; the result maps onto how regulators actually argue.
 
@@ -235,13 +264,20 @@ Beyond the three comparators, a single dangerous-activity sanity anchor at the r
 
 **Why it is worth doing.** This is the method that speaks most directly to policy. It does not set the public's risk tolerance in the abstract; it tests whether the *current* expert estimates fall inside or outside that tolerance. If most of the public calls Amodei's stated figure "unacceptable, should be illegal," that is a finding lawmakers can act on without anyone first agreeing on the true probability.
 
-**Informing literature.** Anchoring and recognition-over-recall (Kahneman & Tversky). The named-source design also answers Barnett's objection that "it depends what you call an expert": we never say "experts," we name the individual and report by source.
+**Informing literature.** Anchoring[^tk74] and constructed preference — people judge presented numbers better than they generate them de novo.[^constructed] The named-source design also answers Barnett's objection that "it depends what you call an expert": we never say "experts," we name the individual and report by source.
+
+<details>
+<summary>Background literature — anchoring and constructed preference (click to expand)</summary>
+
+Numerical judgements are pulled toward presented values even when the anchor is transparently irrelevant,[^tk74] and a half-century of replication finds the effect robust across domains and stubbornly hard to debias.[^furnham] The constructed-preference literature holds that preferences over unfamiliar quantities are built at the moment of elicitation rather than retrieved, which favours structured judgement of presented figures over free numerical generation.[^constructed] We found no established result that presenting several anchors at once dampens the pull of any single one, so we treat that as a design hypothesis this method tests — the within-person spread across the four sources is itself informative — rather than a bias-removal claim.[^furnham]
+
+</details>
 
 **Strengths.** Recognition not generation; directly decision-relevant; robust to the "who counts as an expert" critique because every anchor is attributed.
 
 **Limitations, and how we respond.**
 - **Anchoring:** people may cluster around whatever number they are shown.
-  - We show a set of figures within person that spans the credible range — from near-zero (LeCun's verbatim "below the chances of an asteroid hitting the Earth", glossed with the scientific asteroid base rate of ~1 in 1,000,000 per century, since LeCun himself declines to give a number) through careful forecasters (FRI/XPT superforecasters ~1 in 250, then FRI AI-domain experts ~1 in 30) to the top of the range (Amodei, between 1 in 10 and 1 in 4) — and we report results *by source* so the spread is visible rather than collapsed into one average. Showing several at once dampens the pull of any single anchor. (The earlier Altman/Musk anchors were replaced by the two FRI forecaster medians on 01 Jul 2026, so the set now spans named individuals *and* expert-forecaster groups.)
+  - We show a set of figures within person that spans the credible range — from near-zero (LeCun's verbatim "below the chances of an asteroid hitting the Earth", glossed with the scientific asteroid base rate of ~1 in 1,000,000 per century, since LeCun himself declines to give a number) through careful forecasters (FRI/XPT superforecasters ~1 in 250, then FRI AI-domain experts ~1 in 30) to the top of the range (Amodei, between 1 in 10 and 1 in 4) — and we report results *by source* so the spread is visible rather than collapsed into one average. Whether showing several anchors at once dampens the pull of any single one is not established in the debiasing literature (which finds anchoring hard to remove),[^furnham] so we treat it as a design hypothesis, not an assumption: reporting by source keeps the result interpretable either way. (The earlier Altman/Musk anchors were replaced by the two FRI forecaster medians on 01 Jul 2026, so the set now spans named individuals *and* expert-forecaster groups.)
 - **The figures must be real** and fairly quoted, or the whole item is indefensible.
   - Every figure is verified against a citable public statement before fielding (see the flag below).
 - **A tolerability rating can still be affect** ("I dislike AI") rather than a considered threshold.
@@ -286,7 +322,7 @@ These are variables to measure and control for, rather than for excluding partic
 - **Demographics for weighting.** Age, gender, education, income, state, all aligned to US Census / ACS categories so they post-stratify to population controls (see Appendix A for the exact brackets).
 - **AI familiarity.** Frequency of intentional AI use (Gillespie et al. 2025; item validated as a proxy for technology experience per Hargittai 2005).[^gillespie]
 - **Political orientation.** 7-point Very Liberal to Very Conservative (Jost 2006).[^jost]
-- **Risk literacy / numeracy.** Berlin Numeracy Test style items. The key interaction for one of my honours students' projects: does higher risk literacy increase scope sensitivity?
+- **Risk literacy / numeracy.** Berlin Numeracy Test style items (Cokely et al. 2012; a fast, psychometrically sensitive measure of risk literacy and a robust predictor of decision quality).[^cokely] The key interaction for one of my honours students projects: does higher risk literacy reduce increase scope sensitivity?
 
 ---
 
@@ -304,13 +340,20 @@ A convenience or panel sample is not the US public. We use **multilevel regressi
 
 Critics say poll answers are shallow and shift with messaging. Rather than pretend otherwise, we make the swing a primary outcome. We don't treat any of these as measuring "true" opinion; the question is how far opinion moves when the talking points change, and — where it moves — *why*.
 
+<details>
+<summary>Background literature — framing and information-provision experiments (click to expand)</summary>
+
+That policy attitudes shift with how an issue is framed is one of the best-documented findings in political behaviour,[^chong] which is why briefing content is varied experimentally rather than treated as a neutral constant. The design template for §6.1 is the information-provision-experiment literature, which gives best practice on measuring prior beliefs, varying the information cleanly, measuring updating, and handling experimenter-demand confounds.[^haaland] The central-vs-peripheral decomposition in §6.2 and §6.3 comes from the Elaboration Likelihood Model: attitude change won by scrutiny of arguments (the central route) is more persistent and behaviour-predictive than change won by cues such as source prestige (the peripheral route).[^elm]
+
+</details>
+
 ### 6.1 Balanced-disclosure experiment (information provision)
 
 A random half see a short, balanced *disclosure* — a two-sentence statement of the loss-of-control worry plus the counter-consideration — *before* the tolerance block. "Disclosure" is the honest label: it is too brief to make anyone informed, and we don't claim it does; it tests whether even minimal balanced context moves the tolerance estimate. Where disclosed and undisclosed answers diverge, the *disclosed* estimate is the headline. This is the framing test that touches tolerance; everything else is kept off it.
 
 ### 6.2 The superintelligence briefing experiment (Muskan's 3×3 ELM)
 
-This is a framing experiment, not a measure of superintelligence support in its own right: the question is whether support for *banning* the development of smarter-than-human AI gets pushed around by talking points, and — if it does — whether the movement comes from the *source cue* (who endorses the position, the peripheral route) or the *argument content* (the substance, the central route). We frame it with the **Elaboration Likelihood Model** to separate those two routes.
+This is a framing experiment, not a measure of superintelligence support in its own right: the question is whether support for *banning* the development of smarter-than-human AI gets pushed around by talking points, and — if it does — whether the movement comes from the *source cue* (who endorses the position, the peripheral route) or the *argument content* (the substance, the central route). We frame it with the **Elaboration Likelihood Model**[^elm] to separate those two routes.
 
 The survey's final module, run last so its persuasive material cannot contaminate the tolerance core. After a neutral definition of superintelligence, each respondent is randomly assigned one pre-built briefing from a **3×3 design** — an argument *for* the ban crossed with an argument *against* it, each at three levels: an **elite source-cue** (peripheral route), a **substantive argument** (central route), or **none**. They then answer two 5-point ban-support items (a pro-ban and an anti-ban statement, reported by top-2-box prevalence and as their difference). The contested (two-sided) cells show how far a balanced brief moves support; the one-sided cells isolate the ELM mechanism — whether a source cue alone moves support (peripheral) as much as the argument does (central). Two self-report route items (`muskan_central_route`, `muskan_peripheral_route`) serve as mediators / quasi-manipulation-checks for which route did the work. (Supersedes the earlier accel/safety counter-message arm, the Stem-A/B wording experiment, and the descriptive twins — CAIS extinction-priority and a neutrally worded "treaty to ban" — all retired to the dumpster, 29 Jun 2026.)
 
@@ -510,7 +553,7 @@ The full ledger of items and modules considered and cut — with the reason for 
 
 [^clark]: Gillian K. Hadfield & Jack Clark, "Regulatory Markets: The Future of AI Governance," arXiv:2304.04914 (submitted 11 Apr 2023, rev. 3 Feb 2026); published in *Jurimetrics: The Journal of Law, Science and Technology* 65:195–240 (2026), https://arxiv.org/abs/2304.04914. The paper frames AI governance as facing a "technical deficit" and a "democratic deficit," the latter being that "values-based decisions … must be made by democratically accountable public, not private, actors" (abstract).
 
-[^rss]: Royal Statistical Society, "New RSS survey tests statistical skills of MPs" (2022), https://rss.org.uk/news-publication/news-publications/2022/general-news/new-rss-survey-tests-statistical-skills-of-mps/. Of 101 MPs asked the probability of two heads from two coin tosses, 52% answered 25% correctly, 33% said 50%, 10% didn't know; a 2012 RSS survey found ~40% correct. Reporting: NationalWorld, https://www.nationalworld.com/news/politics/mps-statistics-maths-problem-3564209.
+[^rss]: Royal Statistical Society, "New RSS survey tests statistical skills of MPs" (2022), https://rss.org.uk/news-publication/news-publications/2022/general-news/new-rss-survey-tests-statistical-skills-of-mps/. Savanta ComRes poll of 101 MPs (fielded 17 Nov 2021–18 Jan 2022) asked the probability of two heads from two coin tosses: 52% answered 25% correctly, 33% said 50%, 10% didn't know. The predecessor survey was run by Ipsos MORI (97 MPs, fielded Nov–Dec 2011): ~40% correct. Reporting: NationalWorld, https://www.nationalworld.com/news/politics/mps-statistics-maths-problem-3564209.
 
 [^lancsar]: Emily Lancsar & Jordan Louviere, "Conducting Discrete Choice Experiments to Inform Healthcare Decision Making: A User's Guide," *PharmacoEconomics* 26(8):661–677 (2008), https://pubmed.ncbi.nlm.nih.gov/18620460/.
 
@@ -522,21 +565,60 @@ The full ledger of items and modules considered and cut — with the reason for 
 
 [^soekhai]: Vikas Soekhai, Esther W. de Bekker-Grob, Alan R. Ellis & Caroline M. Vass, "Discrete Choice Experiments in Health Economics: Past, Present and Future," *PharmacoEconomics* 37:201–226 (2019), https://link.springer.com/article/10.1007/s40273-018-0734-2.
 
-[^crt]: Expanded CRT items per Benjamin Reid, *Additional Questions for SARA*, drawing on "Assessing Miserly Information Processing: An Expansion of the Cognitive Reflection Test," *Thinking & Reasoning* (2013), https://www.tandfonline.com/doi/abs/10.1080/13546783.2013.844729.
-
-[^nfc]: Need-for-cognition: original John T. Cacioppo & Richard E. Petty, "The Need for Cognition," *J. Personality and Social Psychology* 42:116–131 (1982); efficient 6-item form, https://pmc.ncbi.nlm.nih.gov/articles/PMC7545655/: I would prefer complex to simple problems. I like to have the responsibility of handling a situation that requires a lot of thinking. Thinking is not my idea of fun. (R)
-I would rather do something that requires little thought than something that is sure to challenge my thinking abilities. (R) I really enjoy a task that involves coming up with new solutions to problems. I would prefer a task that is intellectual, difficult, and important to one that is somewhat important but does not require much thought.
-
 [^jost]: John T. Jost, "The End of the End of Ideology," *American Psychologist* 61(7):651–670 (2006), https://doi.org/10.1037/0003-066X.61.7.651. Source for the 7-point orientation item per Benjamin Reid's notes.
 
 [^gillespie]: Nicole Gillespie, Steven Lockey, T. Ward, A. Macdade & G. Hassed, "Trust, Attitudes and Use of Artificial Intelligence: A Global Study 2025," University of Melbourne (2025), https://doi.org/10.26188/28822919. Frequency-of-use item justified as a technology-experience proxy via Eszter Hargittai, "Survey Measures of Web-Oriented Digital Literacy," *Social Science Computer Review* 23(3):371–379 (2005).
 
-[^open1]: Oscar Delaney (review comment, Dec 2025): "I don't really trust people to understand and think well about probabilities and severities, so I don't think I would care much what people say here. And plausibly politicians won't care much either, since these aren't deeply held beliefs in the electorate but just somewhat made up numbers people give when forced." And on policy items: "people probably won't be engaging with tradeoffs. And unless this becomes a salient issue to people it probably doesn't matter what people think." Peter Barnett reacted in agreement.
-
-[^open2]: Peter Barnett (review comment, Dec 2025): "the current estimates about AI risk are just so so far from anything remotely acceptable by current standards … I somewhat expect the results to be something like 'Current estimates of AI risk are 3-12 Orders of magnitude too high by the normal standards.' And this is such a crazy thing to say that it might just get discounted … I worry that because the risk situation is so unreasonable by any current risk management standard that trying to use precise risk management tools … won't really work." (Self-described as possibly "too doomy.")
-
-[^open3]: Peter Barnett (review comment, Dec 2025): "I think this relies on being able to accurately assess risks, which I think people will either be bad at, or wildly optimistic (off by multiple OOMs)."
-
 [^catdef]: Definitions of catastrophic AI risk vary substantially across legal, expert-prioritisation, and existential-risk contexts. RAISE/SB 53-style statutory definitions use a relatively low legal threshold: "catastrophic risk" means a foreseeable and material risk that a frontier model will materially contribute to death or serious injury to 100 or more people, or at least $1 billion in property damage, from a single incident involving CBRN assistance, autonomous cyber/criminal conduct, or loss of control. The MIT AI Risk Repository prioritisation study uses a broader expert-severity frame: "catastrophic" harm includes, for example, more than 1 million human deaths, more than USD $100 billion in damage, or civilization-scale intangible harms such as collapse of democratic norms or privacy by 2030 under business as usual. The Existential Risk Persuasion Tournament focused on long-run risks to humanity from AI and other causes, distinguishing catastrophic and extinction outcomes across the century; public summaries report AI catastrophe and extinction probabilities separately, with large disagreement between experts and superforecasters. Because these definitions span ordinary legal catastrophes through existential outcomes, this survey does not assume a single threshold. It varies severity explicitly and reports risk tolerance conditional on the severity described.
 
 [^fri]: Forecasting Research Institute, *Existential Risk Persuasion Tournament* (XPT, 2022). "Catastrophe" is defined as 10% or more of humans dying within a five-year period (about 800 million people at current population; pathogen risks use a 1% threshold). https://forecastingresearch.org/xpt
+
+[^starr]: Chauncey Starr, "Social Benefit versus Technological Risk," *Science* 165(3899):1232–1238 (1969), https://doi.org/10.1126/science.165.3899.1232. Verbatim: "the public is willing to accept 'voluntary' risks roughly 1000 times greater than 'involuntary' risks," and "the acceptability of risk appears to be crudely proportional to the third power of the benefits."
+
+[^fischhoff]: Baruch Fischhoff, Paul Slovic, Sarah Lichtenstein, Stephen Read & Barbara Combs, "How Safe Is Safe Enough? A Psychometric Study of Attitudes Towards Technological Risks and Benefits," *Policy Sciences* 9(2):127–152 (1978), https://doi.org/10.1007/BF00143739. Psychometric elicitation of perceived risk, acceptable risk and perceived benefit across 30 activities/technologies; acceptable risk correlates with benefit.
+
+[^slovicrisk]: Paul Slovic, "Perception of Risk," *Science* 236(4799):280–285 (1987), https://doi.org/10.1126/science.3563507. The canonical psychometric-paradigm paper: dread and unknown-risk factors structure lay risk perception and acceptability.
+
+[^zhang]: Baobao Zhang & Allan Dafoe, *Artificial Intelligence: American Attitudes and Trends* (Center for the Governance of AI, University of Oxford, 2019), https://doi.org/10.2139/ssrn.3312874. Nationally representative n=2,000 US adults; more than 8 in 10 agree AI and/or robots "require careful management." The closest large US precedent for AI-attitude measurement.
+
+[^kk92]: Daniel Kahneman & Jack L. Knetsch, "Valuing Public Goods: The Purchase of Moral Satisfaction," *Journal of Environmental Economics and Management* 22(1):57–70 (1992), https://doi.org/10.1016/0095-0696(92)90019-S. The embedding effect: CVM estimates of the same good "may differ by more than an order of magnitude, all with an a priori equal claim to validity."
+
+[^desvousges]: William H. Desvousges, F. Reed Johnson, Richard W. Dunford, Kevin J. Boyle, Sara P. Hudson & K. Nicole Wilson, *Measuring Nonuse Damages Using Contingent Valuation: An Experimental Evaluation of Accuracy* (Research Triangle Institute, 1992; reissued 2010), https://doi.org/10.3768/rtipress.2009.bk.0001.1009. Mean stated WTP to save 2,000 / 20,000 / 200,000 migrating birds was essentially flat — the textbook scope-insensitivity result. (Exact dollar figures circulate secondhand; verify against the RTI report before quoting them.)
+
+[^slovic2007]: Paul Slovic, "'If I Look at the Mass I Will Never Act': Psychic Numbing and Genocide," *Judgment and Decision Making* 2(2):79–95 (2007). Feelings value individual lives strongly but are insensitive to large numbers; "the deterioration of compassion may appear in groups as small as two persons."
+
+[^hseerott]: Christopher K. Hsee & Yuval Rottenstreich, "Music, Pandas, and Muggers: On the Affective Psychology of Value," *Journal of Experimental Psychology: General* 133(1):23–30 (2004), https://doi.org/10.1037/0096-3445.133.1.23. Affect-based valuation is scope-insensitive; calculation-based valuation is scope-sensitive. (Bibliographic details verified; spot-check the text before quoting directly.)
+
+[^schubert]: Stefan Schubert, Lucius Caviola & Nadira S. Faber, "The Psychology of Existential Risk: Moral Judgments about Human Extinction," *Scientific Reports* 9:15100 (2019), https://doi.org/10.1038/s41598-019-50145-9. N=2,507 (UK/US public, UK students). Verbatim: respondents "do not think that an extinction catastrophe would be uniquely bad relative to near-extinction catastrophes, which allow for recovery"; the judgement reverses when prompted to consider long-term consequences.
+
+[^trainweeks]: Kenneth Train & Melvyn Weeks, "Discrete Choice Models in Preference Space and Willingness-to-Pay Space," in R. Scarpa & A. Alberini (eds), *Applications of Simulation Methods in Environmental and Resource Economics* 1–16 (Springer, 2005), https://doi.org/10.1007/1-4020-3684-1_1. A log-normal cost coefficient yields right-skewed, approximately log-normal WTP — a modelling convention chosen to keep WTP positive with finite moments, not an established empirical law. Corroborating: Hole & Kolstad, *Empirical Economics* 42(2):445–469 (2012); Daly, Hess & Train, *Transportation* 39(1):19–31 (2012).
+
+[^sandorwedel]: Zsolt Sándor & Michel Wedel, "Designing Conjoint Choice Experiments Using Managers' Prior Beliefs," *Journal of Marketing Research* 38(4):430–444 (2001), https://doi.org/10.1509/jmkr.38.4.430.18904. Seminal use of Bayesian priors to construct efficient choice designs.
+
+[^bliemer]: Michiel C. J. Bliemer, John M. Rose & Stephane Hess, "Approximation of Bayesian Efficiency in Experimental Choice Designs," *Journal of Choice Modelling* 1(1):98–127 (2008), https://doi.org/10.1016/S1755-5345(13)70024-1. Underpins Bayesian D-efficient design as implemented in standard tools.
+
+[^tsuge]: Takahiro Tsuge, Atsuo Kishimoto & Kenji Takeuchi, "A Choice Experiment Approach to the Valuation of Mortality," *Journal of Risk and Uncertainty* 31(1):73–95 (2005), https://doi.org/10.1007/s11166-005-2931-6. Explicit DCE valuing mortality-risk reductions; examines how subjective risk perception moves marginal WTP.
+
+[^deblaeij]: Arianne de Blaeij, Raymond J. G. M. Florax, Piet Rietveld & Erik Verhoef, "The Value of Statistical Life in Road Safety: A Meta-Analysis," *Accident Analysis & Prevention* 35(6):973–986 (2003), https://doi.org/10.1016/S0001-4575(02)00105-7. VSL estimates depend strongly on valuation method (stated vs revealed preference) and elicitation format. Companion road-safety DCE: Rizzi & Ortúzar, *Accident Analysis & Prevention* 35(1):9–22 (2003).
+
+[^r2p2]: Health and Safety Executive, *Reducing Risks, Protecting People: HSE's Decision-Making Process* (R2P2) (HSE Books, 2001), https://www.hse.gov.uk/enforce/expert/r2p2.htm. Establishes the three-band tolerability-of-risk framework and ALARP; para 136 gives the societal-risk anchor — an accident causing 50 or more deaths in a single event "should be regarded as intolerable if the frequency is estimated to be more than one in five thousand per annum" (used to construct F–N criterion lines, slope −1).
+
+[^hse1992]: Health and Safety Executive, *The Tolerability of Risk from Nuclear Power Stations* (rev. ed., HMSO, 1992). Origin of the three-region tolerability framework later generalised in R2P2; proposes ~1 in 1,000 per year as the upper (worker) individual-risk tolerability bound. (Bibliographic details verified; spot-check pages before quoting directly.)
+
+[^hsee96]: Christopher K. Hsee, "The Evaluability Hypothesis: An Explanation for Preference Reversals between Joint and Separate Evaluations of Alternatives," *Organizational Behavior and Human Decision Processes* 67(3):247–257 (1996), https://doi.org/10.1006/obhd.1996.0077. Hard-to-evaluate attributes receive more weight in joint than separate evaluation; comparison confers evaluability.
+
+[^hsee99]: Christopher K. Hsee, George F. Loewenstein, Sally Blount & Max H. Bazerman, "Preference Reversals between Joint and Separate Evaluations of Options: A Review and Theoretical Analysis," *Psychological Bulletin* 125(5):576–590 (1999), https://doi.org/10.1037/0033-2909.125.5.576. The canonical review-level citation for "comparison is easier than absolute judgement." (Bibliographic details verified; spot-check before quoting directly.)
+
+[^tk74]: Amos Tversky & Daniel Kahneman, "Judgment under Uncertainty: Heuristics and Biases," *Science* 185(4157):1124–1131 (1974), https://doi.org/10.1126/science.185.4157.1124. Introduces anchoring-and-adjustment: estimates are "biased toward the initially presented values," with insufficient adjustment.
+
+[^furnham]: Adrian Furnham & Hua Chu Boo, "A Literature Review of the Anchoring Effect," *Journal of Socio-Economics* 40(1):35–42 (2011), https://doi.org/10.1016/j.socec.2010.10.008. Anchoring is robust across finance, appraisal, sentencing, negotiation and forecasting, and hard to debias (see also Jacowitz & Kahneman, *Personality and Social Psychology Bulletin* 21(11):1161–1166, 1995). We found no authoritative result that presenting multiple anchors dampens single-anchor pull — treated here as a design hypothesis, not an established finding.
+
+[^constructed]: Sarah Lichtenstein & Paul Slovic (eds), *The Construction of Preference* (Cambridge University Press, 2006), https://doi.org/10.1017/CBO9780511618031. The foundational volume for the constructed-preference view: preferences over unfamiliar quantities are built at elicitation, favouring structured judgement over free generation. (Bibliographic details verified; spot-check before quoting directly.)
+
+[^chong]: Dennis Chong & James N. Druckman, "Framing Theory," *Annual Review of Political Science* 10:103–126 (2007), https://doi.org/10.1146/annurev.polisci.10.072805.103054. The standard citation for framing effects on public opinion, with a psychological model of how frames operate.
+
+[^haaland]: Ingar Haaland, Christopher Roth & Johannes Wohlfart, "Designing Information Provision Experiments," *Journal of Economic Literature* 61(1):3–40 (2023), https://doi.org/10.1257/jel.20211658. Best practice on measuring beliefs, designing the information intervention, measuring updating, and handling confounds such as experimenter demand.
+
+[^elm]: Richard E. Petty & John T. Cacioppo, "The Elaboration Likelihood Model of Persuasion," *Advances in Experimental Social Psychology* 19:123–205 (1986), https://doi.org/10.1016/S0065-2601(08)60214-2. Central route (high elaboration, argument scrutiny) vs peripheral route (low elaboration, cue reliance); central-route change is more persistent and behaviour-predictive.
+
+[^cokely]: Edward T. Cokely, Mirta Galesic, Eric Schulz, Saima Ghazal & Rocio Garcia-Retamero, "Measuring Risk Literacy: The Berlin Numeracy Test," *Judgment and Decision Making* 7(1):25–47 (2012). Introduces the 4-item test as a fast, psychometrically sensitive measure of statistical numeracy and risk literacy; a robust predictor of decision quality.
