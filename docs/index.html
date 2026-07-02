@@ -71,6 +71,12 @@ aside.comment-box h2 { border: none; margin: 0 0 .5em; padding: 0; font-size: 1.
 .footnote { font-size: .88rem; color: var(--muted); }
 .footnote hr { margin: 3em 0 1em; }
 .footnote-ref { text-decoration: none; font-weight: 600; }
+.fn-sep { color: var(--muted); }
+#fn-preview { position: absolute; z-index: 10; max-width: 26rem;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 10px;
+  padding: .7rem .9rem; box-shadow: 0 6px 24px rgba(0, 0, 0, .18);
+  font-size: .85rem; line-height: 1.5; overflow-wrap: break-word; }
+#fn-preview > :last-child { margin-bottom: 0; }
 :target { animation: flash 1.6s ease-out 1; }
 @keyframes flash { from { background: var(--mark-bg); } to { background: transparent; } }
 footer { margin-top: 4rem; padding-top: 1rem; border-top: 1px solid var(--border);
@@ -169,9 +175,10 @@ footer { margin-top: 4rem; padding-top: 1rem; border-top: 1px solid var(--border
 
 <blockquote>
 <p>"Hadfield argues that governance of any complex technology implicates two distinct types of question: first, democratic questions: what kinds of deception by AI developers count as unfair? <strong>What tradeoffs between utility, safety, and competition does the polity wish to make? What level of catastrophic risk are we willing to tolerate?</strong>"
-Dean W. Ball, <em>Leviathan Waking</em>, Hyperdimensional.<sup id="fnref:ball"><a class="footnote-ref" href="#fn:ball">16</a></sup></p>
+Dean W. Ball, <em>Leviathan Waking</em>, Hyperdimensional.<sup id="fnref:ball"><a class="footnote-ref" href="#fn:ball">1</a></sup></p>
 </blockquote>
-<p>This survey aims to fill what Hadfield and Clark call the <em>democratic deficit</em>: the values-based decisions that shape AI "must be made by democratically accountable public, not private, actors."<sup id="fnref:clark"><a class="footnote-ref" href="#fn:clark">1</a></sup> As is, it is not clear what level of risk the public is willing to tolerate. It does not aim to have the public estimate the actual risk or prescribe mitigations<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">2</a></sup>, but to judge how much risk the public will tolerate (a values question the public is entitled to answer).</p>
+<p>This survey aims to fill what Hadfield and Clark call the <em>democratic deficit</em>: the values-based decisions that shape AI "must be made by democratically accountable public, not private, actors."<sup id="fnref:clark"><a class="footnote-ref" href="#fn:clark">2</a></sup> As is, it is not clear what level of risk the public is willing to tolerate. It does not aim to have the public estimate the actual risk or prescribe mitigations<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">3</a></sup>, but to judge how much risk the public will tolerate (a values question the public is entitled to answer).</p>
+<p><strong>Try the survey:</strong> a live deployment of the current instrument is at <a href="https://sara2026-1c79e9596779.herokuapp.com/room/sara_usa">https://sara2026-1c79e9596779.herokuapp.com/room/sara_usa</a>.</p>
 <hr />
 <h2 id="1-how-to-read-this-document">1. How to read this document</h2>
 <table>
@@ -215,44 +222,56 @@ Dean W. Ball, <em>Leviathan Waking</em>, Hyperdimensional.<sup id="fnref:ball"><
 <hr />
 <h2 id="2-the-problem-you-cannot-just-ask">2. The problem: you cannot just ask</h2>
 <p>The obvious survey is one question: "What annual chance of an AI catastrophe is acceptable?" This would be unlikely to work for several reasons:</p>
-<p><strong>People are unreliable with probabilities.</strong> Asked the chance of getting two heads from two coin tosses, only 52% of UK MPs answered correctly.<sup id="fnref:rss"><a class="footnote-ref" href="#fn:rss">3</a></sup> If the people who write the laws cannot do two coin flips, a general-population sample will not respond meaningfully with "1 in 1,000" versus "1 in 1,000,000."</p>
-<p><strong>People are scope insensitive.</strong> Many respondents treat 1 in 1,000 and 1 in 1,000,000 as the same feeling of "small," so a single elicited number reflects affect, not a considered threshold.<sup id="fnref:kk92"><a class="footnote-ref" href="#fn:kk92">4</a></sup><sup id="fnref:slovic2007"><a class="footnote-ref" href="#fn:slovic2007">5</a></sup></p>
-<p><strong>People are framing sensitive.</strong> The same question shifts with wording, anchors, and who is quoted.<sup id="fnref:chong"><a class="footnote-ref" href="#fn:chong">6</a></sup><sup id="fnref:tk74"><a class="footnote-ref" href="#fn:tk74">7</a></sup> Because some framing is often necessary, this is an effect we want to quantify, rather than something we can eliminate (see §6).</p>
+<p><strong>People are unreliable with probabilities.</strong> Asked the chance of getting two heads from two coin tosses, only 52% of UK MPs answered correctly.<sup id="fnref:rss"><a class="footnote-ref" href="#fn:rss">4</a></sup> If the people who write the laws cannot do two coin flips, a general-population sample will not respond meaningfully with "1 in 1,000" versus "1 in 1,000,000."</p>
+<p><strong>People are scope insensitive.</strong> Many respondents treat 1 in 1,000 and 1 in 1,000,000 as the same feeling of "small," so a single elicited number reflects affect, not a considered threshold.<sup id="fnref:kk92"><a class="footnote-ref" href="#fn:kk92">5</a></sup><sup class="fn-sep">,</sup><sup id="fnref:slovic2007"><a class="footnote-ref" href="#fn:slovic2007">6</a></sup></p>
+<p><strong>People are framing sensitive.</strong> The same question shifts with wording, anchors, and who is quoted.<sup id="fnref:chong"><a class="footnote-ref" href="#fn:chong">7</a></sup><sup class="fn-sep">,</sup><sup id="fnref:tk74"><a class="footnote-ref" href="#fn:tk74">8</a></sup> Because some framing is often necessary, this is an effect we want to quantify, rather than something we can eliminate (see §6).</p>
 <p><strong>So we plan to triangulate rather than trusting any single method.</strong> We plan to assess risk tolerance in four different ways. A conclusion that survives all four survives whichever method a given critic distrusts. Where the methods converge, we increase our confidence in the estimate. Where they diverge, we plan to report bounds and qualitative findings. Together, we hope the methods assess the gap between what experts estimate and what the public will tolerate.</p>
 <hr />
 <h2 id="3-the-core-four-ways-to-triangulate-risk-tolerance">3. The core: four ways to triangulate risk tolerance</h2>
-<p>The four methods run from least anchoring to most. We:
-1. start by asking for the respondent's own number with nothing shown to them, then
-2. infer a number from their choices, then
-3. offer familiar comparators, and only at the end
-4. reveal what named experts have said to see if they're tolerable.</p>
+<p>The four methods run from least anchoring to most. We:</p>
+<ol>
+<li>start by asking for the respondent's own number with nothing shown to them, then</li>
+<li>infer a number from their choices, then</li>
+<li>offer familiar comparators, and only at the end</li>
+<li>reveal what named experts have said to see if they're tolerable.</li>
+</ol>
 <p>Ordering them this way keeps the more suggestive figures from contaminating the unanchored estimate, both in this document and in the fielding sequence (Appendix A).</p>
 <details>
 <summary>Background literature — the acceptable-risk tradition this builds on (click to expand)</summary>
-<p>Asking what risk society will tolerate is an old question with a serious literature. Starr's founding revealed-preference study concluded the public accepts voluntary risks roughly 1,000 times greater than involuntary ones, with acceptable risk "crudely proportional to the third power of the benefits."<sup id="fnref:starr"><a class="footnote-ref" href="#fn:starr">17</a></sup> The psychometric paradigm that followed showed expressed acceptability is structured by dread and unfamiliarity, not just expected fatalities — involuntary, poorly understood, catastrophic hazards (the AI case) are held to far lower probabilities.<sup id="fnref:fischhoff"><a class="footnote-ref" href="#fn:fischhoff">18</a></sup><sup id="fnref:slovicrisk"><a class="footnote-ref" href="#fn:slovicrisk">19</a></sup> Recent AI surveys quantify attitudes and appetite for regulation — more than 8 in 10 Americans say AI requires careful management, and 70% globally believe regulation is needed — but none elicits a <em>tolerated probability</em> of catastrophe.<sup id="fnref:zhang"><a class="footnote-ref" href="#fn:zhang">20</a></sup><sup id="fnref:gillespie"><a class="footnote-ref" href="#fn:gillespie">21</a></sup> To our knowledge no peer-reviewed study directly asks the public what probability of AI catastrophe is acceptable, so SARA has analogues, not precedents; that gap is the contribution.</p>
+<p>Asking what risk society will tolerate is an old question with a serious literature. Starr's founding revealed-preference study concluded the public accepts voluntary risks roughly 1,000 times greater than involuntary ones, with acceptable risk "crudely proportional to the third power of the benefits."<sup id="fnref:starr"><a class="footnote-ref" href="#fn:starr">9</a></sup> The psychometric paradigm that followed showed expressed acceptability is structured by dread and unfamiliarity, not just expected fatalities — involuntary, poorly understood, catastrophic hazards (the AI case) are held to far lower probabilities.<sup id="fnref:fischhoff"><a class="footnote-ref" href="#fn:fischhoff">10</a></sup><sup class="fn-sep">,</sup><sup id="fnref:slovicrisk"><a class="footnote-ref" href="#fn:slovicrisk">11</a></sup> Recent AI surveys quantify attitudes and appetite for regulation — more than 8 in 10 Americans say AI requires careful management, and 70% globally believe regulation is needed — but none elicits a <em>tolerated probability</em> of catastrophe.<sup id="fnref:zhang"><a class="footnote-ref" href="#fn:zhang">12</a></sup><sup class="fn-sep">,</sup><sup id="fnref2:gillespie"><a class="footnote-ref" href="#fn:gillespie">13</a></sup> To our knowledge no peer-reviewed study directly asks the public what probability of AI catastrophe is acceptable, so SARA has analogues, not precedents; that gap is the contribution.</p>
 </details>
-<p>Each subsection gives:
-- the approach in plain English,
-- some literature behind the approach
-- its strengths and limitations,
-- how we respond to those limitations, and
-- a worked example with the real response scale.</p>
+<p>Each subsection gives:</p>
+<ul>
+<li>the approach in plain English,</li>
+<li>some literature behind the approach</li>
+<li>its strengths and limitations,</li>
+<li>how we respond to those limitations, and</li>
+<li>a worked example with the real response scale.</li>
+</ul>
 <h3 id="31-method-1-ask-directly-then-test-whether-the-answer-is-real">3.1 Method 1: Ask directly, then test whether the answer is real</h3>
 <p><strong>The approach.</strong> We ask people directly for the highest risk they will accept, but build in a test of whether the answer means anything. We ask it across a <em>severity ladder</em>, from a single death up to a global catastrophe (around one in ten people), and read off the highest annual chance the respondent will accept at each rung. The key test is <em>scope sensitivity</em>: a considered answer demands a lower acceptable chance as the outcome gets worse, so an answer that stays flat across the ladder is affect, not a threshold. This yields each person's stated frequency-number (F–N) curve. We also collect willingness-to-pay on a log scale.</p>
 <p><strong>Why it is worth doing.</strong> It is the most legible method ("the public's own number"), it provides the within-person scope slope that no other method gives, and it is the convergence cross-check for the discrete choice experiment. I have an honors student checking how scope sensitive people are, and who is more scope sensitive.</p>
-<p><strong>Informing literature.</strong> Scope-insensitivity and embedding effects (contingent-valuation literature, Kahneman &amp; Knetsch).<sup id="fnref2:kk92"><a class="footnote-ref" href="#fn:kk92">4</a></sup> Willingness-to-pay is conventionally modelled as log-normal — a modelling convention that keeps WTP positive with finite moments, not an empirical law — which dictates a log response scale rather than a free-text box.<sup id="fnref:trainweeks"><a class="footnote-ref" href="#fn:trainweeks">8</a></sup></p>
+<p><strong>Informing literature.</strong> Scope-insensitivity and embedding effects (contingent-valuation literature, Kahneman &amp; Knetsch).<sup id="fnref2:kk92"><a class="footnote-ref" href="#fn:kk92">5</a></sup> Willingness-to-pay is conventionally modelled as log-normal — a modelling convention that keeps WTP positive with finite moments, not an empirical law — which dictates a log response scale rather than a free-text box.<sup id="fnref:trainweeks"><a class="footnote-ref" href="#fn:trainweeks">14</a></sup></p>
 <details>
 <summary>Background literature — scope insensitivity and embedding (click to expand)</summary>
-<p>The embedding effect is the founding result: stated WTP for the same public good can differ by more than an order of magnitude depending on whether it is valued alone or inside a more inclusive category.<sup id="fnref3:kk92"><a class="footnote-ref" href="#fn:kk92">4</a></sup> The textbook demonstration is Desvousges et al.: mean stated WTP to save 2,000, 20,000 or 200,000 migrating birds was essentially flat.<sup id="fnref:desvousges"><a class="footnote-ref" href="#fn:desvousges">22</a></sup> The mechanism is affective — valuation by feeling is insensitive to quantity while valuation by calculation is scope-sensitive<sup id="fnref:hseerott"><a class="footnote-ref" href="#fn:hseerott">23</a></sup> — and the same "psychic numbing" extends to human lives, where compassion can begin deteriorating at the second victim.<sup id="fnref2:slovic2007"><a class="footnote-ref" href="#fn:slovic2007">5</a></sup> At the top of our ladder the pattern persists: people do not spontaneously judge human extinction as uniquely worse than a catastrophe killing most-but-not-all of humanity, drawing that distinction only when prompted to consider the long-term future.<sup id="fnref:schubert"><a class="footnote-ref" href="#fn:schubert">24</a></sup> This is why Method 1 measures the scope slope as an outcome rather than assuming a considered threshold exists.</p>
+<p>The embedding effect is the founding result: stated WTP for the same public good can differ by more than an order of magnitude depending on whether it is valued alone or inside a more inclusive category.<sup id="fnref3:kk92"><a class="footnote-ref" href="#fn:kk92">5</a></sup> The textbook demonstration is Desvousges et al.: mean stated WTP to save 2,000, 20,000 or 200,000 migrating birds was essentially flat.<sup id="fnref:desvousges"><a class="footnote-ref" href="#fn:desvousges">15</a></sup> The mechanism is affective — valuation by feeling is insensitive to quantity while valuation by calculation is scope-sensitive<sup id="fnref:hseerott"><a class="footnote-ref" href="#fn:hseerott">16</a></sup> — and the same "psychic numbing" extends to human lives, where compassion can begin deteriorating at the second victim.<sup id="fnref2:slovic2007"><a class="footnote-ref" href="#fn:slovic2007">6</a></sup> At the top of our ladder the pattern persists: people do not spontaneously judge human extinction as uniquely worse than a catastrophe killing most-but-not-all of humanity, drawing that distinction only when prompted to consider the long-term future.<sup id="fnref:schubert"><a class="footnote-ref" href="#fn:schubert">17</a></sup> This is why Method 1 measures the scope slope as an outcome rather than assuming a considered threshold exists.</p>
 </details>
 <p><strong>Strengths.</strong> Directly interpretable; yields the per-person scope slope; cheap; the natural convergence test for the DCE.</p>
-<p><strong>Limitations, and how we respond.</strong>
-- <strong>Scope insensitivity</strong> ("1 in a million for everything").
-  - We measure scope sensitivity instead of designing it away: severity varies <em>within person</em> across the ladder (a single death up to a global catastrophe) and the respondent sets the highest acceptable annual chance at each rung, so an insensitive respondent (flat across the ladder) is clearly distinguishable. We interact the per-person scope slope with risk literacy (Ben's thesis).
-- <strong>Protest zeros and outliers in WTP.</strong>
-  - WTP uses a bounded log scale (not free text) to tame outliers, and a follow-up probe on $0 answers separates protest zeros ("companies should pay", "the money would be wasted") from genuine zeros before the distribution is summarised; with cost dropped from the DCE (Appendix C), this stated item is now the <em>primary</em> willingness-to-pay estimate.
-- <strong>Demand effects</strong> if the ladder rows are seen in an obvious order.
-  - The rows are shown one per page in per-participant randomised order, and that randomisation doubles as the cross-check: <strong>each participant's first-seen rung is a clean between-subjects experiment</strong> (a random quarter of the sample answers each severity first), so the pre-registered sensitivity analysis compares first-response answers by severity against the full within-person curves, and reports the first-response estimates alongside if the two disagree.</p>
+<p><strong>Limitations, and how we respond.</strong></p>
+<ul>
+<li><strong>Scope insensitivity</strong> ("1 in a million for everything").<ul>
+<li>We measure scope sensitivity instead of designing it away: severity varies <em>within person</em> across the ladder (a single death up to a global catastrophe) and the respondent sets the highest acceptable annual chance at each rung, so an insensitive respondent (flat across the ladder) is clearly distinguishable. We interact the per-person scope slope with risk literacy (Ben's thesis).</li>
+</ul>
+</li>
+<li><strong>Protest zeros and outliers in WTP.</strong><ul>
+<li>WTP uses a bounded log scale (not free text) to tame outliers, and a follow-up probe on $0 answers separates protest zeros ("companies should pay", "the money would be wasted") from genuine zeros before the distribution is summarised; with cost dropped from the DCE (Appendix C), this stated item is now the <em>primary</em> willingness-to-pay estimate.</li>
+</ul>
+</li>
+<li><strong>Demand effects</strong> if the ladder rows are seen in an obvious order.<ul>
+<li>The rows are shown one per page in per-participant randomised order, and that randomisation doubles as the cross-check: <strong>each participant's first-seen rung is a clean between-subjects experiment</strong> (a random quarter of the sample answers each severity first), so the pre-registered sensitivity analysis compares first-response answers by severity against the full within-person curves, and reports the first-response estimates alongside if the two disagree.</li>
+</ul>
+</li>
+</ul>
 <p><strong>Worked example items.</strong> The exact items are generated from the instrument below (folded so you can skim; expand to read them).</p>
 <p><strong>(a) Highest acceptable risk, by severity (the public's stated F–N curve).</strong> One item per outcome, from a single death up to a global catastrophe:</p>
 <!-- BEGIN:auto:ladder-items (generated by render/sync_protocol.py — edit the instrument, not here) -->
@@ -260,27 +279,37 @@ Dean W. Ball, <em>Leviathan Waking</em>, Hyperdimensional.<sup id="fnref:ball"><
 <details>
 <summary>Method 1 — the severity-ladder items, as fielded — 4 items (click to expand)</summary>
 <ul>
-<li><strong><code>m4c_single</code></strong> — For an AI disaster that causes a single death, the highest annual chance you would find acceptable is:</li>
+<li><strong><code>m4c_single</code></strong> — For an AI disaster that causes a single death, the highest annual chance you would find acceptable is:<ul>
 <li><em>Scale:</em> 1 in 10 / 1 in 100 / 1 in 1,000 / 1 in 10,000 / 1 in 100,000 / 1 in 1,000,000 / 1 in 10,000,000 / 1 in 100,000,000 / Never allowed</li>
-<li><strong><code>m4c_100</code></strong> — For an AI disaster causing 100 deaths or serious injuries, or $1 billion in damage, the highest annual chance you would find acceptable is:</li>
+</ul>
+</li>
+<li><strong><code>m4c_100</code></strong> — For an AI disaster causing 100 deaths or serious injuries, or $1 billion in damage, the highest annual chance you would find acceptable is:<ul>
 <li><em>Scale:</em> 1 in 10 / 1 in 100 / 1 in 1,000 / 1 in 10,000 / 1 in 100,000 / 1 in 1,000,000 / 1 in 10,000,000 / 1 in 100,000,000 / Never allowed</li>
-<li><strong><code>m4c_1m</code></strong> — For an AI disaster causing 1,000,000 deaths or $100 billion in damage, the highest annual chance you would find acceptable is:</li>
+</ul>
+</li>
+<li><strong><code>m4c_1m</code></strong> — For an AI disaster causing 1,000,000 deaths or $100 billion in damage, the highest annual chance you would find acceptable is:<ul>
 <li><em>Scale:</em> 1 in 10 / 1 in 100 / 1 in 1,000 / 1 in 10,000 / 1 in 100,000 / 1 in 1,000,000 / 1 in 10,000,000 / 1 in 100,000,000 / Never allowed</li>
-<li><strong><code>m4c_800m</code></strong> — For an AI disaster causing around 800,000,000 deaths (about 10% of humanity), the highest annual chance you would find acceptable is:</li>
+</ul>
+</li>
+<li><strong><code>m4c_800m</code></strong> — For an AI disaster causing around 800,000,000 deaths (about 10% of humanity), the highest annual chance you would find acceptable is:<ul>
 <li><em>Scale:</em> 1 in 10 / 1 in 100 / 1 in 1,000 / 1 in 10,000 / 1 in 100,000 / 1 in 1,000,000 / 1 in 10,000,000 / 1 in 100,000,000 / Never allowed</li>
+</ul>
+</li>
 </ul>
 </details>
 <!-- END:auto:ladder-items -->
 
-<p><em>(Respondents see only the plain outcome wording; the source anchors behind each rung — RAISE Act "critical harm", MIT AI Risk Repository "catastrophic", and FRI/XPT "catastrophe"<sup id="fnref:catdef"><a class="footnote-ref" href="#fn:catdef">9</a></sup><sup id="fnref:fri"><a class="footnote-ref" href="#fn:fri">10</a></sup> — are internal and never shown. Severity rises down the ladder, so a considered respondent's acceptable chance should fall; one who picks the same chance regardless of severity is flagged scope-insensitive. Items shown one per page in randomised order. This traces each person's stated frequency-number, F–N, curve and is the stated-preference cross-check on the DCE's revealed surface, §3.2.)</em></p>
+<p><em>(Respondents see only the plain outcome wording; the source anchors behind each rung — RAISE Act "critical harm", MIT AI Risk Repository "catastrophic", and FRI/XPT "catastrophe"<sup id="fnref:catdef"><a class="footnote-ref" href="#fn:catdef">18</a></sup><sup class="fn-sep">,</sup><sup id="fnref:fri"><a class="footnote-ref" href="#fn:fri">19</a></sup> — are internal and never shown. Severity rises down the ladder, so a considered respondent's acceptable chance should fall; one who picks the same chance regardless of severity is flagged scope-insensitive. Items shown one per page in randomised order. This traces each person's stated frequency-number, F–N, curve and is the stated-preference cross-check on the DCE's revealed surface, §3.2.)</em></p>
 <p><strong>(b) Willingness to pay (log scale).</strong> A costed tradeoff on a roughly log-normal scale:</p>
 <!-- BEGIN:auto:wtp-item (generated by render/sync_protocol.py — edit the instrument, not here) -->
 
 <details>
 <summary>Method 1 — the willingness-to-pay item, as fielded — 1 item (click to expand)</summary>
 <ul>
-<li><strong><code>m5_wtp</code></strong> — What is the most you would pay each year, through taxes or higher prices, to cut the chance of an AI catastrophe from 1 in 20 to 1 in 100 over the next 30 years?</li>
+<li><strong><code>m5_wtp</code></strong> — What is the most you would pay each year, through taxes or higher prices, to cut the chance of an AI catastrophe from 1 in 20 to 1 in 100 over the next 30 years?<ul>
 <li><em>Scale:</em> $0 / $1-10 / $10-100 / $100-1,000 / $1,000-10,000 / More than $10,000 / Don't know</li>
+</ul>
+</li>
 </ul>
 </details>
 <!-- END:auto:wtp-item -->
@@ -291,13 +320,13 @@ Dean W. Ball, <em>Leviathan Waking</em>, Hyperdimensional.<sup id="fnref:ball"><
 <p><strong>Why it is worth doing.</strong> It gives revealed preferences rather than stated ones. People reveal what they will trade off (safety against utility and global competitiveness) the way they reveal preferences when shopping, which is harder to game and less prone to "I'll just say one in a million for everything."</p>
 <p><strong>Informing literature: the DCE methods canon.</strong> Mike asked specifically that the established DCE desiderata sit here. The relevant guidance:</p>
 <ul>
-<li><strong>Lancsar &amp; Louviere (2008)</strong>, <em>Conducting Discrete Choice Experiments to Inform Healthcare Decision Making: A User's Guide</em>, PharmacoEconomics 26(8):661–677. The standard practitioner walkthrough.<sup id="fnref:lancsar"><a class="footnote-ref" href="#fn:lancsar">25</a></sup></li>
-<li><strong>ISPOR good-research-practice trilogy.</strong> Bridges et al. (2011), the <strong>10-item conjoint-analysis checklist</strong>, Value in Health 14(4):403–413;<sup id="fnref:bridges"><a class="footnote-ref" href="#fn:bridges">26</a></sup> Reed Johnson et al. (2013) on <strong>experimental design</strong>, Value in Health 16(1):3–13;<sup id="fnref:johnson"><a class="footnote-ref" href="#fn:johnson">27</a></sup> Hauber et al. (2016) on <strong>statistical analysis</strong> of DCEs, Value in Health 19(4):300–315.<sup id="fnref:hauber"><a class="footnote-ref" href="#fn:hauber">28</a></sup></li>
-<li><strong>Soekhai et al. (2019)</strong>, <em>Discrete Choice Experiments in Health Economics: Past, Present and Future</em>, PharmacoEconomics 37:201–226. The comprehensive recent review.<sup id="fnref:soekhai"><a class="footnote-ref" href="#fn:soekhai">29</a></sup></li>
+<li><strong>Lancsar &amp; Louviere (2008)</strong>, <em>Conducting Discrete Choice Experiments to Inform Healthcare Decision Making: A User's Guide</em>, PharmacoEconomics 26(8):661–677. The standard practitioner walkthrough.<sup id="fnref:lancsar"><a class="footnote-ref" href="#fn:lancsar">20</a></sup></li>
+<li><strong>ISPOR good-research-practice trilogy.</strong> Bridges et al. (2011), the <strong>10-item conjoint-analysis checklist</strong>, Value in Health 14(4):403–413;<sup id="fnref:bridges"><a class="footnote-ref" href="#fn:bridges">21</a></sup> Reed Johnson et al. (2013) on <strong>experimental design</strong>, Value in Health 16(1):3–13;<sup id="fnref:johnson"><a class="footnote-ref" href="#fn:johnson">22</a></sup> Hauber et al. (2016) on <strong>statistical analysis</strong> of DCEs, Value in Health 19(4):300–315.<sup id="fnref:hauber"><a class="footnote-ref" href="#fn:hauber">23</a></sup></li>
+<li><strong>Soekhai et al. (2019)</strong>, <em>Discrete Choice Experiments in Health Economics: Past, Present and Future</em>, PharmacoEconomics 37:201–226. The comprehensive recent review.<sup id="fnref:soekhai"><a class="footnote-ref" href="#fn:soekhai">24</a></sup></li>
 </ul>
 <details>
 <summary>Background literature — design and estimation choices (click to expand)</summary>
-<p>The Bayesian D-efficient approach follows Sándor &amp; Wedel, who introduced prior-informed efficient choice designs,<sup id="fnref:sandorwedel"><a class="footnote-ref" href="#fn:sandorwedel">30</a></sup> with Bliemer, Rose &amp; Hess supplying the Bayesian-efficiency machinery behind modern implementations.<sup id="fnref:bliemer"><a class="footnote-ref" href="#fn:bliemer">31</a></sup> Log-normal coefficient specifications follow Train &amp; Weeks's preference-space vs WTP-space treatment — a modelling convention, not an empirical law.<sup id="fnref2:trainweeks"><a class="footnote-ref" href="#fn:trainweeks">8</a></sup> The closest substantive precedents are DCEs valuing mortality-risk reductions,<sup id="fnref:tsuge"><a class="footnote-ref" href="#fn:tsuge">32</a></sup> and the road-safety value-of-statistical-life meta-analysis shows valuations depend strongly on the elicitation method<sup id="fnref:deblaeij"><a class="footnote-ref" href="#fn:deblaeij">33</a></sup> — a further argument for triangulating across methods rather than trusting any one.</p>
+<p>The Bayesian D-efficient approach follows Sándor &amp; Wedel, who introduced prior-informed efficient choice designs,<sup id="fnref:sandorwedel"><a class="footnote-ref" href="#fn:sandorwedel">25</a></sup> with Bliemer, Rose &amp; Hess supplying the Bayesian-efficiency machinery behind modern implementations.<sup id="fnref:bliemer"><a class="footnote-ref" href="#fn:bliemer">26</a></sup> Log-normal coefficient specifications follow Train &amp; Weeks's preference-space vs WTP-space treatment — a modelling convention, not an empirical law.<sup id="fnref2:trainweeks"><a class="footnote-ref" href="#fn:trainweeks">14</a></sup> The closest substantive precedents are DCEs valuing mortality-risk reductions,<sup id="fnref:tsuge"><a class="footnote-ref" href="#fn:tsuge">27</a></sup> and the road-safety value-of-statistical-life meta-analysis shows valuations depend strongly on the elicitation method<sup id="fnref:deblaeij"><a class="footnote-ref" href="#fn:deblaeij">28</a></sup> — a further argument for triangulating across methods rather than trusting any one.</p>
 </details>
 <details>
 <summary>SARA's DCE against the ISPOR checklist</summary>
@@ -315,7 +344,7 @@ Dean W. Ball, <em>Leviathan Waking</em>, Hyperdimensional.<sup id="fnref:ball"><
 </tr>
 <tr>
 <td>2. Attributes and levels justified</td>
-<td>4 attributes: <strong>severity</strong> (the catastrophe ladder below, a single death → ~800,000,000 deaths),<sup id="fnref6:catdef"><a class="footnote-ref" href="#fn:catdef">9</a></sup> <strong>probability</strong> (annual chance of that catastrophe, 1 in 100 → 1 in 1,000,000), <strong>utility</strong> (modest / major / transformative), <strong>competition</strong> (Other countries are ahead / The US keeps pace / The US is ahead). Cost was dropped to the dumpster (01 Jul 2026): money is an implementation question, not the democratic tradeoff the DCE measures (Hadfield), and acceptable risk is identified by the status-quo opt-out, not a price. Severity is varied, not fixed, so the design traces the full frequency-severity (F–N) surface rather than a single hard-coded 100,000-death point.</td>
+<td>4 attributes: <strong>severity</strong> (the catastrophe ladder below, a single death → ~800,000,000 deaths),<sup id="fnref6:catdef"><a class="footnote-ref" href="#fn:catdef">18</a></sup> <strong>probability</strong> (annual chance of that catastrophe, 1 in 100 → 1 in 1,000,000), <strong>utility</strong> (modest / major / transformative), <strong>competition</strong> (Other countries are ahead / The US keeps pace / The US is ahead). Cost was dropped to the dumpster (01 Jul 2026): money is an implementation question, not the democratic tradeoff the DCE measures (Hadfield), and acceptable risk is identified by the status-quo opt-out, not a price. Severity is varied, not fixed, so the design traces the full frequency-severity (F–N) surface rather than a single hard-coded 100,000-death point.</td>
 </tr>
 <tr>
 <td>3. Construction of choice tasks</td>
@@ -344,7 +373,7 @@ Dean W. Ball, <em>Leviathan Waking</em>, Hyperdimensional.<sup id="fnref:ball"><
 </tbody>
 </table>
 </details>
-<p><strong>Severity ladder (the varied catastrophe attribute).</strong> Severity is one level of a ladder, never a single fixed definition; RAISE/SB 53 is the legal baseline.<sup id="fnref2:catdef"><a class="footnote-ref" href="#fn:catdef">9</a></sup></p>
+<p><strong>Severity ladder (the varied catastrophe attribute).</strong> Severity is one level of a ladder, never a single fixed definition; RAISE/SB 53 is the legal baseline.<sup id="fnref2:catdef"><a class="footnote-ref" href="#fn:catdef">18</a></sup></p>
 <table>
 <thead>
 <tr>
@@ -362,28 +391,36 @@ Dean W. Ball, <em>Leviathan Waking</em>, Hyperdimensional.<sup id="fnref:ball"><
 <tr>
 <td>Critical harm</td>
 <td>100 deaths or serious injuries, or $1 billion in damage</td>
-<td>RAISE Act "critical harm" legal anchor<sup id="fnref4:catdef"><a class="footnote-ref" href="#fn:catdef">9</a></sup></td>
+<td>RAISE Act "critical harm" legal anchor<sup id="fnref5:catdef"><a class="footnote-ref" href="#fn:catdef">18</a></sup></td>
 </tr>
 <tr>
 <td>Catastrophic</td>
 <td>1,000,000 deaths or $100 billion in damage</td>
-<td>MIT AI Risk Repository "catastrophic" threshold<sup id="fnref5:catdef"><a class="footnote-ref" href="#fn:catdef">9</a></sup></td>
+<td>MIT AI Risk Repository "catastrophic" threshold<sup id="fnref4:catdef"><a class="footnote-ref" href="#fn:catdef">18</a></sup></td>
 </tr>
 <tr>
 <td>Global catastrophe</td>
 <td>~800,000,000 deaths, about 10% of humanity</td>
-<td>FRI/XPT "catastrophe"<sup id="fnref2:fri"><a class="footnote-ref" href="#fn:fri">10</a></sup></td>
+<td>FRI/XPT "catastrophe"<sup id="fnref2:fri"><a class="footnote-ref" href="#fn:fri">19</a></sup></td>
 </tr>
 </tbody>
 </table>
 <p><strong>Strengths.</strong> Revealed not stated preferences; recovers a defensible number with intervals; lets us read off the utility and competition tradeoffs directly; resistant to scope-insensitivity gaming because risk trades against other attributes.</p>
-<p><strong>Limitations, and how we respond.</strong>
-- <strong>Combinatorial size.</strong> Mike's worry: with several attributes at several levels the full factorial is sizeable (4 × 5 × 3 × 3 = 180 profiles once severity is varied), and pairwise comparisons multiply quickly. You cannot show one person everything.
-  - We do <strong>not</strong> show every cell to every person. A Bayesian D-efficient design selects an efficient subset, split into 10 blocks, so each respondent sees ~10 well-chosen tasks while the <em>sample</em> identifies all tradeoffs. Severity is a varied attribute (the ladder above), so the DCE traces an F–N surface rather than a single point; varying severity spreads power across the grid, which the 4,000-respondent sample and an efficient design absorb (dropping cost shrank the grid from 720 to 180 and eased this). We confirmed by simulation that this attribute structure identifies the coefficients.
-- <strong>Cognitive load.</strong> Ten multi-attribute choices is near the upper end of what a general sample handles well.
-  - The blocked design keeps each respondent to about ten tasks — near, but not beyond, that upper end — rather than the full grid.
-- <strong>Hypotheticality.</strong> Stated-choice futures are still hypothetical, even if the format is choice-based.
-  - It stays a stated-choice format, so we lean on triangulation: the §3.1 severity-ladder elicitation (a stated F–N curve) is the cheaper stated-preference cross-check, and the DCE number must agree with the direct method (§3.1) within about one order of magnitude before we report any single public number (the convergence go/no-go, §5).</p>
+<p><strong>Limitations, and how we respond.</strong></p>
+<ul>
+<li><strong>Combinatorial size.</strong> Mike's worry: with several attributes at several levels the full factorial is sizeable (4 × 5 × 3 × 3 = 180 profiles once severity is varied), and pairwise comparisons multiply quickly. You cannot show one person everything.<ul>
+<li>We do <strong>not</strong> show every cell to every person. A Bayesian D-efficient design selects an efficient subset, split into 10 blocks, so each respondent sees ~10 well-chosen tasks while the <em>sample</em> identifies all tradeoffs. Severity is a varied attribute (the ladder above), so the DCE traces an F–N surface rather than a single point; varying severity spreads power across the grid, which the 4,000-respondent sample and an efficient design absorb (dropping cost shrank the grid from 720 to 180 and eased this). We confirmed by simulation that this attribute structure identifies the coefficients.</li>
+</ul>
+</li>
+<li><strong>Cognitive load.</strong> Ten multi-attribute choices is near the upper end of what a general sample handles well.<ul>
+<li>The blocked design keeps each respondent to about ten tasks — near, but not beyond, that upper end — rather than the full grid.</li>
+</ul>
+</li>
+<li><strong>Hypotheticality.</strong> Stated-choice futures are still hypothetical, even if the format is choice-based.<ul>
+<li>It stays a stated-choice format, so we lean on triangulation: the §3.1 severity-ladder elicitation (a stated F–N curve) is the cheaper stated-preference cross-check, and the DCE number must agree with the direct method (§3.1) within about one order of magnitude before we report any single public number (the convergence go/no-go, §5).</li>
+</ul>
+</li>
+</ul>
 <p><strong>Population-level sequential design (adaptive priors).</strong> Varying severity enlarges the grid to 180 profiles, so a design built on <em>guessed</em> priors spreads its power thinly and may concentrate it in the wrong region — public AI-risk tolerance is close to unknown going in. We therefore field in waves and let the <strong>population-level</strong> priors adapt to the data, while holding each respondent's instrument fixed:</p>
 <ol>
 <li><strong>Pilot wave</strong> (~500 respondents) on a Bayesian D-efficient design built from diffuse priors (or the 2025 estimates where available).</li>
@@ -437,19 +474,27 @@ Dean W. Ball, <em>Leviathan Waking</em>, Hyperdimensional.<sup id="fnref:ball"><
 <h3 id="33-method-3-anchor-to-the-safety-we-already-accept">3.3 Method 3: Anchor to the safety we already accept</h3>
 <p><strong>The approach.</strong> Rather than ask for an absolute number, we ask the public to place AI <em>relative to industries whose risk we already tolerate</em>: nuclear power, commercial aviation, new pharmaceuticals, cars, dams. Should AI be held to a stricter standard, the same, or a looser one? This converts an impossible absolute judgement into a familiar comparison.</p>
 <p><strong>Why it is worth doing.</strong> It uses the public's lived intuitions about which activities society already keeps very safe (flying) and which it lets run hotter. It also lets us "back out" an implied risk band for AI from the band society tolerates for the comparator, as an illustration only.</p>
-<p><strong>Informing literature.</strong> The ALARP / "as low as reasonably practicable" and F–N (frequency–number) curve traditions in engineering safety (nuclear, rail, chemical).<sup id="fnref:r2p2"><a class="footnote-ref" href="#fn:r2p2">11</a></sup> These give the comparator standards. We treat them as benchmarks the public can react to, not as ground truth for AI. Comparative judgement is also psychologically easier than absolute judgement: hard-to-evaluate attributes become evaluable against a comparator.<sup id="fnref:hsee96"><a class="footnote-ref" href="#fn:hsee96">12</a></sup></p>
+<p><strong>Informing literature.</strong> The ALARP / "as low as reasonably practicable" and F–N (frequency–number) curve traditions in engineering safety (nuclear, rail, chemical).<sup id="fnref:r2p2"><a class="footnote-ref" href="#fn:r2p2">29</a></sup> These give the comparator standards. We treat them as benchmarks the public can react to, not as ground truth for AI. Comparative judgement is also psychologically easier than absolute judgement: hard-to-evaluate attributes become evaluable against a comparator.<sup id="fnref:hsee96"><a class="footnote-ref" href="#fn:hsee96">30</a></sup></p>
 <details>
 <summary>Background literature — tolerability frameworks and comparative judgement (click to expand)</summary>
-<p>UK engineering practice sets societal-risk tolerability inside a three-band framework — unacceptable / tolerable-if-ALARP / broadly acceptable — first developed for nuclear power and generalised in the HSE's <em>Reducing Risks, Protecting People</em>, whose societal anchor holds that an accident killing 50 or more people should be regarded as intolerable above a frequency of 1 in 5,000 per year.<sup id="fnref2:r2p2"><a class="footnote-ref" href="#fn:r2p2">11</a></sup><sup id="fnref:hse1992"><a class="footnote-ref" href="#fn:hse1992">34</a></sup> Psychologically, the case for comparative rather than absolute elicitation is Hsee's evaluability work: attributes that are hard to evaluate in isolation become evaluable when a comparator is present, so joint evaluation yields more stable, scope-sensitive judgements than separate evaluation.<sup id="fnref2:hsee96"><a class="footnote-ref" href="#fn:hsee96">12</a></sup><sup id="fnref:hsee99"><a class="footnote-ref" href="#fn:hsee99">35</a></sup> That is exactly the move Method 3 makes — replacing an impossible absolute number with a comparison to industries whose risk band society already lives with.</p>
+<p>UK engineering practice sets societal-risk tolerability inside a three-band framework — unacceptable / tolerable-if-ALARP / broadly acceptable — first developed for nuclear power and generalised in the HSE's <em>Reducing Risks, Protecting People</em>, whose societal anchor holds that an accident killing 50 or more people should be regarded as intolerable above a frequency of 1 in 5,000 per year.<sup id="fnref2:r2p2"><a class="footnote-ref" href="#fn:r2p2">29</a></sup><sup class="fn-sep">,</sup><sup id="fnref:hse1992"><a class="footnote-ref" href="#fn:hse1992">31</a></sup> Psychologically, the case for comparative rather than absolute elicitation is Hsee's evaluability work: attributes that are hard to evaluate in isolation become evaluable when a comparator is present, so joint evaluation yields more stable, scope-sensitive judgements than separate evaluation.<sup id="fnref2:hsee96"><a class="footnote-ref" href="#fn:hsee96">30</a></sup><sup class="fn-sep">,</sup><sup id="fnref:hsee99"><a class="footnote-ref" href="#fn:hsee99">32</a></sup> That is exactly the move Method 3 makes — replacing an impossible absolute number with a comparison to industries whose risk band society already lives with.</p>
 </details>
 <p><strong>Strengths.</strong> Comparative judgements are far easier and more stable than absolute ones; the comparators are concrete and familiar; the result maps onto how regulators actually argue.</p>
-<p><strong>Limitations, and how we respond.</strong>
-- <strong>Category error.</strong> "AI should be <em>stricter</em>" can mean stricter <em>rules</em> or safer <em>outcomes</em>.
-  - We now focus exclusively on stricter standards rather than safer outcomes because policymakers set standards and we can't measure catastrophic AI outcomes.
-- <strong>The denominator problem (the big one).</strong> "One death per what?" Expert AI risk figures are about the <em>whole technology</em>, the equivalent of every nuclear reactor or every flight worldwide, not a single unit. A naive comparison to "a plane crash" is apples to oranges.
-  - We make it apples to apples by specifying each comparator at the <em>industry</em> level (all reactors, the whole aviation system), matching the scope of the AI estimate.
-- <strong>Quantifiability.</strong> Some respondents reject the premise that AI risk can be put on a number at all. We must not force them onto a scale they reject.
-  - The "reject the frame" escape survives as a <strong>"Cannot compare these technologies"</strong> option on the response scale, so no one is forced onto a scale they reject (this also carries the standalone frame-applicability item's function after that item was cut to the dumpster).</p>
+<p><strong>Limitations, and how we respond.</strong></p>
+<ul>
+<li><strong>Category error.</strong> "AI should be <em>stricter</em>" can mean stricter <em>rules</em> or safer <em>outcomes</em>.<ul>
+<li>We now focus exclusively on stricter standards rather than safer outcomes because policymakers set standards and we can't measure catastrophic AI outcomes.</li>
+</ul>
+</li>
+<li><strong>The denominator problem (the big one).</strong> "One death per what?" Expert AI risk figures are about the <em>whole technology</em>, the equivalent of every nuclear reactor or every flight worldwide, not a single unit. A naive comparison to "a plane crash" is apples to oranges.<ul>
+<li>We make it apples to apples by specifying each comparator at the <em>industry</em> level (all reactors, the whole aviation system), matching the scope of the AI estimate.</li>
+</ul>
+</li>
+<li><strong>Quantifiability.</strong> Some respondents reject the premise that AI risk can be put on a number at all. We must not force them onto a scale they reject.<ul>
+<li>The "reject the frame" escape survives as a <strong>"Cannot compare these technologies"</strong> option on the response scale, so no one is forced onto a scale they reject (this also carries the standalone frame-applicability item's function after that item was cut to the dumpster).</li>
+</ul>
+</li>
+</ul>
 <p>Beyond the three comparators, a single dangerous-activity sanity anchor at the risky end — climbing Mount Everest (restored 02 Jul 2026; one anchor, not the earlier three-activity pool), with its ~1-in-100 fatality record stated in the stem so the anchor doesn't assume the danger is known, fielded after the attention checks because its stem differs from the comparator stems — confirms people can place AI across the <em>full</em> range: the industry comparators only exercise the strict end, and nearly everyone should demand stricter rules for AI than for an activity whose risk falls on the climber. Any F–N back-out is illustrative, gated on the cognitive pre-test, and never published as an "N times safer" headline.</p>
 <p><strong>Worked example items.</strong> The live comparator items, their scales, and the randomisation pools, exactly as fielded:</p>
 <!-- BEGIN:auto:method3-live (generated by render/sync_protocol.py — edit the instrument, not here) -->
@@ -457,18 +502,30 @@ Dean W. Ball, <em>Leviathan Waking</em>, Hyperdimensional.<sup id="fnref:ball"><
 <details>
 <summary>Method 3 — comparator items (incl. the embedded attention checks), as fielded — 6 items (click to expand)</summary>
 <ul>
-<li><strong><code>m3_std_nuclear</code></strong> — Compared with the safety regulations on nuclear power, regulation of advanced AI should be:</li>
+<li><strong><code>m3_std_nuclear</code></strong> — Compared with the safety regulations on nuclear power, regulation of advanced AI should be:<ul>
 <li><em>Scale:</em> Much stricter / Stricter / About the same / Less strict / Much less strict / Cannot compare these technologies</li>
-<li><strong><code>m3_std_aviation</code></strong> — Compared with the safety regulations on commercial aviation, regulation of advanced AI should be:</li>
+</ul>
+</li>
+<li><strong><code>m3_std_aviation</code></strong> — Compared with the safety regulations on commercial aviation, regulation of advanced AI should be:<ul>
 <li><em>Scale:</em> Much stricter / Stricter / About the same / Less strict / Much less strict / Cannot compare these technologies</li>
-<li><strong><code>m3_std_dams</code></strong> — Compared with the safety regulations on large dams, regulation of advanced AI should be:</li>
+</ul>
+</li>
+<li><strong><code>m3_std_dams</code></strong> — Compared with the safety regulations on large dams, regulation of advanced AI should be:<ul>
 <li><em>Scale:</em> Much stricter / Stricter / About the same / Less strict / Much less strict / Cannot compare these technologies</li>
-<li><strong><code>m3_att_bioweapons</code></strong> — Compared with the safety regulations on biological weapons, this is an attention check, so you must select much less strict:</li>
+</ul>
+</li>
+<li><strong><code>m3_att_bioweapons</code></strong> — Compared with the safety regulations on biological weapons, this is an attention check, so you must select much less strict:<ul>
 <li><em>Scale:</em> Much stricter / Stricter / About the same / Less strict / Much less strict / Cannot compare these technologies</li>
-<li><strong><code>m3_att_nuclear</code></strong> — Compared with the safety regulations on nuclear weapons, this is an attention check, so you must select much less strict:</li>
+</ul>
+</li>
+<li><strong><code>m3_att_nuclear</code></strong> — Compared with the safety regulations on nuclear weapons, this is an attention check, so you must select much less strict:<ul>
 <li><em>Scale:</em> Much stricter / Stricter / About the same / Less strict / Much less strict / Cannot compare these technologies</li>
-<li><strong><code>m3_sanity_everest</code></strong> — Climbing Mount Everest is very dangerous: about 1 in every 100 people who have tried to climb it have died. Compared with the safety rules we accept for climbing Everest, regulation of advanced AI should be:</li>
+</ul>
+</li>
+<li><strong><code>m3_sanity_everest</code></strong> — Climbing Mount Everest is very dangerous: about 1 in every 100 people who have tried to climb it have died. Compared with the safety rules we accept for climbing Everest, regulation of advanced AI should be:<ul>
 <li><em>Scale:</em> Much stricter / Stricter / About the same / Less strict / Much less strict / Cannot compare these technologies</li>
+</ul>
+</li>
 </ul>
 </details>
 <!-- END:auto:method3-live -->
@@ -478,33 +535,49 @@ Dean W. Ball, <em>Leviathan Waking</em>, Hyperdimensional.<sup id="fnref:ball"><
 <h3 id="34-method-4-judge-a-named-experts-number">3.4 Method 4: Judge a named expert's number</h3>
 <p><strong>The approach.</strong> We hand the respondent risk figures that named, real people have stated publicly, and we ask whether each level is acceptable. Because the numbers are recognised rather than generated, the respondent does the one thing they are good at: judging. We show <strong>several</strong> sources at once, spanning the full range of stated views, and read off the acceptability of each — a within-person tolerance curve rather than a single anchored reading.</p>
 <p><strong>Why it is worth doing.</strong> This is the method that speaks most directly to policy. It does not set the public's risk tolerance in the abstract; it tests whether the <em>current</em> expert estimates fall inside or outside that tolerance. If most of the public calls Amodei's stated figure "unacceptable, should be illegal," that is a finding lawmakers can act on without anyone first agreeing on the true probability.</p>
-<p><strong>Informing literature.</strong> Anchoring<sup id="fnref2:tk74"><a class="footnote-ref" href="#fn:tk74">7</a></sup> and constructed preference — people judge presented numbers better than they generate them de novo.<sup id="fnref:constructed"><a class="footnote-ref" href="#fn:constructed">13</a></sup> The named-source design also answers Barnett's objection that "it depends what you call an expert": we never say "experts," we name the individual and report by source.</p>
+<p><strong>Informing literature.</strong> Anchoring<sup id="fnref2:tk74"><a class="footnote-ref" href="#fn:tk74">8</a></sup> and constructed preference — people judge presented numbers better than they generate them de novo.<sup id="fnref:constructed"><a class="footnote-ref" href="#fn:constructed">33</a></sup> The named-source design also answers Barnett's objection that "it depends what you call an expert": we never say "experts," we name the individual and report by source.</p>
 <details>
 <summary>Background literature — anchoring and constructed preference (click to expand)</summary>
-<p>Numerical judgements are pulled toward presented values even when the anchor is transparently irrelevant,<sup id="fnref3:tk74"><a class="footnote-ref" href="#fn:tk74">7</a></sup> and a half-century of replication finds the effect robust across domains and stubbornly hard to debias.<sup id="fnref2:furnham"><a class="footnote-ref" href="#fn:furnham">14</a></sup> The constructed-preference literature holds that preferences over unfamiliar quantities are built at the moment of elicitation rather than retrieved, which favours structured judgement of presented figures over free numerical generation.<sup id="fnref2:constructed"><a class="footnote-ref" href="#fn:constructed">13</a></sup> We found no established result that presenting several anchors at once dampens the pull of any single one, so we treat that as a design hypothesis this method tests — the within-person spread across the four sources is itself informative — rather than a bias-removal claim.<sup id="fnref3:furnham"><a class="footnote-ref" href="#fn:furnham">14</a></sup></p>
+<p>Numerical judgements are pulled toward presented values even when the anchor is transparently irrelevant,<sup id="fnref3:tk74"><a class="footnote-ref" href="#fn:tk74">8</a></sup> and a half-century of replication finds the effect robust across domains and stubbornly hard to debias.<sup id="fnref2:furnham"><a class="footnote-ref" href="#fn:furnham">34</a></sup> The constructed-preference literature holds that preferences over unfamiliar quantities are built at the moment of elicitation rather than retrieved, which favours structured judgement of presented figures over free numerical generation.<sup id="fnref2:constructed"><a class="footnote-ref" href="#fn:constructed">33</a></sup> We found no established result that presenting several anchors at once dampens the pull of any single one, so we treat that as a design hypothesis this method tests — the within-person spread across the four sources is itself informative — rather than a bias-removal claim.<sup id="fnref3:furnham"><a class="footnote-ref" href="#fn:furnham">34</a></sup></p>
 </details>
 <p><strong>Strengths.</strong> Recognition not generation; directly decision-relevant; robust to the "who counts as an expert" critique because every anchor is attributed.</p>
-<p><strong>Limitations, and how we respond.</strong>
-- <strong>Anchoring:</strong> people may cluster around whatever number they are shown.
-  - We show a set of figures within person that spans the credible range — from near-zero (LeCun's verbatim "below the chances of an asteroid hitting the Earth", glossed with the scientific asteroid base rate of ~1 in 1,000,000 per century, since LeCun himself declines to give a number) through careful forecasters (FRI/XPT superforecasters ~1 in 250, then FRI AI-domain experts ~1 in 30) to the top of the range (Amodei, between 1 in 10 and 1 in 4) — and we report results <em>by source</em> so the spread is visible rather than collapsed into one average. Whether showing several anchors at once dampens the pull of any single one is not established in the debiasing literature (which finds anchoring hard to remove),<sup id="fnref:furnham"><a class="footnote-ref" href="#fn:furnham">14</a></sup> so we treat it as a design hypothesis, not an assumption: reporting by source keeps the result interpretable either way. (The earlier Altman/Musk anchors were replaced by the two FRI forecaster medians on 01 Jul 2026, so the set now spans named individuals <em>and</em> expert-forecaster groups.)
-- <strong>The figures must be real</strong> and fairly quoted, or the whole item is indefensible.
-  - Every figure is verified against a citable public statement before fielding (see the flag below).
-- <strong>A tolerability rating can still be affect</strong> ("I dislike AI") rather than a considered threshold.
-  - This method is only one of four; if affect were driving it, the choice-based method (§3.2) would not agree.</p>
+<p><strong>Limitations, and how we respond.</strong></p>
+<ul>
+<li><strong>Anchoring:</strong> people may cluster around whatever number they are shown.<ul>
+<li>We show a set of figures within person that spans the credible range — from near-zero (LeCun's verbatim "below the chances of an asteroid hitting the Earth", glossed with the scientific asteroid base rate of ~1 in 1,000,000 per century, since LeCun himself declines to give a number) through careful forecasters (FRI/XPT superforecasters ~1 in 250, then FRI AI-domain experts ~1 in 30) to the top of the range (Amodei, between 1 in 10 and 1 in 4) — and we report results <em>by source</em> so the spread is visible rather than collapsed into one average. Whether showing several anchors at once dampens the pull of any single one is not established in the debiasing literature (which finds anchoring hard to remove),<sup id="fnref:furnham"><a class="footnote-ref" href="#fn:furnham">34</a></sup> so we treat it as a design hypothesis, not an assumption: reporting by source keeps the result interpretable either way. (The earlier Altman/Musk anchors were replaced by the two FRI forecaster medians on 01 Jul 2026, so the set now spans named individuals <em>and</em> expert-forecaster groups.)</li>
+</ul>
+</li>
+<li><strong>The figures must be real</strong> and fairly quoted, or the whole item is indefensible.<ul>
+<li>Every figure is verified against a citable public statement before fielding (see the flag below).</li>
+</ul>
+</li>
+<li><strong>A tolerability rating can still be affect</strong> ("I dislike AI") rather than a considered threshold.<ul>
+<li>This method is only one of four; if affect were driving it, the choice-based method (§3.2) would not agree.</li>
+</ul>
+</li>
+</ul>
 <p><strong>Worked example item.</strong> Public figures and expert-forecaster groups have estimated the chance that advanced AI leads to a catastrophe (for the two forecaster rows, human extinction this century). The exact items, generated from the instrument:</p>
 <!-- BEGIN:auto:experts (generated by render/sync_protocol.py — edit the instrument, not here) -->
 
 <details>
 <summary>Method 4 — the named-source items, as fielded — 4 items (click to expand)</summary>
 <ul>
-<li><strong><code>m2_experts_lecun</code></strong> — Yann LeCun (winner of the Turing Award, computer science's Nobel Prize) has said the chance that AI wipes out humanity is "below the chances of an asteroid hitting the Earth." Scientists put the chance of an extinction-level asteroid strike at about 1 in 1,000,000 per century. Accepting a risk at that level would be:</li>
+<li><strong><code>m2_experts_lecun</code></strong> — Yann LeCun (winner of the Turing Award, computer science's Nobel Prize) has said the chance that AI wipes out humanity is "below the chances of an asteroid hitting the Earth." Scientists put the chance of an extinction-level asteroid strike at about 1 in 1,000,000 per century. Accepting a risk at that level would be:<ul>
 <li><em>Scale:</em> Tolerable: okay to live with, if monitored / Intolerable: too dangerous, must be fixed</li>
-<li><strong><code>m2_experts_fri_super</code></strong> — Expert forecasters in a large forecasting tournament put the chance that AI causes human extinction this century at about 1 in 250. Accepting a risk at that level would be:</li>
+</ul>
+</li>
+<li><strong><code>m2_experts_fri_super</code></strong> — Expert forecasters in a large forecasting tournament put the chance that AI causes human extinction this century at about 1 in 250. Accepting a risk at that level would be:<ul>
 <li><em>Scale:</em> Tolerable: okay to live with, if monitored / Intolerable: too dangerous, must be fixed</li>
-<li><strong><code>m2_experts_fri_domain</code></strong> — AI-domain experts in a large forecasting tournament put the chance that AI causes human extinction this century at about 1 in 30. Accepting a risk at that level would be:</li>
+</ul>
+</li>
+<li><strong><code>m2_experts_fri_domain</code></strong> — AI-domain experts in a large forecasting tournament put the chance that AI causes human extinction this century at about 1 in 30. Accepting a risk at that level would be:<ul>
 <li><em>Scale:</em> Tolerable: okay to live with, if monitored / Intolerable: too dangerous, must be fixed</li>
-<li><strong><code>m2_experts_amodei</code></strong> — Dario Amodei (CEO of Top AI Company, Anthropic) has estimated the chance that AI goes catastrophically wrong at between 1 in 10 and 1 in 4. Accepting a risk at that level would be:</li>
+</ul>
+</li>
+<li><strong><code>m2_experts_amodei</code></strong> — Dario Amodei (CEO of Top AI Company, Anthropic) has estimated the chance that AI goes catastrophically wrong at between 1 in 10 and 1 in 4. Accepting a risk at that level would be:<ul>
 <li><em>Scale:</em> Tolerable: okay to live with, if monitored / Intolerable: too dangerous, must be fixed</li>
+</ul>
+</li>
 </ul>
 </details>
 <!-- END:auto:experts -->
@@ -521,9 +594,9 @@ Dean W. Ball, <em>Leviathan Waking</em>, Hyperdimensional.<sup id="fnref:ball"><
 <p>These are variables to measure and control for, rather than for excluding participants. Covariates moderate the estimate and let us ask whether, for example, young people are less tolerant of low-probability futures that foreclose the long-term future. Default analysis enters them as controls or via MRP (§5) so the headline is a population estimate net of sample composition.</p>
 <ul>
 <li><strong>Demographics for weighting.</strong> Age, gender, education, income, state, all aligned to US Census / ACS categories so they post-stratify to population controls (see Appendix A for the exact brackets).</li>
-<li><strong>AI familiarity.</strong> Frequency of intentional AI use (Gillespie et al. 2025; item validated as a proxy for technology experience per Hargittai 2005).<sup id="fnref2:gillespie"><a class="footnote-ref" href="#fn:gillespie">21</a></sup></li>
-<li><strong>Political orientation.</strong> 7-point Very Liberal to Very Conservative (Jost 2006).<sup id="fnref:jost"><a class="footnote-ref" href="#fn:jost">36</a></sup></li>
-<li><strong>Risk literacy / numeracy.</strong> Berlin Numeracy Test style items (Cokely et al. 2012; a fast, psychometrically sensitive measure of risk literacy and a robust predictor of decision quality).<sup id="fnref:cokely"><a class="footnote-ref" href="#fn:cokely">37</a></sup> The key interaction for one of my honours students' projects: does higher risk literacy increase scope sensitivity?</li>
+<li><strong>AI familiarity.</strong> Frequency of intentional AI use (Gillespie et al. 2025; item validated as a proxy for technology experience per Hargittai 2005).<sup id="fnref:gillespie"><a class="footnote-ref" href="#fn:gillespie">13</a></sup></li>
+<li><strong>Political orientation.</strong> 7-point Very Liberal to Very Conservative (Jost 2006).<sup id="fnref:jost"><a class="footnote-ref" href="#fn:jost">35</a></sup></li>
+<li><strong>Risk literacy / numeracy.</strong> Berlin Numeracy Test style items (Cokely et al. 2012; a fast, psychometrically sensitive measure of risk literacy and a robust predictor of decision quality).<sup id="fnref:cokely"><a class="footnote-ref" href="#fn:cokely">36</a></sup> The key interaction for one of my honours students' projects: does higher risk literacy increase scope sensitivity?</li>
 </ul>
 <hr />
 <h2 id="5-estimating-the-population-view-mrp">5. Estimating the population view (MRP)</h2>
@@ -535,12 +608,12 @@ Dean W. Ball, <em>Leviathan Waking</em>, Hyperdimensional.<sup id="fnref:ball"><
 <p>Critics say poll answers are shallow and shift with messaging. Rather than pretend otherwise, we make the swing a primary outcome. We don't treat any of these as measuring "true" opinion; the question is how far opinion moves when the talking points change, and — where it moves — <em>why</em>.</p>
 <details>
 <summary>Background literature — framing and information-provision experiments (click to expand)</summary>
-<p>That policy attitudes shift with how an issue is framed is one of the best-documented findings in political behaviour,<sup id="fnref2:chong"><a class="footnote-ref" href="#fn:chong">6</a></sup> which is why briefing content is varied experimentally rather than treated as a neutral constant. The design template for §6.1 is the information-provision-experiment literature, which gives best practice on measuring prior beliefs, varying the information cleanly, measuring updating, and handling experimenter-demand confounds.<sup id="fnref:haaland"><a class="footnote-ref" href="#fn:haaland">38</a></sup> The central-vs-peripheral decomposition in §6.2 and §6.3 comes from the Elaboration Likelihood Model: attitude change won by scrutiny of arguments (the central route) is more persistent and behaviour-predictive than change won by cues such as source prestige (the peripheral route).<sup id="fnref2:elm"><a class="footnote-ref" href="#fn:elm">15</a></sup></p>
+<p>That policy attitudes shift with how an issue is framed is one of the best-documented findings in political behaviour,<sup id="fnref2:chong"><a class="footnote-ref" href="#fn:chong">7</a></sup> which is why briefing content is varied experimentally rather than treated as a neutral constant. The design template for §6.1 is the information-provision-experiment literature, which gives best practice on measuring prior beliefs, varying the information cleanly, measuring updating, and handling experimenter-demand confounds.<sup id="fnref:haaland"><a class="footnote-ref" href="#fn:haaland">37</a></sup> The central-vs-peripheral decomposition in §6.2 and §6.3 comes from the Elaboration Likelihood Model: attitude change won by scrutiny of arguments (the central route) is more persistent and behaviour-predictive than change won by cues such as source prestige (the peripheral route).<sup id="fnref2:elm"><a class="footnote-ref" href="#fn:elm">38</a></sup></p>
 </details>
 <h3 id="61-balanced-disclosure-experiment-information-provision">6.1 Balanced-disclosure experiment (information provision)</h3>
 <p>A random half see a short, balanced <em>disclosure</em> — a two-sentence statement of the loss-of-control worry plus the counter-consideration — <em>before</em> the tolerance block. "Disclosure" is the honest label: it is too brief to make anyone informed, and we don't claim it does; it tests whether even minimal balanced context moves the tolerance estimate. Where disclosed and undisclosed answers diverge, the <em>disclosed</em> estimate is the headline. This is the framing test that touches tolerance; everything else is kept off it.</p>
 <h3 id="62-the-superintelligence-briefing-experiment-muskans-33-elm">6.2 The superintelligence briefing experiment (Muskan's 3×3 ELM)</h3>
-<p>This is a framing experiment, not a measure of superintelligence support in its own right: the question is whether support for <em>banning</em> the development of smarter-than-human AI gets pushed around by talking points, and — if it does — whether the movement comes from the <em>source cue</em> (who endorses the position, the peripheral route) or the <em>argument content</em> (the substance, the central route). We frame it with the <strong>Elaboration Likelihood Model</strong><sup id="fnref:elm"><a class="footnote-ref" href="#fn:elm">15</a></sup> to separate those two routes.</p>
+<p>This is a framing experiment, not a measure of superintelligence support in its own right: the question is whether support for <em>banning</em> the development of smarter-than-human AI gets pushed around by talking points, and — if it does — whether the movement comes from the <em>source cue</em> (who endorses the position, the peripheral route) or the <em>argument content</em> (the substance, the central route). We frame it with the <strong>Elaboration Likelihood Model</strong><sup id="fnref:elm"><a class="footnote-ref" href="#fn:elm">38</a></sup> to separate those two routes.</p>
 <p>The survey's final module, run last so its persuasive material cannot contaminate the tolerance core. After a neutral definition of superintelligence, each respondent is randomly assigned one pre-built briefing from a <strong>3×3 design</strong> — an argument <em>for</em> the ban crossed with an argument <em>against</em> it, each at three levels: an <strong>elite source-cue</strong> (peripheral route), a <strong>substantive argument</strong> (central route), or <strong>none</strong>. They then answer two 5-point ban-support items (a pro-ban and an anti-ban statement, reported by top-2-box prevalence and as their difference). The contested (two-sided) cells show how far a balanced brief moves support; the one-sided cells isolate the ELM mechanism — whether a source cue alone moves support (peripheral) as much as the argument does (central). Two self-report route items (<code>muskan_central_route</code>, <code>muskan_peripheral_route</code>) serve as mediators / quasi-manipulation-checks for which route did the work. (Supersedes the earlier accel/safety counter-message arm, the Stem-A/B wording experiment, and the descriptive twins — CAIS extinction-priority and a neutrally worded "treaty to ban" — all retired to the dumpster, 29 Jun 2026.)</p>
 <p>The 27 briefing passages (9 cells × 3 versions) live in <code>survey/muskan_stimuli.md</code>; the full fielded design — aims, testable hypotheses, and the mediators-as-quasi-manipulation-checks — is in <code>Muskan's Experiment/</code> (Rev 3). Participants are debriefed on the end page: a note that the briefings were assembled from real published arguments, with links to full statements of both sides (FLI's statement; Andreessen's manifesto). The support DV and ELM route items, generated from the instrument:</p>
 <!-- BEGIN:auto:muskan-items (generated by render/sync_protocol.py — edit the instrument, not here) -->
@@ -548,10 +621,14 @@ Dean W. Ball, <em>Leviathan Waking</em>, Hyperdimensional.<sup id="fnref:ball"><
 <details>
 <summary>Superintelligence module — ban-support DV and ELM route mediators, as fielded — 2 items (click to expand)</summary>
 <ul>
-<li><strong><code>muskan_support</code></strong> — Do you support or oppose a ban on the development of superintelligence, not lifted before there is (1) broad scientific consensus that it will be done safely and controllably, and (2) strong public buy-in?</li>
+<li><strong><code>muskan_support</code></strong> — Do you support or oppose a ban on the development of superintelligence, not lifted before there is (1) broad scientific consensus that it will be done safely and controllably, and (2) strong public buy-in?<ul>
 <li><em>Scale:</em> Strongly support / Support / Oppose / Strongly oppose / Don't know</li>
-<li><strong><code>muskan_central_route</code></strong> — I tried to judge the reasons given, not just who was giving them.</li>
+</ul>
+</li>
+<li><strong><code>muskan_central_route</code></strong> — I tried to judge the reasons given, not just who was giving them.<ul>
 <li><em>Scale:</em> Strongly disagree / Disagree / Neither agree nor disagree / Agree / Strongly agree</li>
+</ul>
+</li>
 </ul>
 </details>
 <!-- END:auto:muskan-items -->
@@ -630,13 +707,15 @@ Dean W. Ball, <em>Leviathan Waking</em>, Hyperdimensional.<sup id="fnref:ball"><
 <hr />
 <h2 id="appendix-b-dce-design-and-analysis-summary-of-sara_dce_designr">Appendix B: DCE design and analysis (summary of <code>sara_dce_design.R</code>)</h2>
 <ul>
-<li><strong>Grid:</strong> severity (4 levels: a single death, critical harm 100 deaths/$1B, catastrophic 1,000,000 deaths/$100B, global catastrophe ~800,000,000 deaths),<sup id="fnref3:catdef"><a class="footnote-ref" href="#fn:catdef">9</a></sup> probability (5 levels, annual chance 1 in 100 → 1 in 1,000,000), utility (3), competition (3). Full factorial 4 × 5 × 3 × 3 = 180 profiles. Cost was dropped to the dumpster (01 Jul 2026) — money is an implementation question, not the democratic tradeoff the DCE measures (Hadfield), and p* is anchored by the status-quo opt-out, not a price. Severity is varied across the four-tier ladder, not fixed; the RAISE Act "critical harm" tier is the legal baseline.</li>
+<li><strong>Grid:</strong> severity (4 levels: a single death, critical harm 100 deaths/$1B, catastrophic 1,000,000 deaths/$100B, global catastrophe ~800,000,000 deaths),<sup id="fnref3:catdef"><a class="footnote-ref" href="#fn:catdef">18</a></sup> probability (5 levels, annual chance 1 in 100 → 1 in 1,000,000), utility (3), competition (3). Full factorial 4 × 5 × 3 × 3 = 180 profiles. Cost was dropped to the dumpster (01 Jul 2026) — money is an implementation question, not the democratic tradeoff the DCE measures (Hadfield), and p* is anchored by the status-quo opt-out, not a price. Severity is varied across the four-tier ladder, not fixed; the RAISE Act "critical harm" tier is the legal baseline.</li>
 <li><strong>Design:</strong> Bayesian D-efficient, 2 alternatives + opt-out, 10 blocks, 4,000 respondents (oversampling the risk module relative to 2025). Level balance and overlap checked (<code>cbcTools</code>). Each block fields 10 tasks: <strong>tasks 1-8</strong> are the D-efficient design; <strong>task 9</strong> is a dominated pair (one option strictly better on every attribute; the dominant side alternates by block to cancel position bias) and <strong>task 10</strong> is an exact repeat of task 2. Tasks 9-10 are <strong>excluded from estimation</strong>: choosing the dominated option (the opt-out is not a failure) and switching on the repeated task are reported as data-quality rates and drive a pre-registered sensitivity re-estimate excluding flagged respondents (ISPOR internal-validity guidance).</li>
-<li><strong>Population-level sequential re-optimisation (pre-registered algorithm):</strong></li>
+<li><strong>Population-level sequential re-optimisation (pre-registered algorithm):</strong><ul>
 <li><strong>Waves:</strong> pilot ~500, then ~3 main waves of ~1,170 (≈4,010 total). Design locked within each wave.</li>
 <li><strong>Checkpoints:</strong> at each wave boundary, re-estimate the population coefficients on all data so far (mixed logit, <code>logitr</code>, fixed specification, seeded multistart — estimation IS seed-deterministic) and regenerate the Bayesian D-efficient design (<code>cbcTools</code>) using the posterior means as the new prior means; the adopt-if-better comparison is the local D-error at the posterior mean (<code>dce_sequential.R</code>). The search step is not seed-reproducible, so each wave's fielded design is archived (<code>dce_blocks_wave&lt;k&gt;.csv</code> + log) — reproducibility by artifact, not by seed.</li>
 <li><strong>Update rule:</strong> adopt the regenerated design only if it lowers the Bayesian D-error versus the incumbent; otherwise keep the incumbent. Design is locked permanently after the final checkpoint; hard cap 4,000.</li>
 <li><strong>Why this is not p-hacking:</strong> only the <em>priors</em> update — the model, the D-efficiency criterion, the checkpoint sizes, and the downstream analysis are all fixed in advance; estimation is seeded and the adopt rule is deterministic given the archived designs. No analyst discretion enters: the stochastic search proposes, the fixed rule disposes, and the artifacts are committed. Task selection depends only on past observed choices, so the adaptive sampling is ignorable for the likelihood and the pooled estimate is consistent; design-wave is reported as a robustness control. §3.1 is held static (non-adaptive).</li>
+</ul>
+</li>
 <li><strong>Fielding pipeline:</strong> the survey is the <strong>oTree app generated from <code>survey/sara_usa.md</code></strong> (the single source of truth); it assigns each respondent a DCE block plus the randomisation arms and handles Prolific completion-code crediting. The population-level sequential loop runs <em>off-platform</em> in R between waves — <code>cbcTools</code> (design) + <code>logitr</code> (estimation) — regenerating <code>survey/sara/dce_blocks.csv</code> (the per-block design the app reads) for the next wave. No within-session compute is required.</li>
 <li><strong>Estimation:</strong> mixed logit (<code>logitr</code>), random normal coefficients on the log-risk slope; multistart.</li>
 <li><strong>Recovering the public number:</strong> acceptable annual risk p* is the level at which an AI-future option equals the status-quo opt-out for a given severity tier and benefit/competition scenario — the opt-out anchors p*, so no cost attribute is needed. WTP is taken from the stated log-scale item (§3.1, <code>m5_wtp</code>), not backed out of a DCE cost coefficient. Report p* as a distribution with credible intervals by scenario, never a point.</li>
@@ -660,119 +739,119 @@ Dean W. Ball, <em>Leviathan Waking</em>, Hyperdimensional.<sup id="fnref:ball"><
 <div class="footnote">
 <hr />
 <ol>
+<li id="fn:ball">
+<p>Dean W. Ball, "Leviathan Waking," <em>Hyperdimensional</em> (Substack), <a href="https://www.hyperdimensional.co/p/leviathan-waking">https://www.hyperdimensional.co/p/leviathan-waking</a>. Ball attributes the framing to Gillian Hadfield's work on regulatory markets.&#160;<a class="footnote-backref" href="#fnref:ball" title="Back to text">&#8617;</a></p>
+</li>
 <li id="fn:clark">
-<p>Gillian K. Hadfield &amp; Jack Clark, "Regulatory Markets: The Future of AI Governance," arXiv:2304.04914 (submitted 11 Apr 2023, rev. 3 Feb 2026); published in <em>Jurimetrics: The Journal of Law, Science and Technology</em> 65:195–240 (2026), https://arxiv.org/abs/2304.04914. The paper frames AI governance as facing a "technical deficit" and a "democratic deficit," the latter being that "values-based decisions … must be made by democratically accountable public, not private, actors" (abstract).&#160;<a class="footnote-backref" href="#fnref:clark" title="Back to text">&#8617;</a></p>
+<p>Gillian K. Hadfield &amp; Jack Clark, "Regulatory Markets: The Future of AI Governance," arXiv:2304.04914 (submitted 11 Apr 2023, rev. 3 Feb 2026); published in <em>Jurimetrics: The Journal of Law, Science and Technology</em> 65:195–240 (2026), <a href="https://arxiv.org/abs/2304.04914">https://arxiv.org/abs/2304.04914</a>. The paper frames AI governance as facing a "technical deficit" and a "democratic deficit," the latter being that "values-based decisions … must be made by democratically accountable public, not private, actors" (abstract).&#160;<a class="footnote-backref" href="#fnref:clark" title="Back to text">&#8617;</a></p>
 </li>
 <li id="fn:1">
 <p>Those are technical questions for experts&#160;<a class="footnote-backref" href="#fnref:1" title="Back to text">&#8617;</a></p>
 </li>
 <li id="fn:rss">
-<p>Royal Statistical Society, "New RSS survey tests statistical skills of MPs" (2022), https://rss.org.uk/news-publication/news-publications/2022/general-news/new-rss-survey-tests-statistical-skills-of-mps/. Savanta ComRes poll of 101 MPs (fielded 17 Nov 2021–18 Jan 2022) asked the probability of two heads from two coin tosses: 52% answered 25% correctly, 33% said 50%, 10% didn't know. The predecessor survey was run by Ipsos MORI (97 MPs, fielded Nov–Dec 2011): ~40% correct. Reporting: NationalWorld, https://www.nationalworld.com/news/politics/mps-statistics-maths-problem-3564209.&#160;<a class="footnote-backref" href="#fnref:rss" title="Back to text">&#8617;</a></p>
+<p>Royal Statistical Society, "New RSS survey tests statistical skills of MPs" (2022), <a href="https://rss.org.uk/news-publication/news-publications/2022/general-news/new-rss-survey-tests-statistical-skills-of-mps/">https://rss.org.uk/news-publication/news-publications/2022/general-news/new-rss-survey-tests-statistical-skills-of-mps/</a>. Savanta ComRes poll of 101 MPs (fielded 17 Nov 2021–18 Jan 2022) asked the probability of two heads from two coin tosses: 52% answered 25% correctly, 33% said 50%, 10% didn't know. The predecessor survey was run by Ipsos MORI (97 MPs, fielded Nov–Dec 2011): ~40% correct. Reporting: NationalWorld, <a href="https://www.nationalworld.com/news/politics/mps-statistics-maths-problem-3564209">https://www.nationalworld.com/news/politics/mps-statistics-maths-problem-3564209</a>.&#160;<a class="footnote-backref" href="#fnref:rss" title="Back to text">&#8617;</a></p>
 </li>
 <li id="fn:kk92">
-<p>Daniel Kahneman &amp; Jack L. Knetsch, "Valuing Public Goods: The Purchase of Moral Satisfaction," <em>Journal of Environmental Economics and Management</em> 22(1):57–70 (1992), https://doi.org/10.1016/0095-0696(92)90019-S. The embedding effect: CVM estimates of the same good "may differ by more than an order of magnitude, all with an a priori equal claim to validity."&#160;<a class="footnote-backref" href="#fnref:kk92" title="Back to text">&#8617;</a><a class="footnote-backref" href="#fnref2:kk92" title="Back to text">&#8617;</a><a class="footnote-backref" href="#fnref3:kk92" title="Back to text">&#8617;</a></p>
+<p>Daniel Kahneman &amp; Jack L. Knetsch, "Valuing Public Goods: The Purchase of Moral Satisfaction," <em>Journal of Environmental Economics and Management</em> 22(1):57–70 (1992), <a href="https://doi.org/10.1016/0095-0696(92)90019-S">https://doi.org/10.1016/0095-0696(92)90019-S</a>. The embedding effect: CVM estimates of the same good "may differ by more than an order of magnitude, all with an a priori equal claim to validity."&#160;<a class="footnote-backref" href="#fnref:kk92" title="Back to text">&#8617;</a><a class="footnote-backref" href="#fnref2:kk92" title="Back to text">&#8617;</a><a class="footnote-backref" href="#fnref3:kk92" title="Back to text">&#8617;</a></p>
 </li>
 <li id="fn:slovic2007">
 <p>Paul Slovic, "'If I Look at the Mass I Will Never Act': Psychic Numbing and Genocide," <em>Judgment and Decision Making</em> 2(2):79–95 (2007). Feelings value individual lives strongly but are insensitive to large numbers; "the deterioration of compassion may appear in groups as small as two persons."&#160;<a class="footnote-backref" href="#fnref:slovic2007" title="Back to text">&#8617;</a><a class="footnote-backref" href="#fnref2:slovic2007" title="Back to text">&#8617;</a></p>
 </li>
 <li id="fn:chong">
-<p>Dennis Chong &amp; James N. Druckman, "Framing Theory," <em>Annual Review of Political Science</em> 10:103–126 (2007), https://doi.org/10.1146/annurev.polisci.10.072805.103054. The standard citation for framing effects on public opinion, with a psychological model of how frames operate.&#160;<a class="footnote-backref" href="#fnref:chong" title="Back to text">&#8617;</a><a class="footnote-backref" href="#fnref2:chong" title="Back to text">&#8617;</a></p>
+<p>Dennis Chong &amp; James N. Druckman, "Framing Theory," <em>Annual Review of Political Science</em> 10:103–126 (2007), <a href="https://doi.org/10.1146/annurev.polisci.10.072805.103054">https://doi.org/10.1146/annurev.polisci.10.072805.103054</a>. The standard citation for framing effects on public opinion, with a psychological model of how frames operate.&#160;<a class="footnote-backref" href="#fnref:chong" title="Back to text">&#8617;</a><a class="footnote-backref" href="#fnref2:chong" title="Back to text">&#8617;</a></p>
 </li>
 <li id="fn:tk74">
-<p>Amos Tversky &amp; Daniel Kahneman, "Judgment under Uncertainty: Heuristics and Biases," <em>Science</em> 185(4157):1124–1131 (1974), https://doi.org/10.1126/science.185.4157.1124. Introduces anchoring-and-adjustment: estimates are "biased toward the initially presented values," with insufficient adjustment.&#160;<a class="footnote-backref" href="#fnref:tk74" title="Back to text">&#8617;</a><a class="footnote-backref" href="#fnref2:tk74" title="Back to text">&#8617;</a><a class="footnote-backref" href="#fnref3:tk74" title="Back to text">&#8617;</a></p>
+<p>Amos Tversky &amp; Daniel Kahneman, "Judgment under Uncertainty: Heuristics and Biases," <em>Science</em> 185(4157):1124–1131 (1974), <a href="https://doi.org/10.1126/science.185.4157.1124">https://doi.org/10.1126/science.185.4157.1124</a>. Introduces anchoring-and-adjustment: estimates are "biased toward the initially presented values," with insufficient adjustment.&#160;<a class="footnote-backref" href="#fnref:tk74" title="Back to text">&#8617;</a><a class="footnote-backref" href="#fnref2:tk74" title="Back to text">&#8617;</a><a class="footnote-backref" href="#fnref3:tk74" title="Back to text">&#8617;</a></p>
+</li>
+<li id="fn:starr">
+<p>Chauncey Starr, "Social Benefit versus Technological Risk," <em>Science</em> 165(3899):1232–1238 (1969), <a href="https://doi.org/10.1126/science.165.3899.1232">https://doi.org/10.1126/science.165.3899.1232</a>. Verbatim: "the public is willing to accept 'voluntary' risks roughly 1000 times greater than 'involuntary' risks," and "the acceptability of risk appears to be crudely proportional to the third power of the benefits."&#160;<a class="footnote-backref" href="#fnref:starr" title="Back to text">&#8617;</a></p>
+</li>
+<li id="fn:fischhoff">
+<p>Baruch Fischhoff, Paul Slovic, Sarah Lichtenstein, Stephen Read &amp; Barbara Combs, "How Safe Is Safe Enough? A Psychometric Study of Attitudes Towards Technological Risks and Benefits," <em>Policy Sciences</em> 9(2):127–152 (1978), <a href="https://doi.org/10.1007/BF00143739">https://doi.org/10.1007/BF00143739</a>. Psychometric elicitation of perceived risk, acceptable risk and perceived benefit across 30 activities/technologies; acceptable risk correlates with benefit.&#160;<a class="footnote-backref" href="#fnref:fischhoff" title="Back to text">&#8617;</a></p>
+</li>
+<li id="fn:slovicrisk">
+<p>Paul Slovic, "Perception of Risk," <em>Science</em> 236(4799):280–285 (1987), <a href="https://doi.org/10.1126/science.3563507">https://doi.org/10.1126/science.3563507</a>. The canonical psychometric-paradigm paper: dread and unknown-risk factors structure lay risk perception and acceptability.&#160;<a class="footnote-backref" href="#fnref:slovicrisk" title="Back to text">&#8617;</a></p>
+</li>
+<li id="fn:zhang">
+<p>Baobao Zhang &amp; Allan Dafoe, <em>Artificial Intelligence: American Attitudes and Trends</em> (Center for the Governance of AI, University of Oxford, 2019), <a href="https://doi.org/10.2139/ssrn.3312874">https://doi.org/10.2139/ssrn.3312874</a>. Nationally representative n=2,000 US adults; more than 8 in 10 agree AI and/or robots "require careful management." The closest large US precedent for AI-attitude measurement.&#160;<a class="footnote-backref" href="#fnref:zhang" title="Back to text">&#8617;</a></p>
+</li>
+<li id="fn:gillespie">
+<p>Nicole Gillespie, Steven Lockey, T. Ward, A. Macdade &amp; G. Hassed, "Trust, Attitudes and Use of Artificial Intelligence: A Global Study 2025," University of Melbourne (2025), <a href="https://doi.org/10.26188/28822919">https://doi.org/10.26188/28822919</a>. Frequency-of-use item justified as a technology-experience proxy via Eszter Hargittai, "Survey Measures of Web-Oriented Digital Literacy," <em>Social Science Computer Review</em> 23(3):371–379 (2005).&#160;<a class="footnote-backref" href="#fnref:gillespie" title="Back to text">&#8617;</a><a class="footnote-backref" href="#fnref2:gillespie" title="Back to text">&#8617;</a></p>
 </li>
 <li id="fn:trainweeks">
-<p>Kenneth Train &amp; Melvyn Weeks, "Discrete Choice Models in Preference Space and Willingness-to-Pay Space," in R. Scarpa &amp; A. Alberini (eds), <em>Applications of Simulation Methods in Environmental and Resource Economics</em> 1–16 (Springer, 2005), https://doi.org/10.1007/1-4020-3684-1_1. A log-normal cost coefficient yields right-skewed, approximately log-normal WTP — a modelling convention chosen to keep WTP positive with finite moments, not an established empirical law. Corroborating: Hole &amp; Kolstad, <em>Empirical Economics</em> 42(2):445–469 (2012); Daly, Hess &amp; Train, <em>Transportation</em> 39(1):19–31 (2012).&#160;<a class="footnote-backref" href="#fnref:trainweeks" title="Back to text">&#8617;</a><a class="footnote-backref" href="#fnref2:trainweeks" title="Back to text">&#8617;</a></p>
+<p>Kenneth Train &amp; Melvyn Weeks, "Discrete Choice Models in Preference Space and Willingness-to-Pay Space," in R. Scarpa &amp; A. Alberini (eds), <em>Applications of Simulation Methods in Environmental and Resource Economics</em> 1–16 (Springer, 2005), <a href="https://doi.org/10.1007/1-4020-3684-1_1">https://doi.org/10.1007/1-4020-3684-1_1</a>. A log-normal cost coefficient yields right-skewed, approximately log-normal WTP — a modelling convention chosen to keep WTP positive with finite moments, not an established empirical law. Corroborating: Hole &amp; Kolstad, <em>Empirical Economics</em> 42(2):445–469 (2012); Daly, Hess &amp; Train, <em>Transportation</em> 39(1):19–31 (2012).&#160;<a class="footnote-backref" href="#fnref:trainweeks" title="Back to text">&#8617;</a><a class="footnote-backref" href="#fnref2:trainweeks" title="Back to text">&#8617;</a></p>
+</li>
+<li id="fn:desvousges">
+<p>William H. Desvousges, F. Reed Johnson, Richard W. Dunford, Kevin J. Boyle, Sara P. Hudson &amp; K. Nicole Wilson, <em>Measuring Nonuse Damages Using Contingent Valuation: An Experimental Evaluation of Accuracy</em> (Research Triangle Institute, 1992; reissued 2010), <a href="https://doi.org/10.3768/rtipress.2009.bk.0001.1009">https://doi.org/10.3768/rtipress.2009.bk.0001.1009</a>. Mean stated WTP to save 2,000 / 20,000 / 200,000 migrating birds was essentially flat — the textbook scope-insensitivity result. (Exact dollar figures circulate secondhand; verify against the RTI report before quoting them.)&#160;<a class="footnote-backref" href="#fnref:desvousges" title="Back to text">&#8617;</a></p>
+</li>
+<li id="fn:hseerott">
+<p>Christopher K. Hsee &amp; Yuval Rottenstreich, "Music, Pandas, and Muggers: On the Affective Psychology of Value," <em>Journal of Experimental Psychology: General</em> 133(1):23–30 (2004), <a href="https://doi.org/10.1037/0096-3445.133.1.23">https://doi.org/10.1037/0096-3445.133.1.23</a>. Affect-based valuation is scope-insensitive; calculation-based valuation is scope-sensitive. (Bibliographic details verified; spot-check the text before quoting directly.)&#160;<a class="footnote-backref" href="#fnref:hseerott" title="Back to text">&#8617;</a></p>
+</li>
+<li id="fn:schubert">
+<p>Stefan Schubert, Lucius Caviola &amp; Nadira S. Faber, "The Psychology of Existential Risk: Moral Judgments about Human Extinction," <em>Scientific Reports</em> 9:15100 (2019), <a href="https://doi.org/10.1038/s41598-019-50145-9">https://doi.org/10.1038/s41598-019-50145-9</a>. N=2,507 (UK/US public, UK students). Verbatim: respondents "do not think that an extinction catastrophe would be uniquely bad relative to near-extinction catastrophes, which allow for recovery"; the judgement reverses when prompted to consider long-term consequences.&#160;<a class="footnote-backref" href="#fnref:schubert" title="Back to text">&#8617;</a></p>
 </li>
 <li id="fn:catdef">
 <p>Definitions of catastrophic AI risk vary substantially across legal, expert-prioritisation, and existential-risk contexts. RAISE/SB 53-style statutory definitions use a relatively low legal threshold: "catastrophic risk" means a foreseeable and material risk that a frontier model will materially contribute to death or serious injury to 100 or more people, or at least $1 billion in property damage, from a single incident involving CBRN assistance, autonomous cyber/criminal conduct, or loss of control. The MIT AI Risk Repository prioritisation study uses a broader expert-severity frame: "catastrophic" harm includes, for example, more than 1 million human deaths, more than USD $100 billion in damage, or civilization-scale intangible harms such as collapse of democratic norms or privacy by 2030 under business as usual. The Existential Risk Persuasion Tournament focused on long-run risks to humanity from AI and other causes, distinguishing catastrophic and extinction outcomes across the century; public summaries report AI catastrophe and extinction probabilities separately, with large disagreement between experts and superforecasters. Because these definitions span ordinary legal catastrophes through existential outcomes, this survey does not assume a single threshold. It varies severity explicitly and reports risk tolerance conditional on the severity described.&#160;<a class="footnote-backref" href="#fnref:catdef" title="Back to text">&#8617;</a><a class="footnote-backref" href="#fnref2:catdef" title="Back to text">&#8617;</a><a class="footnote-backref" href="#fnref3:catdef" title="Back to text">&#8617;</a><a class="footnote-backref" href="#fnref4:catdef" title="Back to text">&#8617;</a><a class="footnote-backref" href="#fnref5:catdef" title="Back to text">&#8617;</a><a class="footnote-backref" href="#fnref6:catdef" title="Back to text">&#8617;</a></p>
 </li>
 <li id="fn:fri">
-<p>Forecasting Research Institute, <em>Existential Risk Persuasion Tournament</em> (XPT, 2022). "Catastrophe" is defined as 10% or more of humans dying within a five-year period (about 800 million people at current population; pathogen risks use a 1% threshold). https://forecastingresearch.org/xpt&#160;<a class="footnote-backref" href="#fnref:fri" title="Back to text">&#8617;</a><a class="footnote-backref" href="#fnref2:fri" title="Back to text">&#8617;</a></p>
-</li>
-<li id="fn:r2p2">
-<p>Health and Safety Executive, <em>Reducing Risks, Protecting People: HSE's Decision-Making Process</em> (R2P2) (HSE Books, 2001), https://www.hse.gov.uk/enforce/expert/r2p2.htm. Establishes the three-band tolerability-of-risk framework and ALARP; para 136 gives the societal-risk anchor — an accident causing 50 or more deaths in a single event "should be regarded as intolerable if the frequency is estimated to be more than one in five thousand per annum" (used to construct F–N criterion lines, slope −1).&#160;<a class="footnote-backref" href="#fnref:r2p2" title="Back to text">&#8617;</a><a class="footnote-backref" href="#fnref2:r2p2" title="Back to text">&#8617;</a></p>
-</li>
-<li id="fn:hsee96">
-<p>Christopher K. Hsee, "The Evaluability Hypothesis: An Explanation for Preference Reversals between Joint and Separate Evaluations of Alternatives," <em>Organizational Behavior and Human Decision Processes</em> 67(3):247–257 (1996), https://doi.org/10.1006/obhd.1996.0077. Hard-to-evaluate attributes receive more weight in joint than separate evaluation; comparison confers evaluability.&#160;<a class="footnote-backref" href="#fnref:hsee96" title="Back to text">&#8617;</a><a class="footnote-backref" href="#fnref2:hsee96" title="Back to text">&#8617;</a></p>
-</li>
-<li id="fn:constructed">
-<p>Sarah Lichtenstein &amp; Paul Slovic (eds), <em>The Construction of Preference</em> (Cambridge University Press, 2006), https://doi.org/10.1017/CBO9780511618031. The foundational volume for the constructed-preference view: preferences over unfamiliar quantities are built at elicitation, favouring structured judgement over free generation. (Bibliographic details verified; spot-check before quoting directly.)&#160;<a class="footnote-backref" href="#fnref:constructed" title="Back to text">&#8617;</a><a class="footnote-backref" href="#fnref2:constructed" title="Back to text">&#8617;</a></p>
-</li>
-<li id="fn:furnham">
-<p>Adrian Furnham &amp; Hua Chu Boo, "A Literature Review of the Anchoring Effect," <em>Journal of Socio-Economics</em> 40(1):35–42 (2011), https://doi.org/10.1016/j.socec.2010.10.008. Anchoring is robust across finance, appraisal, sentencing, negotiation and forecasting, and hard to debias (see also Jacowitz &amp; Kahneman, <em>Personality and Social Psychology Bulletin</em> 21(11):1161–1166, 1995). We found no authoritative result that presenting multiple anchors dampens single-anchor pull — treated here as a design hypothesis, not an established finding.&#160;<a class="footnote-backref" href="#fnref:furnham" title="Back to text">&#8617;</a><a class="footnote-backref" href="#fnref2:furnham" title="Back to text">&#8617;</a><a class="footnote-backref" href="#fnref3:furnham" title="Back to text">&#8617;</a></p>
-</li>
-<li id="fn:elm">
-<p>Richard E. Petty &amp; John T. Cacioppo, "The Elaboration Likelihood Model of Persuasion," <em>Advances in Experimental Social Psychology</em> 19:123–205 (1986), https://doi.org/10.1016/S0065-2601(08)60214-2. Central route (high elaboration, argument scrutiny) vs peripheral route (low elaboration, cue reliance); central-route change is more persistent and behaviour-predictive.&#160;<a class="footnote-backref" href="#fnref:elm" title="Back to text">&#8617;</a><a class="footnote-backref" href="#fnref2:elm" title="Back to text">&#8617;</a></p>
-</li>
-<li id="fn:ball">
-<p>Dean W. Ball, "Leviathan Waking," <em>Hyperdimensional</em> (Substack), https://www.hyperdimensional.co/p/leviathan-waking. Ball attributes the framing to Gillian Hadfield's work on regulatory markets.&#160;<a class="footnote-backref" href="#fnref:ball" title="Back to text">&#8617;</a></p>
-</li>
-<li id="fn:starr">
-<p>Chauncey Starr, "Social Benefit versus Technological Risk," <em>Science</em> 165(3899):1232–1238 (1969), https://doi.org/10.1126/science.165.3899.1232. Verbatim: "the public is willing to accept 'voluntary' risks roughly 1000 times greater than 'involuntary' risks," and "the acceptability of risk appears to be crudely proportional to the third power of the benefits."&#160;<a class="footnote-backref" href="#fnref:starr" title="Back to text">&#8617;</a></p>
-</li>
-<li id="fn:fischhoff">
-<p>Baruch Fischhoff, Paul Slovic, Sarah Lichtenstein, Stephen Read &amp; Barbara Combs, "How Safe Is Safe Enough? A Psychometric Study of Attitudes Towards Technological Risks and Benefits," <em>Policy Sciences</em> 9(2):127–152 (1978), https://doi.org/10.1007/BF00143739. Psychometric elicitation of perceived risk, acceptable risk and perceived benefit across 30 activities/technologies; acceptable risk correlates with benefit.&#160;<a class="footnote-backref" href="#fnref:fischhoff" title="Back to text">&#8617;</a></p>
-</li>
-<li id="fn:slovicrisk">
-<p>Paul Slovic, "Perception of Risk," <em>Science</em> 236(4799):280–285 (1987), https://doi.org/10.1126/science.3563507. The canonical psychometric-paradigm paper: dread and unknown-risk factors structure lay risk perception and acceptability.&#160;<a class="footnote-backref" href="#fnref:slovicrisk" title="Back to text">&#8617;</a></p>
-</li>
-<li id="fn:zhang">
-<p>Baobao Zhang &amp; Allan Dafoe, <em>Artificial Intelligence: American Attitudes and Trends</em> (Center for the Governance of AI, University of Oxford, 2019), https://doi.org/10.2139/ssrn.3312874. Nationally representative n=2,000 US adults; more than 8 in 10 agree AI and/or robots "require careful management." The closest large US precedent for AI-attitude measurement.&#160;<a class="footnote-backref" href="#fnref:zhang" title="Back to text">&#8617;</a></p>
-</li>
-<li id="fn:gillespie">
-<p>Nicole Gillespie, Steven Lockey, T. Ward, A. Macdade &amp; G. Hassed, "Trust, Attitudes and Use of Artificial Intelligence: A Global Study 2025," University of Melbourne (2025), https://doi.org/10.26188/28822919. Frequency-of-use item justified as a technology-experience proxy via Eszter Hargittai, "Survey Measures of Web-Oriented Digital Literacy," <em>Social Science Computer Review</em> 23(3):371–379 (2005).&#160;<a class="footnote-backref" href="#fnref:gillespie" title="Back to text">&#8617;</a><a class="footnote-backref" href="#fnref2:gillespie" title="Back to text">&#8617;</a></p>
-</li>
-<li id="fn:desvousges">
-<p>William H. Desvousges, F. Reed Johnson, Richard W. Dunford, Kevin J. Boyle, Sara P. Hudson &amp; K. Nicole Wilson, <em>Measuring Nonuse Damages Using Contingent Valuation: An Experimental Evaluation of Accuracy</em> (Research Triangle Institute, 1992; reissued 2010), https://doi.org/10.3768/rtipress.2009.bk.0001.1009. Mean stated WTP to save 2,000 / 20,000 / 200,000 migrating birds was essentially flat — the textbook scope-insensitivity result. (Exact dollar figures circulate secondhand; verify against the RTI report before quoting them.)&#160;<a class="footnote-backref" href="#fnref:desvousges" title="Back to text">&#8617;</a></p>
-</li>
-<li id="fn:hseerott">
-<p>Christopher K. Hsee &amp; Yuval Rottenstreich, "Music, Pandas, and Muggers: On the Affective Psychology of Value," <em>Journal of Experimental Psychology: General</em> 133(1):23–30 (2004), https://doi.org/10.1037/0096-3445.133.1.23. Affect-based valuation is scope-insensitive; calculation-based valuation is scope-sensitive. (Bibliographic details verified; spot-check the text before quoting directly.)&#160;<a class="footnote-backref" href="#fnref:hseerott" title="Back to text">&#8617;</a></p>
-</li>
-<li id="fn:schubert">
-<p>Stefan Schubert, Lucius Caviola &amp; Nadira S. Faber, "The Psychology of Existential Risk: Moral Judgments about Human Extinction," <em>Scientific Reports</em> 9:15100 (2019), https://doi.org/10.1038/s41598-019-50145-9. N=2,507 (UK/US public, UK students). Verbatim: respondents "do not think that an extinction catastrophe would be uniquely bad relative to near-extinction catastrophes, which allow for recovery"; the judgement reverses when prompted to consider long-term consequences.&#160;<a class="footnote-backref" href="#fnref:schubert" title="Back to text">&#8617;</a></p>
+<p>Forecasting Research Institute, <em>Existential Risk Persuasion Tournament</em> (XPT, 2022). "Catastrophe" is defined as 10% or more of humans dying within a five-year period (about 800 million people at current population; pathogen risks use a 1% threshold). <a href="https://forecastingresearch.org/xpt">https://forecastingresearch.org/xpt</a>&#160;<a class="footnote-backref" href="#fnref:fri" title="Back to text">&#8617;</a><a class="footnote-backref" href="#fnref2:fri" title="Back to text">&#8617;</a></p>
 </li>
 <li id="fn:lancsar">
-<p>Emily Lancsar &amp; Jordan Louviere, "Conducting Discrete Choice Experiments to Inform Healthcare Decision Making: A User's Guide," <em>PharmacoEconomics</em> 26(8):661–677 (2008), https://pubmed.ncbi.nlm.nih.gov/18620460/.&#160;<a class="footnote-backref" href="#fnref:lancsar" title="Back to text">&#8617;</a></p>
+<p>Emily Lancsar &amp; Jordan Louviere, "Conducting Discrete Choice Experiments to Inform Healthcare Decision Making: A User's Guide," <em>PharmacoEconomics</em> 26(8):661–677 (2008), <a href="https://pubmed.ncbi.nlm.nih.gov/18620460/">https://pubmed.ncbi.nlm.nih.gov/18620460/</a>.&#160;<a class="footnote-backref" href="#fnref:lancsar" title="Back to text">&#8617;</a></p>
 </li>
 <li id="fn:bridges">
-<p>John F. P. Bridges et al., "Conjoint Analysis Applications in Health — a Checklist: A Report of the ISPOR Good Research Practices for Conjoint Analysis Task Force," <em>Value in Health</em> 14(4):403–413 (2011), https://pubmed.ncbi.nlm.nih.gov/21669364/. The 10-item checklist; verify the exact item labels against the paper before citing each.&#160;<a class="footnote-backref" href="#fnref:bridges" title="Back to text">&#8617;</a></p>
+<p>John F. P. Bridges et al., "Conjoint Analysis Applications in Health — a Checklist: A Report of the ISPOR Good Research Practices for Conjoint Analysis Task Force," <em>Value in Health</em> 14(4):403–413 (2011), <a href="https://pubmed.ncbi.nlm.nih.gov/21669364/">https://pubmed.ncbi.nlm.nih.gov/21669364/</a>. The 10-item checklist; verify the exact item labels against the paper before citing each.&#160;<a class="footnote-backref" href="#fnref:bridges" title="Back to text">&#8617;</a></p>
 </li>
 <li id="fn:johnson">
-<p>F. Reed Johnson et al., "Constructing Experimental Designs for Discrete-Choice Experiments: Report of the ISPOR Conjoint Analysis Experimental Design Good Research Practices Task Force," <em>Value in Health</em> 16(1):3–13 (2013), https://www.sciencedirect.com/science/article/pii/S1098301512041629.&#160;<a class="footnote-backref" href="#fnref:johnson" title="Back to text">&#8617;</a></p>
+<p>F. Reed Johnson et al., "Constructing Experimental Designs for Discrete-Choice Experiments: Report of the ISPOR Conjoint Analysis Experimental Design Good Research Practices Task Force," <em>Value in Health</em> 16(1):3–13 (2013), <a href="https://www.sciencedirect.com/science/article/pii/S1098301512041629">https://www.sciencedirect.com/science/article/pii/S1098301512041629</a>.&#160;<a class="footnote-backref" href="#fnref:johnson" title="Back to text">&#8617;</a></p>
 </li>
 <li id="fn:hauber">
-<p>A. Brett Hauber et al., "Statistical Methods for the Analysis of Discrete Choice Experiments: A Report of the ISPOR Conjoint Analysis Good Research Practices Task Force," <em>Value in Health</em> 19(4):300–315 (2016), https://www.valueinhealthjournal.com/article/S1098-3015(16)30452-1/fulltext.&#160;<a class="footnote-backref" href="#fnref:hauber" title="Back to text">&#8617;</a></p>
+<p>A. Brett Hauber et al., "Statistical Methods for the Analysis of Discrete Choice Experiments: A Report of the ISPOR Conjoint Analysis Good Research Practices Task Force," <em>Value in Health</em> 19(4):300–315 (2016), <a href="https://www.valueinhealthjournal.com/article/S1098-3015(16)30452-1/fulltext">https://www.valueinhealthjournal.com/article/S1098-3015(16)30452-1/fulltext</a>.&#160;<a class="footnote-backref" href="#fnref:hauber" title="Back to text">&#8617;</a></p>
 </li>
 <li id="fn:soekhai">
-<p>Vikas Soekhai, Esther W. de Bekker-Grob, Alan R. Ellis &amp; Caroline M. Vass, "Discrete Choice Experiments in Health Economics: Past, Present and Future," <em>PharmacoEconomics</em> 37:201–226 (2019), https://link.springer.com/article/10.1007/s40273-018-0734-2.&#160;<a class="footnote-backref" href="#fnref:soekhai" title="Back to text">&#8617;</a></p>
+<p>Vikas Soekhai, Esther W. de Bekker-Grob, Alan R. Ellis &amp; Caroline M. Vass, "Discrete Choice Experiments in Health Economics: Past, Present and Future," <em>PharmacoEconomics</em> 37:201–226 (2019), <a href="https://link.springer.com/article/10.1007/s40273-018-0734-2">https://link.springer.com/article/10.1007/s40273-018-0734-2</a>.&#160;<a class="footnote-backref" href="#fnref:soekhai" title="Back to text">&#8617;</a></p>
 </li>
 <li id="fn:sandorwedel">
-<p>Zsolt Sándor &amp; Michel Wedel, "Designing Conjoint Choice Experiments Using Managers' Prior Beliefs," <em>Journal of Marketing Research</em> 38(4):430–444 (2001), https://doi.org/10.1509/jmkr.38.4.430.18904. Seminal use of Bayesian priors to construct efficient choice designs.&#160;<a class="footnote-backref" href="#fnref:sandorwedel" title="Back to text">&#8617;</a></p>
+<p>Zsolt Sándor &amp; Michel Wedel, "Designing Conjoint Choice Experiments Using Managers' Prior Beliefs," <em>Journal of Marketing Research</em> 38(4):430–444 (2001), <a href="https://doi.org/10.1509/jmkr.38.4.430.18904">https://doi.org/10.1509/jmkr.38.4.430.18904</a>. Seminal use of Bayesian priors to construct efficient choice designs.&#160;<a class="footnote-backref" href="#fnref:sandorwedel" title="Back to text">&#8617;</a></p>
 </li>
 <li id="fn:bliemer">
-<p>Michiel C. J. Bliemer, John M. Rose &amp; Stephane Hess, "Approximation of Bayesian Efficiency in Experimental Choice Designs," <em>Journal of Choice Modelling</em> 1(1):98–127 (2008), https://doi.org/10.1016/S1755-5345(13)70024-1. Underpins Bayesian D-efficient design as implemented in standard tools.&#160;<a class="footnote-backref" href="#fnref:bliemer" title="Back to text">&#8617;</a></p>
+<p>Michiel C. J. Bliemer, John M. Rose &amp; Stephane Hess, "Approximation of Bayesian Efficiency in Experimental Choice Designs," <em>Journal of Choice Modelling</em> 1(1):98–127 (2008), <a href="https://doi.org/10.1016/S1755-5345(13)70024-1">https://doi.org/10.1016/S1755-5345(13)70024-1</a>. Underpins Bayesian D-efficient design as implemented in standard tools.&#160;<a class="footnote-backref" href="#fnref:bliemer" title="Back to text">&#8617;</a></p>
 </li>
 <li id="fn:tsuge">
-<p>Takahiro Tsuge, Atsuo Kishimoto &amp; Kenji Takeuchi, "A Choice Experiment Approach to the Valuation of Mortality," <em>Journal of Risk and Uncertainty</em> 31(1):73–95 (2005), https://doi.org/10.1007/s11166-005-2931-6. Explicit DCE valuing mortality-risk reductions; examines how subjective risk perception moves marginal WTP.&#160;<a class="footnote-backref" href="#fnref:tsuge" title="Back to text">&#8617;</a></p>
+<p>Takahiro Tsuge, Atsuo Kishimoto &amp; Kenji Takeuchi, "A Choice Experiment Approach to the Valuation of Mortality," <em>Journal of Risk and Uncertainty</em> 31(1):73–95 (2005), <a href="https://doi.org/10.1007/s11166-005-2931-6">https://doi.org/10.1007/s11166-005-2931-6</a>. Explicit DCE valuing mortality-risk reductions; examines how subjective risk perception moves marginal WTP.&#160;<a class="footnote-backref" href="#fnref:tsuge" title="Back to text">&#8617;</a></p>
 </li>
 <li id="fn:deblaeij">
-<p>Arianne de Blaeij, Raymond J. G. M. Florax, Piet Rietveld &amp; Erik Verhoef, "The Value of Statistical Life in Road Safety: A Meta-Analysis," <em>Accident Analysis &amp; Prevention</em> 35(6):973–986 (2003), https://doi.org/10.1016/S0001-4575(02)00105-7. VSL estimates depend strongly on valuation method (stated vs revealed preference) and elicitation format. Companion road-safety DCE: Rizzi &amp; Ortúzar, <em>Accident Analysis &amp; Prevention</em> 35(1):9–22 (2003).&#160;<a class="footnote-backref" href="#fnref:deblaeij" title="Back to text">&#8617;</a></p>
+<p>Arianne de Blaeij, Raymond J. G. M. Florax, Piet Rietveld &amp; Erik Verhoef, "The Value of Statistical Life in Road Safety: A Meta-Analysis," <em>Accident Analysis &amp; Prevention</em> 35(6):973–986 (2003), <a href="https://doi.org/10.1016/S0001-4575(02)00105-7">https://doi.org/10.1016/S0001-4575(02)00105-7</a>. VSL estimates depend strongly on valuation method (stated vs revealed preference) and elicitation format. Companion road-safety DCE: Rizzi &amp; Ortúzar, <em>Accident Analysis &amp; Prevention</em> 35(1):9–22 (2003).&#160;<a class="footnote-backref" href="#fnref:deblaeij" title="Back to text">&#8617;</a></p>
+</li>
+<li id="fn:r2p2">
+<p>Health and Safety Executive, <em>Reducing Risks, Protecting People: HSE's Decision-Making Process</em> (R2P2) (HSE Books, 2001), <a href="https://www.hse.gov.uk/enforce/expert/r2p2.htm">https://www.hse.gov.uk/enforce/expert/r2p2.htm</a>. Establishes the three-band tolerability-of-risk framework and ALARP; para 136 gives the societal-risk anchor — an accident causing 50 or more deaths in a single event "should be regarded as intolerable if the frequency is estimated to be more than one in five thousand per annum" (used to construct F–N criterion lines, slope −1).&#160;<a class="footnote-backref" href="#fnref:r2p2" title="Back to text">&#8617;</a><a class="footnote-backref" href="#fnref2:r2p2" title="Back to text">&#8617;</a></p>
+</li>
+<li id="fn:hsee96">
+<p>Christopher K. Hsee, "The Evaluability Hypothesis: An Explanation for Preference Reversals between Joint and Separate Evaluations of Alternatives," <em>Organizational Behavior and Human Decision Processes</em> 67(3):247–257 (1996), <a href="https://doi.org/10.1006/obhd.1996.0077">https://doi.org/10.1006/obhd.1996.0077</a>. Hard-to-evaluate attributes receive more weight in joint than separate evaluation; comparison confers evaluability.&#160;<a class="footnote-backref" href="#fnref:hsee96" title="Back to text">&#8617;</a><a class="footnote-backref" href="#fnref2:hsee96" title="Back to text">&#8617;</a></p>
 </li>
 <li id="fn:hse1992">
 <p>Health and Safety Executive, <em>The Tolerability of Risk from Nuclear Power Stations</em> (rev. ed., HMSO, 1992). Origin of the three-region tolerability framework later generalised in R2P2; proposes ~1 in 1,000 per year as the upper (worker) individual-risk tolerability bound. (Bibliographic details verified; spot-check pages before quoting directly.)&#160;<a class="footnote-backref" href="#fnref:hse1992" title="Back to text">&#8617;</a></p>
 </li>
 <li id="fn:hsee99">
-<p>Christopher K. Hsee, George F. Loewenstein, Sally Blount &amp; Max H. Bazerman, "Preference Reversals between Joint and Separate Evaluations of Options: A Review and Theoretical Analysis," <em>Psychological Bulletin</em> 125(5):576–590 (1999), https://doi.org/10.1037/0033-2909.125.5.576. The canonical review-level citation for "comparison is easier than absolute judgement." (Bibliographic details verified; spot-check before quoting directly.)&#160;<a class="footnote-backref" href="#fnref:hsee99" title="Back to text">&#8617;</a></p>
+<p>Christopher K. Hsee, George F. Loewenstein, Sally Blount &amp; Max H. Bazerman, "Preference Reversals between Joint and Separate Evaluations of Options: A Review and Theoretical Analysis," <em>Psychological Bulletin</em> 125(5):576–590 (1999), <a href="https://doi.org/10.1037/0033-2909.125.5.576">https://doi.org/10.1037/0033-2909.125.5.576</a>. The canonical review-level citation for "comparison is easier than absolute judgement." (Bibliographic details verified; spot-check before quoting directly.)&#160;<a class="footnote-backref" href="#fnref:hsee99" title="Back to text">&#8617;</a></p>
+</li>
+<li id="fn:constructed">
+<p>Sarah Lichtenstein &amp; Paul Slovic (eds), <em>The Construction of Preference</em> (Cambridge University Press, 2006), <a href="https://doi.org/10.1017/CBO9780511618031">https://doi.org/10.1017/CBO9780511618031</a>. The foundational volume for the constructed-preference view: preferences over unfamiliar quantities are built at elicitation, favouring structured judgement over free generation. (Bibliographic details verified; spot-check before quoting directly.)&#160;<a class="footnote-backref" href="#fnref:constructed" title="Back to text">&#8617;</a><a class="footnote-backref" href="#fnref2:constructed" title="Back to text">&#8617;</a></p>
+</li>
+<li id="fn:furnham">
+<p>Adrian Furnham &amp; Hua Chu Boo, "A Literature Review of the Anchoring Effect," <em>Journal of Socio-Economics</em> 40(1):35–42 (2011), <a href="https://doi.org/10.1016/j.socec.2010.10.008">https://doi.org/10.1016/j.socec.2010.10.008</a>. Anchoring is robust across finance, appraisal, sentencing, negotiation and forecasting, and hard to debias (see also Jacowitz &amp; Kahneman, <em>Personality and Social Psychology Bulletin</em> 21(11):1161–1166, 1995). We found no authoritative result that presenting multiple anchors dampens single-anchor pull — treated here as a design hypothesis, not an established finding.&#160;<a class="footnote-backref" href="#fnref:furnham" title="Back to text">&#8617;</a><a class="footnote-backref" href="#fnref2:furnham" title="Back to text">&#8617;</a><a class="footnote-backref" href="#fnref3:furnham" title="Back to text">&#8617;</a></p>
 </li>
 <li id="fn:jost">
-<p>John T. Jost, "The End of the End of Ideology," <em>American Psychologist</em> 61(7):651–670 (2006), https://doi.org/10.1037/0003-066X.61.7.651. Source for the 7-point orientation item per Benjamin Reid's notes.&#160;<a class="footnote-backref" href="#fnref:jost" title="Back to text">&#8617;</a></p>
+<p>John T. Jost, "The End of the End of Ideology," <em>American Psychologist</em> 61(7):651–670 (2006), <a href="https://doi.org/10.1037/0003-066X.61.7.651">https://doi.org/10.1037/0003-066X.61.7.651</a>. Source for the 7-point orientation item per Benjamin Reid's notes.&#160;<a class="footnote-backref" href="#fnref:jost" title="Back to text">&#8617;</a></p>
 </li>
 <li id="fn:cokely">
 <p>Edward T. Cokely, Mirta Galesic, Eric Schulz, Saima Ghazal &amp; Rocio Garcia-Retamero, "Measuring Risk Literacy: The Berlin Numeracy Test," <em>Judgment and Decision Making</em> 7(1):25–47 (2012). Introduces the 4-item test as a fast, psychometrically sensitive measure of statistical numeracy and risk literacy; a robust predictor of decision quality.&#160;<a class="footnote-backref" href="#fnref:cokely" title="Back to text">&#8617;</a></p>
 </li>
 <li id="fn:haaland">
-<p>Ingar Haaland, Christopher Roth &amp; Johannes Wohlfart, "Designing Information Provision Experiments," <em>Journal of Economic Literature</em> 61(1):3–40 (2023), https://doi.org/10.1257/jel.20211658. Best practice on measuring beliefs, designing the information intervention, measuring updating, and handling confounds such as experimenter demand.&#160;<a class="footnote-backref" href="#fnref:haaland" title="Back to text">&#8617;</a></p>
+<p>Ingar Haaland, Christopher Roth &amp; Johannes Wohlfart, "Designing Information Provision Experiments," <em>Journal of Economic Literature</em> 61(1):3–40 (2023), <a href="https://doi.org/10.1257/jel.20211658">https://doi.org/10.1257/jel.20211658</a>. Best practice on measuring beliefs, designing the information intervention, measuring updating, and handling confounds such as experimenter demand.&#160;<a class="footnote-backref" href="#fnref:haaland" title="Back to text">&#8617;</a></p>
+</li>
+<li id="fn:elm">
+<p>Richard E. Petty &amp; John T. Cacioppo, "The Elaboration Likelihood Model of Persuasion," <em>Advances in Experimental Social Psychology</em> 19:123–205 (1986), <a href="https://doi.org/10.1016/S0065-2601(08)60214-2">https://doi.org/10.1016/S0065-2601(08)60214-2</a>. Central route (high elaboration, argument scrutiny) vs peripheral route (low elaboration, cue reliance); central-route change is more persistent and behaviour-predictive.&#160;<a class="footnote-backref" href="#fnref:elm" title="Back to text">&#8617;</a><a class="footnote-backref" href="#fnref2:elm" title="Back to text">&#8617;</a></p>
 </li>
 </ol>
 </div>
@@ -797,6 +876,46 @@ To suggest changes, see <a href="#how-to-comment">how to comment</a>.</p>
   }
   if (mq.addEventListener) mq.addEventListener("change", sync);
   sync();
+})();
+// Footnote previews: hovering a superscript shows the note in a popup, so
+// readers don't lose their place jumping to the bottom of the page. Clicking
+// still navigates (the only behaviour on touch devices, which can't hover).
+(function () {
+  var pop = null, hideTimer = null;
+  function hide() { if (pop) { pop.remove(); pop = null; } }
+  function scheduleHide() { hideTimer = setTimeout(hide, 300); }
+  function cancelHide() { clearTimeout(hideTimer); }
+  document.addEventListener("mouseover", function (e) {
+    var ref = e.target.closest && e.target.closest("a.footnote-ref");
+    if (!ref) return;
+    cancelHide();
+    var note = document.getElementById(ref.getAttribute("href").slice(1));
+    if (!note) return;
+    hide();
+    pop = document.createElement("div");
+    pop.id = "fn-preview";
+    pop.innerHTML = note.innerHTML;
+    pop.querySelectorAll(".footnote-backref").forEach(function (a) { a.remove(); });
+    // Keep the popup open while the pointer is inside it (its links are live).
+    pop.addEventListener("mouseenter", cancelHide);
+    pop.addEventListener("mouseleave", scheduleHide);
+    document.body.appendChild(pop);
+    var r = ref.getBoundingClientRect();
+    var pad = 8;
+    var left = window.scrollX + r.left + r.width / 2 - pop.offsetWidth / 2;
+    var maxLeft = window.scrollX + document.documentElement.clientWidth
+                  - pop.offsetWidth - pad;
+    left = Math.max(window.scrollX + pad, Math.min(left, maxLeft));
+    var top = window.scrollY + r.bottom + pad;
+    if (r.bottom + pop.offsetHeight + 2 * pad > window.innerHeight &&
+        r.top - pop.offsetHeight - pad > 0)
+      top = window.scrollY + r.top - pop.offsetHeight - pad;
+    pop.style.left = left + "px";
+    pop.style.top = top + "px";
+  });
+  document.addEventListener("mouseout", function (e) {
+    if (e.target.closest && e.target.closest("a.footnote-ref")) scheduleHide();
+  });
 })();
 </script>
 </body>

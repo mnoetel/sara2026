@@ -33,10 +33,12 @@ Postgres driver).
    heroku login
    ```
 
-2. **Create the app and the database** (from the repo root):
+2. **Create the app and the database** (from the repo root). Already done for
+   this project — the app is `sara2026`, live at
+   `https://sara2026-1c79e9596779.herokuapp.com`:
 
    ```sh
-   heroku create sara-usa-2026        # pick any free name; it becomes the URL
+   heroku create sara2026
    heroku addons:create heroku-postgresql:essential-0
    ```
 
@@ -68,13 +70,14 @@ Postgres driver).
 
    (Deploying a branch instead of main: `git push heroku <branch>:main`.)
 
-5. **Smoke-test.** Open `https://<your-app>.herokuapp.com` — you should be
-   asked for the admin login (user `admin`, the password from step 3). In the
-   admin, go to **Rooms → sara_usa**, create a session there with the config
-   *SARA USA 2026* and enough participant slots for the wave. The room link
+5. **Smoke-test.** Open `https://sara2026-1c79e9596779.herokuapp.com` — you
+   should be asked for the admin login (user `admin`, the password from step
+   3). In the admin, go to **Rooms → sara_usa**, create a session there with
+   the config *SARA USA 2026* and enough participant slots for the wave. The
+   room link
 
    ```
-   https://<your-app>.herokuapp.com/room/sara_usa
+   https://sara2026-1c79e9596779.herokuapp.com/room/sara_usa
    ```
 
    is what the panel gets. Walk through the whole survey yourself at that link
@@ -86,7 +89,7 @@ Postgres driver).
 appended, so responses link to payments without you collecting names:
 
 ```
-https://<your-app>.herokuapp.com/room/sara_usa?participant_label={{%PROLIFIC_PID%}}
+https://sara2026-1c79e9596779.herokuapp.com/room/sara_usa?participant_label={{%PROLIFIC_PID%}}
 ```
 
 and put Prolific's completion URL on the survey's final page so participants
@@ -149,7 +152,7 @@ study.
 heroku pg:backups:capture && heroku pg:backups:download   # final belt-and-braces
 heroku ps:scale web=0        # stop the survey (keeps app + data, ~$5/mo for DB)
 # ...and once the data are safely archived and analysed:
-heroku apps:destroy sara-usa-2026
+heroku apps:destroy sara2026
 ```
 
 Running cost while fielding: ~$12/month (Basic dyno $7 + Essential-0 Postgres

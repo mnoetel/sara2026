@@ -134,5 +134,5 @@ one-per-page in randomised order), or `type: adaptive` + `root:` (items branch v
 (`db.sqlite3*`, `poststrat_frame.csv`, `*.otreezip`, `__pycache__`) are gitignored.
 
 ## Git
-Trunk `main`; work on branches + PRs (repo `mnoetel/SARA-survey`, private). Commit only
+Trunk `main`; work on branches + PRs (repo `mnoetel/sara2026`). Commit only
 when asked.

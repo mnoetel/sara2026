@@ -108,6 +108,11 @@ single source of truth and review happens on the PR.)
 
 ## Git
 
-Repo: `github.com/mnoetel/SARA-survey` (private). Trunk is `main`; feature work goes on
+Repo: `github.com/mnoetel/sara2026`. Trunk is `main`; feature work goes on
 branches with PRs. Secrets (`.Renviron`) and generated data (`db.sqlite3`,
 `poststrat_frame.csv`, `*.otreezip`) are gitignored.
+
+## License
+
+Free to use and adapt with credit — see [LICENSE.md](LICENSE.md) (MIT for code,
+CC BY 4.0 for the instrument, protocol, and other written content).

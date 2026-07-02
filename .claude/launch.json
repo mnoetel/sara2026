@@ -4,7 +4,7 @@
     {
       "name": "sara-survey",
       "runtimeExecutable": "bash",
-      "runtimeArgs": ["-c", "cd survey && otree devserver $PORT"],
+      "runtimeArgs": ["-c", "export PATH=/Users/michaelnoetel/miniconda3/bin:$PATH && cd survey && otree devserver $PORT"],
       "port": 8000,
       "autoPort": true
     },

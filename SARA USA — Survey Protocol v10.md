@@ -7,6 +7,8 @@
 
 This survey aims to fill what Hadfield and Clark call the *democratic deficit*: the values-based decisions that shape AI "must be made by democratically accountable public, not private, actors."[^clark] As is, it is not clear what level of risk the public is willing to tolerate. It does not aim to have the public estimate the actual risk or prescribe mitigations[^1], but to judge how much risk the public will tolerate (a values question the public is entitled to answer).
 
+**Try the survey:** a live deployment of the current instrument is at <https://sara2026-1c79e9596779.herokuapp.com/room/sara_usa>.
+
 ---
 
 ## 1. How to read this document
