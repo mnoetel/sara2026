@@ -6,7 +6,7 @@ This repository is dual-licensed by content type. Either way, you are free to
 use and adapt it — **just credit the source**:
 
 > Noetel, M. (2026). *SARA USA 2026: Survey Assessing Risks from AI.*
-> https://github.com/mnoetel/SARA-survey
+> https://github.com/mnoetel/sara2026
 
 - **Code** (Python, R, HTML templates, build scripts, workflows):
   [MIT License](#mit-license-code) — full text below.

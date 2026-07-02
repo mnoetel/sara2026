@@ -108,7 +108,7 @@ single source of truth and review happens on the PR.)
 
 ## Git
 
-Repo: `github.com/mnoetel/SARA-survey`. Trunk is `main`; feature work goes on
+Repo: `github.com/mnoetel/sara2026`. Trunk is `main`; feature work goes on
 branches with PRs. Secrets (`.Renviron`) and generated data (`db.sqlite3`,
 `poststrat_frame.csv`, `*.otreezip`) are gitignored.
 
