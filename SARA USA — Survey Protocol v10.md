@@ -1,7 +1,6 @@
-# SARA USA 2026: Plan and Survey Protocol (v10)
+# SARA USA 2026: Plan and Survey Protocol
 
 **Survey Assessing Risks from AI 2026**
-**v10, 26 June 2026** (prose reconciled with the instrument `survey/sara_usa.md`, 01 Jul 2026)
 
 > "Hadfield argues that governance of any complex technology implicates two distinct types of question: first, democratic questions: what kinds of deception by AI developers count as unfair? **What tradeoffs between utility, safety, and competition does the polity wish to make? What level of catastrophic risk are we willing to tolerate?**"
 > Dean W. Ball, *Leviathan Waking*, Hyperdimensional.[^ball]
