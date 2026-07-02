@@ -41,7 +41,18 @@ The obvious survey is one question: "What annual chance of an AI catastrophe is 
 
 ## 3. The core: four ways to triangulate risk tolerance
 
-The four methods run from least anchoring to most. We start by asking for the respondent's own number with nothing shown to them, then infer a number from their choices, then offer familiar comparators, and only at the end reveal what named experts have said. Ordering them this way keeps the more suggestive figures from contaminating the unanchored estimate, both in this document and in the fielding sequence (Appendix A). Each subsection gives the approach in plain English, the literature behind it, its strengths and limitations, how we respond to those limitations, and a worked example with the real response scale.
+The four methods run from least anchoring to most. We:
+1. start by asking for the respondent's own number with nothing shown to them, then
+2. infer a number from their choices, then
+3. offer familiar comparators, and only at the end
+4. reveal what named experts have said to see if they're tolerable.
+Ordering them this way keeps the more suggestive figures from contaminating the unanchored estimate, both in this document and in the fielding sequence (Appendix A).
+Each subsection gives:
+- the approach in plain English,
+- some literature behind the approach
+- its strengths and limitations,
+- how we respond to those limitations, and
+- a worked example with the real response scale.
 
 ### 3.1 Method 1: Ask directly, then test whether the answer is real
 
