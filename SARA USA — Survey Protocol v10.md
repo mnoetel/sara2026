@@ -19,7 +19,6 @@ This survey aims to fill what Hadfield and Clark call the *democratic deficit*: 
 | [§5](#5-estimating-the-population-view-mrp) | Estimating the *population* view using MRP. |
 | [§6](#6-how-much-does-opinion-move-with-framing) | Testing how opinion moves with framing, including the superintelligence briefing experiment (does ban support get pushed around by talking points, and — via the ELM — is it the source cue or the argument content?). |
 | [§7](#7-criticisms-and-our-responses) | Criticisms and tentative responses: one table for what we have resolved, one for what we have not. |
-| [§8](#8-open-questions-to-settle) | Open questions we still need to settle. |
 | Appendices | [A](#appendix-a-fielding-order--assumptions-and-rationale) fielding order, [B](#appendix-b-dce-design-and-analysis-summary-of-sara_dce_designr) Discrete choice experiment design, [C](#appendix-c-the-dumpster-considered-deliberately-not-asking) dumpster, [D](#appendix-d-provenance-and-sources) provenance. |
 
 ---
@@ -125,7 +124,7 @@ Each subsection gives:
 - **Soekhai et al. (2019)**, *Discrete Choice Experiments in Health Economics: Past, Present and Future*, PharmacoEconomics 37:201–226. The comprehensive recent review.[^soekhai]
 
 <details>
-<summary>**SARA's DCE against the ISPOR checklist:**</summary>
+<summary>SARA's DCE against the ISPOR checklist</summary>
 
 | Checklist step (Bridges et al. 2011) | What SARA does |
 |---|---|
@@ -193,8 +192,8 @@ The adaptation is **between-respondent only**: it sharpens *which* tradeoffs the
 **Strengths.** Comparative judgements are far easier and more stable than absolute ones; the comparators are concrete and familiar; the result maps onto how regulators actually argue.
 
 **Limitations, and how we respond.**
-- **Category error.** "AI should be *stricter*" can mean stricter *rules* or safer *outcomes*. v7 split these into two items (standards vs safety-in-practice) after Gradient flagged the Figure-11 conflation.
-  - The safety-in-practice (outcomes) twin was cut to the dumpster (01 Jul 2026), so the single live comparator asks only about *standards* (rules): three fixed items — nuclear power, commercial aviation, large dams — with every respondent answering all three, so the between-comparator contrast is within person (the earlier five-industry randomised-pool design was retired with the `{comparator}` machinery).
+- **Category error.** "AI should be *stricter*" can mean stricter *rules* or safer *outcomes*.
+  - We now focuse exclusivly on stricter standards than safer outcomes because policymakers set standards and we can't measure catastrophic AI outcomes.
 - **The denominator problem (the big one).** "One death per what?" Expert AI risk figures are about the *whole technology*, the equivalent of every nuclear reactor or every flight worldwide, not a single unit. A naive comparison to "a plane crash" is apples to oranges.
   - We make it apples to apples by specifying each comparator at the *industry* level (all reactors, the whole aviation system), matching the scope of the AI estimate.
 - **Quantifiability.** Some respondents reject the premise that AI risk can be put on a number at all. We must not force them onto a scale they reject.
@@ -297,7 +296,7 @@ A convenience or panel sample is not the US public. We use **multilevel regressi
 
 **Panel-selection calibration.** MRP adjusts demographics, not the attitudinal self-selection of an opt-in panel (§7.2-E). Two verbatim Pew ATP benchmark items are fielded before any treatment (`bench_pew_cncexc`, `bench_pew_aireg`); the gap between our sample and Pew's probability-sample toplines is reported alongside every population claim.
 
-**Convergence go/no-go (pre-registered).** A single quantitative public number is reported only if the DCE (§3.2) and the direct scope instrument (§3.1) agree within about one order of magnitude in an overlap subsample. If they diverge, we report a bound plus a qualitative finding. The expert-to-public multiplier, if reported at all, is computed only on a pass, as a distribution with credible intervals, conditioned on a stated benefit scenario, with uncertainty propagated on both sides. We never manufacture an "N times safer" headline from the §3.3 back-out.
+**Convergence go/no-go (pre-registered).** A single quantitative public number is reported only if the DCE (§3.2) and the direct scope instrument (§3.1) agree within about one order of magnitude in an overlap subsample. If they diverge, we report a bound plus a qualitative finding. The expert assessment vs. public expectations multiplier (e.g., 4,000x safer) is reported, if at all, as researcher interpretations and never as public opinions.
 
 ---
 
@@ -350,108 +349,115 @@ A data-centre reverse-halo module was also considered as a framing experiment (d
 Each entry gives the reviewer's concern in fuller form and what we changed in response. The compact one-line version of this table lived in v9; reviewers asked for the concern *and* the fix spelled out, so both are expanded here.
 
 **1. Oscar Delaney (Barnett agreeing) — don't trust public probabilities; relative comparisons are more useful.**
+
 *Concern.* Delaney doesn't trust a general sample to understand or reason well about probabilities and severities, so a directly elicited number is "somewhat made up when forced" — it reflects affect, not a considered threshold — and politicians are unlikely to weight it. Comparative judgements ("should AI be held stricter than nuclear power?") are cognitively easier and more stable than absolute ones.
+
 *Response.* We demoted the direct number (§3.1) from headline to a validation cross-check, and made the two methods that lean on *judgement rather than generation* primary: named-expert recognition (§3.4, where the respondent judges a real published figure rather than inventing one) and relative-standard anchoring (§3.3, comparison to industries whose risk we already tolerate). The direct number is only reported as a single public figure if it agrees with the revealed-preference DCE within about one order of magnitude (the convergence go/no-go, §5); otherwise we report a bound and a qualitative finding.
 
 **2. Peter Barnett — scope insensitivity (treating 1 in 100,000 ≈ 1 in 10,000,000).**
+
 *Concern.* Many respondents feel both very small probabilities as the same undifferentiated "small," so a single elicited threshold reflects that affect rather than a considered number, and a naive elicitation would report a spuriously precise figure.
+
 *Response.* We *measure* scope sensitivity instead of designing it away. Severity varies within person across the ladder (a single death → ~800M deaths) and the respondent sets the highest acceptable annual chance at each rung, with rows about two orders of magnitude apart and order randomised; anyone flat across the ladder is flagged scope-insensitive. The randomised one-per-page order gives the demand-effect cross-check for free: whichever rung a participant sees *first* is answered unanchored, so first-seen answers form a between-subjects comparison across severities, pre-registered as a sensitivity analysis against the within-person curves (§3.1). The per-person scope slope is interacted with risk literacy (an honours thesis) to ask *who* is insensitive rather than assuming everyone is.
 
 **3. Peter Barnett — a tolerability Likert measures affect, not a threshold.**
+
 *Concern.* A tolerability rating ("acceptable / intolerable") may capture nothing more than "I like or dislike AI," not a considered risk threshold the respondent would defend.
+
 *Response.* Accepted — which is the whole reason we triangulate rather than trust any one method. The tolerability reading (§3.4) must agree with the revealed-preference DCE (§3.2) before we report a number; within-person consistency, the information-provision contrast (§6), and numeracy moderation all test whether the rating is stable or pure affect. If affect were driving it, the choice-based method would not converge.
 
 **4. Peter Barnett — the F–N exercise overshoots and may be dismissed.**
+
 *Concern.* Expert AI-risk estimates sit so far above any tolerated engineering standard that a precise frequency–number chart risks "overshooting the graph" and being discounted as absurd.
-*Response.* The headline is reframed to the robust *gap* between what experts estimate and what the public will tolerate, not a point on an F–N curve. Any F–N back-out is illustrative only, gated on the cognitive pre-test, and never published as an "N times safer" headline (see also open item B, where the residual dismissal risk remains).
+
+*Response.* The headline is reframed to the robust *gap* between what experts estimate and what the public will tolerate, not a point on an F–N curve.
 
 **5. Peter Barnett — the "all technologies carry risk" framing misleads.**
+
 *Concern.* A preamble that "every technology carries some residual risk" quietly imports a "we're only haggling over the last order of magnitude" frame, nudging respondents toward acceptance.
+
 *Response.* Removed from all public-facing items and parked in the dumpster; the instrument does not tell respondents that residual risk is inevitable before asking what they will tolerate.
 
 **6. Peter Barnett — "negligent" reads as weaker than "intolerable."**
+
 *Concern.* An earlier scale used "negligent / grossly negligent" for the middle points; "negligent" reads as *milder* than "intolerable," breaking the monotonic ordering the scale depends on.
+
 *Response.* Those labels were dropped for a strictly monotonic tolerability scale, later collapsed to the two-point **Tolerable / Intolerable** forced choice (01 Jul 2026) for the named-expert items, giving a cleaner low-effort judgement across the four within-person anchors (§3.4).
 
 **7. Peter Barnett — it depends what you call "experts."**
+
 *Concern.* A finding stated as "experts think X" hinges on the contested question of who counts as an expert, and is easy to wave away on that ground.
+
 *Response.* We never say "experts." Every anchor is a named individual or a specified forecaster group — LeCun, the FRI/XPT superforecaster median, the FRI AI-domain-expert median, Amodei — shown within person and reported *by source*, so the reader sees the spread and its attribution rather than an undifferentiated average (§3.4).
 
 **8. Oscar Delaney — test counter-messages (a16z / accelerationist talking points).**
+
 *Concern.* Poll answers may be shallow and shift under industry counter-messaging; we should test whether accelerationist framing moves opinion rather than assume our numbers are stable.
 *Response.* Folded into Muskan's 3×3 ELM briefing experiment (§6.2): each respondent gets one briefing crossing an argument *for* a ban × an argument *against*, each at three levels (elite source-cue / substantive argument / none). It runs last, off the tolerance core, so the persuasion test cannot contaminate the tolerance estimate.
 
 **9. Peter Barnett — one attention check should point "more strict," one "less strict."**
+
 *Concern.* Barnett suggested bidirectional attention checks (one demanding a high answer, one a low answer) to catch straightliners who pick the same option throughout.
+
 *Response.* We embed two disguised checks among the comparator items (biological weapons, nuclear weapons) but made them *same-direction* on purpose: Prolific excludes a respondent only when they fail *both* checks, so a shared fail endpoint ("Much less strict") is more likely to catch someone straightlining across both than a split criterion would (instrument: `m3_att_bioweapons` / `m3_att_nuclear` + the `att_failed` screen-out).
 
 **10. Barnett / Delaney — give people a neutral intuition for risk magnitudes by comparing to other fields.**
+
 *Concern.* Absolute risk numbers are meaningless to most respondents without a reference point drawn from domains they already understand.
 *Response.* The relative-standards method (§3.3) anchors AI against industries whose risk society already tolerates (nuclear power, commercial aviation, large dams), and the Mount Everest sanity anchor fixes the risky end of the range so we can confirm respondents can place AI across the full scale.
 
 **11. Gradient (Carroll, A. Reid, Caetano) — open with a clear purpose; separate the two question classes.**
+
 *Concern.* The instrument should state its purpose up front and not blur descriptive-attitude questions together with the values question about tolerance.
-*Response.* §1–§2 were rewritten around the single purpose (how much catastrophic risk the public will tolerate), and the instrument separates Cluster A (descriptive attitudes) from Cluster B (tolerance), with only the balanced information arm allowed to touch the tolerance block.
+
+*Response.* §1–§2 were rewritten around the single purpose (how much catastrophic risk the public will tolerate).
 
 **12. Gradient — don't assume a latent quantitative preference exists.**
+
 *Concern.* Respondents may simply not hold a pre-formed numeric risk threshold, so eliciting one manufactures a preference that isn't there.
+
 *Response.* Stated explicitly in the protocol; the convergence test (§5) is the check on whether a stable number exists at all, and where it fails we report ordinal findings and bounds rather than forcing a point estimate.
 
 **13. Gradient — define risk precisely (probability × impact; whose risk; loss-of-control vs application).**
+
 *Concern.* "Risk" is ambiguous across probability and severity, personal versus societal exposure, and loss-of-control versus ordinary application harms; leaving it undefined makes answers uninterpretable.
+
 *Response.* Addressed structurally rather than with a definitions page: severity (impact) and annual probability are separate, concretely-labelled dimensions in both the severity ladder and the DCE, so probability and impact are not conflated, and the severity-ladder items are explicitly scoped to *societal* (not personal) risk. The loss-of-control-vs-application distinction is not drawn separately — the catastrophe framing deliberately spans both.
 
 **14. Gradient — don't conflate conditional with unconditional support.**
+
 *Concern.* "I'd support a pause *if* China also paused" is a different measurement from unconditional support, and merging them overstates agreement.
+
 *Response.* A strict conditional-reporting rule, with separate unconditional and conditional delay items so the two are never collapsed in the headline.
 
 **15. Gradient — a citizens' assembly may beat a poll.**
+
 *Concern.* A deliberative mini-public might elicit more considered views than a one-shot survey, and could be the better instrument for a values question.
+
 *Response.* Accepted as a complement, not a replacement: a deliberative Phase 2 is recommended (see open item D — recommended but not yet scoped or funded).
 
 **16. Gradient — drop the "public want AI 4000× safer" claim.**
+
 *Concern.* Headlining a precise multiplier backed out of an F–N comparison is indefensible and invites ridicule.
-*Response.* Removed; the multiplier back-out is downgraded to an illustration only, governed by the go/no-go rule (§5), and never published as a headline.
+
+*Response.* Plan to avoid this framing; any multipliers will be clearly the researchers' intepretations not the public's beliefs.
 
 **17. Gradient — the Figure-11 category error ("systems should be stricter").**
 *Concern.* Asking whether AI "should be stricter" conflates stricter *rules* (standards) with safer *outcomes* (systems in practice) — two different judgements collapsed into one.
-*Response.* Split into a standards item and a safety-in-practice item; the standards comparator is the single live item, and the safer-systems twin was cut to the dumpster (01 Jul 2026) as not needed for the headline number (§3.3).
 
-**18. Ball-style skeptical review (reconstructed) — "advocacy in a lab coat."**
-*Concern.* A hostile reader could see the whole exercise as advocacy dressed as neutral research, with design choices quietly tilted toward an alarming result.
-*Response.* A pre-registered disconfirmation list plus adversarial pre-launch review: a regulation-skeptic and an environment-skeptic critique the instrument before fielding, and their unedited critiques are published alongside the results.
+*Response.* All questions are now 'safety standards' not 'in practice' because standards are what policymakers have more control over, especially for catastrophic risks.
 
-**19. Ball-style review — curated alarming anchors.**
-*Concern.* Showing only high risk estimates would bias respondents toward alarm.
-*Response.* A full-range anchor set spanning the credible spread — LeCun's asteroid comparison (glossed at ~1 in 1,000,000 per century) up to Amodei (1 in 10 to 1 in 4), with the two FRI forecaster medians in between — every figure reported by anchor so the range is visible.
+**18. Claude as Dean Ball skeptical review — adoiding advocacy.**
 
-**20. Ball-style review — liability options biased.**
-*Concern.* The liability response options were skewed, offering no middle ground between no liability and full strict liability.
-*Response.* A negligence / duty-of-care middle option was added so the liability item spans the realistic range of standards.
+*Concern.* A hostile reader could see the exercise as advocacy, with design choices quietly tilted toward an alarming result.
 
-### 7.2 Open, not yet resolved
+*Response.* Removed attitude questions that looked like support for specific policies. Also, aim to seek adversarial pre-launch and post-report review, and publish their critiques alongside the results.
 
-| # | Raised by | The criticism (paraphrased, with the live quote in the footnote) | Where we stand |
-|---|---|---|---|
-| A | Delaney; Barnett agreed | It may not matter what the public thinks here: these are not deeply held beliefs, just numbers people invent when forced, politicians won't weight them, and unless AI becomes personally salient the public won't act on them.[^open1] | **Partially mitigated, not resolved.** We measure stability (the information-provision contrast on tolerance, within-person consistency, the superintelligence-briefing swing on ban support) and recommend a deliberative Phase 2. But the deeper theory-of-change challenge (does this move decisions?) is unsettled. See §8. |
-| B | Barnett | The whole F–N exercise may overshoot: AI risk estimates sit 3–12 orders of magnitude above any tolerated engineering standard, so a precise risk-management chart may "overshoot the graph" and be discounted as absurd.[^open2] | **Partially mitigated.** Headline is now the *gap*, not a point on an F–N curve; the back-out is illustrative only. The residual worry (that the framing invites dismissal) remains. |
-| C | Barnett | The method relies on people accurately assessing risks, which they will do badly or with wild optimism (off by OOMs).[^open3] | **Partially mitigated** via recognition-over-generation, the information-provision arm, and numeracy moderation. Not fully closed. |
-| D | Liam Carroll (Gradient) | Latent-preference and conditional-vs-unconditional points (mostly actioned in §7.1) plus the standing recommendation that a deliberative process may be the better instrument. | Phase 2 deliberative mini-public recommended; not yet scoped or funded. |
-| E | Internal (v10 review, Jul 2026) | **Panel selection.** Prolific is an opt-in panel that self-selects on tech engagement and AI familiarity — traits correlated with the outcome — and MRP adjusts only the demographics in the poststrat frame (age, sex, education, income, state), not that attitudinal selection. A "population estimate" claim outruns the sampling design if this is left unstated. | **Mitigated, not resolved.** Named limitation in all reporting. Two verbatim probability-sample benchmark items are fielded first (Pew ATP: CNCEXC, excited-vs-concerned, Jun 2025 topline; AIREG, government won't go far enough, Aug 2024 topline) so the Prolific-vs-population gap on AI attitudes is *measured* and reported next to every headline; direction-of-bias reasoning accompanies the MRP estimates. Residual: no adjustment for selection on unmeasured attitudes. |
+**19. Claude as Dean Ball skeptical review — curated alarming anchors.**
 
----
+*Concern.* Original draft showed only high risk estimates that would bias respondents toward alarm.
 
-## 8. Open questions to settle
-
-1. **Theory of change.** What is the strongest version of "this changes a real decision"? If the honest answer is "it shifts the Overton window and arms regulators with a public number," say so, and design the dissemination around that. (Open item A.)
-2. **The overshoot problem.** If the gap is 3–12 OOMs, is the F–N machinery the right vehicle, or does the simpler "the public finds the current trajectory unacceptable" framing land better and dodge the "absurd precision" dismissal? (Open item B.)
-3. **Data-centre module.** *Decided (29 Jun 2026): cut to the dumpster (Appendix C); none of the three justifications earned its place against the length budget.*
-4. **Cognitive measures (CRT and need for cognition).** Tentatively dropped to the dumpster (Appendix C) on space and weak rationale; revisit only if a collaborator brings a hypothesis the numeracy item cannot test.
-5. **Argument vs social-proof decomposition (§6.3).** Approve, modify, or drop the proposed 2×2.
-6. **Convergence failure.** Pre-commit now to exactly what we publish if the DCE and direct methods disagree by more than one OOM (a bound and qualitative finding, with what wording).
-7. **Australia replication.** What changes for an AU run: comparators (Australian regulators), the income/ACS analogues (ABS categories), and whether the data-centre module is more relevant there.
-8. **Verification before fielding.** (a) Every named-expert figure in §3.4 needs an exact citable quote. (b) The dangerous-activity death rates in §3.3d need checking. (c) Confirm reviewer names: the project documents record **Oscar Delaney** (not "Mollonez"); confirm this is the person Mike meant.
-9. **Fielding order vs dropout.** v9 fields the tolerance blocks least-to-most anchoring (§3, Appendix A); confirm this is worth front-loading the harder quantitative items, or move a gentler block first.
+*Response.* A full-range anchor set spanning the credible spread — LeCun (~1 in 1,000,000) up to Amodei (1 in 10 to 1 in 4), with the two FRI forecaster medians in between — every figure reported by anchor so the range is visible.
 
 ---
 
@@ -483,7 +489,7 @@ The authoritative item list, response scales, and exact page order **are the ins
 - **Recovering the public number:** acceptable annual risk p\* is the level at which an AI-future option equals the status-quo opt-out for a given severity tier and benefit/competition scenario — the opt-out anchors p\*, so no cost attribute is needed. WTP is taken from the stated log-scale item (§3.1, `m5_wtp`), not backed out of a DCE cost coefficient. Report p\* as a distribution with credible intervals by scenario, never a point.
 - **Identification:** confirmed by simulation (seed 7); coefficients recovered to within ~0.03 of truth.
 - **Go/no-go and multiplier governance:** see §5.
-- **Status (02 Jul 2026):** `sara_dce_design.R` encodes the varied-severity 180-profile grid, appends the two internal-validity tasks, exports the per-block CSV the app reads, and runs the repaired one-shot identification simulation (choices simulated directly from the registered mixed-logit specification). The wave/checkpoint sequential loop is implemented in `dce_sequential.R` (shared coding/estimator/export in `dce_model_utils.R`), with `--simulate` running the full four-wave sequential procedure against known coefficients. The pre-freeze recovery run is archived (`dce_sequential_sim_2026-07-02.log`: every checkpoint executed, all coefficients recovered within 0.033; see PREREGISTRATION.md §5). **Before the pilot fields:** freeze PREREGISTRATION.md.
+- **Status (02 Jul 2026):** `sara_dce_design.R` encodes the varied-severity 180-profile grid, appends the two internal-validity tasks, exports the per-block CSV the app reads, and runs the repaired one-shot identification simulation (choices simulated directly from the registered mixed-logit specification). The wave/checkpoint sequential loop is implemented in `dce_sequential.R` (shared coding/estimator/export in `dce_model_utils.R`), with `--simulate` running the full four-wave sequential procedure against known coefficients. **Before the pilot fields:** archive one clean `--simulate` recovery run and freeze PREREGISTRATION.md.
 
 ---
 
