@@ -223,8 +223,9 @@ pages:
           Verbatim Pew benchmark (CNCEXC; American Trends Panel Wave 173,
           Jun 9-15 2025, N=5,023, probability-recruited: 10% more excited /
           50% more concerned / 38% equally). Five-wave trend since 2021.
-          Comparing our sample against this topline measures panel-selection
-          distance on general AI-risk affect. The two directional options are
+          Comparing our sample against this topline shows how far our online
+          panel sits from a probability-based national sample on general AI
+          sentiment. The two directional options are
           rotated per respondent (shuffle_options + shuffle_keep_last) while
           "Equally concerned and excited" stays anchored last.
         triangulates: [bench_pew_aireg]
@@ -247,10 +248,10 @@ pages:
         rationale: >
           Verbatim Pew benchmark (AIREG; American Trends Panel, Aug 12-18
           2024, N=5,410: 21% go too far / 58% not far enough / 21% not sure).
-          Directly on-construct for SARA (regulation preference). This
-          restores the dumpstered m1_reg_toofar in Pew's exact wording so
-          the same item does double duty as the population-calibration
-          benchmark. The two directional options are rotated per respondent
+          Directly measures SARA's core construct (regulation preference).
+          This restores m1_reg_toofar — an earlier item cut to the dumpster —
+          in Pew's exact wording, so the same item does double duty as the
+          population-calibration benchmark. The two directional options are rotated per respondent
           with "Not sure" anchored last. See bench_pew_cncexc.
         triangulates: [bench_pew_cncexc]
 
@@ -282,8 +283,10 @@ pages:
       global catastrophe, tracing their stated frequency–number (F–N) curve.
       Presented one severity per page in randomised order so the ordering can't
       cue a monotone pattern; a set of answers that ignores severity is flagged
-      scope-insensitive. The source anchors behind the rungs (RAISE Act, MIT AI
-      Risk Repository, FRI/XPT) are internal.
+      scope-insensitive. The rung magnitudes are anchored to published
+      thresholds (New York's RAISE Act, the MIT AI Risk Repository, and the
+      FRI/XPT forecasting tournament), though the question text itself names
+      no sources.
     items:
       - id: m4c_single
         text: >
@@ -300,8 +303,9 @@ pages:
           page order randomised, so a considered answer reflects genuine
           judgement rather than a mechanical read-down of a visible list; a
           flat answer across pages is still flagged scope-insensitive. The
-          source anchors behind the rungs (RAISE Act, MIT AI Risk Repository,
-          FRI/XPT) are internal.
+          rung magnitudes are anchored to published thresholds (New York's
+          RAISE Act, the MIT AI Risk Repository, and the FRI/XPT forecasting
+          tournament), though the question text itself names no sources.
         triangulates: [m4c_100, m4c_1m, m4c_800m, dce_choice]
 
       - id: m4c_100
@@ -313,7 +317,8 @@ pages:
         widget: radio
         required: true
         rationale: >
-          RAISE Act "critical harm" rung of the severity ladder. See m4c_single.
+          The "critical harm" rung of the severity ladder, matching the
+          threshold in New York's RAISE Act. See m4c_single.
         triangulates: [m4c_single, m4c_1m, m4c_800m, dce_choice]
 
       - id: m4c_1m
@@ -335,7 +340,9 @@ pages:
         widget: radio
         required: true
         rationale: >
-          FRI/XPT "catastrophe" rung (top of the ladder). See m4c_single.
+          The "catastrophe" rung (top of the ladder), from the Forecasting
+          Research Institute's Existential-Risk Persuasion Tournament
+          (FRI/XPT). See m4c_single.
         triangulates: [m4c_single, m4c_100, m4c_1m, dce_choice]
 
   # ── Page 5: DCE (Method 2, §3.2) ─────────────────────────────────
@@ -387,9 +394,9 @@ pages:
         rationale: >
           Relative anchoring (Method 3). Rather than asking for a number, we ask
           how AI should compare with a technology people already live with.
-          Nuclear power carries a known, published tolerable-risk level (NRC
-          core-damage / large-release frequencies per reactor-year), so the
-          answer implies a band.
+          Nuclear power carries a known, published tolerable-risk level (US
+          Nuclear Regulatory Commission core-damage / large-release
+          frequencies per reactor-year), so the answer implies a band.
         triangulates: [m3_std_aviation, m3_std_dams]
 
       - id: m3_std_aviation
@@ -414,8 +421,9 @@ pages:
         required: true
         rationale: >
           Relative anchoring (Method 3). Large dams carry a known tolerable-risk
-          level (ANCOLD / dam-safety failure probability per dam-year, with F–N
-          curves at the installation level). See m3_std_nuclear.
+          level (failure probability per dam-year under the ANCOLD dam-safety
+          guidelines, with frequency–number (F–N) curves at the installation
+          level). See m3_std_nuclear.
         triangulates: [m3_std_nuclear, m3_std_aviation]
 
       - id: m3_att_bioweapons
@@ -432,7 +440,7 @@ pages:
           carries the same answering habit straight into it. The required answer
           ("Much less strict") is an extreme endpoint a default-clicker or
           straightliner will miss. Both checks demand the same endpoint on
-          purpose: Prolific/Bastical needs two failures to exclude someone, and a
+          purpose: Prolific needs two failures to exclude someone, and a
           shared fail criterion is more likely to catch a straightliner on both.
           `last` forces it after all three real comparators, so the respondent
           settles into the answering pattern on genuine items before any check.
@@ -486,7 +494,7 @@ pages:
   # ── Attention-check screen-out ──────────────────────────────────────
   # Shown ONLY when BOTH disguised attention checks (m3_att_bioweapons,
   # m3_att_nuclear) are answered with anything other than "Much less strict".
-  # Prolific/Bastical needs two failures to exclude, so a single miss is not
+  # Prolific needs two failures to exclude, so a single miss is not
   # screened out. The gate (condition: att_failed), the redirect, and hiding
   # every later page are wired in survey/sara/__init__.py. BEFORE FIELDING:
   # replace REPLACE_WITH_SCREENOUT_CODE below with the screen-out ("return
@@ -561,8 +569,8 @@ pages:
           AI-caused extinction by 2100 = 0.38% [95% CI 0.10, 0.75], N=88
           (Table 9/Table 15, Karger, Rosenberg, ... Tetlock, 2023,
           "Forecasting Existential Risks", FRI Working Paper #1,
-          forecastingresearch.org/pdf/existential-risk-persuasion-
-          tournament.pdf). Question wording: probability AI "will cause human
+          forecastingresearch.org/pdf/existential-risk-persuasion-tournament.pdf).
+          Question wording: probability AI "will cause human
           extinction or reduce the global population below 5,000" by 2100.
           0.38% ≈ 1 in 263, shown as "about 1 in 250".
         triangulates:
@@ -644,9 +652,10 @@ pages:
         rationale: >
           A costed tradeoff on a log scale. Each band is about ten times the
           last because willingness-to-pay is roughly log-normal. This is now
-          the primary willingness-to-pay estimate: the DCE dropped its cost
-          attribute (dumpster, 01 Jul 2026), so WTP is measured here directly
-          rather than backed out of a DCE cost coefficient.
+          the primary willingness-to-pay estimate: the discrete choice
+          experiment (DCE) dropped its cost attribute (see the dumpster, 01
+          Jul 2026), so willingness-to-pay is measured here directly rather
+          than backed out of a DCE cost coefficient.
         triangulates: [dce_choice, m5b_delay_cond, m5_race]
 
       - id: m5b_delay_uncond
@@ -657,10 +666,11 @@ pages:
         widget: radio
         required: true
         rationale: >
-          Unconditional support for delay, measured directly. Gradient caught
-          the 2025 report turning a conditional answer into "X% support
-          waiting 10+ years". This is the unconditional version, reported on
-          its own and never merged with the conditional item.
+          Unconditional support for delay, measured directly. Gradient
+          Institute caught the 2025 Australian wave's report turning a
+          conditional answer into "X% support waiting 10+ years". This is the
+          unconditional version, reported on its own and never merged with
+          the conditional item.
         triangulates: [m5b_delay_cond, m5_race]
 
       - id: m5b_delay_cond
@@ -684,9 +694,10 @@ pages:
         widget: radio
         required: true
         rationale: >
-          The competition tradeoff as a direct item. Mirrors the "global
-          position" attribute in the DCE and Ball's question about utility,
-          safety, and competition.
+          The competition tradeoff as a direct item. Mirrors the "America's
+          position" attribute in the discrete choice experiment, and Dean
+          Ball's framing of the democratic question: what tradeoffs between
+          utility, safety, and competition does the polity wish to make?
         triangulates: [m5b_delay_uncond, m5b_delay_cond, dce_choice]
 
   # (Page 9: Policy — both items, m6_firm_approval and m6_offswitch, moved to
@@ -775,8 +786,9 @@ pages:
         next_if_correct: bnt_loaded_die
         next_if_incorrect: bnt_five_die
         rationale: >
-          Root item of the adaptive tree; about half of respondents answer
-          it correctly by design.
+          Root item of the Berlin Numeracy Test's adaptive tree (Cokely et
+          al., 2012); about half of respondents answer it correctly by
+          design.
 
       - id: bnt_five_die
         node: 2a
@@ -888,8 +900,9 @@ pages:
           - "75 or older"
           - "Prefer not to say"
         rationale: >
-          Demographics for MRP weighting. Bands match the US Census / ACS
-          adult age groups (table B01001, collapsed).
+          Demographics for weighting the sample to the US population via MRP
+          (multilevel regression and post-stratification). Bands match the US
+          Census / ACS adult age groups (table B01001, collapsed).
         triangulates: []
 
   - id: demo_gender_page
@@ -905,10 +918,11 @@ pages:
           - Female
           - "Other or prefer not to say"
         rationale: >
-          MRP weighting variable. Post-stratification uses the Census ACS sex
-          controls (Male / Female only); the combined "Other or prefer not to
-          say" group has no ACS population cell and is allocated for weighting
-          (or handled per the pre-registered approach — see the ACS manual).
+          Population-weighting (MRP) variable. Post-stratification uses the
+          Census ACS sex controls (Male / Female only); the combined "Other
+          or prefer not to say" group has no ACS population cell, so its
+          weighting treatment follows the pre-registered approach (see the
+          ACS manual).
         triangulates: []
 
   - id: demo_education_page
@@ -928,7 +942,7 @@ pages:
           - "Graduate or professional degree"
           - "Prefer not to say"
         rationale: >
-          MRP weighting variable. Categories match Census / ACS
+          Population-weighting (MRP) variable. Categories match Census / ACS
           educational-attainment table (B15003, collapsed).
         triangulates: []
 
@@ -994,9 +1008,10 @@ pages:
           - Wyoming
           - "Prefer not to say"
         rationale: >
-          State is essential for MRP state-level estimates. No state map is
-          published unless the effective per-state sample clears a
-          pre-registered threshold.
+          State is essential for state-level estimates via MRP (multilevel
+          regression and post-stratification). No state map is published
+          unless the effective per-state sample clears a pre-registered
+          threshold.
         triangulates: []
 
   - id: demo_income_page
@@ -1019,9 +1034,10 @@ pages:
           - "$200,000 or more"
           - "Prefer not to say"
         rationale: >
-          MRP weighting variable and a control for willingness-to-pay. WTP
-          scales with income, so we report it income-adjusted. Brackets match
-          Census / ACS household-income groupings (table B19001).
+          Population-weighting (MRP) variable and a control for
+          willingness-to-pay, which scales with income, so we report it
+          income-adjusted. Brackets match Census / ACS household-income
+          groupings (table B19001).
         triangulates: []
 
   # ── Muskan's 3x3 superintelligence-briefing experiment (final module) ──
@@ -1058,12 +1074,14 @@ pages:
         widget: radio
         required: true
         rationale: >
-          Muskan's primary DV — ban support (the FLI conditional-ban statement),
-          reported as top-2-box prevalence. In the two-sided "contested" cells
-          this is the considered-support estimate (support after hearing both
-          sides). Shown in every cell. Paired with the reverse-keyed
-          muskan_support_anti on the next page so acquiescence ("agree with
-          whatever is asked") can't masquerade as ban support.
+          Primary outcome of the superintelligence-briefing experiment — ban
+          support (the Future of Life Institute conditional-ban statement),
+          reported as top-2-box prevalence (the share choosing one of the top
+          two response options). In the two-sided "contested" cells of the
+          3x3 design this is the considered-support estimate (support after
+          hearing both sides). Shown in every cell. Paired with the
+          reverse-keyed muskan_support_anti on the next page so acquiescence
+          ("agree with whatever is asked") can't masquerade as ban support.
         triangulates: [muskan_support_anti]
 
   - id: superintelligence_support_anti
@@ -1078,9 +1096,10 @@ pages:
         widget: radio
         required: true
         rationale: >
-          Muskan's second DV — the anti-ban statement, the mirror image of the
-          conditional ban on the previous page (development allowed without the
-          safety consensus or the public buy-in). Asking a pro-ban and an
+          Second outcome of the superintelligence-briefing experiment — the
+          anti-ban statement, the mirror image of the conditional ban on the
+          previous page (development allowed without the safety consensus or
+          the public buy-in). Asking a pro-ban and an
           anti-ban statement guards against acquiescence bias; results are
           reported as top-2-box on each item and as their difference after this
           item is reverse-scored. Shown in every cell.
@@ -1104,9 +1123,10 @@ pages:
         widget: radio
         required: true
         rationale: >
-          Central-route mediator (depth of processing) for the ELM model. Asked
-          only in one-sided cells, where a single message isolates the route.
-          Higher = more elaboration on argument substance.
+          Central-route mediator (depth of processing) for the Elaboration
+          Likelihood Model (ELM). Asked only in the one-sided briefing cells,
+          where a single message isolates the persuasion route. Higher = more
+          elaboration on argument substance.
         triangulates: [muskan_peripheral_route]
 
   - id: superintelligence_route_peripheral
@@ -1122,8 +1142,9 @@ pages:
         widget: radio
         required: true
         rationale: >
-          Peripheral-route mediator (reliance on source cues) for the ELM model.
-          Kept separate (not reverse-scored) from the central-route item so both
+          Peripheral-route mediator (reliance on source cues) for the
+          Elaboration Likelihood Model (ELM). Kept separate (not
+          reverse-scored) from the central-route item so both
           routes are measured independently. Higher = more reliance on endorser
           identity than on argument content.
         triangulates: [muskan_central_route]
@@ -1151,11 +1172,12 @@ pages:
         shuffle_options: true
         required: true
         rationale: >
-          Comprehension check for the pure-control cell only. Control
-          participants get no argument and only the neutral definition, so this
-          confirms they understood what they were asked to (dis)allow banning.
-          Correct = option 4 ("more intelligently than most humans"). Used to
-          flag/weight low-comprehension control responses, not scored as a DV.
+          Comprehension check for the pure-control cell only (no briefing,
+          definition only). Control participants get no argument and only the
+          neutral definition, so this confirms they understood what they were
+          asked to (dis)allow banning. Correct = option 4 ("more intelligently
+          than most humans"). Used to flag/weight low-comprehension control
+          responses, not scored as an outcome.
 
   # ── End page ────────────────────────────────────────────────────
   # The closing note is the debrief for the superintelligence module: the

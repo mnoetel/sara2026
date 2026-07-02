@@ -160,16 +160,16 @@ def main():
 
 <table id="reviewTable">
 <colgroup>
-  <col class="c-order"><col class="c-id"><col class="c-item">
-  <col class="c-scale"><col class="c-rationale"><col class="c-tri">
+  <col class="c-order"><col class="c-item"><col class="c-scale">
+  <col class="c-rationale"><col class="c-id"><col class="c-tri">
 </colgroup>
 <thead>
 <tr>
   <th data-col="order">Order <span class="arrow">&#9650;</span></th>
-  <th data-col="id">ID <span class="arrow">&#9650;</span></th>
   <th data-col="item">Item <span class="arrow">&#9650;</span></th>
   <th data-col="scale">Scale <span class="arrow">&#9650;</span></th>
   <th data-col="rationale">Rationale <span class="arrow">&#9650;</span></th>
+  <th data-col="id">ID <span class="arrow">&#9650;</span></th>
   <th data-col="triangulates">Triangulates <span class="arrow">&#9650;</span></th>
 </tr>
 </thead>
@@ -221,10 +221,10 @@ function render() {{
       tr.dataset.page = page;
       tr.innerHTML =
         '<td style="text-align:center">' + r.order + '</td>' +
-        '<td class="mono">' + esc(r.id) + '</td>' +
         '<td class="wrap">' + esc(r.item) + '</td>' +
         '<td class="wrap" style="font-size:13px">' + esc(r.scale) + '</td>' +
         '<td class="wrap" style="font-size:13px">' + esc(r.rationale) + '</td>' +
+        '<td class="mono">' + esc(r.id) + '</td>' +
         '<td class="mono wrap">' + esc(r.triangulates) + '</td>';
       tbody.appendChild(tr);
     }}

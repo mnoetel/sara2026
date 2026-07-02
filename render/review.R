@@ -78,10 +78,10 @@ for (page in pages) {
     rows[[length(rows) + 1]] <- data.frame(
       Page = page$title,
       Order = order,
-      ID = item$id,
       Item = trimws(item$text),
       Scale = scale_text,
       Rationale = trimws(rationale),
+      ID = item$id,
       Triangulates = tri_text,
       stringsAsFactors = FALSE
     )
