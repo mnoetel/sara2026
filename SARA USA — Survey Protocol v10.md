@@ -121,7 +121,8 @@ Each subsection gives:
 - **ISPOR good-research-practice trilogy.** Bridges et al. (2011), the **10-item conjoint-analysis checklist**, Value in Health 14(4):403–413;[^bridges] Reed Johnson et al. (2013) on **experimental design**, Value in Health 16(1):3–13;[^johnson] Hauber et al. (2016) on **statistical analysis** of DCEs, Value in Health 19(4):300–315.[^hauber]
 - **Soekhai et al. (2019)**, *Discrete Choice Experiments in Health Economics: Past, Present and Future*, PharmacoEconomics 37:201–226. The comprehensive recent review.[^soekhai]
 
-**SARA's DCE against the ISPOR checklist:**
+<details>
+<summary>**SARA's DCE against the ISPOR checklist:**</summary>
 
 | Checklist step (Bridges et al. 2011) | What SARA does |
 |---|---|
@@ -133,7 +134,7 @@ Each subsection gives:
 | 6. Instrument design and data collection | Blocked versions; plain natural-frequency risk labels; oversample the risk module. |
 | 7. Statistical analysis | Mixed logit / hierarchical Bayes; random coefficients on the risk slope; per-respondent posteriors feed the literacy interaction. |
 | 8 & 9. Results, conclusions, reporting | Acceptable risk reported as a *distribution with credible intervals by benefit scenario*, never a point; WTP measured by the stated log-scale item (§3.1), not the DCE; identification confirmed by simulation (seed 7, coefficients recovered to within ~0.03). |
-
+</details>
 **Severity ladder (the varied catastrophe attribute).** Severity is one level of a ladder, never a single fixed definition; RAISE/SB 53 is the legal baseline.[^catdef]
 
 | Severity level | Concrete wording shown to respondents | Why this level |
