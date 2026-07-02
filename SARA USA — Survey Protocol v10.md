@@ -46,6 +46,7 @@ The four methods run from least anchoring to most. We:
 2. infer a number from their choices, then
 3. offer familiar comparators, and only at the end
 4. reveal what named experts have said to see if they're tolerable.
+
 Ordering them this way keeps the more suggestive figures from contaminating the unanchored estimate, both in this document and in the fielding sequence (Appendix A).
 Each subsection gives:
 - the approach in plain English,
