@@ -1,0 +1,140 @@
+
+
+
+
+
+=== simulated wave 1 fielded (n = 500, cumulative 500) ===
+Running multistart...
+  Random starting point iterations: 5
+  Number of cores: 9
+Done!
+Stochastic design will be optimized into 10 design blocks, then allocated across 4000 respondents
+Running 5 design searches using 9 cores...
+
+D-error results from all starts:
+Start 4: 0.135644   (Best)
+Start 5: 0.136055 
+Start 3: 0.136244 
+Start 1: 0.136863 
+Start 2: 0.138566 
+
+checkpoint -> wave 2 | n_resp = 500 | D-error incumbent 0.075394 vs candidate 0.07452 -> ADOPT candidate
+--- recovery so far (estimate - truth) ---
+      logp       logn  ben_major ben_transf  comp_pace  comp_lead  no_choice 
+     0.000      0.014     -0.003     -0.050     -0.045     -0.018      0.156 
+
+=== simulated wave 2 fielded (n = 1170, cumulative 1670) ===
+Running multistart...
+  Random starting point iterations: 5
+  Number of cores: 9
+Done!
+Stochastic design will be optimized into 10 design blocks, then allocated across 4000 respondents
+Running 5 design searches using 9 cores...
+
+D-error results from all starts:
+Start 2: 0.135166   (Best)
+Start 4: 0.135561 
+Start 1: 0.136355 
+Start 5: 0.137279 
+Start 3: 0.139584 
+
+checkpoint -> wave 3 | n_resp = 1670 | D-error incumbent 0.075981 vs candidate 0.075163 -> ADOPT candidate
+--- recovery so far (estimate - truth) ---
+      logp       logn  ben_major ben_transf  comp_pace  comp_lead  no_choice 
+     0.004      0.021      0.004     -0.076     -0.023     -0.023      0.051 
+
+=== simulated wave 3 fielded (n = 1170, cumulative 2840) ===
+Running multistart...
+  Random starting point iterations: 5
+  Number of cores: 9
+Done!
+Stochastic design will be optimized into 10 design blocks, then allocated across 4000 respondents
+Running 5 design searches using 9 cores...
+
+D-error results from all starts:
+Start 1: 0.135071   (Best)
+Start 3: 0.135422 
+Start 5: 0.135551 
+Start 2: 0.136102 
+Start 4: 0.137883 
+
+checkpoint -> wave 4 | n_resp = 2840 | D-error incumbent 0.074826 vs candidate 0.073193 -> ADOPT candidate
+--- recovery so far (estimate - truth) ---
+      logp       logn  ben_major ben_transf  comp_pace  comp_lead  no_choice 
+     0.026      0.016      0.006     -0.069     -0.015     -0.055     -0.031 
+
+=== simulated wave 4 fielded (n = 1160, cumulative 4000) ===
+Running multistart...
+  Random starting point iterations: 5
+  Number of cores: 9
+Done!
+
+=== FINAL pooled estimate (all 4000 respondents) ===
+=================================================
+
+Model estimated on: Thu Jul 02 12:01:30 2026 
+
+Using logitr version: 1.1.2 
+
+Call:
+logitr::logitr(data = dat, outcome = "choice", obsID = "obsID", 
+    pars = MAIN_PARS, randPars = c(logp = "n"), panelID = "respID", 
+    numMultiStarts = numMultiStarts)
+
+Frequencies of alternatives:
+       1        2        3 
+0.467719 0.468219 0.064062 
+
+Summary Of Multistart Runs:
+  Log Likelihood Iterations Exit Status
+1      -25874.59         34           3
+2      -25868.12         27           3
+3      -25868.12         31           3
+4      -25868.12         28           3
+5      -25868.12         28           3
+
+Use statusCodes() to view the meaning of each status code
+
+Exit Status: 3, Optimization stopped because ftol_rel or ftol_abs was reached.
+                             
+Model Type:       Mixed Logit
+Model Space:       Preference
+Model Run:             5 of 5
+Iterations:                28
+Elapsed Time:       0h:0m:11s
+Algorithm:     NLOPT_LD_LBFGS
+Weights Used?:          FALSE
+Panel ID:              respID
+Robust?                 FALSE
+
+Model Coefficients: 
+             Estimate Std. Error  z-value  Pr(>|z|)    
+logp       -0.9034413  0.0179367 -50.3682 < 2.2e-16 ***
+logn       -0.3411203  0.0060964 -55.9543 < 2.2e-16 ***
+ben_major   0.6128515  0.0217067  28.2333 < 2.2e-16 ***
+ben_transf  1.3716144  0.0302526  45.3387 < 2.2e-16 ***
+comp_pace   0.3038734  0.0192595  15.7779 < 2.2e-16 ***
+comp_lead   0.6759918  0.0228969  29.5233 < 2.2e-16 ***
+no_choice  -0.1670410  0.0599738  -2.7852  0.005349 ** 
+sd_logp    -0.4226739  0.0089806 -47.0652 < 2.2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+                                     
+Log-Likelihood:         -2.586812e+04
+Null Log-Likelihood:    -3.515559e+04
+AIC:                     5.175225e+04
+BIC:                     5.181924e+04
+McFadden R2:             2.641818e-01
+Adj McFadden R2:         2.639543e-01
+Number of Observations:  3.200000e+04
+
+Summary of 10k Draws for Random Coefficients: 
+     Min.   1st Qu.     Median       Mean    3rd Qu. Max.
+logp -Inf -1.188409 -0.9033766 -0.9030187 -0.6183115  Inf
+
+--- FINAL recovery (estimate - truth) ---
+      logp       logn  ben_major ben_transf  comp_pace  comp_lead  no_choice 
+    -0.003      0.009      0.013     -0.028      0.004     -0.024      0.033 
+sd_logp: est -0.423 truth 0.4 
+
+RECOVERY OK: all deviations < 0.1

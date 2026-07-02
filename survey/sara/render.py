@@ -63,10 +63,14 @@ def information_sheet_html():
     try:
         with open(_INFO_SHEET_PATH, encoding='utf-8') as fh:
             raw = fh.read()
-        # The canonical doc ends with two ballot-box (☐) consent lines. On this
-        # screen the real consent control is the radio question below the sheet,
-        # so strip the non-functional checkboxes to stop people clicking them.
-        raw = "".join(ln for ln in raw.splitlines(keepends=True) if '☐' not in ln)
+        # The canonical doc ends with a "By proceeding..." lead-in and two
+        # ballot-box (☐) consent lines. On this screen the real consent control
+        # is the radio question below the sheet, so strip both — the lead-in
+        # duplicates that question, and the checkboxes are non-functional here.
+        raw = "".join(
+            ln for ln in raw.splitlines(keepends=True)
+            if '☐' not in ln
+            and 'By proceeding to complete this survey' not in ln)
     except OSError as e:
         # Deliberately NOT cached: once the file is fixed the next render
         # recovers without a server restart.
@@ -97,12 +101,22 @@ def _numbered_options(item, scales, player=None):
     (so the saved answer maps to the same option regardless of display order).
     If the item sets ``shuffle_options: true``, the display order is shuffled
     per-participant (seeded on participant.code + item id) so it's stable across
-    re-renders but the correct answer isn't always in a fixed position."""
+    re-renders but the correct answer isn't always in a fixed position.
+    ``shuffle_keep_last: true`` anchors the final option in place and shuffles
+    only the rest — this reproduces Pew's rotation of a bipolar item's two
+    directional options while pinning the neutral "Equally…/Not sure" option
+    last."""
     pairs = list(enumerate(_options_for(item, scales) or [], 1))
     if item.get("shuffle_options") and player is not None:
         code = getattr(getattr(player, "participant", None), "code", None)
         if code:
-            random.Random("%s|%s" % (code, item["id"])).shuffle(pairs)
+            rng = random.Random("%s|%s" % (code, item["id"]))
+            if item.get("shuffle_keep_last") and len(pairs) > 1:
+                head, tail = pairs[:-1], pairs[-1:]
+                rng.shuffle(head)
+                pairs = head + tail
+            else:
+                rng.shuffle(pairs)
     return pairs
 
 

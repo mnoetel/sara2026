@@ -28,6 +28,7 @@ survey/            oTree app — reads sara_usa.md, builds the Player model + pa
   sara/            engine (__init__.py), render.py, Page.html, data files
 render/            review table generator (review.R / review_fallback.py → review.html)
 SARA USA — Survey Protocol v10.md   design rationale & assumptions
+PREREGISTRATION.md  draft OSF pre-registration — freeze before the pilot fields
 sara_dce_design.R  DCE design → survey/sara/dce_blocks.csv (the choice tasks)
 build_poststrat.py / acs_poststrat.R   MRP frame from ACS PUMS → poststrat_frame.csv
 ACS_poststratification_manual.md   how to get ACS data + survey↔ACS alignment check

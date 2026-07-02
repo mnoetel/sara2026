@@ -41,6 +41,7 @@ def load_spec(md_path):
 KNOWN_CONDITIONS = frozenset([
     "info_arm",
     "att_failed",
+    "wtp_zero",
     "muskan_not_control",
     "muskan_control",
     "muskan_one_sided",

@@ -186,6 +186,10 @@ def _page_displayed(player, page):
         return True
     if cond == 'info_arm':
         return bool(player.field_maybe_none('info_arm'))
+    if cond == 'wtp_zero':
+        # Protest-zero probe: only for respondents who answered "$0" (the
+        # first option) on the willingness-to-pay item.
+        return player.field_maybe_none('m5_wtp') == 1
     if cond == 'muskan_not_control':
         return not muskan.is_control(player.field_maybe_none('muskan_stim') or '')
     if cond == 'muskan_control':
@@ -239,11 +243,13 @@ def _make_rgroup_page(page, slot, ordn, total):
     participant.code), so the sequence can't cue a monotone answering pattern.
     Every participant sees every item exactly once; fields save normally.
 
-    Items flagged `last: true` are forced after every un-flagged item: the
-    whole group is shuffled, then a stable partition drops the flagged items to
-    the tail (preserving the shuffled order within each group). Used so the
-    disguised attention checks always trail the real comparators — the block
-    reads real items (randomised) then the checks last."""
+    Items flagged `last:` are forced after every un-flagged item: the whole
+    group is shuffled, then a stable sort drops the flagged items to the
+    tail. `last` may be `true` (== 1) or a number; flagged items are ordered
+    by that number, with the shuffled order preserved within ties. Used so
+    the disguised attention checks (`last: true`) always trail the real
+    comparators, and the differently-stemmed sanity anchor (`last: 2`)
+    trails the attention checks in turn."""
     gid = page['id']
     items = page.get('items', [])
     n = len(items)
@@ -252,9 +258,9 @@ def _make_rgroup_page(page, slot, ordn, total):
         r = random.Random('%s|%s' % (player.participant.code, gid))
         idx = list(range(n))
         r.shuffle(idx)
-        # Stable partition: `last` items go to the tail, order within each
-        # group preserved from the shuffle above.
-        idx.sort(key=lambda i: 1 if items[i].get('last') else 0)
+        # Stable sort: un-flagged first (key 0), then `last` items by their
+        # number (true == 1); shuffled order preserved within ties.
+        idx.sort(key=lambda i: int(items[i].get('last') or 0))
         return idx
 
     class _R(Page):
