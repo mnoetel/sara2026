@@ -1493,6 +1493,7 @@ dumpster:
       elite source-cue (peripheral route) from the substantive argument
       (central route). Recoverable if a prestige-signatory cue distinct
       from the elite-cue cells is later wanted.
+  - name: Mitigations battery ("I'd trust AI more if…") and priority-risks battery
     reason: "Removed from the live instrument (17 Jun 2026); the entity-licensing item (m6_firm_approval, which replaced the FAA-style m6_faa on 1 Jul 2026) carries the single most important mitigation."
     items:
       - id: mit
