@@ -61,8 +61,8 @@ uncertainty, not directional hypotheses.
   last); option order on the comprehension check.
 - **Adaptive elements:** Berlin Numeracy Test branching (validated adaptive
   format); the DCE's *population-level* sequential re-optimisation between
-  waves (see §5 — deterministic, pre-registered algorithm; each
-  respondent's instrument is fixed).
+  waves (see §5 — mechanical, pre-registered algorithm with archival
+  design reproducibility; each respondent's instrument is fixed).
 
 ---
 
@@ -177,11 +177,21 @@ stated benefit scenario.
 
 As specified in protocol Appendix B: waves (pilot ~500; ~3 × ~1,170); at
 each wave boundary re-estimate the fixed mixed-logit specification on all
-data (fixed seed, multistart) and regenerate the Bayesian D-efficient design
-(`cbcTools`, fixed prior-draw count and seed) with posterior mean/covariance
-as priors; adopt only if Bayesian D-error improves; design locked within
-waves and permanently after the final checkpoint; hard cap N=4,000. The
-quality tasks (9–10) are never re-optimised. Method 1 is held fully static.
+data (seeded multistart — estimation is seed-deterministic) and regenerate
+the Bayesian D-efficient design (`cbcTools`) with the posterior means as the
+new prior means; adopt only if the local D-error at the posterior mean
+improves; design locked within waves and permanently after the final
+checkpoint; hard cap N=4,000. The quality tasks (9–10) are never
+re-optimised. Method 1 is held fully static.
+
+**Reproducibility is archival for the design-search step:** cbcTools'
+stochastic search is not bit-reproducible from a seed (verified 02 Jul
+2026, single- and multi-core), so the registered guarantee is that (i) the
+exact design fielded at every wave is committed to the repository
+(`dce_blocks.csv`, `dce_blocks_wave<k>.csv`, `dce_sequential_log.csv`) and
+(ii) estimation and the adopt-if-better rule are deterministic given those
+artifacts. Re-running the search would propose a different, equally valid
+candidate; it could not change what was fielded or how it is analysed.
 
 **Pre-freeze checklist (status, 02 Jul 2026):**
 - (a) **DONE** — `dce_sequential.R`: the checkpoint loop (estimate →
@@ -194,9 +204,13 @@ quality tasks (9–10) are never re-optimised. Method 1 is held fully static.
   accordingly.
 - (b) **DONE** — identification simulation repaired (choices simulated
   directly from the registered mixed-logit specification) and extended to
-  the full sequential procedure (`dce_sequential.R --simulate`: all four
-  waves, every checkpoint, recovery vs truth reported; result recorded
-  below once the pre-freeze run is archived).
+  the full sequential procedure. Pre-freeze run archived
+  (`dce_sequential_sim_2026-07-02.log`): all four waves simulated, every
+  checkpoint executed (each regenerated design improved the D-error and
+  was adopted: 0.0754→0.0745, 0.0760→0.0752, 0.0748→0.0732), and final
+  pooled recovery on N=4,000 was within 0.033 of truth on every fixed
+  coefficient, with the random risk-slope SD recovered at |−0.42| vs 0.4
+  ("RECOVERY OK").
 - (c) **DONE** — H2 power simulation (`Muskan's Experiment/
   power_sim_h2.R`, 4,000 reps): power for the direction × route
   interaction is 0.83 at δ=0.15 SD and 0.97 at δ=0.20 SD at a

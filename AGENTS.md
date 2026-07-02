@@ -1,4 +1,4 @@
-# CLAUDE.md — working in this repo
+# AGENTS.md — working in this repo
 
 Orientation for AI assistants. Read this before editing.
 

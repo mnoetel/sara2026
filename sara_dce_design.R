@@ -72,6 +72,11 @@ priors <- cbc_priors(
 # 3. GENERATE THE DESIGN  (Bayesian D-efficient; 2 alts + opt-out;
 #    8 q per block — tasks 9-10 are appended quality checks, see 3c)
 # ---------------------------------------------------------------------
+# NOTE (verified 02 Jul 2026): cbc_design's stochastic search is NOT
+# seed-reproducible — two runs differ even single-core with set.seed.
+# Reproducibility is therefore ARCHIVAL: the committed dce_blocks.csv is
+# the canonical design. Never regenerate casually once fielding has
+# started; each wave's fielded design is archived by dce_sequential.R.
 set.seed(2026)
 design <- cbc_design(
   profiles  = profiles,
@@ -82,8 +87,7 @@ design <- cbc_design(
   n_blocks  = 10,
   n_resp    = 4000,
   no_choice = TRUE,
-  max_iter  = 50,
-  n_cores   = 1   # parallel workers ignore set.seed -> non-reproducible runs
+  max_iter  = 50
 )
 
 cat("\n--- design columns ---\n"); print(names(design))

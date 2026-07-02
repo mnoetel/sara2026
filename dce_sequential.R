@@ -2,13 +2,16 @@
 # SARA USA 2026 — the pre-registered DCE wave/checkpoint loop
 # (PREREGISTRATION.md §5; protocol v10 Appendix B)
 #
-# Runs OFF-PLATFORM between waves. Deterministic given the data: fixed
-# model specification (dce_model_utils.R), fixed seeds, fixed checkpoint
+# Runs OFF-PLATFORM between waves. No analyst discretion: fixed model
+# specification (dce_model_utils.R), seeded estimation, fixed checkpoint
 # sizes, adopt-if-better D-error rule, hard lock after the final wave.
 # Only the PRIORS update — never the model, criterion, or an individual
 # respondent's instrument. The update uses the posterior MEANS as the new
 # cbcTools prior means (the D-error criterion is evaluated at the
-# posterior mean; cbcTools' stochastic search supplies the draws).
+# posterior mean). Reproducibility of the DESIGN-SEARCH step is ARCHIVAL,
+# not seeded — cbcTools' search is not seed-reproducible (verified 02 Jul
+# 2026) — so every fielded design is committed per wave; estimation and
+# the adopt rule are deterministic given those artifacts.
 #
 # Usage:
 #   Rscript dce_sequential.R --checkpoint <next_wave: 2|3|4> <export1.csv> [...]
@@ -65,18 +68,25 @@ run_checkpoint <- function(dat, wave, incumbent_tasks = NULL,
     "Design is permanently locked after wave ", FINAL_WAVE,
     " (pre-registered); refusing checkpoint for wave ", wave, ".")
 
+  # Estimation IS seed-deterministic (logitr multistart draws from R's
+  # RNG): same data -> same estimates.
+  set.seed(DESIGN_SEED_BASE)
   m <- dce_estimate(dat, numMultiStarts = N_MULTISTARTS)
   est <- coef(m)
   beta_mean <- est[MAIN_PARS]
 
   set.seed(DESIGN_SEED_BASE + (wave - 1))
+  # The design search is NOT seed-reproducible (cbcTools/idefix workers
+  # seed independently of R's RNG — verified 02 Jul 2026). Reproducibility
+  # is archival: the candidate actually adopted is written to
+  # dce_blocks_wave<k>.csv and committed; the adopt-if-better comparison
+  # below is deterministic given the archived artifacts.
   candidate <- cbc_design(
     profiles  = profiles,
     priors    = dce_coefs_to_priors(est, profiles),
     method    = "stochastic",
     n_alts    = 2, n_q = 8, n_blocks = 10, n_resp = 4000,
-    no_choice = TRUE, max_iter = 50,
-    n_cores   = 1   # parallel workers ignore set.seed -> non-reproducible runs
+    no_choice = TRUE, max_iter = 50
   )
   cand_tasks <- dce_export_blocks(candidate, tempfile(fileext = ".csv"))
 

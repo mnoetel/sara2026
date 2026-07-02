@@ -192,8 +192,8 @@ pages:
   # gap that demographic MRP cannot adjust for (protocol §8.2). They must sit
   # BEFORE the disclosure arm, the anchors, and every briefing, so the
   # comparison with Pew's cold-ask context is clean.
-  - id: benchmarks
-    title: "Two quick questions about AI"
+  - id: benchmark_cncexc_page
+    title: "A quick question about AI"
     items:
       - id: bench_pew_cncexc
         text: >
@@ -214,6 +214,9 @@ pages:
           order fixed rather than rotated.
         triangulates: [bench_pew_aireg]
 
+  - id: benchmark_aireg_page
+    title: "Another quick question about AI"
+    items:
       - id: bench_pew_aireg
         text: >
           Thinking about the use of artificial intelligence (AI) in the United
