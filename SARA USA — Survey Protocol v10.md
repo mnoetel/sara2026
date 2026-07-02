@@ -122,7 +122,7 @@ Each subsection gives:
 - **Soekhai et al. (2019)**, *Discrete Choice Experiments in Health Economics: Past, Present and Future*, PharmacoEconomics 37:201–226. The comprehensive recent review.[^soekhai]
 
 <details>
-<summary>**SARA's DCE against the ISPOR checklist:**</summary>
+<summary>SARA's DCE against the ISPOR checklist</summary>
 
 | Checklist step (Bridges et al. 2011) | What SARA does |
 |---|---|
@@ -135,6 +135,7 @@ Each subsection gives:
 | 7. Statistical analysis | Mixed logit / hierarchical Bayes; random coefficients on the risk slope; per-respondent posteriors feed the literacy interaction. |
 | 8 & 9. Results, conclusions, reporting | Acceptable risk reported as a *distribution with credible intervals by benefit scenario*, never a point; WTP measured by the stated log-scale item (§3.1), not the DCE; identification confirmed by simulation (seed 7, coefficients recovered to within ~0.03). |
 </details>
+
 **Severity ladder (the varied catastrophe attribute).** Severity is one level of a ladder, never a single fixed definition; RAISE/SB 53 is the legal baseline.[^catdef]
 
 | Severity level | Concrete wording shown to respondents | Why this level |
@@ -187,8 +188,7 @@ The adaptation is **between-respondent only**: it sharpens *which* tradeoffs the
 **Strengths.** Comparative judgements are far easier and more stable than absolute ones; the comparators are concrete and familiar; the result maps onto how regulators actually argue.
 
 **Limitations.**
-- **Category error.** "AI should be *stricter*" can mean stricter *rules* or safer *outcomes*. v7 split these into two items (standards vs safety-in-practice) after Gradient flagged the Figure-11 conflation; the safety-in-practice half was later cut to the dumpster (01 Jul 2026), leaving the standards item as the single live comparator (see "How we respond").
-- **The denominator problem (the big one).** "One death per what?" Expert AI risk figures are about the *whole technology*, the equivalent of every nuclear reactor or every flight worldwide, not a single unit. A naive comparison to "a plane crash" is apples to oranges. We make it apples to apples by specifying the comparator at the *industry* level (all reactors, the whole aviation system), matching the scope of the AI estimate.
+- **The denominator problem (the big one).** "One death per what?" Expert AI risk figures are about the *whole technology*, the equivalent of every nuclear reactor or every flight worldwide, not a single unit. A naive comparison to the risk tolerance for "one plane crash per x miles" is apples to oranges. We make it apples to apples by specifying the comparator at the *industry* level (all reactors, the whole aviation system), matching the scope of the AI estimate.
 - **Quantifiability.** Some respondents reject the premise that AI risk can be put on a number at all. We must not force them onto a scale they reject.
 
 **How we respond.** One live comparator item on *standards* (rules), the comparator randomised across five familiar industries (nuclear power, commercial aviation, new prescription drugs, cars, large dams) and specified at industry scope to fix the denominator; the safety-in-practice (outcomes) twin and the standalone frame-applicability item were both cut to the dumpster (01 Jul 2026), but the "reject the frame" escape survives as a **"Cannot compare these technologies"** option on the response scale, so no one is forced onto a scale they reject; and a dangerous-activity sanity anchor at the risky end (Everest, BASE jumping, bungee jumping) so we can confirm people can place AI across the full range. Any F–N back-out is illustrative, gated on the cognitive pre-test, and never published as an "N times safer" headline.
