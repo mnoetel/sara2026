@@ -1,7 +1,6 @@
-# SARA USA 2026: Plan and Survey Protocol (v10)
+# SARA USA 2026: Plan and Survey Protocol
 
 **Survey Assessing Risks from AI 2026**
-**v10, 26 June 2026** (prose reconciled with the instrument `survey/sara_usa.md`, 02 Jul 2026)
 
 > "Hadfield argues that governance of any complex technology implicates two distinct types of question: first, democratic questions: what kinds of deception by AI developers count as unfair? **What tradeoffs between utility, safety, and competition does the polity wish to make? What level of catastrophic risk are we willing to tolerate?**"
 > Dean W. Ball, *Leviathan Waking*, Hyperdimensional.[^ball]
@@ -21,7 +20,7 @@ This survey aims to fill what Hadfield and Clark call the *democratic deficit*: 
 | [§6](#6-how-much-does-opinion-move-with-framing) | Testing how opinion moves with framing, including the superintelligence briefing experiment (does ban support get pushed around by talking points, and — via the ELM — is it the source cue or the argument content?). |
 | [§7](#7-criticisms-and-our-responses) | Criticisms and tentative responses: one table for what we have resolved, one for what we have not. |
 | [§8](#8-open-questions-to-settle) | Open questions we still need to settle. |
-| Appendices | [A](#appendix-a-fielding-order--assumptions-and-rationale) fielding order, [B](#appendix-b-dce-design-and-analysis-summary-of-sara_dce_designr) DCE design, [C](#appendix-c-the-dumpster-considered-deliberately-not-asking) dumpster, [D](#appendix-d-provenance-and-sources) provenance. |
+| Appendices | [A](#appendix-a-fielding-order--assumptions-and-rationale) fielding order, [B](#appendix-b-dce-design-and-analysis-summary-of-sara_dce_designr) Discrete choice experiment design, [C](#appendix-c-the-dumpster-considered-deliberately-not-asking) dumpster, [D](#appendix-d-provenance-and-sources) provenance. |
 
 ---
 
@@ -41,7 +40,19 @@ The obvious survey is one question: "What annual chance of an AI catastrophe is 
 
 ## 3. The core: four ways to triangulate risk tolerance
 
-The four methods run from least anchoring to most. We start by asking for the respondent's own number with nothing shown to them, then infer a number from their choices, then offer familiar comparators, and only at the end reveal what named experts have said. Ordering them this way keeps the more suggestive figures from contaminating the unanchored estimate, both in this document and in the fielding sequence (Appendix A). Each subsection gives the approach in plain English, the literature behind it, its strengths and limitations, how we respond to those limitations, and a worked example with the real response scale.
+The four methods run from least anchoring to most. We:
+1. start by asking for the respondent's own number with nothing shown to them, then
+2. infer a number from their choices, then
+3. offer familiar comparators, and only at the end
+4. reveal what named experts have said to see if they're tolerable.
+
+Ordering them this way keeps the more suggestive figures from contaminating the unanchored estimate, both in this document and in the fielding sequence (Appendix A).
+Each subsection gives:
+- the approach in plain English,
+- some literature behind the approach
+- its strengths and limitations,
+- how we respond to those limitations, and
+- a worked example with the real response scale.
 
 ### 3.1 Method 1: Ask directly, then test whether the answer is real
 
@@ -113,7 +124,8 @@ The four methods run from least anchoring to most. We start by asking for the re
 - **ISPOR good-research-practice trilogy.** Bridges et al. (2011), the **10-item conjoint-analysis checklist**, Value in Health 14(4):403–413;[^bridges] Reed Johnson et al. (2013) on **experimental design**, Value in Health 16(1):3–13;[^johnson] Hauber et al. (2016) on **statistical analysis** of DCEs, Value in Health 19(4):300–315.[^hauber]
 - **Soekhai et al. (2019)**, *Discrete Choice Experiments in Health Economics: Past, Present and Future*, PharmacoEconomics 37:201–226. The comprehensive recent review.[^soekhai]
 
-**SARA's DCE against the ISPOR checklist:**
+<details>
+<summary>**SARA's DCE against the ISPOR checklist:**</summary>
 
 | Checklist step (Bridges et al. 2011) | What SARA does |
 |---|---|
@@ -125,6 +137,8 @@ The four methods run from least anchoring to most. We start by asking for the re
 | 6. Instrument design and data collection | Blocked versions; plain natural-frequency risk labels; oversample the risk module. |
 | 7. Statistical analysis | Mixed logit / hierarchical Bayes; random coefficients on the risk slope; per-respondent posteriors feed the literacy interaction. |
 | 8 & 9. Results, conclusions, reporting | Acceptable risk reported as a *distribution with credible intervals by benefit scenario*, never a point; WTP measured by the stated log-scale item (§3.1), not the DCE; identification confirmed by simulation (seed 7, coefficients recovered to within ~0.03). |
+
+</details>
 
 **Severity ladder (the varied catastrophe attribute).** Severity is one level of a ladder, never a single fixed definition; RAISE/SB 53 is the legal baseline.[^catdef]
 
