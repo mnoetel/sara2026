@@ -135,9 +135,34 @@ tbl <- reactable(
 dump <- spec$dumpster
 dump_html <- ""
 if (!is.null(dump) && length(dump) > 0) {
-  drows <- vapply(dump, function(d) sprintf(
-    "<tr><td><b>%s</b></td><td>%s</td></tr>",
-    htmlEscape(d$name %||% ""), htmlEscape(trimws(d$reason %||% ""))), character(1))
+  # Resolve an item's response scale to its labels (same logic as the live table)
+  dump_scale_text <- function(item) {
+    s <- item$scale
+    if (!is.null(s) && s %in% names(scales)) return(paste(scales[[s]]$labels, collapse = " / "))
+    if (!is.null(item$options)) return(paste(item$options, collapse = " / "))
+    if (!is.null(item$widget) && item$widget == "number") return("(numeric entry)")
+    ""
+  }
+  drows <- vapply(dump, function(d) {
+    cell <- sprintf("<b>%s</b>", htmlEscape(d$name %||% ""))
+    for (it in (d$items %||% list())) {
+      cell <- paste0(cell, "<div class='d-item'><div>",
+                     htmlEscape(trimws(it$text %||% "")), "</div>")
+      if (!is.null(it$rows)) {
+        cell <- paste0(cell, "<ul class='d-rows'>",
+                       paste0("<li>", vapply(it$rows, htmlEscape, character(1)), "</li>",
+                              collapse = ""), "</ul>")
+      }
+      st <- dump_scale_text(it)
+      if (nzchar(st)) cell <- paste0(cell, "<div class='d-scale'>", htmlEscape(st), "</div>")
+      if (!is.null(it$note)) cell <- paste0(cell, "<div class='d-note'>",
+                                            htmlEscape(trimws(it$note)), "</div>")
+      cell <- paste0(cell, "<span class='d-id'>", htmlEscape(it$id %||% ""), "</span></div>")
+    }
+    if (!is.null(d$note)) cell <- paste0(cell, "<div class='d-note'>",
+                                         htmlEscape(trimws(d$note)), "</div>")
+    sprintf("<tr><td>%s</td><td>%s</td></tr>", cell, htmlEscape(trimws(d$reason %||% "")))
+  }, character(1))
   dump_html <- paste0(
     "<h2 class='dump-h'>Dumpster <span style='color:#647281;font-weight:400;font-size:12px'>(",
     length(dump), " cut)</span></h2>",
@@ -164,7 +189,12 @@ style_html <- paste0(
   " table.dumpster{width:calc(100% - 48px);margin:6px 24px;border-collapse:collapse;background:#fff}",
   " table.dumpster th{background:#647281;color:#fff;text-align:left;padding:8px 12px}",
   " table.dumpster td{border-bottom:1px solid #e2e6eb;padding:8px 12px;vertical-align:top;font-size:14px}",
-  " table.dumpster td:first-child{width:34%}</style>")
+  " table.dumpster td:first-child{width:46%}",
+  " .d-item{margin-top:8px;padding-left:10px;border-left:3px solid #e2e6eb}",
+  " .d-scale{color:#647281;font-size:12.5px;margin-top:2px}",
+  " .d-note{color:#647281;font-size:12px;font-style:italic;margin-top:2px}",
+  " .d-id{font-family:ui-monospace,Menlo,monospace;font-size:11px;color:#647281}",
+  " ul.d-rows{margin:2px 0 0 18px;font-size:13px}</style>")
 
 content <- paste(readLines(out_path, warn = FALSE), collapse = "\n")
 content <- sub("</head>", paste0(style_html, "</head>"), content, fixed = TRUE)

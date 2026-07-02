@@ -85,11 +85,40 @@ def main():
     n_pages = len(set(r["page"] for r in rows))
 
     # ── Dumpster panel (items considered and cut) ────────────────────
+    def dump_scale_text(item):
+        # Resolve an item's response scale to its labels (same logic as the live table)
+        s = item.get("scale")
+        if s and s in scales:
+            return " / ".join(scales[s]["labels"])
+        if item.get("options"):
+            return " / ".join(str(o) for o in item["options"])
+        if item.get("widget") == "number":
+            return "(numeric entry)"
+        return ""
+
+    def dump_cell(d):
+        cell = "<b>{}</b>".format(esc(d.get("name", "")))
+        for it in d.get("items") or []:
+            cell += '<div class="d-item"><div>{}</div>'.format(
+                esc((it.get("text") or "").strip()))
+            if it.get("rows"):
+                cell += '<ul class="d-rows">{}</ul>'.format(
+                    "".join("<li>{}</li>".format(esc(r)) for r in it["rows"]))
+            st = dump_scale_text(it)
+            if st:
+                cell += '<div class="d-scale">{}</div>'.format(esc(st))
+            if it.get("note"):
+                cell += '<div class="d-note">{}</div>'.format(esc(it["note"].strip()))
+            cell += '<span class="d-id">{}</span></div>'.format(esc(it.get("id", "")))
+        if d.get("note"):
+            cell += '<div class="d-note">{}</div>'.format(esc(d["note"].strip()))
+        return cell
+
     dumpster = spec.get("dumpster", [])
     if dumpster:
         d_rows = "".join(
-            '<tr><td class="wrap"><b>{}</b></td><td class="wrap">{}</td></tr>'.format(
-                esc(d.get("name", "")), esc((d.get("reason") or "").strip()))
+            '<tr><td class="wrap">{}</td><td class="wrap">{}</td></tr>'.format(
+                dump_cell(d), esc((d.get("reason") or "").strip()))
             for d in dumpster)
         dumpster_html = (
             '<h2 class="dump-h">Dumpster <span class="count">({} cut)</span></h2>'
@@ -146,7 +175,12 @@ def main():
   .dump-h {{ color: var(--muted); font-size: 18px; margin: 30px 0 2px; }}
   table.dumpster {{ margin-top: 6px; }}
   table.dumpster th {{ position: static; cursor: default; background: var(--muted); }}
-  table.dumpster td:first-child {{ width: 34%; }}
+  table.dumpster td:first-child {{ width: 46%; }}
+  .d-item {{ margin-top: 8px; padding-left: 10px; border-left: 3px solid var(--line); }}
+  .d-scale {{ color: var(--muted); font-size: 12.5px; margin-top: 2px; }}
+  .d-note {{ color: var(--muted); font-size: 12px; font-style: italic; margin-top: 2px; }}
+  .d-id {{ font-family: ui-monospace, Menlo, monospace; font-size: 11px; color: var(--muted); }}
+  ul.d-rows {{ margin: 2px 0 0 18px; font-size: 13px; }}
 </style>
 </head>
 <body>
