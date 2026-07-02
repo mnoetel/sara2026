@@ -212,10 +212,9 @@ pages:
           Jun 9-15 2025, N=5,023, probability-recruited: 10% more excited /
           50% more concerned / 38% equally). Five-wave trend since 2021.
           Comparing our sample against this topline measures panel-selection
-          distance on general AI-risk affect. Replicates Pew exactly: the two
-          directional options are rotated per respondent (shuffle_options +
-          shuffle_keep_last) while "Equally concerned and excited" stays
-          anchored last.
+          distance on general AI-risk affect. The two directional options are
+          rotated per respondent (shuffle_options + shuffle_keep_last) while
+          "Equally concerned and excited" stays anchored last.
         triangulates: [bench_pew_aireg]
 
   - id: benchmark_aireg_page
@@ -240,9 +239,7 @@ pages:
           restores the dumpstered m1_reg_toofar in Pew's exact wording so
           the same item does double duty as the population-calibration
           benchmark. The two directional options are rotated per respondent
-          with "Not sure" anchored last, matching Pew's bipolar-item rotation
-          — VERIFY Pew rotated this specific item before fielding; if Pew fixed
-          the order, drop shuffle_options here. See bench_pew_cncexc.
+          with "Not sure" anchored last. See bench_pew_cncexc.
         triangulates: [bench_pew_cncexc]
 
   # ── Page 3: Information-provision experiment (balanced; random half) ──
@@ -1486,7 +1483,16 @@ dumpster:
           not as a standalone arm. Origin: Oscar Delaney's Nov 2025 note — "do some
           counter-message testing … of how people's views change after being given
           various a16z type talking points."
-  - name: Mitigations battery ("I'd trust AI more if…") and priority-risks battery
+  - name: Argument vs social-proof 2x2 (proposed framing decomposition)
+    reason: >
+      Cut 2 Jul 2026, never built. Mike's proposed 2x2 — argument
+      (present/absent) x prestige-signatory cue (present/absent, e.g.
+      "Prince Harry signed it") — asked whether framing effects come from
+      the argument's content or the social signal. Subsumed by Muskan's 3x3
+      ELM briefing experiment, whose one-sided cells already separate the
+      elite source-cue (peripheral route) from the substantive argument
+      (central route). Recoverable if a prestige-signatory cue distinct
+      from the elite-cue cells is later wanted.
     reason: "Removed from the live instrument (17 Jun 2026); the entity-licensing item (m6_firm_approval, which replaced the FAA-style m6_faa on 1 Jul 2026) carries the single most important mitigation."
     items:
       - id: mit
