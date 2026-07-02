@@ -32,3 +32,6 @@ jobs:
 
       - name: Protocol auto-blocks in sync with the instrument
         run: make -C render check-protocol
+
+      - name: Published protocol page (docs/index.html) in sync with the protocol
+        run: make -C render check-docs

@@ -8,15 +8,16 @@
 # Default target tries R first, falls back to Python.
 #
 # `make` also refreshes the protocol doc's auto-blocks from the instrument
-# (sync-protocol); `make check-protocol` is a read-only CI guard that fails on drift.
+# (sync-protocol) and re-renders the public protocol page (docs);
+# `make check-protocol` / `make check-docs` are the read-only CI drift guards.
 
 SPEC   := ../survey/sara_usa.md
 LOADER := ../survey/spec_loader.py
 OUT    := review.html
 
-.PHONY: all review-r review-py sync-protocol check-protocol clean
+.PHONY: all review-r review-py sync-protocol check-protocol docs check-docs clean
 
-all: $(OUT) sync-protocol
+all: $(OUT) sync-protocol docs
 
 # Refresh the protocol doc's auto-blocks from the instrument (the volatile
 # facts that would otherwise drift — expert anchors, scales, live/cut split).
@@ -26,6 +27,17 @@ sync-protocol: $(SPEC) $(LOADER) sync_protocol.py
 # CI guard: fail if the protocol's auto-blocks have drifted from the instrument.
 check-protocol: $(SPEC) $(LOADER) sync_protocol.py
 	python3 sync_protocol.py --check
+
+# Publish the protocol as a pretty standalone page for non-GitHub readers
+# (docs/index.html, served by GitHub Pages). Renders the protocol Markdown;
+# needs the `markdown` package (pinned in ../requirements.txt). Runs after
+# sync-protocol so the page reflects freshly synced auto-blocks.
+docs: sync-protocol build_docs.py
+	python3 build_docs.py
+
+# CI guard: fail if docs/index.html has drifted from the protocol.
+check-docs: build_docs.py
+	python3 build_docs.py --check
 
 $(OUT): $(SPEC) $(LOADER) review.R review_fallback.py
 	@if command -v Rscript >/dev/null 2>&1 && Rscript -e 'library(reactable)' 2>/dev/null; then \
