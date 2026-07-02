@@ -171,13 +171,18 @@ def _att_failed(player):
 
 def _page_displayed(player, page):
     pid = page['id']
-    if _declined(player) and pid not in ('consent', 'end'):
+    cond = page.get('condition')
+    # consent gate: declining shows ONLY the page marked `condition: declined`
+    # (the no-consent close-out). The debrief (`end`) is hidden too — it
+    # debriefs briefings a decliner never saw (issue #30).
+    if cond == 'declined':
+        return _declined(player)
+    if _declined(player) and pid != 'consent':
         return False
     # attention-check screen-out: both checks wrong -> show the page marked
     # `condition: att_failed` and hide every page after it (they are
     # redirected to Prolific).
     failed = _att_failed(player)
-    cond = page.get('condition')
     if cond == 'att_failed':
         return failed
     if failed and _SCREENOUT_POS is not None and _PAGE_IDS.index(pid) > _SCREENOUT_POS:
