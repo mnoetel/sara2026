@@ -37,7 +37,7 @@ REPO_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, ".."))
 OUT_DIR = os.path.join(REPO_ROOT, "docs")
 OUT_HTML = os.path.join(OUT_DIR, "index.html")
 
-GITHUB_REPO = "https://github.com/mnoetel/SARA-survey"
+GITHUB_REPO = "https://github.com/mnoetel/sara2026"
 CONTACT_EMAIL = "noetel@gmail.com"
 
 
