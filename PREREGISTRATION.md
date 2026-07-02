@@ -183,13 +183,39 @@ as priors; adopt only if Bayesian D-error improves; design locked within
 waves and permanently after the final checkpoint; hard cap N=4,000. The
 quality tasks (9–10) are never re-optimised. Method 1 is held fully static.
 
-**Blocking to-dos before registration is frozen (registered as commitments):**
-(a) implement and archive the wave/checkpoint loop script; (b) repair and
-extend the identification simulation in `sara_dce_design.R` to the
-sequential procedure; (c) run the superintelligence-module H2 power
-simulation; (d) verify every named-expert figure against a citable public
-statement; (e) verify the Everest death-rate figure used in the sanity
-anchor's rationale.
+**Pre-freeze checklist (status, 02 Jul 2026):**
+- (a) **DONE** — `dce_sequential.R`: the checkpoint loop (estimate →
+  regenerate → adopt-if-better local D-error at the posterior mean →
+  archive per-wave design + log), sharing its coding/estimator/export
+  with `sara_dce_design.R` via `dce_model_utils.R`. Note: the update rule
+  uses the **posterior means** as the new cbcTools prior means (the
+  D-error criterion is evaluated at the posterior mean); the earlier
+  "mean and covariance" phrasing in protocol Appendix B is amended
+  accordingly.
+- (b) **DONE** — identification simulation repaired (choices simulated
+  directly from the registered mixed-logit specification) and extended to
+  the full sequential procedure (`dce_sequential.R --simulate`: all four
+  waves, every checkpoint, recovery vs truth reported; result recorded
+  below once the pre-freeze run is archived).
+- (c) **DONE** — H2 power simulation (`Muskan's Experiment/
+  power_sim_h2.R`, 4,000 reps): power for the direction × route
+  interaction is 0.83 at δ=0.15 SD and 0.97 at δ=0.20 SD at a
+  conservative 360/cell.
+- (d) **DONE (02 Jul 2026)** — every Method-4 figure verified against a
+  citable primary source (citations in each item's rationale). One
+  misattribution caught and fixed: the "1 in 1,000,000" formerly
+  attributed to LeCun is not his (he declines to give a number); the item
+  now quotes his verbatim asteroid comparison and attributes the number
+  to the asteroid base rate. FRI medians confirmed against the report's
+  Table 9 (0.38% / 3%); Amodei's 10–25% confirmed (Logan Bartlett Show,
+  Oct 2023; flat 25% at Axios AI+ Summit, Sep 2025). PI sign-off on the
+  reworded LeCun item still required.
+- (e) **DONE (02 Jul 2026)** — Everest figure verified and now stated in
+  the item stem: ~1.3% of climbers above base camp died 1921–2006 (Firth
+  et al., BMJ 2008); ~1.0% of first-time summit attempters 2006–2019
+  (Huey et al., PLOS ONE 2020); 0.7% for 2007–2024 (Moore et al., J
+  Physiol 2026). Fielded as "about 1 in every 100 people who have tried
+  to climb it have died."
 
 ---
 

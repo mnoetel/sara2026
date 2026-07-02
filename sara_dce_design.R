@@ -82,101 +82,52 @@ design <- cbc_design(
   n_blocks  = 10,
   n_resp    = 4000,
   no_choice = TRUE,
-  max_iter  = 50
+  max_iter  = 50,
+  n_cores   = 1   # parallel workers ignore set.seed -> non-reproducible runs
 )
 
 cat("\n--- design columns ---\n"); print(names(design))
 cat("\n--- design head ---\n"); print(utils::head(design, 8))
 
 # ---------------------------------------------------------------------
-# 3b. EXPORT the 10 unique blocks x 10 tasks for oTree (one row per task)
+# 3b/3c. EXPORT the 10 blocks x 10 tasks for oTree (one row per task):
+# 8 D-efficient tasks + task 9 dominated pair + task 10 repeat of task 2.
+# The export (incl. the quality tasks) is shared with the sequential loop
+# via dce_export_blocks() in dce_model_utils.R, so the two scripts cannot
+# drift apart.
 # ---------------------------------------------------------------------
-# Keep one representative respondent per block, drop the no-choice alt, and
-# pivot the two AI alternatives wide so each row is a full choice task.
-attrs <- c("severity","risk_annual","benefit","competition")
-
-# Identify the per-block question set (blocks repeat across respondents).
-blk <- design %>%
-  group_by(blockID) %>%
-  filter(respID == min(respID)) %>%   # first respondent carrying each block
-  ungroup() %>%
-  filter(altID %in% c(1, 2)) %>%
-  select(blockID, qID, altID, all_of(attrs))
-
-a <- blk %>% filter(altID == 1) %>% select(-altID)
-b <- blk %>% filter(altID == 2) %>% select(-altID)
-names(a)[match(attrs, names(a))] <- paste0("a_", attrs)
-names(b)[match(attrs, names(b))] <- paste0("b_", attrs)
-
-tasks <- a %>%
-  inner_join(b, by = c("blockID","qID")) %>%
-  arrange(blockID, qID) %>%
-  rename(block = blockID, task = qID) %>%
-  mutate(task_type = "defficient")
-
-# ---------------------------------------------------------------------
-# 3c. QUALITY-CONTROL TASKS (excluded from estimation; ISPOR guidance)
-#   task 9  = dominated pair: one option strictly better on every attribute
-#             (least severe outcome, lowest chance, biggest benefit, US ahead
-#             vs the opposite). Choosing the dominated option is a
-#             rationality-check failure; the opt-out is NOT a failure. The
-#             dominant side alternates by block to cancel position bias.
-#   task 10 = exact repeat of task 2: within-person choice stability.
-# ---------------------------------------------------------------------
-best  <- c(severity = "A single death",       risk_annual = "1 in 1,000,000",
-           benefit  = "Transformative",       competition = "The US is ahead")
-worst <- c(severity = "~800,000,000 deaths (10% of humanity)",
-           risk_annual = "1 in 100",
-           benefit  = "Modest",               competition = "Other countries are ahead")
-
-dominated <- lapply(sort(unique(tasks$block)), function(bk) {
-  a_side <- if (bk %% 2 == 1) best else worst   # odd blocks: A dominates
-  b_side <- if (bk %% 2 == 1) worst else best
-  data.frame(block = bk, task = 9L,
-             a_severity = a_side[["severity"]], a_risk_annual = a_side[["risk_annual"]],
-             a_benefit = a_side[["benefit"]],   a_competition = a_side[["competition"]],
-             b_severity = b_side[["severity"]], b_risk_annual = b_side[["risk_annual"]],
-             b_benefit = b_side[["benefit"]],   b_competition = b_side[["competition"]],
-             task_type = "dominated")
-}) %>% bind_rows()
-
-repeat2 <- tasks %>% filter(task == 2) %>%
-  mutate(task = 10L, task_type = "repeat_of_2")
-
-tasks <- bind_rows(tasks, dominated, repeat2) %>% arrange(block, task)
-
-dir.create(dirname(OUT_CSV), showWarnings = FALSE, recursive = TRUE)
-write.csv(tasks, OUT_CSV, row.names = FALSE)
+source(file.path(.root, "dce_model_utils.R"))
+tasks <- dce_export_blocks(design, OUT_CSV)
 cat("\nWROTE", nrow(tasks), "tasks across",
     length(unique(tasks$block)), "blocks ->", OUT_CSV, "\n")
 
 # ---------------------------------------------------------------------
-# 4-7. Identification (simulate -> estimate -> recover p*) — unchanged logic,
-#      now with severity in the model. Wrapped so export never blocks on it.
+# 4-7. Identification: simulate from a KNOWN mixed logit -> estimate with
+#      the registered specification -> compare. (v13 repair: the old
+#      cbc_choices() path broke on cbcTools' automatic dummy re-coding;
+#      choices are now simulated directly from the utility model we
+#      estimate, which is also the honest recovery test — the DGP and the
+#      estimator share a specification.) Wrapped so export never blocks.
+#      The SEQUENTIAL procedure's recovery test lives in dce_sequential.R
+#      (--simulate); this block validates the one-shot wave-1 design.
 # ---------------------------------------------------------------------
 try({
   library(logitr)
-  risk_to_logp <- c("1 in 100"=-2, "1 in 1,000"=-3, "1 in 10,000"=-4,
-                    "1 in 100,000"=-5, "1 in 1,000,000"=-6)
-  sev_to_logn  <- c("A single death"=0,
-                    "100 deaths or $1B damage"=2,
-                    "1,000,000 deaths or $100B damage"=6,
-                    "~800,000,000 deaths (10% of humanity)"=8.9)  # log10(deaths)
+  dat <- dce_code_design(design)      # logp/logn/dummies/no_choice rows
 
-  sim <- cbc_choices(design, priors = priors)
-  dat <- sim %>%
-    mutate(logp  = risk_to_logp[as.character(risk_annual)],
-           logn  = sev_to_logn[as.character(severity)])
+  set.seed(7)
+  b_true <- c(logp = -0.9, logn = -0.35, ben_major = 0.6, ben_transf = 1.4,
+              comp_pace = 0.3, comp_lead = 0.7, no_choice = -0.2)
+  sd_logp_true <- 0.4                 # respondent heterogeneity on the risk slope
+  dat <- dce_simulate_choices(dat, b_true, sd_logp = sd_logp_true)
 
-  m <- logitr(
-    data    = dat,
-    outcome = "choice",
-    obsID   = "obsID",
-    pars    = c("logp","logn","benefit","competition"),
-    randPars = c(logp = "n"),
-    numMultiStarts = 5
-  )
+  m <- dce_estimate(dat, numMultiStarts = 5)
   print(summary(m))
+
+  est <- coef(m)
+  cat("\n--- recovery (estimate - truth) ---\n")
+  print(round(est[names(b_true)] - b_true, 3))
+  cat("sd_logp: est", round(est[["sd_logp"]], 3), "truth", sd_logp_true, "\n")
 }, silent = FALSE)
 
 # Report p* as a DISTRIBUTION with credible intervals by severity tier and

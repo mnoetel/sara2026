@@ -95,8 +95,18 @@ one-per-page in randomised order), or `type: adaptive` + `root:` (items branch v
   `make -C render check-protocol` is a read-only drift guard for CI.
 
 ## Analysis & data
-- `sara_dce_design.R` → `survey/sara/dce_blocks.csv` (varied-severity 720-grid, Bayesian
-  D-efficient).
+- `sara_dce_design.R` → `survey/sara/dce_blocks.csv` (varied-severity 180-grid, Bayesian
+  D-efficient; per block: 8 D-efficient tasks + task 9 dominated pair + task 10 repeat of
+  task 2 — quality checks, excluded from estimation). **Always pass `n_cores = 1` to
+  `cbc_design`** — parallel workers ignore `set.seed` and break reproducibility.
+- `dce_model_utils.R` — the shared attribute coding, registered estimator (`logitr` mixed
+  logit), choice simulator, D-error metric, and block export. Both DCE scripts source it;
+  change the model spec here once.
+- `dce_sequential.R` — the pre-registered wave/checkpoint loop (`--checkpoint <wave>
+  <exports...>` between waves; `--simulate` runs the full four-wave recovery test).
+- `Muskan's Experiment/power_sim_h2.R` — the module's H2 power simulation.
+- `PREREGISTRATION.md` — the OSF pre-registration draft; freeze before the pilot fields.
+  Analysis commitments live there, not in the protocol.
 - `build_poststrat.py` (stdlib, Census API) / `acs_poststrat.R` (tidycensus) →
   `poststrat_frame.csv` for MRP. **Verified survey↔ACS alignment:** age/education/income/
   state align (no survey change needed); **gender is the only mismatch** (ACS = M/F only)

@@ -63,10 +63,14 @@ def information_sheet_html():
     try:
         with open(_INFO_SHEET_PATH, encoding='utf-8') as fh:
             raw = fh.read()
-        # The canonical doc ends with two ballot-box (☐) consent lines. On this
-        # screen the real consent control is the radio question below the sheet,
-        # so strip the non-functional checkboxes to stop people clicking them.
-        raw = "".join(ln for ln in raw.splitlines(keepends=True) if '☐' not in ln)
+        # The canonical doc ends with a "By proceeding..." lead-in and two
+        # ballot-box (☐) consent lines. On this screen the real consent control
+        # is the radio question below the sheet, so strip both — the lead-in
+        # duplicates that question, and the checkboxes are non-functional here.
+        raw = "".join(
+            ln for ln in raw.splitlines(keepends=True)
+            if '☐' not in ln
+            and 'By proceeding to complete this survey' not in ln)
     except OSError as e:
         # Deliberately NOT cached: once the file is fixed the next render
         # recovers without a server restart.

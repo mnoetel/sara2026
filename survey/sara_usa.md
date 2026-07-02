@@ -397,27 +397,6 @@ pages:
           curves at the installation level). See m3_std_nuclear.
         triangulates: [m3_std_nuclear, m3_std_aviation]
 
-      - id: m3_sanity_everest
-        text: >
-          Compared with the safety rules we accept for climbing Mount Everest,
-          regulation of advanced AI should be:
-        scale: strictness5_cantcompare
-        widget: radio
-        required: true
-        rationale: >
-          Sanity anchor at the risky end of the range (Method 3). Climbing
-          Everest is a famously dangerous activity that society leaves lightly
-          regulated (roughly 1 death per 100 summit attempts), and the risk
-          falls mainly on the climber. Nearly everyone should say AI needs
-          stricter rules than that, so this fixes the risky end of the scale
-          and confirms respondents can place AI across the full range — the
-          real comparators alone only exercise the strict end. One anchor
-          only (restored Jul 2026, single-item version of the retired
-          m3_sanity pool): a second (e.g. BASE jumping) adds length without
-          adding information. Not an exclusion criterion; failures are
-          reported descriptively.
-        triangulates: [m3_std_nuclear]
-
       - id: m3_att_bioweapons
         text: >
           Compared with the safety regulations on biological weapons, this is an
@@ -453,6 +432,35 @@ pages:
           exclude, and identical criteria catch straightliners on both. Also
           flagged `last`. See m3_att_bioweapons.
         triangulates: [m3_att_bioweapons]
+
+      - id: m3_sanity_everest
+        text: >
+          Climbing Mount Everest is very dangerous: about 1 in every 100
+          people who have tried to climb it have died. Compared with the
+          safety rules we accept for climbing Everest, regulation of advanced
+          AI should be:
+        scale: strictness5_cantcompare
+        widget: radio
+        required: true
+        last: 2
+        rationale: >
+          Sanity anchor at the risky end of the range (Method 3). The danger
+          is stated in the stem rather than assumed known, so the anchor works
+          for respondents who don't know Everest's fatality record. The figure
+          is citable — about 1.3% of people above base camp died 1921-2006
+          (Firth et al., BMJ 2008); ~1.0% of first-time summit attempters
+          2006-2019 (Huey et al., PLOS ONE 2020); 0.7% for 2007-2024 (Moore
+          et al., J Physiol 2026) — "about 1 in 100" is the defensible round
+          number. Everest risk is chosen and falls on the climber, so nearly
+          everyone should say AI needs stricter rules than that; the item
+          fixes the risky end of the scale and confirms respondents can use
+          the full range (the industry comparators only exercise the strict
+          end). Flagged `last: 2` so it always follows the attention checks —
+          its stem differs from the comparator stems, and putting it after
+          both checks keeps the disguised-check block homogeneous. One anchor
+          only: a second (e.g. BASE jumping) adds length without information.
+          Not an exclusion criterion; failures are reported descriptively.
+        triangulates: [m3_std_nuclear]
 
   # ── Attention-check screen-out ──────────────────────────────────────
   # Shown ONLY when BOTH disguised attention checks (m3_att_bioweapons,
@@ -491,9 +499,10 @@ pages:
       - id: m2_experts_lecun
         text: >
           Yann LeCun (winner of the Turing Award, computer science's Nobel
-          Prize) has put the chance that AI wipes out humanity at
-          about 1 in 1,000,000 — "less likely than an asteroid wiping us out."
-          Accepting a risk at that level would be:
+          Prize) has said the chance that AI wipes out humanity is "below
+          the chances of an asteroid hitting the Earth." Scientists put the
+          chance of an extinction-level asteroid strike at about 1 in
+          1,000,000 per century. Accepting a risk at that level would be:
         scale: tolerability2
         widget: radio
         required: true
@@ -502,11 +511,16 @@ pages:
           judge a named, real figure rather than producing one. The four
           experts are shown within-person to span the credible range and
           dampen anchoring from any single source; reported by source, never
-          averaged. Source: LeCun's stated p(doom) <0.01% — "Less likely than
-          an asteroid wiping us out" (Wikipedia, "P(doom)", Note 4). Rendered
-          as ~1 in 1,000,000 to sit in "1 in X" form beside the other three;
-          this matches asteroid-extinction odds of roughly 1 in a million per
-          century (Ord, "The Precipice", 2020). Verify before fielding.
+          averaged. VERIFIED 02 Jul 2026 — and rewritten: LeCun has never
+          stated a numeric p(doom) (he says attaching a probability "makes no
+          sense"), so no number is attributed to him. His verbatim quote is
+          "below the chances of an asteroid hitting the Earth" (CBS Mornings
+          interview, Dec 2023; cbsnews.com "Some experts push for
+          transparency..."; the "<0.01%" figure circulating via Wikipedia
+          "P(doom)" is a third party's inference, not his statement). The 1
+          in 1,000,000 per century figure is the extinction-class asteroid
+          base rate (NASA/planetary-defense literature; Ord, "The
+          Precipice", 2020), attributed to scientists, not to LeCun.
         triangulates:
           - m2_experts_fri_super
           - m2_experts_fri_domain
@@ -521,11 +535,15 @@ pages:
         widget: radio
         required: true
         rationale: >
-          Low-but-careful anchor from professional forecasters. Source:
-          Forecasting Research Institute, Existential Risk Persuasion
-          Tournament — superforecaster median for AI-caused extinction by 2100
-          ≈ 0.38% (~1 in 250) (Karger, Rosenberg, Tetlock et al., 2023,
-          "Forecasting Existential Risks"). Verify figure before fielding.
+          Low-but-careful anchor from professional forecasters. VERIFIED 02
+          Jul 2026 against the report PDF: superforecaster median for
+          AI-caused extinction by 2100 = 0.38% [95% CI 0.10, 0.75], N=88
+          (Table 9/Table 15, Karger, Rosenberg, ... Tetlock, 2023,
+          "Forecasting Existential Risks", FRI Working Paper #1,
+          forecastingresearch.org/pdf/existential-risk-persuasion-
+          tournament.pdf). Question wording: probability AI "will cause human
+          extinction or reduce the global population below 5,000" by 2100.
+          0.38% ≈ 1 in 263, shown as "about 1 in 250".
         triangulates:
           - m2_experts_lecun
           - m2_experts_fri_domain
@@ -541,11 +559,13 @@ pages:
         required: true
         rationale: >
           Mid anchor from the same tournament, showing how much higher subject
-          experts sit than generalist forecasters. Source: FRI Existential
-          Risk Persuasion Tournament — AI-domain-expert median for AI-caused
-          extinction by 2100 ≈ 3% (~1 in 30) (Karger, Rosenberg, Tetlock et
-          al., 2023, "Forecasting Existential Risks"). Verify figure before
-          fielding.
+          experts sit than generalist forecasters. VERIFIED 02 Jul 2026
+          against the report PDF: AI-domain-expert median for AI-caused
+          extinction by 2100 = 3% [95% CI 0.49, 10.00], N=29 (Table 9/Table
+          15, same citation as m2_experts_fri_super). Cite the 3% from the
+          tables and executive summary — the AI-chapter prose says 3.9% once,
+          an internal inconsistency in the report. 3% ≈ 1 in 33, shown as
+          "about 1 in 30".
         triangulates:
           - m2_experts_lecun
           - m2_experts_fri_super
@@ -560,9 +580,16 @@ pages:
         widget: radio
         required: true
         rationale: >
-          Top anchor. Source: Amodei's stated p(doom) 10–25% — "there's a 25%
-          chance that things go really, really badly" (Axios, Morrone 2023).
-          Verify figure before fielding.
+          Top anchor. VERIFIED 02 Jul 2026. Canonical range: "my chance that
+          something goes really quite catastrophically wrong on the scale of
+          human civilization might be somewhere between 10 and 25%" (The
+          Logan Bartlett Show EP 82, 6 Oct 2023, ~1:38:40) — he prefaces
+          that a fixed number is hard and fluctuates. Most recent single
+          number: "I think there's a 25% chance that things go really,
+          really badly" (Axios AI+ DC Summit, 17 Sep 2025;
+          axios.com/2025/09/17/anthropic-dario-amodei-p-doom-25-percent).
+          The item shows the 10-25% range as the fairer representation of
+          his stated view.
         triangulates:
           - m2_experts_lecun
           - m2_experts_fri_super

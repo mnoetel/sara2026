@@ -144,7 +144,7 @@ The four methods run from least anchoring to most. We start by asking for the re
 **Population-level sequential design (adaptive priors).** Varying severity enlarges the grid to 180 profiles, so a design built on *guessed* priors spreads its power thinly and may concentrate it in the wrong region — public AI-risk tolerance is close to unknown going in. We therefore field in waves and let the **population-level** priors adapt to the data, while holding each respondent's instrument fixed:
 
 1. **Pilot wave** (~500 respondents) on a Bayesian D-efficient design built from diffuse priors (or the 2025 estimates where available).
-2. At fixed sample checkpoints, re-estimate the population coefficients (mixed logit, `logitr`) and regenerate the Bayesian D-efficient design (`cbcTools`) using the posterior mean and covariance as the new priors.
+2. At fixed sample checkpoints, re-estimate the population coefficients (mixed logit, `logitr`) and regenerate the Bayesian D-efficient design (`cbcTools`) using the posterior means as the new prior means (the adopt-if-better D-error criterion is evaluated at the posterior mean; implemented in `dce_sequential.R`).
 3. **Main waves** (~3 waves of ~1,170) field the current design; the design is *locked within a wave*.
 4. Lock the design permanently after the final checkpoint; cap the total at 4,000.
 
@@ -179,7 +179,7 @@ The adaptation is **between-respondent only**: it sharpens *which* tradeoffs the
 - **The denominator problem (the big one).** "One death per what?" Expert AI risk figures are about the *whole technology*, the equivalent of every nuclear reactor or every flight worldwide, not a single unit. A naive comparison to "a plane crash" is apples to oranges. We make it apples to apples by specifying the comparator at the *industry* level (all reactors, the whole aviation system), matching the scope of the AI estimate.
 - **Quantifiability.** Some respondents reject the premise that AI risk can be put on a number at all. We must not force them onto a scale they reject.
 
-**How we respond.** Three fixed comparator items on *standards* (rules) — nuclear power, commercial aviation, large dams — each specified at industry scope to fix the denominator (every respondent answers all three, so the between-comparator contrast is within person; the earlier five-industry randomised-pool design was retired with the `{comparator}` machinery). The safety-in-practice (outcomes) twin and the standalone frame-applicability item were cut to the dumpster (01 Jul 2026), but the "reject the frame" escape survives as a **"Cannot compare these technologies"** option on the response scale, so no one is forced onto a scale they reject. A single dangerous-activity sanity anchor at the risky end — climbing Mount Everest (restored 02 Jul 2026; one anchor, not the earlier three-activity pool) — confirms people can place AI across the *full* range: the industry comparators only exercise the strict end, and nearly everyone should demand stricter rules for AI than for an activity whose risk falls on the climber. Any F–N back-out is illustrative, gated on the cognitive pre-test, and never published as an "N times safer" headline.
+**How we respond.** Three fixed comparator items on *standards* (rules) — nuclear power, commercial aviation, large dams — each specified at industry scope to fix the denominator (every respondent answers all three, so the between-comparator contrast is within person; the earlier five-industry randomised-pool design was retired with the `{comparator}` machinery). The safety-in-practice (outcomes) twin and the standalone frame-applicability item were cut to the dumpster (01 Jul 2026), but the "reject the frame" escape survives as a **"Cannot compare these technologies"** option on the response scale, so no one is forced onto a scale they reject. A single dangerous-activity sanity anchor at the risky end — climbing Mount Everest (restored 02 Jul 2026; one anchor, not the earlier three-activity pool), with its ~1-in-100 fatality record stated in the stem so the anchor doesn't assume the danger is known, fielded after the attention checks because its stem differs from the comparator stems — confirms people can place AI across the *full* range: the industry comparators only exercise the strict end, and nearly everyone should demand stricter rules for AI than for an activity whose risk falls on the climber. Any F–N back-out is illustrative, gated on the cognitive pre-test, and never published as an "N times safer" headline.
 
 **Worked example items.** The live comparator items, their scales, and the randomisation pools, exactly as fielded:
 
@@ -194,18 +194,18 @@ The adaptation is **between-respondent only**: it sharpens *which* tradeoffs the
   - _Scale:_ Much stricter / Stricter / About the same / Less strict / Much less strict / Cannot compare these technologies
 - **`m3_std_dams`** — Compared with the safety regulations on large dams, regulation of advanced AI should be:
   - _Scale:_ Much stricter / Stricter / About the same / Less strict / Much less strict / Cannot compare these technologies
-- **`m3_sanity_everest`** — Compared with the safety rules we accept for climbing Mount Everest, regulation of advanced AI should be:
-  - _Scale:_ Much stricter / Stricter / About the same / Less strict / Much less strict / Cannot compare these technologies
 - **`m3_att_bioweapons`** — Compared with the safety regulations on biological weapons, this is an attention check, so you must select much less strict:
   - _Scale:_ Much stricter / Stricter / About the same / Less strict / Much less strict / Cannot compare these technologies
 - **`m3_att_nuclear`** — Compared with the safety regulations on nuclear weapons, this is an attention check, so you must select much less strict:
+  - _Scale:_ Much stricter / Stricter / About the same / Less strict / Much less strict / Cannot compare these technologies
+- **`m3_sanity_everest`** — Climbing Mount Everest is very dangerous: about 1 in every 100 people who have tried to climb it have died. Compared with the safety rules we accept for climbing Everest, regulation of advanced AI should be:
   - _Scale:_ Much stricter / Stricter / About the same / Less strict / Much less strict / Cannot compare these technologies
 
 </details>
 
 <!-- END:auto:method3-live -->
 
-*(Pedagogy: the "Cannot compare these technologies" option is the frame-rejection escape so no one is forced onto a scale they reject; the sanity anchor is a deliberately easy check — almost everyone should say AI must be far safer, and anyone who does not is flagged. Death rates are approximate and must be verified before fielding.)*
+*(Pedagogy: the "Cannot compare these technologies" option is the frame-rejection escape so no one is forced onto a scale they reject; the sanity anchor is a deliberately easy check — almost everyone should say AI needs far stricter rules, and anyone who does not is flagged. Its fatality figure is verified — about 1.3% of climbers above base camp died 1921-2006 (Firth et al., BMJ 2008), ~1% of first-time summit attempters 2006-2019 (Huey et al., PLOS ONE 2020), 0.7% for 2007-2024 (Moore et al., J Physiol 2026) — and is stated in the item stem so the anchor doesn't assume respondents know Everest is deadly. It fields after the attention checks (its stem differs from the disguised-comparator stems).)*
 
 Cut from this method (retired to the dumpster, recoverable):
 
@@ -237,7 +237,7 @@ Cut from this method (retired to the dumpster, recoverable):
 
 **Limitations.** (a) Anchoring: people may cluster around whatever number they are shown. (b) The figures must be real and fairly quoted, or the whole item is indefensible. (c) A tolerability rating can still be affect ("I dislike AI") rather than a considered threshold.
 
-**How we respond.** We show a set of figures within person that spans the credible range — from near-zero (LeCun, ~1 in 1,000,000, "less likely than an asteroid wiping us out") through careful forecasters (FRI/XPT superforecasters ~1 in 250, then FRI AI-domain experts ~1 in 30) to the top of the range (Amodei, between 1 in 10 and 1 in 4) — and we report results *by source* so the spread is visible rather than collapsed into one average. (The earlier Altman/Musk anchors were replaced by the two FRI forecaster medians on 01 Jul 2026, so the set now spans named individuals *and* expert-forecaster groups.) Showing several at once also dampens the pull of any single anchor. Every figure is verified against a citable public statement before fielding (see the flag below). And this method is only one of four; if affect were driving it, the choice-based method (§3.2) would not agree.
+**How we respond.** We show a set of figures within person that spans the credible range — from near-zero (LeCun's verbatim "below the chances of an asteroid hitting the Earth", glossed with the scientific asteroid base rate of ~1 in 1,000,000 per century, since LeCun himself declines to give a number) through careful forecasters (FRI/XPT superforecasters ~1 in 250, then FRI AI-domain experts ~1 in 30) to the top of the range (Amodei, between 1 in 10 and 1 in 4) — and we report results *by source* so the spread is visible rather than collapsed into one average. (The earlier Altman/Musk anchors were replaced by the two FRI forecaster medians on 01 Jul 2026, so the set now spans named individuals *and* expert-forecaster groups.) Showing several at once also dampens the pull of any single anchor. Every figure is verified against a citable public statement before fielding (see the flag below). And this method is only one of four; if affect were driving it, the choice-based method (§3.2) would not agree.
 
 **Worked example item.** Public figures and expert-forecaster groups have estimated the chance that advanced AI leads to a catastrophe (for the two forecaster rows, human extinction this century). The exact items, generated from the instrument:
 
@@ -246,7 +246,7 @@ Cut from this method (retired to the dumpster, recoverable):
 <details>
 <summary>Method 4 — the named-source items, as fielded — 4 items (click to expand)</summary>
 
-- **`m2_experts_lecun`** — Yann LeCun (winner of the Turing Award, computer science's Nobel Prize) has put the chance that AI wipes out humanity at about 1 in 1,000,000 — "less likely than an asteroid wiping us out." Accepting a risk at that level would be:
+- **`m2_experts_lecun`** — Yann LeCun (winner of the Turing Award, computer science's Nobel Prize) has said the chance that AI wipes out humanity is "below the chances of an asteroid hitting the Earth." Scientists put the chance of an extinction-level asteroid strike at about 1 in 1,000,000 per century. Accepting a risk at that level would be:
   - _Scale:_ Tolerable: okay to live with, if monitored / Intolerable: too dangerous, must be fixed
 - **`m2_experts_fri_super`** — Expert forecasters in a large forecasting tournament put the chance that AI causes human extinction this century at about 1 in 250. Accepting a risk at that level would be:
   - _Scale:_ Tolerable: okay to live with, if monitored / Intolerable: too dangerous, must be fixed
@@ -259,9 +259,9 @@ Cut from this method (retired to the dumpster, recoverable):
 
 <!-- END:auto:experts -->
 
-*(In the fielded instrument each row carries its own source citation — LeCun via Wikipedia "P(doom)"; the two forecaster medians via Karger, Rosenberg, Tetlock et al. 2023, the FRI Existential Risk Persuasion Tournament; Amodei via Axios, Morrone 2023 — each flagged "verify before fielding.")*
+*(Each row's rationale in the instrument carries its verified citation — LeCun via the CBS Mornings interview (Dec 2023; the circulating "<0.01%" figure is a third party's inference, so no number is attributed to him); the two forecaster medians via Karger, Rosenberg, ... Tetlock 2023, FRI Existential Risk Persuasion Tournament, Table 9 (0.38% and 3% for AI-caused extinction by 2100); Amodei via The Logan Bartlett Show EP 82 (Oct 2023, "somewhere between 10 and 25%") with his more recent flat "25%" (Axios AI+ DC Summit, 17 Sep 2025) noted.)*
 
-> **Field flag.** Each figure now carries a provisional source (above), but every one must still be verified against an exact, citable statement (source, date, wording) before fielding. Do not field a number we cannot source. This is non-negotiable given the named-attribution design.
+> **Field flag — resolved 02 Jul 2026.** Every figure was verified against an exact, citable statement (sources in each item's rationale). The check caught one misattribution: the "1 in 1,000,000" formerly attributed to LeCun is not his — he has never stated a numeric p(doom) — so the item now quotes his verbatim asteroid comparison and attributes the number to asteroid science. The rule stands for any future anchor: do not field a number we cannot source.
 
 ### A note on the tolerability scale
 
@@ -420,7 +420,7 @@ Each entry gives the reviewer's concern in fuller form and what we changed in re
 
 **19. Ball-style review — curated alarming anchors.**
 *Concern.* Showing only high risk estimates would bias respondents toward alarm.
-*Response.* A full-range anchor set spanning the credible spread — LeCun (~1 in 1,000,000) up to Amodei (1 in 10 to 1 in 4), with the two FRI forecaster medians in between — every figure reported by anchor so the range is visible.
+*Response.* A full-range anchor set spanning the credible spread — LeCun's asteroid comparison (glossed at ~1 in 1,000,000 per century) up to Amodei (1 in 10 to 1 in 4), with the two FRI forecaster medians in between — every figure reported by anchor so the range is visible.
 
 **20. Ball-style review — liability options biased.**
 *Concern.* The liability response options were skewed, offering no middle ground between no liability and full strict liability.
@@ -472,7 +472,7 @@ The authoritative item list, response scales, and exact page order **are the ins
 - **Design:** Bayesian D-efficient, 2 alternatives + opt-out, 10 blocks, 4,000 respondents (oversampling the risk module relative to 2025). Level balance and overlap checked (`cbcTools`). Each block fields 10 tasks: **tasks 1-8** are the D-efficient design; **task 9** is a dominated pair (one option strictly better on every attribute; the dominant side alternates by block to cancel position bias) and **task 10** is an exact repeat of task 2. Tasks 9-10 are **excluded from estimation**: choosing the dominated option (the opt-out is not a failure) and switching on the repeated task are reported as data-quality rates and drive a pre-registered sensitivity re-estimate excluding flagged respondents (ISPOR internal-validity guidance).
 - **Population-level sequential re-optimisation (pre-registered algorithm):**
   - **Waves:** pilot ~500, then ~3 main waves of ~1,170 (≈4,010 total). Design locked within each wave.
-  - **Checkpoints:** at each wave boundary, re-estimate the population coefficients on all data so far (mixed logit, `logitr`, fixed specification, multistart, fixed seed) and regenerate the Bayesian D-efficient design (`cbcTools`, fixed prior-draw count and seed) using the posterior mean and covariance as priors.
+  - **Checkpoints:** at each wave boundary, re-estimate the population coefficients on all data so far (mixed logit, `logitr`, fixed specification, multistart, fixed seed) and regenerate the Bayesian D-efficient design (`cbcTools`, fixed seed) using the posterior means as the new prior means; the adopt-if-better comparison is the local D-error at the posterior mean (`dce_sequential.R`).
   - **Update rule:** adopt the regenerated design only if it lowers the Bayesian D-error versus the incumbent; otherwise keep the incumbent. Design is locked permanently after the final checkpoint; hard cap 4,000.
   - **Why this is not p-hacking:** only the *priors* update — the model, the D-efficiency criterion, the seeds, the checkpoint sizes, and the downstream analysis are all fixed in advance. The algorithm is deterministic given the data; no analyst discretion enters. Task selection depends only on past observed choices, so the adaptive sampling is ignorable for the likelihood and the pooled estimate is consistent; design-wave is reported as a robustness control. §3.1 is held static (non-adaptive).
 - **Fielding pipeline:** the survey is the **oTree app generated from `survey/sara_usa.md`** (the single source of truth); it assigns each respondent a DCE block plus the randomisation arms and handles Prolific completion-code crediting. The population-level sequential loop runs *off-platform* in R between waves — `cbcTools` (design) + `logitr` (estimation) — regenerating `survey/sara/dce_blocks.csv` (the per-block design the app reads) for the next wave. No within-session compute is required.
@@ -480,7 +480,7 @@ The authoritative item list, response scales, and exact page order **are the ins
 - **Recovering the public number:** acceptable annual risk p\* is the level at which an AI-future option equals the status-quo opt-out for a given severity tier and benefit/competition scenario — the opt-out anchors p\*, so no cost attribute is needed. WTP is taken from the stated log-scale item (§3.1, `m5_wtp`), not backed out of a DCE cost coefficient. Report p\* as a distribution with credible intervals by scenario, never a point.
 - **Identification:** confirmed by simulation (seed 7); coefficients recovered to within ~0.03 of truth.
 - **Go/no-go and multiplier governance:** see §5.
-- **Status / to do before fielding:** `sara_dce_design.R` now encodes the varied-severity 180-profile grid — cost dropped to the dumpster (01 Jul 2026) — and exports the per-block CSV the app reads (done). **Still to do:** implement the wave/checkpoint sequential loop (wrap design generation + `logitr` estimation), and extend the identification simulation to confirm the *sequential* procedure recovers the coefficients (not just a one-shot static design).
+- **Status (02 Jul 2026):** `sara_dce_design.R` encodes the varied-severity 180-profile grid, appends the two internal-validity tasks, exports the per-block CSV the app reads, and runs the repaired one-shot identification simulation (choices simulated directly from the registered mixed-logit specification). The wave/checkpoint sequential loop is implemented in `dce_sequential.R` (shared coding/estimator/export in `dce_model_utils.R`), with `--simulate` running the full four-wave sequential procedure against known coefficients. **Before the pilot fields:** archive one clean `--simulate` recovery run and freeze PREREGISTRATION.md.
 
 ---
 
