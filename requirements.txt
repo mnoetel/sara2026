@@ -6,3 +6,6 @@ otree==6.0.15
 pyyaml>=6.0,<7
 markdown>=3.4,<4
 requests>=2.31,<3
+# Production only: lets oTree talk to Heroku Postgres via DATABASE_URL.
+# Unused on local devserver (which stays on sqlite); harmless to install.
+psycopg2-binary>=2.9,<3

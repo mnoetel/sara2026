@@ -23,6 +23,17 @@ DEMO_PAGE_TITLE = 'SARA USA 2026'
 PARTICIPANT_FIELDS = []
 SESSION_FIELDS = []
 
+# One stable fielding URL (/room/sara_usa) that survives across sessions:
+# the panel keeps the same link while we create a fresh session per DCE
+# wave behind it. No participant_label_file — the panel appends its own
+# ID as ?participant_label=... (see DEPLOY.md).
+ROOMS = [
+    dict(
+        name='sara_usa',
+        display_name='SARA USA 2026 — fielding room',
+    ),
+]
+
 # Production fielding MUST set these in the environment; the fallbacks are
 # for local devserver only. With the defaults, session URLs are forgeable
 # and the admin (with participant data) is open — do not field with them.
