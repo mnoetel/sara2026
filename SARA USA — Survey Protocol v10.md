@@ -18,7 +18,7 @@ This survey aims to fill what Hadfield and Clark call the *democratic deficit*: 
 | [§4](#4-moderators-who-we-measure-and-why) | Moderators to explore. |
 | [§5](#5-estimating-the-population-view-mrp) | Estimating the *population* view using MRP. |
 | [§6](#6-how-much-does-opinion-move-with-framing) | Testing how opinion moves with framing. |
-| [§7](#7-secondary-modules-not-about-risk-tolerance) | Secondary modules not about risk tolerance: the superintelligence ban (the data-centre module was cut to the dumpster, Appendix C). |
+| [§7](#7-secondary-modules-not-about-risk-tolerance) | Secondary modules not about risk tolerance: the superintelligence ban |
 | [§8](#8-criticisms-and-our-responses) | Criticisms and tentative responses: one table for what we have resolved, one for what we have not. |
 | [§9](#9-open-questions-to-settle) | Open questions we still need to settle. |
 | Appendices | [A](#appendix-a-full-fielding-order-and-demographics) fielding order, [B](#appendix-b-dce-design-and-analysis-summary-of-sara_dce_designr) DCE design, [C](#appendix-c-the-dumpster-considered-deliberately-not-asking) dumpster, [D](#appendix-d-provenance-and-sources) provenance. |
