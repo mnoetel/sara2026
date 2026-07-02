@@ -116,7 +116,7 @@ footer { margin-top: 4rem; padding-top: 1rem; border-top: 1px solid var(--border
 <ol>
 <li><a href="#61-balanced-disclosure-experiment-information-provision">6.1 Balanced-disclosure experiment (information provision)</a></li>
 <li><a href="#62-the-superintelligence-briefing-experiment-muskans-33-elm">6.2 The superintelligence briefing experiment (Muskan&#x27;s 3×3 ELM)</a></li>
-<li><a href="#63-argument-vs-social-proof-proposed-decomposition">6.3 Argument vs social proof (proposed decomposition)</a></li>
+<li><a href="#63-argument-vs-social-proof-considered-cut">6.3 Argument vs social proof (considered, cut)</a></li>
 </ol>
 </li>
 <li><a href="#7-criticisms-and-our-responses">7. Criticisms and our responses</a>
@@ -171,7 +171,7 @@ footer { margin-top: 4rem; padding-top: 1rem; border-top: 1px solid var(--border
 <p>"Hadfield argues that governance of any complex technology implicates two distinct types of question: first, democratic questions: what kinds of deception by AI developers count as unfair? <strong>What tradeoffs between utility, safety, and competition does the polity wish to make? What level of catastrophic risk are we willing to tolerate?</strong>"
 Dean W. Ball, <em>Leviathan Waking</em>, Hyperdimensional.<sup id="fnref:ball"><a class="footnote-ref" href="#fn:ball">16</a></sup></p>
 </blockquote>
-<p>This survey aims to fill what Hadfield and Clark call the <em>democratic deficit</em>: the values-based decisions that shape AI "must be made by democratically accountable public, not private, actors."<sup id="fnref:clark"><a class="footnote-ref" href="#fn:clark">1</a></sup> As is, it not clear what level of risk the public is willing to tolerate. It does not aim to have the public estimate the actual risk or prescribe mitigiations<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">2</a></sup>, but to judge how much risk the public will tolerate (a values question the public is entitled to answer).</p>
+<p>This survey aims to fill what Hadfield and Clark call the <em>democratic deficit</em>: the values-based decisions that shape AI "must be made by democratically accountable public, not private, actors."<sup id="fnref:clark"><a class="footnote-ref" href="#fn:clark">1</a></sup> As is, it is not clear what level of risk the public is willing to tolerate. It does not aim to have the public estimate the actual risk or prescribe mitigations<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">2</a></sup>, but to judge how much risk the public will tolerate (a values question the public is entitled to answer).</p>
 <hr />
 <h2 id="1-how-to-read-this-document">1. How to read this document</h2>
 <table>
@@ -217,8 +217,8 @@ Dean W. Ball, <em>Leviathan Waking</em>, Hyperdimensional.<sup id="fnref:ball"><
 <p>The obvious survey is one question: "What annual chance of an AI catastrophe is acceptable?" This would be unlikely to work for several reasons:</p>
 <p><strong>People are unreliable with probabilities.</strong> Asked the chance of getting two heads from two coin tosses, only 52% of UK MPs answered correctly.<sup id="fnref:rss"><a class="footnote-ref" href="#fn:rss">3</a></sup> If the people who write the laws cannot do two coin flips, a general-population sample will not respond meaningfully with "1 in 1,000" versus "1 in 1,000,000."</p>
 <p><strong>People are scope insensitive.</strong> Many respondents treat 1 in 1,000 and 1 in 1,000,000 as the same feeling of "small," so a single elicited number reflects affect, not a considered threshold.<sup id="fnref:kk92"><a class="footnote-ref" href="#fn:kk92">4</a></sup><sup id="fnref:slovic2007"><a class="footnote-ref" href="#fn:slovic2007">5</a></sup></p>
-<p><strong>People are framing sensitive.</strong> The same question shifts with wording, anchors, and who is quoted.<sup id="fnref:chong"><a class="footnote-ref" href="#fn:chong">6</a></sup><sup id="fnref:tk74"><a class="footnote-ref" href="#fn:tk74">7</a></sup> Because some faming is often necessary, this is an effect we want to quantify, rather than something we can eliminate (see §6).</p>
-<p><strong>So we plan to trianguate rather than trusting any single method.</strong> We plan to assess risk tolerance in four different ways. A conclusion that survives all four survives whichever method a given critic distrusts. Where the methods converge, we increase our confidence in the estimate. Where they diverge, we plan to report bounds and qualitative findings. Together, we hope the methods assess the gap between what experts estimate and what the public will tolerate.</p>
+<p><strong>People are framing sensitive.</strong> The same question shifts with wording, anchors, and who is quoted.<sup id="fnref:chong"><a class="footnote-ref" href="#fn:chong">6</a></sup><sup id="fnref:tk74"><a class="footnote-ref" href="#fn:tk74">7</a></sup> Because some framing is often necessary, this is an effect we want to quantify, rather than something we can eliminate (see §6).</p>
+<p><strong>So we plan to triangulate rather than trusting any single method.</strong> We plan to assess risk tolerance in four different ways. A conclusion that survives all four survives whichever method a given critic distrusts. Where the methods converge, we increase our confidence in the estimate. Where they diverge, we plan to report bounds and qualitative findings. Together, we hope the methods assess the gap between what experts estimate and what the public will tolerate.</p>
 <hr />
 <h2 id="3-the-core-four-ways-to-triangulate-risk-tolerance">3. The core: four ways to triangulate risk tolerance</h2>
 <p>The four methods run from least anchoring to most. We:
@@ -445,7 +445,7 @@ Dean W. Ball, <em>Leviathan Waking</em>, Hyperdimensional.<sup id="fnref:ball"><
 <p><strong>Strengths.</strong> Comparative judgements are far easier and more stable than absolute ones; the comparators are concrete and familiar; the result maps onto how regulators actually argue.</p>
 <p><strong>Limitations, and how we respond.</strong>
 - <strong>Category error.</strong> "AI should be <em>stricter</em>" can mean stricter <em>rules</em> or safer <em>outcomes</em>.
-  - We now focuse exclusivly on stricter standards than safer outcomes because policymakers set standards and we can't measure catastrophic AI outcomes.
+  - We now focus exclusively on stricter standards rather than safer outcomes because policymakers set standards and we can't measure catastrophic AI outcomes.
 - <strong>The denominator problem (the big one).</strong> "One death per what?" Expert AI risk figures are about the <em>whole technology</em>, the equivalent of every nuclear reactor or every flight worldwide, not a single unit. A naive comparison to "a plane crash" is apples to oranges.
   - We make it apples to apples by specifying each comparator at the <em>industry</em> level (all reactors, the whole aviation system), matching the scope of the AI estimate.
 - <strong>Quantifiability.</strong> Some respondents reject the premise that AI risk can be put on a number at all. We must not force them onto a scale they reject.
@@ -518,17 +518,17 @@ Dean W. Ball, <em>Leviathan Waking</em>, Hyperdimensional.<sup id="fnref:ball"><
 <p>Earlier drafts used a four-point monotonic scale (Acceptable &lt; Tolerable &lt; Intolerable &lt; Unacceptable / should be illegal); it was collapsed to the two-point forced choice on 01 Jul 2026 for a cleaner, lower-effort judgement across the four within-person anchors. An even earlier draft labelled the middle points "negligent / grossly negligent"; Barnett pointed out that "negligent" reads as <em>weaker</em> than "intolerable," breaking monotonicity, so those labels were dropped. We keep the history because it is a case where reviewers' small wording points reshaped the instrument.</p>
 <hr />
 <h2 id="4-moderators-who-we-measure-and-why">4. Moderators: who we measure, and why</h2>
-<p>These are viables to measure and control for, rather than for exluding participats. Covariates moderate the estimate and let us ask whether, for example, young people are less tolerant of low-probability futures that foreclose the long-term future. Default analysis enters them as controls or via MRP (§5) so the headline is a population estimate net of sample composition.</p>
+<p>These are variables to measure and control for, rather than for excluding participants. Covariates moderate the estimate and let us ask whether, for example, young people are less tolerant of low-probability futures that foreclose the long-term future. Default analysis enters them as controls or via MRP (§5) so the headline is a population estimate net of sample composition.</p>
 <ul>
 <li><strong>Demographics for weighting.</strong> Age, gender, education, income, state, all aligned to US Census / ACS categories so they post-stratify to population controls (see Appendix A for the exact brackets).</li>
 <li><strong>AI familiarity.</strong> Frequency of intentional AI use (Gillespie et al. 2025; item validated as a proxy for technology experience per Hargittai 2005).<sup id="fnref2:gillespie"><a class="footnote-ref" href="#fn:gillespie">21</a></sup></li>
 <li><strong>Political orientation.</strong> 7-point Very Liberal to Very Conservative (Jost 2006).<sup id="fnref:jost"><a class="footnote-ref" href="#fn:jost">36</a></sup></li>
-<li><strong>Risk literacy / numeracy.</strong> Berlin Numeracy Test style items (Cokely et al. 2012; a fast, psychometrically sensitive measure of risk literacy and a robust predictor of decision quality).<sup id="fnref:cokely"><a class="footnote-ref" href="#fn:cokely">37</a></sup> The key interaction for one of my honours students projects: does higher risk literacy reduce increase scope sensitivity?</li>
+<li><strong>Risk literacy / numeracy.</strong> Berlin Numeracy Test style items (Cokely et al. 2012; a fast, psychometrically sensitive measure of risk literacy and a robust predictor of decision quality).<sup id="fnref:cokely"><a class="footnote-ref" href="#fn:cokely">37</a></sup> The key interaction for one of my honours students' projects: does higher risk literacy increase scope sensitivity?</li>
 </ul>
 <hr />
 <h2 id="5-estimating-the-population-view-mrp">5. Estimating the population view (MRP)</h2>
 <p>A convenience or panel sample is not the US public. We use <strong>multilevel regression and post-stratification (MRP)</strong>: model the outcome with demographic and geographic predictors, then re-weight model predictions to ACS population counts to recover the population-level risk tolerance (and, if the per-state effective sample is large enough, state-level estimates). MRP is validated by posterior predictive checks and leave-one-state-out cross-validation. <strong>No state map is published unless the effective per-state sample clears a pre-registered threshold.</strong></p>
-<p><strong>Panel-selection calibration.</strong> MRP adjusts demographics, not the attitudinal self-selection of an opt-in panel (§7.2-E). Two verbatim Pew ATP benchmark items are fielded before any treatment (<code>bench_pew_cncexc</code>, <code>bench_pew_aireg</code>); the gap between our sample and Pew's probability-sample toplines is reported alongside every population claim.</p>
+<p><strong>Panel-selection calibration.</strong> MRP adjusts demographics, not the attitudinal self-selection of an opt-in panel — Prolific self-selects on tech engagement and AI familiarity, traits correlated with the outcome, and that residual selection is a named limitation in all reporting. Two verbatim Pew ATP benchmark items are fielded before any treatment (<code>bench_pew_cncexc</code>, <code>bench_pew_aireg</code>); the gap between our sample and Pew's probability-sample toplines is reported alongside every population claim.</p>
 <p><strong>Convergence go/no-go (pre-registered).</strong> A single quantitative public number is reported only if the DCE (§3.2) and the direct scope instrument (§3.1) agree within about one order of magnitude in an overlap subsample. If they diverge, we report a bound plus a qualitative finding. The expert assessment vs. public expectations multiplier (e.g., 4,000x safer) is reported, if at all, as researcher interpretations and never as public opinions.</p>
 <hr />
 <h2 id="6-how-much-does-opinion-move-with-framing">6. How much does opinion move with framing?</h2>
@@ -556,8 +556,8 @@ Dean W. Ball, <em>Leviathan Waking</em>, Hyperdimensional.<sup id="fnref:ball"><
 </details>
 <!-- END:auto:muskan-items -->
 
-<h3 id="63-argument-vs-social-proof-proposed-decomposition">6.3 Argument vs social proof (proposed decomposition)</h3>
-<p>Mike's question, and the same central-vs-peripheral logic as §6.2 in miniature: when framing moves people, is it the <em>content</em> of the argument or the <em>social signal</em> (for example, "Prince Harry signed it")? Proposed design: cross the argument (present / absent) with a prestige-signatory cue (present / absent) so we can attribute any movement to the substance or to the social proof. <strong>This is a proposed addition; flag for sign-off (§8).</strong></p>
+<h3 id="63-argument-vs-social-proof-considered-cut">6.3 Argument vs social proof (considered, cut)</h3>
+<p>Mike's question, and the same central-vs-peripheral logic as §6.2 in miniature: when framing moves people, is it the <em>content</em> of the argument or the <em>social signal</em> (for example, "Prince Harry signed it")? The proposed design crossed the argument (present / absent) with a prestige-signatory cue (present / absent). <strong>Cut to the dumpster 2 Jul 2026, never built:</strong> Muskan's 3×3 (§6.2) already makes this decomposition — its one-sided cells separate the elite source-cue (peripheral route) from the substantive argument (central route) — so a standalone 2×2 would duplicate it. Recoverable if a prestige-signatory cue distinct from the elite-cue cells is later wanted (Appendix C).</p>
 <p>A data-centre reverse-halo module was also considered as a framing experiment (does an "AI data centre" label draw more objection than an identical generic plant?) but was cut to the dumpster on 29 Jun 2026; see Appendix C.</p>
 <hr />
 <h2 id="7-criticisms-and-our-responses">7. Criticisms and our responses</h2>
@@ -607,14 +607,14 @@ Dean W. Ball, <em>Leviathan Waking</em>, Hyperdimensional.<sup id="fnref:ball"><
 <p><em>Response.</em> A strict conditional-reporting rule, with separate unconditional and conditional delay items so the two are never collapsed in the headline.</p>
 <p><strong>15. Gradient — a citizens' assembly may beat a poll.</strong></p>
 <p><em>Concern.</em> A deliberative mini-public might elicit more considered views than a one-shot survey, and could be the better instrument for a values question.</p>
-<p><em>Response.</em> Accepted as a complement, not a replacement: a deliberative Phase 2 is recommended (see open item D — recommended but not yet scoped or funded).</p>
+<p><em>Response.</em> Accepted as a complement, not a replacement: a deliberative Phase 2 is recommended, though not yet scoped or funded.</p>
 <p><strong>16. Gradient — drop the "public want AI 4000× safer" claim.</strong></p>
 <p><em>Concern.</em> Headlining a precise multiplier backed out of an F–N comparison is indefensible and invites ridicule.</p>
-<p><em>Response.</em> Plan to avoid this framing; any multipliers will be clearly the researchers' intepretations not the public's beliefs.</p>
+<p><em>Response.</em> Plan to avoid this framing; any multipliers will be clearly the researchers' interpretations not the public's beliefs.</p>
 <p><strong>17. Gradient — the Figure-11 category error ("systems should be stricter").</strong>
 <em>Concern.</em> Asking whether AI "should be stricter" conflates stricter <em>rules</em> (standards) with safer <em>outcomes</em> (systems in practice) — two different judgements collapsed into one.</p>
 <p><em>Response.</em> All questions are now 'safety standards' not 'in practice' because standards are what policymakers have more control over, especially for catastrophic risks.</p>
-<p><strong>18. Claude as Dean Ball skeptical review — adoiding advocacy.</strong></p>
+<p><strong>18. Claude as Dean Ball skeptical review — avoiding advocacy.</strong></p>
 <p><em>Concern.</em> A hostile reader could see the exercise as advocacy, with design choices quietly tilted toward an alarming result.</p>
 <p><em>Response.</em> Removed attitude questions that looked like support for specific policies. Also, aim to seek adversarial pre-launch and post-report review, and publish their critiques alongside the results.</p>
 <p><strong>19. Claude as Dean Ball skeptical review — curated alarming anchors.</strong></p>
@@ -646,7 +646,7 @@ Dean W. Ball, <em>Leviathan Waking</em>, Hyperdimensional.<sup id="fnref:ball"><
 </ul>
 <hr />
 <h2 id="appendix-c-the-dumpster-considered-deliberately-not-asking">Appendix C: The dumpster (considered, deliberately not asking)</h2>
-<p>The full ledger of items and modules considered and cut — with the reason for each — lives in the instrument, <code>survey/sara_usa.md</code>, under the top-level <strong><code>dumpster:</code></strong> key, so the decision record sits beside the items themselves. It covers the icon arrays, verbal/micromort risk anchors, the "all technologies carry residual risk" preamble, off-the-shelf scales (AIAS-4/GAAIS/GRIPS/DOSPERT), the "4000× safer" multiplier, the direct "support SB 53/RAISE" item, the DCE cost attribute, the test–retest wave, the unbounded-WTP option, the mitigations and priority-risks batteries, CRT and need-for-cognition, the environment/data-centre module, the Module 1 descriptive-attitudes battery, m2_pace, and the retired Stem-A/B wording experiment + counter-message arm (superseded by Muskan's 3×3). The deeper rationale for the methodologically interesting cuts is in §2–§3 and §6.</p>
+<p>The full ledger of items and modules considered and cut — with the reason for each — lives in the instrument, <code>survey/sara_usa.md</code>, under the top-level <strong><code>dumpster:</code></strong> key, so the decision record sits beside the items themselves. It covers the icon arrays, verbal/micromort risk anchors, the "all technologies carry residual risk" preamble, off-the-shelf scales (AIAS-4/GAAIS/GRIPS/DOSPERT), the "4000× safer" multiplier, the direct "support SB 53/RAISE" item, the DCE cost attribute, the test–retest wave, the unbounded-WTP option, the mitigations and priority-risks batteries, CRT and need-for-cognition, the environment/data-centre module, the Module 1 descriptive-attitudes battery, m2_pace, the retired Stem-A/B wording experiment + counter-message arm (superseded by Muskan's 3×3), and the argument-vs-social-proof 2×2 (subsumed by the same 3×3, §6.3). The deeper rationale for the methodologically interesting cuts is in §2–§3 and §6.</p>
 <hr />
 <h2 id="appendix-d-provenance-and-sources">Appendix D: Provenance and sources</h2>
 <ul>
