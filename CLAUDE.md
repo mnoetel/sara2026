@@ -91,8 +91,14 @@ one-per-page in randomised order), or `type: adaptive` + `root:` (items branch v
 - Manual: `cd survey && otree devserver`. Walk a participant via a session's
   `/join/<room>` link; POST does **not** need a CSRF token on devserver.
 - Review table: `make -C render` (R path) or `python3 render/review_fallback.py`.
-  `make -C render` also runs `sync-protocol` (refreshes the protocol's auto-blocks);
-  `make -C render check-protocol` is a read-only drift guard for CI.
+  `make -C render` also runs `sync-protocol` (refreshes the protocol's auto-blocks) and
+  `docs` (see below); `make -C render check-protocol` / `check-docs` are the read-only
+  drift guards for CI.
+- **`docs/index.html` is generated** — the public GitHub Pages rendering of the protocol
+  for reviewers who don't use GitHub (with a banner telling GitHub users how to comment
+  line-by-line). `render/build_docs.py` renders the protocol Markdown; never hand-edit
+  `docs/`. After editing the protocol, rebuild with `make -C render docs` (or
+  `python3 render/build_docs.py`) and commit the result.
 
 ## Fielding / deployment
 - `DEPLOY.md` is the runbook: Heroku + managed Postgres, `Procfile` runs
