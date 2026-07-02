@@ -58,7 +58,54 @@ def gh_slug(value, separator="-"):
     return value.replace(" ", separator)
 
 
+LIST_ITEM = r"([-*+]|\d{1,3}\.) "
+
+
+def normalize_gfm_lists(md_text):
+    """The protocol is written for GitHub's Markdown, which is looser than
+    python-markdown in two ways that silently mangle the rendered page: a
+    list may start on the line right after a paragraph (python-markdown
+    needs a blank line first, else the items run on as paragraph text), and
+    nested items may be indented two spaces (python-markdown needs four,
+    and renders two-space nests as *siblings*). Normalise both so the page
+    matches what reviewers see on GitHub."""
+    out, prev, in_fence = [], "", False
+    for line in md_text.splitlines():
+        if line.lstrip().startswith("```"):
+            in_fence = not in_fence
+        elif not in_fence:
+            if re.match(r"^ {1,3}" + LIST_ITEM, line):
+                line = "    " + line.lstrip()
+            elif (re.match(r"^" + LIST_ITEM, line) and prev.strip()
+                  and not re.match(r"^ *" + LIST_ITEM, prev)
+                  and not prev.lstrip().startswith(("#", ">", "|"))):
+                out.append("")
+        out.append(line)
+        prev = line
+    return "\n".join(out) + "\n"
+
+
+def autolink_urls(md_text):
+    """GitHub autolinks bare URLs (the protocol's citations rely on it);
+    python-markdown leaves them as dead text. Wrap each bare URL in <...> so
+    it renders as a link, trimming trailing prose punctuation and any close
+    paren that isn't part of the URL (DOIs contain balanced parens)."""
+    def repl(m):
+        url = m.group(0)
+        while True:
+            if url[-1] in ".,;:!?'\"":
+                url = url[:-1]
+            elif url[-1] == ")" and url.count("(") < url.count(")"):
+                url = url[:-1]
+            else:
+                break
+        return "<" + url + ">" + m.group(0)[len(url):]
+
+    return re.sub(r"(?<!<)(?<!\]\()(?<!=\")\bhttps?://[^\s<>]+", repl, md_text)
+
+
 def render_body(md_text):
+    md_text = autolink_urls(normalize_gfm_lists(md_text))
     # python-markdown treats a whole <details>…</details> span as one raw-HTML
     # block, which would leave the protocol's collapsible "as fielded" blocks
     # (and the tables inside them) as unrendered Markdown. md_in_html processes
@@ -73,6 +120,44 @@ def render_body(md_text):
     )
     body = md.convert(md_text)
     return body, md.toc_tokens
+
+
+FNREF_RE = re.compile(
+    r'(<sup id="fnref\d*:([^"]+)"><a class="footnote-ref" '
+    r'href="#fn:[^"]+">)(\d+)(</a></sup>)')
+
+
+def renumber_footnotes(page):
+    """The footnotes extension numbers notes by the order their *definitions*
+    appear in the protocol, so the superscripts in the text jump around.
+    Renumber by order of first reference, and reorder the end-of-page list to
+    match (an <ol>, so each note's displayed number is its position).
+    Footnotes defined but never referenced sink to the end, keeping their
+    relative order (their dead backlinks are stripped separately)."""
+    order = {}
+    for m in FNREF_RE.finditer(page):
+        order.setdefault(m.group(2), len(order) + 1)
+    if not order:
+        return page
+    page = FNREF_RE.sub(
+        lambda m: m.group(1) + str(order[m.group(2)]) + m.group(4), page)
+
+    def reorder(m):
+        chunks = re.split(r'(?=<li id="fn:)', m.group(2))
+        head, items = chunks[0], chunks[1:]
+        items.sort(key=lambda li: order.get(
+            re.match(r'<li id="fn:([^"]+)"', li).group(1), len(order) + 1))
+        return m.group(1) + head + "".join(items) + m.group(3)
+
+    return re.sub(r'(<div class="footnote">.*?<ol>)(.*?)(</ol>)',
+                  reorder, page, count=1, flags=re.S)
+
+
+def separate_adjacent_fnrefs(page):
+    """Back-to-back footnote references render as one run-on number
+    (…catastrophe¹⁸¹⁹); put a superscript comma between them."""
+    return page.replace('</sup><sup id="fnref',
+                        '</sup><sup class="fn-sep">,</sup><sup id="fnref')
 
 
 def drop_dead_backlinks(page):
@@ -217,6 +302,12 @@ aside.comment-box h2 {{ border: none; margin: 0 0 .5em; padding: 0; font-size: 1
 .footnote {{ font-size: .88rem; color: var(--muted); }}
 .footnote hr {{ margin: 3em 0 1em; }}
 .footnote-ref {{ text-decoration: none; font-weight: 600; }}
+.fn-sep {{ color: var(--muted); }}
+#fn-preview {{ position: absolute; z-index: 10; max-width: 26rem;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 10px;
+  padding: .7rem .9rem; box-shadow: 0 6px 24px rgba(0, 0, 0, .18);
+  font-size: .85rem; line-height: 1.5; overflow-wrap: break-word; }}
+#fn-preview > :last-child {{ margin-bottom: 0; }}
 :target {{ animation: flash 1.6s ease-out 1; }}
 @keyframes flash {{ from {{ background: var(--mark-bg); }} to {{ background: transparent; }} }}
 footer {{ margin-top: 4rem; padding-top: 1rem; border-top: 1px solid var(--border);
@@ -268,6 +359,46 @@ To suggest changes, see <a href="#how-to-comment">how to comment</a>.</p>
   if (mq.addEventListener) mq.addEventListener("change", sync);
   sync();
 }})();
+// Footnote previews: hovering a superscript shows the note in a popup, so
+// readers don't lose their place jumping to the bottom of the page. Clicking
+// still navigates (the only behaviour on touch devices, which can't hover).
+(function () {{
+  var pop = null, hideTimer = null;
+  function hide() {{ if (pop) {{ pop.remove(); pop = null; }} }}
+  function scheduleHide() {{ hideTimer = setTimeout(hide, 300); }}
+  function cancelHide() {{ clearTimeout(hideTimer); }}
+  document.addEventListener("mouseover", function (e) {{
+    var ref = e.target.closest && e.target.closest("a.footnote-ref");
+    if (!ref) return;
+    cancelHide();
+    var note = document.getElementById(ref.getAttribute("href").slice(1));
+    if (!note) return;
+    hide();
+    pop = document.createElement("div");
+    pop.id = "fn-preview";
+    pop.innerHTML = note.innerHTML;
+    pop.querySelectorAll(".footnote-backref").forEach(function (a) {{ a.remove(); }});
+    // Keep the popup open while the pointer is inside it (its links are live).
+    pop.addEventListener("mouseenter", cancelHide);
+    pop.addEventListener("mouseleave", scheduleHide);
+    document.body.appendChild(pop);
+    var r = ref.getBoundingClientRect();
+    var pad = 8;
+    var left = window.scrollX + r.left + r.width / 2 - pop.offsetWidth / 2;
+    var maxLeft = window.scrollX + document.documentElement.clientWidth
+                  - pop.offsetWidth - pad;
+    left = Math.max(window.scrollX + pad, Math.min(left, maxLeft));
+    var top = window.scrollY + r.bottom + pad;
+    if (r.bottom + pop.offsetHeight + 2 * pad > window.innerHeight &&
+        r.top - pop.offsetHeight - pad > 0)
+      top = window.scrollY + r.top - pop.offsetHeight - pad;
+    pop.style.left = left + "px";
+    pop.style.top = top + "px";
+  }});
+  document.addEventListener("mouseout", function (e) {{
+    if (e.target.closest && e.target.closest("a.footnote-ref")) scheduleHide();
+  }});
+}})();
 </script>
 </body>
 </html>
@@ -309,7 +440,7 @@ def build():
         repo_url=GITHUB_REPO,
         repo_name=GITHUB_REPO.rsplit("/", 1)[-1],
     )
-    return drop_dead_backlinks(page)
+    return drop_dead_backlinks(separate_adjacent_fnrefs(renumber_footnotes(page)))
 
 
 def main():
