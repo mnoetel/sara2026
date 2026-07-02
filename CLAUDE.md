@@ -94,6 +94,14 @@ one-per-page in randomised order), or `type: adaptive` + `root:` (items branch v
   `make -C render` also runs `sync-protocol` (refreshes the protocol's auto-blocks);
   `make -C render check-protocol` is a read-only drift guard for CI.
 
+## Fielding / deployment
+- `DEPLOY.md` is the runbook: Heroku + managed Postgres, `Procfile` runs
+  `otree prodserver`, `.python-version` pins 3.11 (same as CI). Responses accumulate in
+  Postgres across the four DCE waves; each `dce_sequential.R --checkpoint` produces a new
+  `dce_blocks.csv` → commit, tag `wave-<k>`, redeploy (schema-safe — task count is fixed).
+  The panel's stable entry link is the `sara_usa` room (`ROOMS` in `settings.py`).
+  **Never edit the instrument (`sara_usa.md`) mid-fielding** — that changes the DB schema.
+
 ## Analysis & data
 - `sara_dce_design.R` → `survey/sara/dce_blocks.csv` (varied-severity 180-grid, Bayesian
   D-efficient; per block: 8 D-efficient tasks + task 9 dominated pair + task 10 repeat of
