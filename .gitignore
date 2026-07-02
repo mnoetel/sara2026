@@ -20,3 +20,6 @@ staticfiles/
 poststrat_frame.csv
 .Rproj.user
 .Renviron
+
+# Secrets
+secrets.txt
