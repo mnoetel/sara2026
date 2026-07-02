@@ -1220,7 +1220,7 @@ dumpster:
       hands revealed WTP back to the stated item m5_wtp. Recoverable by
       re-adding cost_usd to sara_dce_design.R if a revealed-WTP number is
       later wanted.
-  - name: m6_firm_approval (regulate frontier AI companies like banks — license and audit the firm)
+  - name: Regulate frontier AI companies like banks — license and audit the firm
     reason: >
       Cut 1 Jul 2026 along with m6_offswitch, retiring the whole policy page.
       The entity-level licensing/auditing question probes a specific policy
@@ -1246,7 +1246,7 @@ dumpster:
           - "Somewhat oppose"
           - "Strongly oppose"
           - "Unsure"
-  - name: m6_offswitch (governments build capability to monitor and, if dangerous, halt frontier AI)
+  - name: Governments build the capability to monitor and, if dangerous, halt frontier AI (the "Off Switch")
     reason: >
       Cut 1 Jul 2026 along with m6_firm_approval, retiring the whole policy
       page. Tested support for MIRI's proposed jurisdiction-level "Off Switch"
@@ -1272,7 +1272,7 @@ dumpster:
           - "No, the costs and risks of concentrated control outweigh the benefit"
           - "No, voluntary industry safeguards are enough"
           - "Unsure"
-  - name: m6_certify (before deployment, who should certify that an AI system is safe?)
+  - name: Who should certify that an AI system is safe before deployment?
     reason: >
       Cut 1 Jul 2026: the certifier question is subsumed by m6_firm_approval
       (entity-level licensing/auditing, which implies government or independent
@@ -1286,7 +1286,7 @@ dumpster:
           - Government agencies
           - Independent third-party auditors
           - No certification needed; the market will sort it out
-  - name: m6_fedstate (one national AI policy vs state-by-state)
+  - name: One national AI policy vs state-by-state rules
     reason: >
       Cut 1 Jul 2026 to make room on page 9 and because the entity-level
       m6_firm_approval item already gets at the "who regulates" question more
@@ -1302,7 +1302,7 @@ dumpster:
           - "Somewhat prefer federal"
           - "Somewhat prefer state-by-state"
           - "Strongly prefer state-by-state"
-  - name: m6_liability (when should the company that built an AI be financially liable?)
+  - name: When should the company that built an AI be financially liable?
     reason: >
       Cut 1 Jul 2026. Liability is largely subsumed by m6_firm_approval:
       Ball's entity-licensing framing folds the consequences of failure into
@@ -1322,7 +1322,7 @@ dumpster:
           - "Liable only if it broke a specific written rule"
           - "Not liable if it followed all safety standards"
           - "Unsure"
-  - name: m3a_ii_safety (compared with how safe {comparator} is in practice, AI systems should be)
+  - name: How safe AI should be compared with the comparator in practice (the outcomes half of the standards/safety split)
     reason: >
       Cut 1 Jul 2026: page 9 now asks only about standards (m3a_i_standards),
       not about outcomes/practice. Splitting standards from safety-in-practice
@@ -1335,7 +1335,7 @@ dumpster:
           And compared with how safe {comparator} is in practice today, advanced
           AI systems themselves should be:
         scale: safety5_cantcompare
-  - name: m3_sanity (compared with how safe {sanity} is, AI systems should be)
+  - name: Deliberately-easy sanity anchor (how safe AI should be compared with a 1-in-100-death activity)
     reason: >
       Cut 1 Jul 2026: the deliberately-easy sanity anchor was meant to catch
       non-engaged respondents (almost everyone should say AI must be far safer
@@ -1353,7 +1353,7 @@ dumpster:
           {sanity}. Compared with how safe that is, advanced AI systems
           should be:
         scale: safety5_cantcompare
-  - name: "\"cars\" as a safety-standards comparator (m3_std_* pool)"
+  - name: "\"cars\" as a safety-standards comparator"
     reason: >
       Cut 1 Jul 2026 from the comparator pool (was one of five; pool is now
       nuclear power / commercial aviation / large dams, all shown to everyone).
@@ -1368,7 +1368,7 @@ dumpster:
       revealed-tolerance rather than a set-standard basis. Recoverable by
       re-adding "cars" to the m3_std_* items if a revealed-tolerance anchor is
       later wanted.
-  - name: "\"new prescription drugs\" as a safety-standards comparator (m3_std_* pool)"
+  - name: "\"new prescription drugs\" as a safety-standards comparator"
     reason: >
       Cut 1 Jul 2026 from the comparator pool (see the cars entry). Drug safety
       is governed case-by-case by benefit–risk balance, not by a single
@@ -1379,7 +1379,7 @@ dumpster:
       approval / efficacy gatekeeping rather than catastrophic-risk tolerance.
       Recoverable by re-adding it to the m3_std_* items if a benefit–risk
       comparator is later wanted.
-  - name: m2_frame_applicable (can you put a number on AI's risk, or is it too uncertain?)
+  - name: Can you put a number on AI's risk, or is it too uncertain? (frame-applicability check)
     reason: >
       Cut 1 Jul 2026: the frame-applicability check was judged not important
       enough to keep in the live instrument.
@@ -1393,7 +1393,7 @@ dumpster:
           - You can put a number on its risk and hold it to a safety limit too
           - Its risk is too uncertain to put a useful number on
           - Unsure
-  - name: free_estimate / m4b_reasonable (highest annual chance of an AI disaster killing 100,000 people you'd find reasonable)
+  - name: Free estimate — highest annual chance of an AI disaster killing 100,000 people you'd find reasonable
     reason: >
       Cut 1 Jul 2026: redundant with the severity-ladder rung m4c_1m (1,000,000
       deaths), which asks essentially the same thing but is anchored to a
@@ -1414,7 +1414,7 @@ dumpster:
           - "1 in 10,000,000 or less"
           - "Zero risk only is reasonable"
           - "Too speculative to answer"
-  - name: Environment / data-centre module (env_label, env_reversal, env_forgo, env_attitude)
+  - name: Environment / data-centre module (4 items)
     reason: >
       Reverse-halo framing experiment, fielded first in v10. Cut 29 Jun 2026:
       decision relevance unclear; none of its justifications (predictive
@@ -1448,7 +1448,7 @@ dumpster:
           How worried, if at all, are you about advanced AI's impact on the
           environment, including its energy and water use?
         options: [Very worried, Fairly worried, Not very worried, Not at all worried, Don't know]
-  - name: Module 1 descriptive-attitudes battery (m1_goodharm, m1_worry_control, m1_trust_companies, m1_extinction_priority, m1_reg_toofar, m1_treaty_ban)
+  - name: Module 1 descriptive-attitudes battery (6 items)
     reason: >
       Cluster A descriptive attitudes, not risk tolerance — they don't feed the
       public number. Cut 29 Jun 2026; trend value recoverable from prior SARA
@@ -1479,7 +1479,7 @@ dumpster:
       - id: m1_treaty_ban
         text: "Would you support or oppose an international treaty to ban the development of any 'smarter-than-human' AI?"
         options: [Strongly support, Somewhat support, Somewhat oppose, Strongly oppose, Don't know]
-  - name: m2_pace (tolerability of the current pace of AI disruption)
+  - name: Tolerability of the current pace of AI disruption
     reason: "Non-catastrophic disruption is off-aim for a risk-tolerance survey. Cut 29 Jun 2026."
     items:
       - id: m2_pace
