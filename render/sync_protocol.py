@@ -6,11 +6,10 @@ Keep the *volatile facts* in the protocol doc in sync with the single source of
 truth, so the prose can't silently drift from the fielded instrument again.
 
 The protocol ("SARA USA — Survey Protocol v10.md") is context/reasoning only —
-per CLAUDE.md it must NOT restate item text, scales, or the live/cut split. But
-its worked examples inevitably quote a few of those values (the expert anchors,
-the tolerability scale, which Method-3 items are live vs cut). Those are the
-bits that rot. This script regenerates *only* those bits, inside HTML-comment
-markers, from:
+per CLAUDE.md it must NOT restate item text or scales. But its worked examples
+inevitably quote a few of those values (the expert anchors, the live Method-3
+comparator items, the ladder rungs). Those are the bits that rot. This script
+regenerates *only* those bits, inside HTML-comment markers, from:
 
   - survey/sara_usa.md          (item text + scales + dumpster — via spec_loader)
 
@@ -67,9 +66,6 @@ ITEM_BLOCKS = {
         pages=["safety_standards"],
         summary="Method 3 — comparator items (incl. the embedded attention "
                 "checks), as fielded"),
-    "method3-cut": dict(
-        ids=["m3a_ii_safety", "m2_frame_applicable"],
-        summary="Method 3 — items retired to the dumpster (recoverable)"),
     "muskan-items": dict(
         pages=["superintelligence_support", "superintelligence_route"],
         summary="Superintelligence module — ban-support DV and ELM route "
@@ -179,18 +175,13 @@ def gen_item_block(spec, cfg):
     return _details(cfg["summary"], body)
 
 
-# ── short inline scale blocks (not collapsed — one line each) ────────────
+# ── the generator registry ──────────────────────────────────────────────
 
-def gen_tolerability_scale(spec):
-    labels = spec["scales"]["tolerability2"]["labels"]
-    return "**" + "** vs **".join(_flat(l) for l in labels) + "**"
-
-
-# Marker key → generator. Item blocks are data-driven from ITEM_BLOCKS; each
-# item already prints its own scale, so there is no separate ladder-scale block.
-GENERATORS = {
-    "tolerability-scale": gen_tolerability_scale,
-}
+# Marker key → generator. Every block is a collapsible "as fielded" item block,
+# data-driven from ITEM_BLOCKS; each item already prints its own scale, so there
+# is no separate scale block. (The tolerability scale is short and stable enough
+# to be stated inline in the protocol prose rather than generated.)
+GENERATORS = {}
 for _key, _cfg in ITEM_BLOCKS.items():
     GENERATORS[_key] = (lambda spec, cfg=_cfg: gen_item_block(spec, cfg))
 
