@@ -230,6 +230,8 @@ pages:
           - "Not go far enough regulating its use"
           - "Not sure"
         widget: radio
+        shuffle_options: true
+        shuffle_keep_last: true
         required: true
         rationale: >
           Verbatim Pew benchmark (AIREG; American Trends Panel, Aug 12-18
@@ -237,7 +239,10 @@ pages:
           Directly on-construct for SARA (regulation preference). This
           restores the dumpstered m1_reg_toofar in Pew's exact wording so
           the same item does double duty as the population-calibration
-          benchmark. See bench_pew_cncexc.
+          benchmark. The two directional options are rotated per respondent
+          with "Not sure" anchored last, matching Pew's bipolar-item rotation
+          — VERIFY Pew rotated this specific item before fielding; if Pew fixed
+          the order, drop shuffle_options here. See bench_pew_cncexc.
         triangulates: [bench_pew_cncexc]
 
   # ── Page 3: Information-provision experiment (balanced; random half) ──
@@ -1048,10 +1053,13 @@ pages:
           reported as top-2-box prevalence. In the two-sided "contested" cells
           this is the considered-support estimate (support after hearing both
           sides). Shown in every cell. Paired with the reverse-keyed
-          muskan_support_anti below so acquiescence ("agree with whatever is
-          asked") can't masquerade as ban support.
+          muskan_support_anti on the next page so acquiescence ("agree with
+          whatever is asked") can't masquerade as ban support.
         triangulates: [muskan_support_anti]
 
+  - id: superintelligence_support_anti
+    title: "Your view"
+    items:
       - id: muskan_support_anti
         text: >
           How much do you agree? "Companies should be free to build machines
@@ -1062,11 +1070,11 @@ pages:
         required: true
         rationale: >
           Muskan's second DV — the anti-ban statement, the mirror image of the
-          conditional ban above (development allowed without the safety
-          consensus or the public buy-in). Asking a pro-ban and an anti-ban
-          statement guards against acquiescence bias; results are reported as
-          top-2-box on each item and as their difference after this item is
-          reverse-scored. Shown in every cell.
+          conditional ban on the previous page (development allowed without the
+          safety consensus or the public buy-in). Asking a pro-ban and an
+          anti-ban statement guards against acquiescence bias; results are
+          reported as top-2-box on each item and as their difference after this
+          item is reverse-scored. Shown in every cell.
         triangulates: [muskan_support]
 
   # ELM route mediators, shown ONLY to the one-sided cells (3, 6, 7, 8 —
@@ -1082,7 +1090,7 @@ pages:
     items:
       - id: muskan_central_route
         text: >
-          "I tried to judge the reasons given, not just who was giving them."
+          I tried to judge the reasons given, not just who was giving them.
         scale: agree5_asc
         widget: radio
         required: true
@@ -1092,10 +1100,15 @@ pages:
           Higher = more elaboration on argument substance.
         triangulates: [muskan_peripheral_route]
 
+  - id: superintelligence_route_peripheral
+    title: "How you weighed it"
+    condition: muskan_one_sided
+    note: "Thinking about the case you just read, how much do you agree?"
+    items:
       - id: muskan_peripheral_route
         text: >
-          "My reaction depended more on who backed the idea than on the reasons
-          they gave."
+          My reaction depended more on who backed the idea than on the reasons
+          they gave.
         scale: agree5_asc
         widget: radio
         required: true
