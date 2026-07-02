@@ -31,7 +31,7 @@ The obvious survey is one question: "What annual chance of an AI catastrophe is 
 
 **People are scope insensitive.** Many respondents treat 1 in 1,000 and 1 in 1,000,000 as the same feeling of "small," so a single elicited number reflects affect, not a considered threshold.[^kk92][^slovic2007]
 
-**People are framing sensitive.** The same question shifts with wording, anchors, and who is quoted.[^chong][^tk74] Because some faming is often necessary, this is an effect we want to quantify, rather than something we can eliminate (see §6).
+**People are framing sensitive.** The same question shifts with wording, anchors, and who is quoted.[^chong][^tk74] Because some framing is often necessary, this is an effect we want to quantify, rather than something we can eliminate (see §6).
 
 **So we plan to triangulate rather than trusting any single method.** We plan to assess risk tolerance in four different ways. A conclusion that survives all four survives whichever method a given critic distrusts. Where the methods converge, we increase our confidence in the estimate. Where they diverge, we plan to report bounds and qualitative findings. Together, we hope the methods assess the gap between what experts estimate and what the public will tolerate.
 
@@ -322,7 +322,7 @@ These are variables to measure and control for, rather than for excluding partic
 - **Demographics for weighting.** Age, gender, education, income, state, all aligned to US Census / ACS categories so they post-stratify to population controls (see Appendix A for the exact brackets).
 - **AI familiarity.** Frequency of intentional AI use (Gillespie et al. 2025; item validated as a proxy for technology experience per Hargittai 2005).[^gillespie]
 - **Political orientation.** 7-point Very Liberal to Very Conservative (Jost 2006).[^jost]
-- **Risk literacy / numeracy.** Berlin Numeracy Test style items (Cokely et al. 2012; a fast, psychometrically sensitive measure of risk literacy and a robust predictor of decision quality).[^cokely] The key interaction for one of my honours students projects: does higher risk literacy reduce increase scope sensitivity?
+- **Risk literacy / numeracy.** Berlin Numeracy Test style items (Cokely et al. 2012; a fast, psychometrically sensitive measure of risk literacy and a robust predictor of decision quality).[^cokely] The key interaction for one of my honours students' projects: does higher risk literacy increase scope sensitivity?
 
 ---
 
