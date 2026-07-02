@@ -66,6 +66,13 @@ class PlayerBot(Bot):
             expect(self.player.field_maybe_none('muskan_support'), '!=', None)
         else:
             expect(self.player.field_maybe_none('muskan_support'), None)
+        if mode == 'decline':
+            # Regression guard (issue #30): decliners end on the no-consent
+            # close-out, never the debrief (it debriefs briefings they never saw).
+            shown = {cls.__name__ for cls in page_sequence
+                     if cls.is_displayed(self.player)}
+            expect('NoConsentPage' in shown, True)
+            expect('EndPage' in shown, False)
 
     def _mode(self):
         non_control = [p.id_in_subsession

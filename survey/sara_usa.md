@@ -174,8 +174,20 @@ pages:
           - "I do not consent to participate"
         rationale: >
           Consent gate (UQ ethics 2023/HE002257). Selecting "I do not consent" ends the survey
-          immediately at the thank-you page; no further responses are recorded.
+          immediately at the no-consent close-out page; no further responses are recorded.
         triangulates: []
+
+  # ── Page 1b: No-consent close-out ────────────────────────────────
+  # Shown ONLY to participants who decline consent (condition: declined).
+  # Everyone else skips it. Decliners must NOT see the `end` debrief — it
+  # debriefs one-sided briefings they never read (issue #30).
+  - id: no_consent
+    title: "Thank you"
+    condition: declined
+    body: |
+      <p>You have chosen not to take part in this research. No survey responses have
+      been recorded. Thank you for your time — you may now close this window.</p>
+    items: []
 
   # ── Page 2: Intro ────────────────────────────────────────────────
   - id: intro
