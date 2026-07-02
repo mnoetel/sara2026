@@ -5,3 +5,4 @@
 otree==6.0.15
 pyyaml>=6.0,<7
 markdown>=3.4,<4
+requests>=2.31,<3
