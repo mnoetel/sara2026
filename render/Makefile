@@ -32,8 +32,11 @@ check-protocol: $(SPEC) $(LOADER) sync_protocol.py
 # (docs/index.html, served by GitHub Pages). Renders the protocol Markdown;
 # needs the `markdown` package (pinned in ../requirements.txt). Runs after
 # sync-protocol so the page reflects freshly synced auto-blocks.
-docs: sync-protocol build_docs.py
+# Also publishes the review table (docs/review.html) so reviewers can proof
+# the item list + dumpster without cloning the repo.
+docs: sync-protocol build_docs.py $(OUT)
 	python3 build_docs.py
+	cp $(OUT) ../docs/review.html
 
 # CI guard: fail if docs/index.html has drifted from the protocol.
 check-docs: build_docs.py
