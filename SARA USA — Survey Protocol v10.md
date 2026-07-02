@@ -399,7 +399,7 @@ Each entry gives the reviewer's concern in fuller form and what we changed in re
 
 **13. Gradient — define risk precisely (probability × impact; whose risk; loss-of-control vs application).**
 *Concern.* "Risk" is ambiguous across probability and severity, personal versus societal exposure, and loss-of-control versus ordinary application harms; leaving it undefined makes answers uninterpretable.
-*Response.* Standard definitions (probability vs impact, personal vs societal, loss-of-control vs application anchored to today's baseline) are shown before any Cluster B item, and every tolerance item is labelled with which sense of risk it asks about.
+*Response.* Addressed structurally rather than with a definitions page: severity (impact) and annual probability are separate, concretely-labelled dimensions in both the severity ladder and the DCE, so probability and impact are not conflated, and the severity-ladder items are explicitly scoped to *societal* (not personal) risk. The loss-of-control-vs-application distinction is not drawn separately — the catastrophe framing deliberately spans both.
 
 **14. Gradient — don't conflate conditional with unconditional support.**
 *Concern.* "I'd support a pause *if* China also paused" is a different measurement from unconditional support, and merging them overstates agreement.
@@ -459,7 +459,7 @@ Each entry gives the reviewer's concern in fuller form and what we changed in re
 
 The authoritative item list, response scales, and exact page order **are the instrument** — `survey/sara_usa.md` (the single source of truth) and the generated review table `render/review.html`. This appendix gives only the design assumptions behind that order; it does not restate the items.
 
-**Standard definitions** (probability vs impact; personal vs societal; loss-of-control vs application risk, anchored to today's baseline) are shown before any Cluster B (tolerance) item.
+**Risk framing.** The severity-ladder items are explicitly scoped to *societal* risk (the chance somewhere in the population, not the respondent's personal risk), and severity and annual probability appear as separate, concretely-labelled dimensions throughout the tolerance block; there is no standalone definitions preamble.
 
 **Least-to-most anchoring.** The four tolerance methods are fielded *free estimate → DCE → safety comparators → named-expert figures* (matching §3), so an earlier figure cannot anchor a later answer. They sit after the topic-neutral warm-up, so the harder quantitative items are not the respondent's first task. Fielding a gentler block first to cut early dropout is an open tradeoff (§8).
 
