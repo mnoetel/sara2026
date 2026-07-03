@@ -110,7 +110,7 @@ one-per-page in randomised order), or `type: adaptive` + `root:` (items branch v
   **Never edit the instrument (`sara_usa.md`) mid-fielding** — that changes the DB schema.
 
 ## Analysis & data
-- `sara_dce_design.R` → `survey/sara/dce_blocks.csv` (varied-severity 180-grid, Bayesian
+- `sara_dce_design.R` → `survey/sara/dce_blocks.csv` (varied-severity 225-grid, Bayesian
   D-efficient; per block: 8 D-efficient tasks + task 9 dominated pair + task 10 repeat of
   task 2 — quality checks, excluded from estimation). **`cbc_design` is NOT
   seed-reproducible** (even single-core) — the committed CSV is the canonical design;

@@ -138,8 +138,9 @@ read_exports <- function(paths) {
 # ── Sequential recovery simulation ────────────────────────────────────
 simulate_sequential <- function() {
   waves <- c(500, 1170, 1170, 1160)      # pre-registered sizes; sum = 4,000
-  b_true <- c(logp = -0.9, logn = -0.35, ben_major = 0.6, ben_transf = 1.4,
-              comp_pace = 0.3, comp_lead = 0.7, no_choice = -0.2)
+  b_true <- c(logp = -0.9, logn = -0.35, ext = -0.7, ben_major = 0.6,
+              ben_transf = 1.4, comp_pace = 0.3, comp_lead = 0.7,
+              no_choice = -0.2)
   sd_logp_true <- 0.4
 
   # Wave-1 design = the committed guess-prior design (dce_blocks.csv as

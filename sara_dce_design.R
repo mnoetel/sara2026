@@ -16,6 +16,13 @@
 # by block) + task 10 = an exact REPEAT of task 2 (within-person stability).
 # Tasks 9-10 are excluded from estimation and analysed as quality checks
 # (see protocol Appendix B and PREREGISTRATION.md).
+# v14 (03 Jul 2026): severity extended with the FRI/XPT extinction tier
+# (global population below 5,000), matching the new m4c_extinction ladder
+# rung and the Method-4 forecaster anchors. Full factorial now
+# 5 x 5 x 3 x 3 = 225. The registered model gains an extinction
+# discontinuity indicator (`ext`) so the data can test whether extinction
+# is dreaded beyond its log-death value (Schubert et al.) rather than
+# assuming linearity in log deaths.
 # This script (a) generates a Bayesian D-efficient design, (b) EXPORTS the
 # 10 blocks x 10 tasks as a flat CSV that the oTree app consumes, and
 # (c) keeps the simulate/estimate/recover sections for identification.
@@ -43,14 +50,15 @@ profiles <- cbc_profiles(
   severity    = c("A single death",
                   "100 deaths or $1B damage",
                   "1,000,000 deaths or $100B damage",
-                  "~800,000,000 deaths (10% of humanity)"),   # SEVERITY (4)
+                  "~800,000,000 deaths (10% of humanity)",
+                  "Human extinction (fewer than 5,000 people survive)"),  # SEVERITY (5)
   risk_annual = c("1 in 100", "1 in 1,000", "1 in 10,000",
                   "1 in 100,000", "1 in 1,000,000"),          # PROBABILITY (5)
   benefit     = c("Modest", "Major", "Transformative"),       # UTILITY (3)
   competition = c("Other countries are ahead", "The US keeps pace",
                   "The US is ahead")                          # COMPETITION (3)
 )
-# Full factorial = 4 * 5 * 3 * 3 = 180 profiles.
+# Full factorial = 5 * 5 * 3 * 3 = 225 profiles.
 # Benefit levels are shown to respondents as short labels; render.py prints a
 # one-line legend under each task with a plain-English gloss of each.
 
@@ -61,7 +69,9 @@ profiles <- cbc_profiles(
 # ---------------------------------------------------------------------
 priors <- cbc_priors(
   profiles    = profiles,
-  severity    = c(-0.8, -1.6, -2.4),   # vs ref "A single death" (worse = lower)
+  severity    = c(-0.8, -1.6, -2.4, -3.4), # vs ref "A single death" (worse = lower);
+                                           # extinction = the log-death trend (~-2.7)
+                                           # plus a guessed dread premium (~-0.7)
   risk_annual = c(0.6, 1.2, 1.8, 2.4), # vs ref "1 in 100" (safer = higher)
   benefit     = c(0.6, 1.4),           # vs ref "Minor"
   competition = c(0.3, 0.7),           # vs ref "Other countries are ahead"
@@ -120,8 +130,9 @@ try({
   dat <- dce_code_design(design)      # logp/logn/dummies/no_choice rows
 
   set.seed(7)
-  b_true <- c(logp = -0.9, logn = -0.35, ben_major = 0.6, ben_transf = 1.4,
-              comp_pace = 0.3, comp_lead = 0.7, no_choice = -0.2)
+  b_true <- c(logp = -0.9, logn = -0.35, ext = -0.7, ben_major = 0.6,
+              ben_transf = 1.4, comp_pace = 0.3, comp_lead = 0.7,
+              no_choice = -0.2)
   sd_logp_true <- 0.4                 # respondent heterogeneity on the risk slope
   dat <- dce_simulate_choices(dat, b_true, sd_logp = sd_logp_true)
 
