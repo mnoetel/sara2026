@@ -22,7 +22,7 @@ import html as html_lib
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(SCRIPT_DIR, "..", "survey"))
 try:
-    from spec_loader import load_spec
+    from spec_loader import OPT_OUT_LABEL, item_gets_opt_out, load_spec
 except ImportError:
     sys.exit("PyYAML is required: pip install pyyaml")
 
@@ -54,6 +54,11 @@ def main():
                 scale_text = "(numeric entry)"
             else:
                 scale_text = ""
+            # The engine appends the universal opt-out to every item that
+            # doesn't already offer one; show it so reviewers see what
+            # participants see.
+            if scale_text and item_gets_opt_out(item, scales):
+                scale_text += " / %s" % OPT_OUT_LABEL
 
             tri = item.get("triangulates", [])
             tri_text = ", ".join(tri) if tri else ""

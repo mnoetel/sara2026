@@ -61,6 +61,13 @@
   .sara-opt:hover{border-color:#b9c7da;background:#fafbfd;}
   .sara-opt.sel{border-color:var(--accent);background:var(--soft);box-shadow:inset 0 0 0 1px var(--accent);}
   .sara-opt input{margin-top:3px;}
+  /* Universal opt-out: present but visually quiet, so it reads as an escape
+     hatch rather than a substantive response option. */
+  .sara-opt.sara-optout{border-style:dashed;color:var(--muted);font-size:13.5px;
+    padding:8px 14px;margin-top:2px;}
+  .sara-opt.sara-optout.sel{color:var(--ink);}
+  .sara-optout-num{display:flex;align-items:center;gap:8px;margin-top:10px;
+    color:var(--muted);font-size:13.5px;cursor:pointer;user-select:none;}
   .sara-select,.sara-num{font:inherit;padding:9px 12px;border:1.5px solid #cdd6e0;border-radius:8px;
     max-width:360px;margin-top:12px;}
   .sara-numwrap{display:inline-flex;align-items:center;gap:10px;}
@@ -152,6 +159,14 @@
   var nFields = radioNames.length + selects.length + nums.length;
   var single = (radioNames.length === 1 && selects.length === 0 && nums.length === 0);
 
+  // Single-question radio pages advance on click, so the Next button is
+  // redundant there — hide the bar but keep the button in the DOM for the
+  // programmatic click below.
+  if (single) {
+    var nav = document.querySelector('.sara-nav');
+    if (nav) nav.style.display = 'none';
+  }
+
   function complete(){
     for (var i=0;i<radioNames.length;i++){
       if (!document.querySelector('input[name="'+radioNames[i]+'"]:checked')) return false;
@@ -172,6 +187,19 @@
   radios.forEach(function(r){ r.addEventListener('change', function(){ paint(r); update(); }); });
   selects.forEach(function(s){ s.addEventListener('change', update); });
   nums.forEach(function(n){ n.addEventListener('input', update); });
+
+  // Number-widget opt-out: the checkbox stores its sentinel value in the
+  // (hidden-while-checked) number input, so the answer saves through the
+  // same field; unchecking clears it again.
+  document.querySelectorAll('input[data-optout-for]').forEach(function(cb){
+    var inp = document.getElementById(cb.getAttribute('data-optout-for'));
+    if (!inp) return;
+    cb.addEventListener('change', function(){
+      if (cb.checked) { inp.value = cb.getAttribute('data-optout-value'); inp.disabled = false; inp.readOnly = true; inp.style.visibility = 'hidden'; }
+      else { inp.value = ''; inp.readOnly = false; inp.style.visibility = ''; }
+      update();
+    });
+  });
   update();
 })();
 </script>

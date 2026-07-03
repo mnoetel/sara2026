@@ -1,0 +1,161 @@
+Version:  0.7.1
+Author:   John Paul Helveston (George Washington University)
+
+Consider submitting praise at
+https://github.com/jhelvy/cbcTools/issues/3.
+
+Please cite the package in your publications, see:
+citation("cbcTools")
+Version:  1.1.2
+Author:   John Paul Helveston (George Washington University)
+
+Consider submitting praise at
+https://github.com/jhelvy/logitr/issues/8.
+
+Please cite the JSS article in your publications, see:
+citation("logitr")
+
+=== simulated wave 1 fielded (n = 500, cumulative 500) ===
+Running multistart...
+  Random starting point iterations: 5
+  Number of cores: 1
+Done!
+Stochastic design will be optimized into 10 design blocks, then allocated across 4000 respondents
+Running 5 design searches using 9 cores...
+
+D-error results from all starts:
+Start 2: 0.150183   (Best)
+Start 4: 0.150376 
+Start 1: 0.150937 
+Start 3: 0.152218 
+Start 5: 0.152639 
+
+checkpoint -> wave 2 | n_resp = 500 | D-error incumbent 0.08429 vs candidate 0.085255 -> KEEP incumbent
+--- recovery so far (estimate - truth) ---
+      logp       logn        ext  ben_major ben_transf  comp_pace  comp_lead 
+    -0.012     -0.012      0.050     -0.055      0.050     -0.013      0.037 
+ no_choice 
+    -0.146 
+
+=== simulated wave 2 fielded (n = 1170, cumulative 1670) ===
+Running multistart...
+  Random starting point iterations: 5
+  Number of cores: 1
+Done!
+Stochastic design will be optimized into 10 design blocks, then allocated across 4000 respondents
+Running 5 design searches using 9 cores...
+
+D-error results from all starts:
+Start 3: 0.149217   (Best)
+Start 2: 0.149944 
+Start 5: 0.150782 
+Start 1: 0.152882 
+Start 4: 0.155920 
+
+checkpoint -> wave 3 | n_resp = 1670 | D-error incumbent 0.085089 vs candidate 0.084455 -> ADOPT candidate
+--- recovery so far (estimate - truth) ---
+      logp       logn        ext  ben_major ben_transf  comp_pace  comp_lead 
+    -0.031      0.003     -0.016     -0.021     -0.031      0.016      0.062 
+ no_choice 
+     0.016 
+
+=== simulated wave 3 fielded (n = 1170, cumulative 2840) ===
+Running multistart...
+  Random starting point iterations: 5
+  Number of cores: 1
+Done!
+Stochastic design will be optimized into 10 design blocks, then allocated across 4000 respondents
+Running 5 design searches using 9 cores...
+
+D-error results from all starts:
+Start 3: 0.149427   (Best)
+Start 4: 0.149798 
+Start 2: 0.149930 
+Start 5: 0.149986 
+Start 1: 0.151343 
+
+checkpoint -> wave 4 | n_resp = 2840 | D-error incumbent 0.083397 vs candidate 0.084311 -> KEEP incumbent
+--- recovery so far (estimate - truth) ---
+      logp       logn        ext  ben_major ben_transf  comp_pace  comp_lead 
+    -0.004      0.005     -0.011     -0.022     -0.057     -0.020      0.007 
+ no_choice 
+    -0.023 
+
+=== simulated wave 4 fielded (n = 1160, cumulative 4000) ===
+Running multistart...
+  Random starting point iterations: 5
+  Number of cores: 1
+Done!
+
+=== FINAL pooled estimate (all 4000 respondents) ===
+=================================================
+
+Model estimated on: Fri Jul 03 09:58:39 2026 
+
+Using logitr version: 1.1.2 
+
+Call:
+logitr::logitr(data = dat, outcome = "choice", obsID = "obsID", 
+    pars = MAIN_PARS, randPars = c(logp = "n"), panelID = "respID", 
+    numMultiStarts = numMultiStarts, numCores = numCores)
+
+Frequencies of alternatives:
+       1        2        3 
+0.482156 0.434719 0.083125 
+
+Summary Of Multistart Runs:
+  Log Likelihood Iterations Exit Status
+1      -26151.98         32           3
+2      -37661.45         12          -1
+3      -26148.01         25           3
+4      -26151.98         32           3
+5      -26148.01         32           3
+
+Use statusCodes() to view the meaning of each status code
+
+Exit Status: 3, Optimization stopped because ftol_rel or ftol_abs was reached.
+                             
+Model Type:       Mixed Logit
+Model Space:       Preference
+Model Run:             5 of 5
+Iterations:                32
+Elapsed Time:       0h:0m:11s
+Algorithm:     NLOPT_LD_LBFGS
+Weights Used?:          FALSE
+Panel ID:              respID
+Robust?                 FALSE
+
+Model Coefficients: 
+             Estimate Std. Error  z-value  Pr(>|z|)    
+logp       -0.9278022  0.0168796 -54.9659 < 2.2e-16 ***
+logn       -0.3480817  0.0059846 -58.1630 < 2.2e-16 ***
+ext        -0.7295650  0.0280309 -26.0271 < 2.2e-16 ***
+ben_major   0.5786766  0.0223807  25.8561 < 2.2e-16 ***
+ben_transf  1.3832099  0.0311476  44.4083 < 2.2e-16 ***
+comp_pace   0.2809921  0.0210711  13.3354 < 2.2e-16 ***
+comp_lead   0.7061387  0.0249324  28.3222 < 2.2e-16 ***
+no_choice  -0.2078790  0.0566506  -3.6695  0.000243 ***
+sd_logp    -0.4250006  0.0083790 -50.7221 < 2.2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+                                     
+Log-Likelihood:         -2.614801e+04
+Null Log-Likelihood:    -3.515559e+04
+AIC:                     5.231403e+04
+BIC:                     5.238939e+04
+McFadden R2:             2.562204e-01
+Adj McFadden R2:         2.559644e-01
+Number of Observations:  3.200000e+04
+
+Summary of 10k Draws for Random Coefficients: 
+     Min.   1st Qu.     Median       Mean    3rd Qu. Max.
+logp -Inf -1.214338 -0.9277372 -0.9273772 -0.6411028  Inf
+
+--- FINAL recovery (estimate - truth) ---
+      logp       logn        ext  ben_major ben_transf  comp_pace  comp_lead 
+    -0.028      0.002     -0.030     -0.021     -0.017     -0.019      0.006 
+ no_choice 
+    -0.008 
+sd_logp: est -0.425 truth 0.4 
+
+RECOVERY OK: all deviations < 0.1

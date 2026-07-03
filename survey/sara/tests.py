@@ -5,6 +5,8 @@ control-only comprehension page — gets walked.)
 """
 from otree.api import Bot, Submission, expect
 
+from spec_loader import OPT_OUT_NUMBER, OPT_OUT_VALUE, item_gets_opt_out
+
 from . import (
     _ATT_IDS,
     _ATT_REQUIRED,
@@ -29,11 +31,13 @@ class PlayerBot(Bot):
     """Walks the full survey, rendering every page (the submit machinery's
     HTML check catches template/render crashes, not just model errors).
     Answers vary by participant id so adaptive branches and option positions
-    get exercised. Two participants take the failure paths instead: the first
-    two NON-control participants (by id) play consent-decline and the
-    attention-check screen-out — chosen from the assignment so the
-    control-cell-only pages are still fully walked whenever the session is
-    big enough to cover all stimuli (27+ participants)."""
+    get exercised. Three participants take special paths instead: the first
+    three NON-control participants (by id) play consent-decline, the
+    attention-check screen-out, and opt-out-everywhere ("Prefer not to
+    answer" on every item that offers it, incl. the DCE and the number
+    widgets) — chosen from the assignment so the control-cell-only pages are
+    still fully walked whenever the session is big enough to cover all
+    stimuli (27+ participants)."""
 
     def play_round(self):
         mode = self._mode()
@@ -52,15 +56,24 @@ class PlayerBot(Bot):
                 if f == 'consent':
                     values[f] = 2 if mode == 'decline' else 1
                 elif f in _ATT_IDS:
+                    # The opt-out participant still passes the (instructed-
+                    # response) checks — opting out of them counts as a fail.
                     values[f] = wrong_att if mode == 'screenout' else _ATT_REQUIRED
                 elif f.startswith('dce_'):
-                    values[f] = 1 + (me % 3)
+                    values[f] = OPT_OUT_VALUE if mode == 'optout' else 1 + (me % 3)
                 elif item and item.get('widget') == 'number':
-                    values[f] = 10
+                    opt = mode == 'optout' and item_gets_opt_out(item, _SCALES)
+                    values[f] = OPT_OUT_NUMBER if opt else 10
+                elif mode == 'optout' and item and item_gets_opt_out(item, _SCALES):
+                    values[f] = OPT_OUT_VALUE
                 else:
                     values[f] = 1 + (me % max(_n_labels(item) if item else 1, 1))
             yield Submission(cls, values)
-        if mode == 'consent':
+        if mode == 'optout':
+            # Regression guard: the opt-out saves as its sentinel, not None.
+            expect(self.player.field_maybe_none('muskan_support'), OPT_OUT_VALUE)
+            expect(self.player.field_maybe_none('dce_1'), OPT_OUT_VALUE)
+        elif mode == 'consent':
             # Regression guard: the primary Muskan DV must have been asked
             # and answered on every completed walk.
             expect(self.player.field_maybe_none('muskan_support'), '!=', None)
@@ -80,9 +93,11 @@ class PlayerBot(Bot):
                        if not muskan.is_control(
                            p.field_maybe_none('muskan_stim') or '')]
         me = self.player.id_in_subsession
-        if len(non_control) > 2:  # keep at least one full walk in tiny sessions
+        if len(non_control) > 3:  # keep at least one full walk in tiny sessions
             if me == non_control[0]:
                 return 'decline'
             if me == non_control[1]:
                 return 'screenout'
+            if me == non_control[2]:
+                return 'optout'
         return 'consent'

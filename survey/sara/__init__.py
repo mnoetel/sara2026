@@ -34,7 +34,14 @@ from . import render, dce, muskan
 
 # ── Load the single source of truth ─────────────────────────────────
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
-from spec_loader import load_spec, validate_spec  # noqa: E402
+from spec_loader import (  # noqa: E402
+    OPT_OUT_LABEL,
+    OPT_OUT_NUMBER,
+    OPT_OUT_VALUE,
+    item_gets_opt_out,
+    load_spec,
+    validate_spec,
+)
 
 _MD_PATH = os.path.join(os.path.dirname(__file__), '..', 'sara_usa.md')
 SPEC = validate_spec(load_spec(_MD_PATH), _MD_PATH)
@@ -66,7 +73,12 @@ def _make_field(item):
     label = item['text'].strip()
     required = item.get('required', True)
     if widget == 'number':
-        return db.IntegerField(label=label, blank=not required)
+        kw = dict(label=label, blank=not required)
+        if item_gets_opt_out(item, _SCALES):
+            # oTree defaults numeric form validation to min=0; widen it so
+            # the opt-out sentinel (stored via the same field) validates.
+            kw['min'] = OPT_OUT_NUMBER
+        return db.IntegerField(**kw)
     options = item.get('options')
     scale = item.get('scale')
     labels = options if options else (_SCALES[scale]['labels'] if scale in _SCALES else None)
@@ -76,6 +88,10 @@ def _make_field(item):
         raise ValueError("item %r: no scale/options to build choices from"
                          % item['id'])
     choices = list(zip(range(1, len(labels) + 1), labels))
+    if item_gets_opt_out(item, _SCALES):
+        # Universal opt-out (see spec_loader): saved as 0, so real answers
+        # keep their 1-based coding.
+        choices.append((OPT_OUT_VALUE, OPT_OUT_LABEL))
     w = None if widget == 'select' else widgets.RadioSelect()
     kw = dict(label=label, choices=choices, blank=not required)
     if w is not None:
@@ -152,7 +168,8 @@ for _ps in _PAGES:
 # DCE choice fields, one per task.
 for _t in range(1, NUM_DCE_TASKS + 1):
     setattr(Player, 'dce_%d' % _t, db.IntegerField(
-        choices=[(1, 'Option A'), (2, 'Option B'), (3, "Neither")],
+        choices=[(1, 'Option A'), (2, 'Option B'), (3, "Neither"),
+                 (OPT_OUT_VALUE, OPT_OUT_LABEL)],
         widget=widgets.RadioSelect(), blank=False,
         label='DCE task %d' % _t))
 

@@ -40,7 +40,7 @@ import sys
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(SCRIPT_DIR, "..", "survey"))
 try:
-    from spec_loader import load_spec
+    from spec_loader import OPT_OUT_LABEL, item_gets_opt_out, load_spec
 except ImportError:
     sys.exit("PyYAML is required: pip install pyyaml")
 
@@ -91,16 +91,23 @@ def _flat(text):
 
 
 def _scale_text(spec, item):
-    """Human-readable ' / '-joined response options for an item."""
+    """Human-readable ' / '-joined response options for an item, including the
+    engine-appended universal opt-out where it applies — the protocol's worked
+    examples should show what participants see."""
     scales = spec.get("scales", {})
     name = item.get("scale")
+    text = None
     if name and name in scales:
-        return " / ".join(scales[name]["labels"])
-    if item.get("options"):
-        return " / ".join(str(o) for o in item["options"])
-    if item.get("widget") == "number":
-        return "(numeric entry)"
-    return "(no fixed scale)"
+        text = " / ".join(scales[name]["labels"])
+    elif item.get("options"):
+        text = " / ".join(str(o) for o in item["options"])
+    elif item.get("widget") == "number":
+        text = "(numeric entry)"
+    if text is None:
+        return "(no fixed scale)"
+    if item_gets_opt_out(item, scales):
+        text += " / %s" % OPT_OUT_LABEL
+    return text
 
 
 def _find_live(spec, item_id):

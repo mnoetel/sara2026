@@ -11,15 +11,22 @@ suppressMessages(library(dplyr))
 # ── Level codings (must match the profiles in sara_dce_design.R) ──────
 RISK_TO_LOGP <- c("1 in 100" = -2, "1 in 1,000" = -3, "1 in 10,000" = -4,
                   "1 in 100,000" = -5, "1 in 1,000,000" = -6)
+# The extinction tier uses the FRI/XPT definition (global population falls
+# below 5,000), matching the m4c_extinction ladder rung and the Method-4
+# forecaster anchors.
+EXT_LEVEL    <- "Human extinction (fewer than 5,000 people survive)"
 SEV_TO_LOGN  <- c("A single death" = 0,
                   "100 deaths or $1B damage" = 2,
                   "1,000,000 deaths or $100B damage" = 6,
-                  "~800,000,000 deaths (10% of humanity)" = 8.9)  # log10 deaths
+                  "~800,000,000 deaths (10% of humanity)" = 8.9,
+                  "Human extinction (fewer than 5,000 people survive)" = 9.9)  # log10 deaths
 
 # The registered estimation parameters (PREREGISTRATION.md §4.2):
-# log annual probability (random normal), log severity, benefit and
-# competition dummies, opt-out constant.
-MAIN_PARS <- c("logp", "logn", "ben_major", "ben_transf",
+# log annual probability (random normal), log severity, an extinction
+# indicator (`ext` — the discontinuity beyond the log-death slope at the
+# FRI/XPT extinction tier; Schubert et al.'s uniquely-bad test), benefit
+# and competition dummies, opt-out constant.
+MAIN_PARS <- c("logp", "logn", "ext", "ben_major", "ben_transf",
                "comp_pace", "comp_lead", "no_choice")
 
 # ── Coding ────────────────────────────────────────────────────────────
@@ -35,6 +42,7 @@ dce_code_rows <- function(df) {
   df$no_choice  <- no_choice
   df$logp       <- ifelse(no_choice == 1, 0, unname(RISK_TO_LOGP[as.character(df$risk_annual)]))
   df$logn       <- ifelse(no_choice == 1, 0, unname(SEV_TO_LOGN[as.character(df$severity)]))
+  df$ext        <- ifelse(no_choice == 1, 0, as.integer(df$severity == EXT_LEVEL))
   df$ben_major  <- ifelse(no_choice == 1, 0, as.integer(df$benefit == "Major"))
   df$ben_transf <- ifelse(no_choice == 1, 0, as.integer(df$benefit == "Transformative"))
   df$comp_pace  <- ifelse(no_choice == 1, 0, as.integer(df$competition == "The US keeps pace"))
@@ -75,7 +83,11 @@ dce_simulate_choices <- function(dat, b, sd_logp = 0) {
 }
 
 # ── The registered estimator ──────────────────────────────────────────
-dce_estimate <- function(dat, numMultiStarts = 5) {
+# numCores = 1: logitr's forked multistart workers crash on macOS at the
+# full N=4,000 (fork + multithreaded BLAS); single-core is robust and the
+# estimates are identical (starting points are drawn from R's RNG before
+# the workers fork, so core count never changes the result).
+dce_estimate <- function(dat, numMultiStarts = 5, numCores = 1) {
   logitr::logitr(
     data    = dat,
     outcome = "choice",
@@ -83,7 +95,8 @@ dce_estimate <- function(dat, numMultiStarts = 5) {
     panelID = "respID",
     pars    = MAIN_PARS,
     randPars = c(logp = "n"),
-    numMultiStarts = numMultiStarts
+    numMultiStarts = numMultiStarts,
+    numCores = numCores
   )
 }
 
@@ -113,7 +126,7 @@ dce_d_error <- function(coded_tasks, beta) {
 # sara_dce_design.R v13; see protocol Appendix B.
 DOM_BEST  <- c(severity = "A single death",  risk_annual = "1 in 1,000,000",
                benefit  = "Transformative",  competition = "The US is ahead")
-DOM_WORST <- c(severity = "~800,000,000 deaths (10% of humanity)",
+DOM_WORST <- c(severity = "Human extinction (fewer than 5,000 people survive)",
                risk_annual = "1 in 100",
                benefit  = "Modest",          competition = "Other countries are ahead")
 
@@ -167,7 +180,9 @@ dce_build_long <- function(responses, blocks_csv) {
     for (j in seq_len(nrow(bt))) {
       t <- bt[j, ]
       ans <- r[[paste0("dce_", t$task)]]
-      if (is.na(ans)) next
+      # 0 = "Prefer not to answer" (the survey's universal opt-out); an
+      # opted-out task has no chosen alternative, so drop it here.
+      if (is.na(ans) || !ans %in% 1:3) next
       obs <- paste(r$code, t$task, sep = "|")
       mk <- function(alt, prefix) data.frame(
         respID = r$code, obsID = obs, altID = alt,
@@ -229,9 +244,13 @@ dce_replicate_template <- function(template, n_resp, resp_offset = 0) {
 # The design generator wants per-level part-worths vs each reference
 # level; the estimator is linear in logp/logn. Deterministic mapping.
 dce_coefs_to_priors <- function(est, profiles) {
+  # Per-level severity part-worths: the log-death slope, plus the extinction
+  # discontinuity on the extinction tier only.
+  sev <- est[["logn"]] * (SEV_TO_LOGN[-1] - SEV_TO_LOGN[1]) +
+    est[["ext"]] * as.integer(names(SEV_TO_LOGN)[-1] == EXT_LEVEL)
   cbcTools::cbc_priors(
     profiles    = profiles,
-    severity    = unname(est[["logn"]] * (SEV_TO_LOGN[-1] - SEV_TO_LOGN[1])),
+    severity    = unname(sev),
     risk_annual = unname(est[["logp"]] * (RISK_TO_LOGP[-1] - RISK_TO_LOGP[1])),
     benefit     = c(est[["ben_major"]], est[["ben_transf"]]),
     competition = c(est[["comp_pace"]], est[["comp_lead"]]),

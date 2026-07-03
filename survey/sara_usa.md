@@ -279,8 +279,8 @@ pages:
       not your personal risk.
     rationale: >
       The within-person severity ladder (Method 1, v10 §3.1). Each person sets
-      an acceptable annual chance across outcomes from a single death up to a
-      global catastrophe, tracing their stated frequency–number (F–N) curve.
+      an acceptable annual chance across outcomes from a single death up to
+      human extinction, tracing their stated frequency–number (F–N) curve.
       Presented one severity per page in randomised order so the ordering can't
       cue a monotone pattern; a set of answers that ignores severity is flagged
       scope-insensitive. The rung magnitudes are anchored to published
@@ -298,7 +298,7 @@ pages:
         rationale: >
           Lower anchor of the within-person severity ladder (Method 1, v10
           §3.1). Each person sets an acceptable annual chance across outcomes
-          from one death up to a global catastrophe, tracing their stated
+          from one death up to human extinction, tracing their stated
           frequency–number (F–N) curve. Shown one severity level per page,
           page order randomised, so a considered answer reflects genuine
           judgement rather than a mechanical read-down of a visible list; a
@@ -306,7 +306,7 @@ pages:
           rung magnitudes are anchored to published thresholds (New York's
           RAISE Act, the MIT AI Risk Repository, and the FRI/XPT forecasting
           tournament), though the question text itself names no sources.
-        triangulates: [m4c_100, m4c_1m, m4c_800m, dce_choice]
+        triangulates: [m4c_100, m4c_1m, m4c_800m, m4c_extinction, dce_choice]
 
       - id: m4c_100
         text: >
@@ -319,7 +319,7 @@ pages:
         rationale: >
           The "critical harm" rung of the severity ladder, matching the
           threshold in New York's RAISE Act. See m4c_single.
-        triangulates: [m4c_single, m4c_1m, m4c_800m, dce_choice]
+        triangulates: [m4c_single, m4c_1m, m4c_800m, m4c_extinction, dce_choice]
 
       - id: m4c_1m
         text: >
@@ -330,7 +330,7 @@ pages:
         required: true
         rationale: >
           MIT AI Risk Repository "catastrophic" rung. See m4c_single.
-        triangulates: [m4c_single, m4c_100, m4c_800m, dce_choice]
+        triangulates: [m4c_single, m4c_100, m4c_800m, m4c_extinction, dce_choice]
 
       - id: m4c_800m
         text: >
@@ -340,10 +340,34 @@ pages:
         widget: radio
         required: true
         rationale: >
-          The "catastrophe" rung (top of the ladder), from the Forecasting
-          Research Institute's Existential-Risk Persuasion Tournament
-          (FRI/XPT). See m4c_single.
-        triangulates: [m4c_single, m4c_100, m4c_1m, dce_choice]
+          The "catastrophe" rung (10% or more of humans dying within five
+          years), from the Forecasting Research Institute's Existential-Risk
+          Persuasion Tournament (FRI/XPT). See m4c_single.
+        triangulates: [m4c_single, m4c_100, m4c_1m, m4c_extinction, dce_choice]
+
+      - id: m4c_extinction
+        text: >
+          For an AI disaster causing human extinction (fewer than 5,000 people
+          survive anywhere on Earth), the highest annual chance you would find
+          acceptable is:
+        scale: ladder9
+        widget: radio
+        required: true
+        rationale: >
+          The "extinction" rung (top of the ladder) — the FRI/XPT tournament
+          defines extinction as human extinction or the global population
+          falling below 5,000, the same event the Method-4 forecaster anchors
+          (m2_experts_fri_super, m2_experts_fri_domain) put at 0.38% / 3% by
+          2100. Added 03 Jul 2026 (pre-registration not yet frozen): without
+          it, Methods 1-2 top out at the 10% catastrophe while Method 4 asks
+          about extinction, so no own-stated public threshold existed at the
+          severity the expert anchors describe. The within-person contrast
+          against m4c_800m is a direct test of Schubert, Caviola & Faber's
+          finding that people do not judge extinction uniquely worse than
+          near-extinction unless prompted about the long-term future. See
+          m4c_single.
+        triangulates: [m4c_single, m4c_100, m4c_1m, m4c_800m,
+                       m2_experts_fri_super, m2_experts_fri_domain, dce_choice]
 
   # ── Page 5: DCE (Method 2, §3.2) ─────────────────────────────────
   # type: dce — the engine expands this into one page per task (dce_1 … dce_N),
@@ -358,15 +382,19 @@ pages:
       concrete AI-future options rather than stating a probability. Across
       ~10 tasks a mixed-logit model recovers acceptable catastrophe risk from
       the point at which a future ties the "keep today's status quo" opt-out.
-      Attributes are the democratic tradeoff: severity (4-tier ladder),
+      Attributes are the democratic tradeoff: severity (5-tier ladder, a
+      single death up to the FRI/XPT extinction threshold),
       probability, utility (Modest / Major / Transformative), competition.
       Cost was dropped (dumpster, 01 Jul 2026) — money is an implementation
       question, not a democratic-preference one (Hadfield); willingness-to-pay
       now comes from the stated item m5_wtp. Severity is varied so the DCE
-      traces a full frequency–severity (F–N) surface. Tasks are assigned by
+      traces a full frequency–severity (F–N) surface; the extinction tier
+      carries its own discontinuity term in the registered model, so the data
+      can test whether extinction is dreaded beyond its log-death value
+      (Schubert et al.) rather than assuming linearity. Tasks are assigned by
       Bayesian D-efficient block (cbcTools); the YAML does not enumerate them
       because the design is generated programmatically.
-    triangulates: [m4c_single, m4c_100, m4c_1m, m4c_800m, m5_wtp]
+    triangulates: [m4c_single, m4c_100, m4c_1m, m4c_800m, m4c_extinction, m5_wtp]
     items: []
 
   # ── Page 6: Anchor to accepted safety (Method 3, §3.3) ───────────

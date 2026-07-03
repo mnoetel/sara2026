@@ -11,6 +11,15 @@ import html
 import os
 import random
 import re
+import sys
+
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+from spec_loader import (  # noqa: E402
+    OPT_OUT_LABEL,
+    OPT_OUT_NUMBER,
+    OPT_OUT_VALUE,
+    item_gets_opt_out,
+)
 
 
 def esc(s):
@@ -122,14 +131,23 @@ def _numbered_options(item, scales, player=None):
 def input_html(item, scales, player=None):
     iid = item["id"]
     widget = item.get("widget", "radio")
+    opt_out = item_gets_opt_out(item, scales)
     if widget == "number":
         box = ('<input type="number" inputmode="numeric" class="sara-num" '
                'name="%s" id="id_%s">' % (iid, iid))
         suffix = item.get("suffix")
         if suffix:
-            return ('<span class="sara-numwrap">%s'
-                    '<span class="sara-suffix">%s</span></span>'
-                    % (box, esc(suffix)))
+            box = ('<span class="sara-numwrap">%s'
+                   '<span class="sara-suffix">%s</span></span>'
+                   % (box, esc(suffix)))
+        if opt_out:
+            # A checkbox the template JS wires up: checked, it stores
+            # OPT_OUT_NUMBER in the (hidden) number input so the answer
+            # saves through the same field.
+            box += ('<label class="sara-optout sara-optout-num">'
+                    '<input type="checkbox" data-optout-for="id_%s" '
+                    'data-optout-value="%d"><span>%s</span></label>'
+                    % (iid, OPT_OUT_NUMBER, esc(OPT_OUT_LABEL)))
         return box
     pairs = _numbered_options(item, scales, player)
     if widget == "select":
@@ -137,6 +155,9 @@ def input_html(item, scales, player=None):
                '<option value="">— select —</option>' % (iid, iid)]
         for i, o in pairs:
             out.append('<option value="%d">%s</option>' % (i, esc(o)))
+        if opt_out:
+            out.append('<option value="%d">%s</option>'
+                       % (OPT_OUT_VALUE, esc(OPT_OUT_LABEL)))
         out.append("</select>")
         return "".join(out)
     # radio (default)
@@ -144,6 +165,11 @@ def input_html(item, scales, player=None):
     for i, o in pairs:
         out.append('<label class="sara-opt"><input type="radio" name="%s" value="%d">'
                    '<span>%s</span></label>' % (iid, i, esc(o)))
+    if opt_out:
+        out.append('<label class="sara-opt sara-optout">'
+                   '<input type="radio" name="%s" value="%d">'
+                   '<span>%s</span></label>'
+                   % (iid, OPT_OUT_VALUE, esc(OPT_OUT_LABEL)))
     out.append("</div>")
     return "".join(out)
 
@@ -232,7 +258,9 @@ def dce_body(task_num, total, t, rationale=""):
     neither = (
         '<label class="sara-opt dce-neither"><input type="radio" name="%s" value="3">'
         '<span>Neither &mdash; keep today\'s status quo</span></label>'
-        % field)
+        '<label class="sara-opt dce-neither sara-optout">'
+        '<input type="radio" name="%s" value="%d"><span>%s</span></label>'
+        % (field, field, OPT_OUT_VALUE, esc(OPT_OUT_LABEL)))
     info, note = _info_bits(rationale)
     return (
         '<div class="sara-item"><div class="sara-qhead">'

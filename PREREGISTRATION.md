@@ -107,9 +107,15 @@ No other exclusions. Any additional cleaning is labelled exploratory.
 - **Scope-sensitivity slope** per respondent: ordinal position change across
   the ladder; % flat (scope-insensitive) reported overall and by numeracy
   quartile (registered interaction: slope × Berlin Numeracy quartile).
+- **Extinction-discontinuity contrast (registered).** The within-person
+  ordinal contrast `m4c_extinction` vs `m4c_800m` (the FRI/XPT extinction
+  and catastrophe tiers) tests whether extinction is judged uniquely worse
+  than near-extinction (Schubert, Caviola & Faber 2019). Reported as % of
+  respondents stricter at extinction / tied / laxer, with "Never allowed"
+  handled ordinally as the strictest rung.
 - **First-rung sensitivity analysis (anchoring/demand check).** The ladder
   is one-item-per-page in per-participant random order, so each
-  respondent's *first-seen* rung is a between-subjects experiment (~25% of
+  respondent's *first-seen* rung is a between-subjects experiment (~20% of
   the sample per severity, unanchored). Registered comparison: first-seen
   answers by severity vs the full within-person curves. Divergence beyond
   sampling error is reported, and the first-response (between-subjects)
@@ -124,9 +130,11 @@ No other exclusions. Any additional cleaning is labelled exploratory.
 
 ### 4.2 Method 2 — DCE
 - **Model:** mixed logit (`logitr`), fixed specification: log annual
-  probability (random normal coefficient), log severity (deaths), benefit
-  and competition as categorical, opt-out constant. Multistart, fixed seed.
-  Estimation on tasks 1–8 only.
+  probability (random normal coefficient), log severity (deaths), an
+  **extinction indicator** (the FRI/XPT extinction tier — the registered
+  test of whether extinction carries disutility beyond its log-death
+  value; Schubert et al.), benefit and competition as categorical, opt-out
+  constant. Multistart, fixed seed. Estimation on tasks 1–8 only.
 - **Estimand:** p\*(severity, benefit, competition) — the annual probability
   at which an AI-future option is indifferent to the status-quo opt-out —
   reported as a posterior distribution with credible intervals by scenario,
@@ -206,14 +214,18 @@ candidate; it could not change what was fielded or how it is analysed.
   D-error criterion is evaluated at the posterior mean); the earlier
   "mean and covariance" phrasing in protocol Appendix B is amended
   accordingly.
-- (b) **DONE** — identification simulation repaired (choices simulated
-  directly from the registered mixed-logit specification) and extended to
-  the full sequential procedure. Pre-freeze run archived
-  (`dce_sequential_sim_2026-07-02.log`): all four waves simulated, every
-  checkpoint executed (each regenerated design improved the D-error and
-  was adopted: 0.0754→0.0745, 0.0760→0.0752, 0.0748→0.0732), and final
-  pooled recovery on N=4,000 was within 0.033 of truth on every fixed
-  coefficient, with the random risk-slope SD recovered at |−0.42| vs 0.4
+- (b) **DONE (re-run 03 Jul 2026)** — identification simulation repaired
+  (choices simulated directly from the registered mixed-logit
+  specification) and extended to the full sequential procedure. Re-run
+  after the extinction tier + `ext` discontinuity term were added to the
+  grid and model (the 02 Jul run validated the superseded 4-tier design).
+  Pre-freeze run archived (`dce_sequential_sim_2026-07-03.log`): all four
+  waves simulated on the 225-profile design, every checkpoint executed
+  under the adopt-if-better rule (wave 2 kept the incumbent, 0.0843 vs
+  0.0853; wave 3 adopted, 0.0845 vs 0.0851; wave 4 kept, 0.0834 vs
+  0.0843), and final pooled recovery on N=4,000 was within 0.030 of truth
+  on every fixed coefficient — including the extinction discontinuity —
+  with the random risk-slope SD recovered at |−0.425| vs 0.4
   ("RECOVERY OK").
 - (c) **DONE** — H2 power simulation (`Muskan's Experiment/
   power_sim_h2.R`, 4,000 reps): power for the direction × route
