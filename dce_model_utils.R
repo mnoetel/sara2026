@@ -201,7 +201,13 @@ dce_build_long <- function(responses, blocks_csv) {
   }
   dat <- bind_rows(rows)
   dat$obsID <- as.integer(factor(dat$obsID))
-  dce_code_rows(dat)
+  dat <- dce_code_rows(dat)
+  # logitr coerces panelID to numeric, and oTree participant codes are
+  # strings — map them to integers for estimation, keeping the original
+  # code in `code` for joins back to participant-level flags.
+  dat$code <- dat$respID
+  dat$respID <- as.integer(factor(dat$respID, levels = unique(dat$respID)))
+  dat
 }
 
 # ── Coded long template from a wide blocks table ──────────────────────

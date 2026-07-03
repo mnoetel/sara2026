@@ -110,6 +110,14 @@ one-per-page in randomised order), or `type: adaptive` + `root:` (items branch v
   **Never edit the instrument (`sara_usa.md`) mid-fielding** — that changes the DB schema.
 
 ## Analysis & data
+- **`analysis/` is the pre-registered report pipeline** (`make -C analysis`):
+  `simulate_data.py` generates data in *exactly* the oTree export format
+  (schema-checked against a real bot export by `check_export_schema.py`, wired
+  into CI); `report.Rmd` implements every analysis in `PREREGISTRATION.md` and
+  runs unchanged on real exports (`make -C analysis real DATA=realdata`).
+  `derive_orders.py` reconstructs the per-participant random page orders from
+  `participant.code` (deterministic seeding — no server logging needed). See
+  `analysis/README.md`.
 - `sara_dce_design.R` → `survey/sara/dce_blocks.csv` (varied-severity 225-grid, Bayesian
   D-efficient; per block: 8 D-efficient tasks + task 9 dominated pair + task 10 repeat of
   task 2 — quality checks, excluded from estimation). **`cbc_design` is NOT
