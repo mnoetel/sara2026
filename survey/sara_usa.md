@@ -194,7 +194,7 @@ pages:
     title: "Technology and your community"
     body: |
       <p>This survey asks for your views on technology and public policy. There are no right
-      answers; we want your honest opinion. It takes about 15 minutes.</p>
+      answers; we want your honest opinion.</p>
     items: []
 
   # ── Page 2b: Population benchmarks (verbatim Pew ATP items) ──────
