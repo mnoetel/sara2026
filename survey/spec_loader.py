@@ -51,6 +51,33 @@ KNOWN_CONDITIONS = frozenset([
 # Widgets the engine can build a field for.
 KNOWN_WIDGETS = frozenset(["radio", "select", "number"])
 
+# ── Universal opt-out ─────────────────────────────────────────────────
+# The Participant Information Sheet promises "You can skip any questions you
+# prefer not to answer", so every question carries an opt-out. It is an
+# engine-level affordance (like the Next button), not item content — the
+# engine appends it to every item that doesn't already offer one, and the
+# review-table / protocol renderers append it to the displayed options so
+# reviewers see what participants see. Saved value: 0 for choice items
+# (1-based real answers, so 0 is unambiguous), OPT_OUT_NUMBER for `number`
+# widgets (where 0 can be a genuine answer).
+OPT_OUT_LABEL = "Prefer not to answer"
+OPT_OUT_VALUE = 0
+OPT_OUT_NUMBER = -1
+
+
+def item_gets_opt_out(item, scales):
+    """True when the engine should append the universal opt-out to this item.
+
+    Exempt: the consent gate (declining IS its opt-out) and items whose
+    options already include their own "Prefer not to ..." label (the
+    demographics)."""
+    if item.get("id") == "consent":
+        return False
+    labels = item.get("options") or (
+        scales.get(item.get("scale"), {}).get("labels")
+        if item.get("scale") else None) or []
+    return not any("prefer not" in str(lab).lower() for lab in labels)
+
 
 def validate_spec(spec, md_path="<spec>"):
     """Raise ValueError listing every structural problem in the spec.

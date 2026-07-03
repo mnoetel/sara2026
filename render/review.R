@@ -58,14 +58,24 @@ for (page in pages) {
 
     # Resolve scale labels
     scale_name <- item$scale
+    labels <- character(0)
     if (!is.null(scale_name) && scale_name %in% names(scales)) {
-      scale_text <- paste(scales[[scale_name]]$labels, collapse = " / ")
+      labels <- unlist(scales[[scale_name]]$labels)
+      scale_text <- paste(labels, collapse = " / ")
     } else if (!is.null(item$options)) {
-      scale_text <- paste(item$options, collapse = " / ")
+      labels <- unlist(item$options)
+      scale_text <- paste(labels, collapse = " / ")
     } else if (!is.null(item$widget) && item$widget == "number") {
       scale_text <- "(numeric entry)"
     } else {
       scale_text <- ""
+    }
+    # The engine appends a universal "Prefer not to answer" opt-out to every
+    # item that doesn't already carry one (see survey/spec_loader.py) — show
+    # it so reviewers see what participants see.
+    if (nzchar(scale_text) && item$id != "consent" &&
+        !any(grepl("prefer not", tolower(labels)))) {
+      scale_text <- paste(scale_text, "Prefer not to answer", sep = " / ")
     }
 
     # Triangulates
