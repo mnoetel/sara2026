@@ -14,6 +14,12 @@ ships as a dated, labelled amendment.
   (rationale), `Muskan's Experiment/PROJECT_PLAN_superintelligence_study.md`
   (Rev 3, superintelligence module), `sara_dce_design.R` (DCE design
   algorithm), `build_poststrat.py` / `acs_poststrat.R` (MRP frame).
+- **Registered analysis code:** `analysis/report.Rmd` at the registered
+  commit — every analysis in §3–§7 below is implemented there and was
+  developed and validated end-to-end on simulated data
+  (`analysis/simulate_data.py`, format-identical to the oTree export;
+  schema check in CI) **before any real data existed**. The registered
+  analysis of the real data is this document plus that code, run unchanged.
 
 ---
 
@@ -162,6 +168,13 @@ No other exclusions. Any additional cleaning is labelled exploratory.
 A single quantitative public number is published only if the Method 1
 (stated) and Method 2 (DCE) estimates agree within **one order of
 magnitude** in the overlap of severity tiers, on the disclosed-arm data.
+**Operationalisation (registered):** the DCE side of the comparison is the
+p\* median at the **Major benefit / "The US keeps pace"** scenario (the
+middle level of each non-risk attribute); the Method 1 side is the
+disclosed-arm median rung ("Never allowed" tiers and tiers where p\* ≥ 1
+do not enter). The same rule evaluated at the other benefit levels is
+reported as robustness; if the verdict differs across scenarios, that
+fragility is reported alongside any published number.
 Otherwise: report a bound and qualitative findings. Any expert-vs-public
 multiplier (e.g. "4,000× safer") is computed only on a pass, as a
 distribution conditioned on a stated benefit scenario, and is always

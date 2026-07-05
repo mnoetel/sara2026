@@ -4,15 +4,36 @@
     {
       "name": "sara-survey",
       "runtimeExecutable": "bash",
-      "runtimeArgs": ["-c", "export PATH=/Users/michaelnoetel/miniconda3/bin:$PATH && cd survey && otree devserver $PORT"],
+      "runtimeArgs": [
+        "-c",
+        "export PATH=/Users/michaelnoetel/miniconda3/bin:$PATH && cd survey && otree devserver $PORT"
+      ],
       "port": 8000,
       "autoPort": true
     },
     {
       "name": "protocol-docs",
       "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "4173", "--directory", "docs"],
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4173",
+        "--directory",
+        "docs"
+      ],
       "port": 4173
+    },
+    {
+      "name": "report-preview",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4180",
+        "--directory",
+        "analysis"
+      ],
+      "port": 4180
     }
   ]
 }

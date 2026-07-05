@@ -30,6 +30,13 @@ jobs:
         working-directory: survey
         run: otree test sara_usa 27
 
+      - name: Simulator output format-identical to the oTree export
+        working-directory: analysis
+        run: |
+          python3 simulate_data.py --n 60 --seed 1 --out simdata_ci
+          python3 derive_orders.py simdata_ci/all_apps_wide.csv simdata_ci/orders.csv
+          python3 check_export_schema.py simdata_ci
+
       - name: Protocol auto-blocks in sync with the instrument
         run: make -C render check-protocol
 

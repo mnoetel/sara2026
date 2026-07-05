@@ -23,3 +23,8 @@ poststrat_frame.csv
 
 # Secrets
 secrets.txt
+
+# Simulated data + rendered report (regenerate with make -C analysis)
+analysis/simdata*/
+analysis/realdata*/
+analysis/*.html
