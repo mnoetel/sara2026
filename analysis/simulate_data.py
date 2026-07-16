@@ -351,8 +351,8 @@ class Resp:
         self.b_logp = rng.gauss(d["logp"], d["sd_logp"])
 
 
-SEV_TO_LOGN = {"A single death": 0.0, "100 deaths or $1B damage": 2.0,
-               "1,000,000 deaths or $100B damage": 6.0,
+SEV_TO_LOGN = {"A single death": 0.0, "100 deaths": 2.0,
+               "1,000,000 deaths": 6.0,
                "~800,000,000 deaths (10% of humanity)": 8.9,
                "Human extinction (fewer than 5,000 people survive)": 9.9}
 RISK_TO_LOGP = {"1 in 100": -2.0, "1 in 1,000": -3.0, "1 in 10,000": -4.0,

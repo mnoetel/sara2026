@@ -48,8 +48,8 @@ OUT_CSV <- file.path(.root, "survey", "sara", "dce_blocks.csv")
 # DCE table can render these verbatim.
 profiles <- cbc_profiles(
   severity    = c("A single death",
-                  "100 deaths or $1B damage",
-                  "1,000,000 deaths or $100B damage",
+                  "100 deaths",
+                  "1,000,000 deaths",
                   "~800,000,000 deaths (10% of humanity)",
                   "Human extinction (fewer than 5,000 people survive)"),  # SEVERITY (5)
   risk_annual = c("1 in 100", "1 in 1,000", "1 in 10,000",

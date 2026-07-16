@@ -310,26 +310,40 @@ pages:
 
       - id: m4c_100
         text: >
-          For an AI disaster causing 100 deaths or serious injuries, or $1
-          billion in damage, the highest annual chance you would find acceptable
-          is:
+          For an AI disaster causing 100 deaths or serious injuries, the
+          highest annual chance you would find acceptable is:
         scale: ladder9
         widget: radio
         required: true
         rationale: >
-          The "critical harm" rung of the severity ladder, matching the
-          threshold in New York's RAISE Act. See m4c_single.
+          The "critical harm" rung of the severity ladder, anchored to the
+          threshold in New York's RAISE Act (100 deaths or serious injuries,
+          or $1 billion in damage). The dollar clause was dropped 16 Jul 2026
+          (pre-data, pre-registration not yet frozen): a disjunction is rated
+          no worse than its least-bad disjunct, so mixing property damage into
+          a rung coded as log-deaths dilutes the severity dimension and breaks
+          the apples-to-apples F–N ladder. Deaths-only is the strictest
+          reading of the statutory threshold — tolerance for the full
+          disjunctive event can only be at least as high — so the RAISE
+          comparison survives as a conservative bound. See m4c_single.
         triangulates: [m4c_single, m4c_1m, m4c_800m, m4c_extinction, dce_choice]
 
       - id: m4c_1m
         text: >
-          For an AI disaster causing 1,000,000 deaths or $100 billion in damage,
-          the highest annual chance you would find acceptable is:
+          For an AI disaster causing 1,000,000 deaths, the highest annual
+          chance you would find acceptable is:
         scale: ladder9
         widget: radio
         required: true
         rationale: >
-          MIT AI Risk Repository "catastrophic" rung. See m4c_single.
+          MIT AI Risk Repository "catastrophic" rung (defined there as more
+          than 1 million deaths or more than $100 billion in damage). The
+          dollar clause was dropped 16 Jul 2026 (pre-data): at a ~$10M value
+          per statistical life, $100 billion is equivalent to roughly 10,000
+          deaths — two orders of magnitude milder than the 1,000,000 deaths
+          this rung is coded as (log10 N = 6) — so respondents anchoring on
+          the money reading would systematically flatten the estimated F–N
+          slope. See m4c_single and m4c_100.
         triangulates: [m4c_single, m4c_100, m4c_800m, m4c_extinction, dce_choice]
 
       - id: m4c_800m
